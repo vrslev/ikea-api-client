@@ -1,14 +1,21 @@
 import requests
 import json
 
+ITEMS_ENDPOINT = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
+
+def build_url(items):
+    templated_list = []
+    for item in items:
+        templated_list.append('{0},{1}'.format(items[item], item))
+    return ITEMS_ENDPOINT + ';'.join(templated_list)
+
 def return_response(response, is_list):
     if is_list:
         return response['RetailItemCommList']['RetailItemComm']
     else:
         return [response['RetailItemComm']]
 
-def fetch_items_specs(items):
-    endpoint = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
+def fetch_items_specs(input_items):
     headers = {
     'Accept': 'application/vnd.ikea.iows+json;version=2.0',
     'Origin': 'https://www.ikea.com',
@@ -24,23 +31,24 @@ def fetch_items_specs(items):
     }
     session = requests.Session()
 
-    if type(items) is list:
-        is_list = True
+    if type(input_items) is list:
+        is_list = False if len(input_items) == 1 else True
     else:
         is_list = False
-        items = [items]
+        input_items = [input_items]
 
-    items_templated = []
-    for item in items:
-        items_templated.append('ART,' + item)
-    items_str = ';'.join(items_templated)
+    items = {}
+    for item in input_items:
+        items[item] = 'ART'
 
     # 1. Get data, catch errors
-    url = endpoint + items_str
+    url = build_url(items)
     response = session.get(url, headers=headers)
-    response_res = response.json()
     if response.status_code == 404:
         raise ValueError('Wrong item code')
+    else:
+        response_res = response.json()
+
     try:
         return return_response(response_res, is_list)
     except KeyError:
@@ -48,26 +56,30 @@ def fetch_items_specs(items):
         errors = response_res['ErrorList']['Error']
         if type(errors) is not list:
             errors = [errors]
-        repaired_str = items_str
         for error in errors:
             item_code = str(error['ErrorAttributeList']['ErrorAttribute'][0]['Value']['$'])
             item_type = error['ErrorAttributeList']['ErrorAttribute'][1]['Value']['$']
-            item_templated = '%s,%s' % (item_type, item_code)
-            item_replacement = '%s,%s' % ('SPR' if item_type == 'ART' else 'ART', item_code)
-            repaired_str = repaired_str.replace(item_templated, item_replacement)
-        repaired_url = endpoint + repaired_str
+            items[item_code] = 'SPR' if item_type == 'ART' else 'ART'
+        repaired_url = build_url(items)
         repaired_response = session.get(repaired_url, headers=headers)
         repaired_response_res = repaired_response.json()
+
         try:
             return return_response(repaired_response_res, is_list)
         except KeyError:
             # 3. If item is not ART nor SPR it means there's no such item. Deleting such items
             errors = repaired_response_res['ErrorList']['Error']
-            final_str = repaired_str
+            # print(errors)
+            if not type(errors) is list:
+                errors = [errors]
             for err in errors:
-                final_str = final_str.replace('%s,%s;' % (err['ErrorAttributeList']['ErrorAttribute'][1]['Value']['$'],
-                str(err['ErrorAttributeList']['ErrorAttribute'][0]['Value']['$'])), '')
-            final_url = endpoint + final_str
+                item_code = str(err['ErrorAttributeList']['ErrorAttribute'][0]['Value']['$'])
+                item_type = err['ErrorAttributeList']['ErrorAttribute'][1]['Value']['$']
+                items.pop(item_code)
+            if len(items) == 1:
+                is_list = False
+            final_url = build_url(items)
             final_response = session.get(final_url, headers=headers)
             final_response_res = final_response.json()
             return return_response(final_response_res, is_list)
+            
