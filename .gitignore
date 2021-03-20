@@ -1,4 +1,4 @@
 .DS_Store
 __pycache__
-config_.json
-storage_.json
+config.json
+storage.json

@@ -69,7 +69,6 @@ def fetch_items_specs(input_items):
         except KeyError:
             # 3. If item is not ART nor SPR it means there's no such item. Deleting such items
             errors = repaired_response_res['ErrorList']['Error']
-            # print(errors)
             if not type(errors) is list:
                 errors = [errors]
             for err in errors:

@@ -1,9 +1,9 @@
 import re
 import json
 import requests
+import auth
 
 CONFIG = json.loads(open('config.json', 'r').read())
-STORAGE = json.loads(open('storage.json', 'r').read())
 
 HEADERS = {
     'Accept-Encoding': 'gzip, deflate, br',
@@ -18,7 +18,28 @@ class Cart:
     """
     Can show, clear a cart, add or delete items, get delivery options.
     """
-    def __init__(self, token):
+    def __init__(self, use_authorized_token=False):
+        with open('storage.json', 'r+') as file:
+            try:
+                storage = json.loads(file.read())
+            except json.decoder.JSONDecodeError:
+                storage = {'guest_token': '', 'authorized_token': ''}
+            if use_authorized_token:
+                if not storage['authorized_token']:
+                    storage['authorized_token'] = auth.login()
+                    file.seek(0)
+                    file.truncate()
+                    json.dump(storage, file)
+                token = storage['authorized_token']
+            else:
+                if not storage['guest_token']:
+                    print('fetching new')
+                    storage['guest_token'] = auth.fetch_guest_token()
+                    file.seek(0)
+                    file.truncate()
+                    json.dump(storage, file)
+                token = storage['guest_token']
+
         self.token = token
         self.endpoint = 'https://cart.oneweb.ingka.com/graphql'
         self.headers = HEADERS

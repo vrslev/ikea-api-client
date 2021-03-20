@@ -8,54 +8,9 @@ import requests
 from bs4 import BeautifulSoup
 
 CONFIG_DESTINATION = 'config.json'
-STORAGE_DESTINATION = 'storage.json'
-
 CONFIG = json.loads(open(CONFIG_DESTINATION, 'r').read())
 
-def get_guest_token():
-    """Get token to add items to cart etc. No credentials needed."""
-    with open(STORAGE_DESTINATION, 'a+') as file:
-        try:
-            storage = json.load(file)
-            token = storage['guest_token']
-            if not token:
-                token = _fetch_new_guest_token()
-                storage['guest_token'] = token
-                file.seek(0)
-                file.truncate()
-                json.dump(storage, file)
-        except json.decoder.JSONDecodeError:
-            token = _fetch_new_guest_token()
-            storage = {
-                "guest_token": token,
-                "authorized_token": ""
-            }
-            file.seek(0)
-            file.truncate()
-            json.dump(storage, file)
-    return token
-
-def get_new_guest_token(): # TODO: Real refresh token
-    """Technically it just fetches new token and puts it into the storage."""
-    token = _fetch_new_guest_token()
-    with open(STORAGE_DESTINATION, 'a+') as file:
-        try:
-            storage = json.load(file)
-            storage['guest_token'] = token
-            file.seek(0)
-            file.truncate()
-            json.dump(storage, file)
-        except json.decoder.JSONDecodeError:
-            storage = {
-                "guest_token": token,
-                "authorized_token": ""
-            }
-            file.seek(0)
-            file.truncate()
-            json.dump(storage, file)
-    return token
-
-def _fetch_new_guest_token():
+def fetch_guest_token():
     url = 'https://api.ingka.ikea.com/guest/token'
     headers = {
         'Accept-Encoding': 'gzip, deflate, br',
