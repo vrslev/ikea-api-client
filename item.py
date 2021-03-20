@@ -15,7 +15,7 @@ def return_response(response, is_list):
     else:
         return [response['RetailItemComm']]
 
-def fetch_items_specs(input_items):
+def _fetch_items_specs(input_items):
     headers = {
     'Accept': 'application/vnd.ikea.iows+json;version=2.0',
     'Origin': 'https://www.ikea.com',
@@ -82,3 +82,11 @@ def fetch_items_specs(input_items):
             final_response_res = final_response.json()
             return return_response(final_response_res, is_list)
             
+def fetch_items_specs(input_items):
+    input_items = list(set(input_items))
+    chunks = [input_items[x:x+90] for x in range(0, len(input_items), 90)]
+    responses = []
+    for chunk in chunks:
+        response = _fetch_items_specs(chunk)
+        responses += response
+    return responses
