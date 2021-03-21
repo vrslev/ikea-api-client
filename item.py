@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 
 ITEMS_ENDPOINT = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
 
