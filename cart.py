@@ -215,6 +215,7 @@ class Cart:
         response = requests.post(self.endpoint, headers=self.headers, json=data)
         return response.json()
 
+    # Check if item is valid
     def add_items(self, items):
         items_templated = []
         for item in items:
@@ -241,7 +242,7 @@ class Cart:
         return response.json()
 
 
-    def fetch_delivery_options(self):
+    def get_delivery_options(self):
         zip_code = CONFIG['zip_code']
         if not zip_code:
             raise Exception('Add zip code in config.json')
@@ -258,10 +259,11 @@ class Cart:
             data = {'shoppingType':'ONLINE','channel':'WEBAPP','checkoutType':'STANDARD',
             'languageCode':'ru','preferredServiceType':None,'requestedServiceTypes':None}
             response = requests.post(endpoint, headers=headers, json=data, verify=False)
+            response_json = response.json()
             try:
-                return response.json()['resourceId']
+                return response_json['resourceId']
             except KeyError as exc:
-                raise Exception('Cart is empty') from exc
+                raise Exception(response_json['message']) from exc
 
         def get_delivery_area(checkout):
             url = '%s/%s/delivery-areas' % (endpoint, checkout)
@@ -277,47 +279,3 @@ class Cart:
             return response.json()
 
         return get_delivery_services()
-
-    def parse_delivery_options(self, options):
-        parsed_options = []
-        for option in options:
-            try:
-                price = option['servicePrice']['amount']
-                price = int(re.search(r'(\d+)(.00)?', price)[1])
-                date_info = option['deliveries'][0]['selectedTimeWindow']
-                from_date_time = date_info['fromDateTime']
-                to_date_time = date_info['fromDateTime']
-            except TypeError as exc:
-                try:
-                    raise Exception(options['message']) from exc
-                except TypeError as exc:
-                    raise Exception(option['errorMessage']['errorDescription']) from exc
-
-            try:
-                unavailable_items = []
-                for item in option['unavailableItems']:
-                    unavailable_items.append({
-                        'item_no': item['itemNo'],
-                        'is_combination': item['type'] != 'ART',
-                        'required_qty': item['requiredQuantity'],
-                        'available_qty': item['availableQuantity']
-                    })
-            except TypeError:
-                unavailable_items = []
-            parsed_option = {
-                'delivery_id': option['id'],
-                'type': option['fulfillmentMethodType'],
-                'service_type': option['servicetype'],
-                'from_date_time': from_date_time,
-                'to_date_time': to_date_time,
-                'price': price,
-                'unavailable_items': unavailable_items
-            }
-            parsed_options.append(parsed_option)
-        return parsed_options
-
-    def get_delivery_options(self):
-        src = self.fetch_delivery_options()
-        res = self.parse_delivery_options(src)
-        return res
-        
