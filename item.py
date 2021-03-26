@@ -64,7 +64,7 @@ def _fetch_items_specs(input_items):
 
     try:
         return return_response(response_res, is_list)
-    except (KeyError, json.decoder.JSONDecodeError):
+    except KeyError:
         # 2. If error than some items are SPRs. Finding out which ones
         errors = response_res['ErrorList']['Error']
         if type(errors) is not list:
