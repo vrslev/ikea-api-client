@@ -7,19 +7,7 @@ import requests
 import hashlib
 from bs4 import BeautifulSoup
 
-def read_config():
-    file_name = 'config.json'
-    try:
-        open(file_name, 'x')
-    except FileExistsError:
-        pass
-    with open(file_name, 'r+') as f:
-        try:
-            return json.load(f)
-        except json.decoder.JSONDecodeError:
-            json.dump({"username": "", "password": "", "zip_code": ""}, f)
-
-CONFIG = read_config()
+# TODO: Headers are too complicated
 BASE_HEADERS = {
     'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'ru',
@@ -28,6 +16,7 @@ BASE_HEADERS = {
     'Origin': 'https://www.ikea.com',
     'Referer': 'https://www.ikea.com/'
 }
+
 
 def get_guest_token():
     url = 'https://api.ingka.ikea.com/guest/token'
@@ -41,28 +30,25 @@ def get_guest_token():
     token = response.json()['access_token']
     return token
 
+
 def create_s256_code_challenge(code_verifier):
     """
     https://github.com/lepture/authlib
     Create S256 code_challenge with the given code_verifier.
     """
-    data = hashlib.sha256(bytes(code_verifier.encode('ascii', 'strict'))).digest()
+    data = hashlib.sha256(
+        bytes(code_verifier.encode('ascii', 'strict'))).digest()
     return base64.urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
+
 
 def generate_token():
     """https://github.com/lepture/authlib"""
     rand = random.SystemRandom()
     return ''.join(rand.choice(string.ascii_letters + string.digits) for _ in range(48))
 
-def get_authorized_token():
-    """
-    OAuth2 authorization
-    """
-    username = CONFIG['username']
-    password = CONFIG['password']
-    if not username and not password:
-        raise Exception('Add username and password in config.json')
 
+def get_authorized_token(username, password):
+    """OAuth2 authorization"""
     session = requests.Session()
     headers = {
         'User-Agent': BASE_HEADERS['User-Agent']
@@ -84,8 +70,10 @@ def get_authorized_token():
         + '&state=' + state + '&auth0Client=eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS4xNC4zIn0%3D'
     authorize_headers = headers
     authorize_headers['Accept']: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8.'
-    authorize_response = session.get(authorize_endpoint, headers=authorize_headers)
-    encoded_session_config = BeautifulSoup(authorize_response.text, 'html.parser').find('script', id='a0-config').get('data-config')
+    authorize_response = session.get(
+        authorize_endpoint, headers=authorize_headers)
+    encoded_session_config = BeautifulSoup(authorize_response.text, 'html.parser').find(
+        'script', id='a0-config').get('data-config')
     session_config = json.loads(base64.b64decode(encoded_session_config))
     # 2. /usernamepassword/login    Log in system
     usrpwd_login_endpoint = 'https://ru.accounts.ikea.com/usernamepassword/login'
@@ -112,14 +100,15 @@ def get_authorized_token():
         'Accept-Language': 'en-us',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8.'
     })
-    usrpwd_login_result = session.post(usrpwd_login_endpoint, headers=usrpwd_login_headers, json=usrpwd_login_payload)
+    usrpwd_login_result = session.post(
+        usrpwd_login_endpoint, headers=usrpwd_login_headers, json=usrpwd_login_payload)
     if not usrpwd_login_result.ok:
         raise Exception(usrpwd_login_result.json())
 
     # 3. /login/callback    Get code parameter from callback
     soup = BeautifulSoup(usrpwd_login_result.text, 'html.parser')
-    wctx = soup.find('input', {'name':'wctx'}).get('value')
-    wresult = soup.find('input', {'name':'wresult'}).get('value')
+    wctx = soup.find('input', {'name': 'wctx'}).get('value')
+    wresult = soup.find('input', {'name': 'wresult'}).get('value')
 
     login_callback_endpoint = 'https://ru.accounts.ikea.com/login/callback'
     login_callback_headers = headers
@@ -131,8 +120,10 @@ def get_authorized_token():
         'Referer': usrpwd_login_result.url,
         'Accept-Language': 'en-us'
     })
-    login_callback_payload = 'wa=wsignin1.0&wresult=%s&wctx=%s' % (wresult, wctx)
-    login_callback_response = session.post(login_callback_endpoint, headers=login_callback_headers, data=login_callback_payload)
+    login_callback_payload = 'wa=wsignin1.0&wresult=%s&wctx=%s' % (
+        wresult, wctx)
+    login_callback_response = session.post(
+        login_callback_endpoint, headers=login_callback_headers, data=login_callback_payload)
 
     # 4. /oauth/token   Get access token
     oauth_token_enpoint = 'https://ru.accounts.ikea.com/oauth/token'
@@ -161,36 +152,13 @@ def get_authorized_token():
     token = oauth_token_response.json()['access_token']
     return token
 
+
 class Cart:
     """
     Can show, clear a cart, add or delete items, get delivery options.
     """
-    def __init__(self, use_authorized_token=False):
-        file_name = 'storage.json'
-        try:
-            open(file_name, 'x')
-        except FileExistsError:
-            pass
-        with open(file_name, 'r+') as f:
-            try:
-                storage = json.load(f)
-            except json.decoder.JSONDecodeError:
-                storage = {'guest_token': '', 'authorized_token': ''}
-            if use_authorized_token:
-                if not storage['authorized_token']:
-                    storage['authorized_token'] = get_authorized_token()
-                    f.seek(0)
-                    f.truncate()
-                    json.dump(storage, f)   
-                token = storage['authorized_token']
-            else:
-                if not storage['guest_token']:
-                    storage['guest_token'] = get_guest_token()
-                    f.seek(0)
-                    f.truncate()
-                    json.dump(storage, f)
-                token = storage['guest_token']
 
+    def __init__(self, token):
         self.token = token
         self.endpoint = 'https://cart.oneweb.ingka.com/graphql'
         self.headers = BASE_HEADERS
@@ -203,50 +171,52 @@ class Cart:
 
     def show(self):
         data = {'query': '\n  query Cart(\n    $languageCode: String\n    ) '
-                + '{\n    cart(languageCode: $languageCode) ' + self.cart_graphql_props,
+                + '{\n    cart(languageCode: $languageCode) ' +
+                self.cart_graphql_props,
                 'variables': {'languageCode': 'ru'}}
-        response = requests.post(self.endpoint, headers=self.headers, json=data)
+        response = requests.post(
+            self.endpoint, headers=self.headers, json=data)
         return response.json()
 
     def clear(self):
-        data = {'query':'\n  mutation ClearItems(\n    $languageCode: String\n  ) '
-                + '{\n    clearItems(languageCode: $languageCode) ' + self.cart_graphql_props,
+        data = {'query': '\n  mutation ClearItems(\n    $languageCode: String\n  ) '
+                + '{\n    clearItems(languageCode: $languageCode) ' +
+                self.cart_graphql_props,
                 'variables': {'languageCode': 'ru'}}
-        response = requests.post(self.endpoint, headers=self.headers, json=data)
+        response = requests.post(
+            self.endpoint, headers=self.headers, json=data)
         return response.json()
 
-    # Check if item is valid
+    # TODO: Check if item is valid
     def add_items(self, items):
         items_templated = []
         for item in items:
-            items_templated.append('{itemNo: "%s", quantity: %d}' % (item, items[item]))
-        data = {'query':'mutation {addItems(items: ['
-        + ', '.join(items_templated) + ']) {quantity}}'}
-        response = requests.post(self.endpoint, headers=self.headers, json=data)
+            items_templated.append(
+                '{itemNo: "%s", quantity: %d}' % (item, items[item]))
+        data = {'query': 'mutation {addItems(items: ['
+                + ', '.join(items_templated) + ']) {quantity}}'}
+        response = requests.post(
+            self.endpoint, headers=self.headers, json=data)
         return response.json()
 
     def delete_items(self, items):
-        # Required format of items:
-        # 'item_no': quantity
+        # Required items list format:
+        # [{'item_no': quantity}, {...}]
         items_str = []
         for item in items:
             items_str.append(str(item))
-        data = {'query': '\n  mutation RemoveItems(\n    $itemNos: [ID!]!\n    $languageCode: ' \
+        data = {'query': '\n  mutation RemoveItems(\n    $itemNos: [ID!]!\n    $languageCode: '
                 + 'String\n  ){\n    removeItems(itemNos: $itemNos, languageCode: $languageCode) '
                 + self.cart_graphql_props,
                 'variables': {
                     'itemNos': items,
                     'languageCode': 'ru'
                 }}
-        response = requests.post(self.endpoint, headers=self.headers, json=data)
+        response = requests.post(
+            self.endpoint, headers=self.headers, json=data)
         return response.json()
 
-
-    def get_delivery_options(self):
-        zip_code = CONFIG['zip_code']
-        if not zip_code:
-            raise Exception('Add zip code in config.json')
-
+    def get_delivery_options(self, zip_code):
         endpoint = 'https://ordercapture.ikea.ru/ordercaptureapi/ru/checkouts'
         headers = BASE_HEADERS
         headers.update({
@@ -255,10 +225,12 @@ class Cart:
             'Host': 'ordercapture.ikea.ru',
             'X-Client-Id': 'af2525c3-1779-49be-8d7d-adf32cac1934'
         })
+
         def get_checkout():
-            data = {'shoppingType':'ONLINE','channel':'WEBAPP','checkoutType':'STANDARD',
-            'languageCode':'ru','preferredServiceType':None,'requestedServiceTypes':None}
-            response = requests.post(endpoint, headers=headers, json=data, verify=False)
+            data = {'shoppingType': 'ONLINE', 'channel': 'WEBAPP', 'checkoutType': 'STANDARD',
+                    'languageCode': 'ru', 'preferredServiceType': None, 'requestedServiceTypes': None}
+            response = requests.post(
+                endpoint, headers=headers, json=data, verify=False)
             response_json = response.json()
             try:
                 return response_json['resourceId']
@@ -267,15 +239,46 @@ class Cart:
 
         def get_delivery_area(checkout):
             url = '%s/%s/delivery-areas' % (endpoint, checkout)
-            data = {'zipCode': CONFIG['zip_code'], 'enableRangeOfDays': False}
-            response = requests.post(url, headers=headers, json=data, verify=False)
+            data = {'zipCode': zip_code, 'enableRangeOfDays': False}
+            response = requests.post(
+                url, headers=headers, json=data, verify=False)
             return response.json()['resourceId']
 
         def get_delivery_services():
             checkout = get_checkout()
             delivery_area = get_delivery_area(checkout)
-            url = '%s/%s/delivery-areas/%s/delivery-services' % (endpoint, checkout, delivery_area)
+            url = '%s/%s/delivery-areas/%s/delivery-services' % (
+                endpoint, checkout, delivery_area)
             response = requests.get(url, headers=headers, verify=False)
             return response.json()
 
         return get_delivery_services()
+
+
+class Profile:
+    def __init__(self, token):
+        self.token = token
+        self.endpoint = "https://purchase-history.ocp.ingka.ikea.com/graphql"
+        self.headers = BASE_HEADERS
+        self.headers.update({
+            'Origin': 'https://order.ikea.com',
+            'Referer': 'https://order.ikea.com/ru/ru/purchases/',
+            'Accept-Language': 'ru-ru',
+            'Authorization': 'Bearer ' + self.token
+        })
+
+    def purchase_history(self):
+        payload = [{
+            "operationName": "Authenticated",
+            "variables": {},
+            "query": "query Authenticated {\n  authenticated\n}\n"
+        },
+            {
+            "operationName": "History",
+            "variables": {"take": 5, "skip": 0},
+            "query": "query History($skip: Int!, $take: Int!) {\n  history(skip: $skip, take: $take) {\n    id\n    dateAndTime {\n      ...DateAndTime\n      __typename\n    }\n    status\n    storeName\n    totalCost {\n      code\n      value\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment DateAndTime on DateAndTime {\n  time\n  date\n  formattedLocal\n  formattedShortDate\n  formattedLongDate\n  formattedShortDateTime\n  formattedLongDateTime\n  __typename\n}\n"
+        }
+        ]
+        response = requests.post(
+            self.endpoint, headers=self.headers, json=payload)
+        return response.json()

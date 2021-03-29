@@ -60,7 +60,6 @@ def _fetch_items_specs(input_items):
                 raise ValueError('Wrong item code')
             else:
                 response_res = response.json()
-                
 
     try:
         return return_response(response_res, is_list)
