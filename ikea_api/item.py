@@ -1,17 +1,15 @@
 import json
 import requests
 
-ITEMS_ENDPOINT = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
-
-
-def build_url(items):
+def _build_url(items):
+    endpoint = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
     templated_list = []
     for item in items:
         templated_list.append('{0},{1}'.format(items[item], item))
-    return ITEMS_ENDPOINT + ';'.join(templated_list)
+    return endpoint + ';'.join(templated_list)
 
 
-def return_response(response, is_list):
+def _return_response(response, is_list):
     if is_list:
         return response['RetailItemCommList']['RetailItemComm']
     else:
@@ -45,7 +43,7 @@ def _fetch_items_specs(input_items):
         items[item] = 'ART'
 
     # 1. Get data, catch errors
-    url = build_url(items)
+    url = _build_url(items)
     response = session.get(url, headers=headers)
     if response.status_code != 404:
         response_res = response.json()
@@ -54,7 +52,7 @@ def _fetch_items_specs(input_items):
         # then it's probably SPR
         if len(items) == 1:
             items[item] = 'SPR'
-            url = build_url(items)
+            url = _build_url(items)
             response = session.get(url, headers=headers)
             if response.status_code == 404:
                 raise ValueError('Wrong item code')
@@ -62,7 +60,7 @@ def _fetch_items_specs(input_items):
                 response_res = response.json()
 
     try:
-        return return_response(response_res, is_list)
+        return _return_response(response_res, is_list)
     except KeyError:
         # 2. If error than some items are SPRs. Finding out which ones
         errors = response_res['ErrorList']['Error']
@@ -73,13 +71,13 @@ def _fetch_items_specs(input_items):
                             ['ErrorAttribute'][0]['Value']['$'])
             item_type = error['ErrorAttributeList']['ErrorAttribute'][1]['Value']['$']
             items[item_code] = 'SPR' if item_type == 'ART' else 'ART'
-        repaired_url = build_url(items)
+        repaired_url = _build_url(items)
         repaired_response = session.get(repaired_url, headers=headers)
 
         repaired_response_res = repaired_response.json()
 
         try:
-            return return_response(repaired_response_res, is_list)
+            return _return_response(repaired_response_res, is_list)
         except KeyError:
             # 3. If item is not ART nor SPR it means there's no such item. Deleting such items
             errors = repaired_response_res['ErrorList']['Error']
@@ -92,10 +90,10 @@ def _fetch_items_specs(input_items):
                 items.pop(item_code)
             if len(items) == 1:
                 is_list = False
-            final_url = build_url(items)
+            final_url = _build_url(items)
             final_response = session.get(final_url, headers=headers)
             final_response_res = final_response.json()
-            return return_response(final_response_res, is_list)
+            return _return_response(final_response_res, is_list)
 
 
 def fetch_items_specs(input_items):
