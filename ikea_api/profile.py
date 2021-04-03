@@ -1,24 +1,28 @@
-import requests
-
+from requests import Session
 from .constants import Constants
+from .utils import call_api as _utils_call_api
 
 
 class Profile:
     def __init__(self, token):
-        self.token = token
         self.endpoint = "https://purchase-history.ocp.ingka.ikea.com/graphql"
-        self.headers = {
-            'Origin': 'https://order.ikea.com',
-            'Accept-Language': 'ru-ru',
+        self.base_referer = 'https://order.ikea.com/ru/ru/purchases/'
+        self.session = Session()
+        self.session.headers.update({
+            'Accept': '*/*',
             'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'ru-ru',
+            'Origin': 'https://order.ikea.com',
             'Connection': 'keep-alive',
             'User-Agent': Constants.USER_AGENT,
-            'Authorization': 'Bearer ' + self.token
-        }
+            'Authorization': 'Bearer ' + token
+        })
+
+    def _call_api(self, data, headers=None):
+        return _utils_call_api(self, data)
 
     def purchase_history(self):
-        headers = self.headers
-        headers['Referer'] = 'https://order.ikea.com/ru/ru/purchases/'
+        headers = {'Referer': self.base_referer}
         payload = {
             "operationName": "History",
             "variables": {
@@ -27,16 +31,10 @@ class Profile:
             },
             "query": "query History($skip: Int!, $take: Int!) {\n  history(skip: $skip, take: $take) {\n    id\n    dateAndTime {\n      ...DateAndTime\n      __typename\n    }\n    status\n    storeName\n    totalCost {\n      code\n      value\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment DateAndTime on DateAndTime {\n  time\n  date\n  formattedLocal\n  formattedShortDate\n  formattedLongDate\n  formattedShortDateTime\n  formattedLongDateTime\n  __typename\n}\n"
         }
-        response = requests.post(
-            self.endpoint, headers=headers, json=payload)
-        return response.json()
+        return self._call_api(payload, headers)
 
     def purchase_info(self, purchase_id):
-        headers = self.headers
-        headers.update({
-            'Accept': '*/*',  # TODO: Check if this header in purchase history too
-            'Referer': 'https://order.ikea.com/ru/ru/purchases/{}/'.format(purchase_id)
-        })
+        headers = {'Referer': '{}/{}/'.format(self.base_referer, purchase_id)}
         payload = [
             {
                 "operationName": "StatusBannerOrder",
@@ -55,5 +53,4 @@ class Profile:
                 "query": "query CostsOrder($orderNumber: String!, $liteId: String) {\n  order(orderNumber: $orderNumber, liteId: $liteId) {\n    id\n    costs {\n      ...Costs\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment Costs on Costs {\n  total {\n    ...Money\n    __typename\n  }\n  delivery {\n    ...Money\n    __typename\n  }\n  service {\n    ...Money\n    __typename\n  }\n  discount {\n    ...Money\n    __typename\n  }\n  sub {\n    ...Money\n    __typename\n  }\n  tax {\n    ...Money\n    __typename\n  }\n  taxRates {\n    ...TaxRate\n    __typename\n  }\n  __typename\n}\n\nfragment Money on Money {\n  code\n  value\n  __typename\n}\n\nfragment TaxRate on TaxRate {\n  percentage\n  name\n  amount {\n    ...Money\n    __typename\n  }\n  __typename\n}\n"
             }
         ]
-        response = requests.post(self.endpoint, headers=headers, json=payload)
-        return response.json()
+        return self._call_api(payload, headers)
