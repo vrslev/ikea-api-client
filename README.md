@@ -12,14 +12,3 @@ Note that all requests are made for Russian IKEA website. In future I'll add opp
 
 ### Profile
 - show purchase history
-
-## Usage example
-```python
-from api import get_authorized_token, Cart
-
-token = get_authorized_token(username='username', password='password')
-cart = Cart(token)
-cart.add_items({'30457903': 1})
-deliveries = cart.get_delivery_options('your_zip_code')
-print(deliveries)
-```
