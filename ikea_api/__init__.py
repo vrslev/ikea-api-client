@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from .auth import Auth
+from .auth import Auth, get_guest_token
 from .cart import Cart
-from .constants import Constants
-from .item import fetch_items_specs
 from .profile import Profile
+from .order_capture import OrderCapture
+from .item import fetch_items_specs
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'

@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 def _build_url(items):
     endpoint = 'https://iows.ikea.com/retail/iows/ru/ru/catalog/items/'
     templated_list = []

@@ -1,7 +1,6 @@
-from ikea_api.auth import Auth
-from ikea_api.cart import Cart
+from ikea_api import get_guest_token, Cart
 
-token = Auth().get_authorized_token(username='username', password='password')
+token = get_guest_token()
 cart = Cart(token)
 cart.add_items({'30457903': 1})
 deliveries = cart.get_delivery_options('your_zip_code')
