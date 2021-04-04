@@ -1,4 +1,5 @@
 from .errors import TokenExpiredError, NotAuthenticatedError
+import re
 
 
 def check_response(response):
@@ -27,3 +28,13 @@ def call_api(self, data):
             raise NotAuthenticatedError(response_json['error'])
     check_response(response)
     return response_json
+
+
+def parse_item_code(item_code):
+    found = re.search(
+        r'\d{3}[,.-]{0,2}\d{3}[,.-]{0,2}\d{2}', str(item_code))
+    try:
+        clean = re.sub(r'[^0-9]+', '', found[0])
+    except TypeError:
+        clean = None
+    return clean

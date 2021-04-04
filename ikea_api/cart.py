@@ -2,7 +2,8 @@ from requests import Session
 from bs4 import BeautifulSoup
 
 from .constants import Constants
-from .utils import call_api as _utils_call_api
+from .utils import call_api as _utils_call_api, parse_item_code
+from .errors import WrongItemCodeError
 
 
 class Cart:
@@ -29,6 +30,7 @@ class Cart:
         return _utils_call_api(self, data)
 
     def show(self):
+        """Show items in cart"""
         data = {'query': '\n  query Cart(\n    $languageCode: String\n    ) '
                 + '{\n    cart(languageCode: $languageCode) ' +
                 self.cart_graphql_props,
@@ -36,27 +38,41 @@ class Cart:
         return self._call_api(data)
 
     def clear(self):
+        """Delete all items from cart"""
         data = {'query': '\n  mutation ClearItems(\n    $languageCode: String\n  ) '
                 + '{\n    clearItems(languageCode: $languageCode) ' +
                 self.cart_graphql_props,
                 'variables': {'languageCode': 'ru'}}
         return self._call_api(data)
 
-    # TODO: Check if item is valid
     def add_items(self, items):
+        """
+        Add items to cart.
+        Required items list format: [{'item_no': quantity}, {...}]
+        """
         items_templated = []
         for item in items:
-            items_templated.append(
-                '{itemNo: "%s", quantity: %d}' % (item, items[item]))
+            item = parse_item_code(item)
+            if item is not None:
+                items_templated.append(
+                    '{itemNo: "%s", quantity: %d}' % (item, items[item]))
         data = {'query': 'mutation {addItems(items: ['
                 + ', '.join(items_templated) + ']) {quantity}}'}
-        return self._call_api(data)
+        response = self._call_api(data)
+        try:
+            if response['errors'][0]['extensions']['code'] == 'INVALID_ITEM_NUMBER' and response['errors'][0]['extensions']['data']['itemNos']:
+                raise WrongItemCodeError(
+                    response['errors'][0]['extensions']['data']['itemNos'])
+        except KeyError:
+            return response
 
     def delete_items(self, items):
-        # Required items list format: [{'item_no': quantity}, {...}]
+        """Delete items from cart"""
         items_str = []
         for item in items:
-            items_str.append(str(item))
+            item = parse_item_code(item)
+            if item is not None:
+                items_str.append(item)
         data = {'query': '\n  mutation RemoveItems(\n    $itemNos: [ID!]!\n    $languageCode: '
                 + 'String\n  ){\n    removeItems(itemNos: $itemNos, languageCode: $languageCode) ' +
                 self.cart_graphql_props,

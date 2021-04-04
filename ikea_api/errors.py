@@ -4,3 +4,6 @@ class TokenExpiredError(Exception):
 
 class NotAuthenticatedError(Exception):
     pass
+
+class WrongItemCodeError(Exception):
+    pass
