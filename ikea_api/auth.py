@@ -16,8 +16,9 @@ def get_guest_token():
     """Token expires in 30 days"""
     url = 'https://api.ingka.ikea.com/guest/token'
     headers = {
-        'Accept-Encoding': Constants.ACCEPT_ENCODING,
-        'Accept-Language': 'ru',
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-us',
         'Origin': 'https://www.ikea.com',
         'Referer': 'https://www.ikea.com/',
         'Connection': 'keep-alive',
@@ -42,8 +43,7 @@ class Auth:
         self.session = Session()
         self.session.headers.update({
             'Accept-Language': 'en-us',
-            'Accept-Encoding': Constants.ACCEPT_ENCODING,
-            'Origin': 'https://www.ikea.com',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
             'User-Agent': Constants.USER_AGENT
         })
@@ -93,7 +93,7 @@ class Auth:
         }
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8.',
-            'Referer': 'https://www.ikea.com/'
+            'Referer': 'https://www.ikea.com/ru/ru/profile/login/'
         }
         response = self.session.get(
             endpoint, params=params, headers=headers)
@@ -111,23 +111,24 @@ class Auth:
         """
         endpoint = 'https://ru.accounts.ikea.com/usernamepassword/login'
         payload = {
-            'client_id': session_config['clientID'],
-            'redirect_uri': session_config['callbackURL'],
-            'tenant': session_config['auth0Tenant'],
+            'state': session_config['extraParams']['state'],
+            '_csrf': session_config['extraParams']['_csrf'],
             'response_type': session_config['extraParams']['response_type'],
             'scope': session_config['extraParams']['scope'],
             'audience': session_config['extraParams']['audience'],
-            '_csrf': session_config['extraParams']['_csrf'],
-            'state': session_config['extraParams']['state'],
-            '_intstate': session_config['extraParams']['_intstate'],
-            'username': usr,
+            'tenant': session_config['auth0Tenant'],
             'password': pwd,
+            'redirect_uri': session_config['callbackURL'],
+            '_intstate': session_config['extraParams']['_intstate'],
+            'client_id': session_config['clientID'],
+            'username': usr,
             'connection': 'Username-Password-Authentication'
         }
         headers = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8.',
+            'Accept': '*/*',
             'Referer': authorize_final_url,
             'Auth0-Client': session_config['extraParams']['auth0Client'],
+            'Origin': 'https://ru.accounts.ikea.com'
         }
         response = self.session.post(
             endpoint, headers=headers, json=payload)
@@ -145,6 +146,7 @@ class Auth:
         """
         endpoint = 'https://ru.accounts.ikea.com/login/callback'
         headers = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Origin': 'https://ru.accounts.ikea.com',
             'Referer': usernamepassword_login_final_url
         }
@@ -168,15 +170,16 @@ class Auth:
         endpoint = 'https://ru.accounts.ikea.com/oauth/token'
         headers = {
             'Accept': '*/*',
-            'Referer': callback_final_url
+            'Referer': callback_final_url,
+            'Origin': 'https://www.ikea.com'
         }
         payload = {
-            'grant_type': 'authorization_code',
             'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
             'code_verifier': self.code_verifier,
             'code': callback_code,
             'redirect_uri': 'https://www.ikea.com/ru/ru/profile/login/',
-            'scope': 'openid profile email'
+            'scope': 'openid profile email',
+            'grant_type': 'authorization_code'
         }
         response = self.session.post(endpoint, headers=headers, json=payload)
         check_response(response)
