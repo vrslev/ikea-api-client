@@ -9,7 +9,7 @@ from requests import Session, post
 from bs4 import BeautifulSoup
 
 from .api import USER_AGENT
-from .utils import check_response
+from .utils import check_response, get_config_values, get_client_id_from_login_page
 from .errors import (
     InvalidRetailUnitError,
     UnauthorizedError,
@@ -31,7 +31,7 @@ def get_guest_token():
         'X-Client-Id': 'e026b58d-dd69-425f-a67f-1e9a5087b87b',
         'X-Client-Secret': 'cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB'
     }
-    payload = {'retailUnit': 'ru'}
+    payload = {'retailUnit': get_config_values()[0]}
     response = post(url, headers=headers, json=payload)
     if response.text == 'Invalid retail unit.':
         raise InvalidRetailUnitError
@@ -40,6 +40,22 @@ def get_guest_token():
     check_response(response)
     token = response.json()['access_token']
     return token
+
+
+def generate_token():
+    """https://github.com/lepture/authlib"""
+    rand = SystemRandom()
+    return ''.join(rand.choice(ascii_letters + digits) for _ in range(48))
+
+
+def create_s256_code_challenge(code_verifier):
+    """
+    https://github.com/lepture/authlib
+    Create S256 code_challenge with the given code_verifier.
+    """
+    data = sha256(
+        bytes(code_verifier.encode('ascii', 'strict'))).digest()
+    return urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
 
 
 class Auth:
@@ -56,69 +72,73 @@ class Auth:
             'Connection': 'keep-alive',
             'User-Agent': USER_AGENT
         })
-        auth0_authorize = self._auth0_authorize()
+        config = get_config_values()
+        self.country_code = config[0]
+        self.language_code = config[1]
+        self.client_id = config[2]
+        try:
+            auth0_authorize = self._auth0_authorize()
+        except AttributeError:
+            self.client_id = get_client_id_from_login_page(
+                self.country_code, self.language_code)
+            auth0_authorize = self._auth0_authorize()
         usernamepassword_login = self._usernamepassword_login(
-            username, password, auth0_authorize['session_config'], auth0_authorize['url'])
-        login_callback = self._login_callback(
-            usernamepassword_login['wctx'], usernamepassword_login['wresult'], usernamepassword_login['url'])
-        oauth_token = self._oauth_token(
-            login_callback['code'], login_callback['url'])
+            username, password, **auth0_authorize)
+        login_callback = self._login_callback(**usernamepassword_login)
+        oauth_token = self._oauth_token(**login_callback)
         self.token = oauth_token
-
-    def _create_s256_code_challenge(self, code_verifier):
-        """
-        https://github.com/lepture/authlib
-        Create S256 code_challenge with the given code_verifier.
-        """
-        data = sha256(
-            bytes(code_verifier.encode('ascii', 'strict'))).digest()
-        return urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
-
-    def _generate_token(self):
-        """https://github.com/lepture/authlib"""
-        rand = SystemRandom()
-        return ''.join(rand.choice(ascii_letters + digits) for _ in range(48))
 
     def _auth0_authorize(self):
         """
         1. /autorize
         Get Auth0 config
         """
-        self.code_verifier = self._generate_token()
-        endpoint = 'https://ru.accounts.ikea.com/authorize'
+        # def authorize():
+        self.code_verifier = generate_token()
+        endpoint = 'https://{}.accounts.ikea.com/authorize'.format(
+            self.country_code)
+        self.main_url = 'https://www.ikea.com/{}/{}/profile/login/'.format(
+            self.country_code, self.language_code)
         params = {
-            'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
-            'redirect_uri': 'https://www.ikea.com/ru/ru/profile/login/',
+            'client_id': self.client_id,
+            'redirect_uri': self.main_url,
             'response_type': 'code',
-            'ui_locales': 'ru-RU',
-            'code_chalenge': self._create_s256_code_challenge(self.code_verifier),
+            'ui_locales': '{}-{}'.format(self.language_code, self.country_code.upper()),
+            'code_chalenge': create_s256_code_challenge(self.code_verifier),
             'code_chalenge_method': 'S256',
             'scope': 'openid profile email',
             'audience': 'https://retail.api.ikea.com',
             'registration': '{"bveventid":null}',
             'consumer': 'OWF',
-            'state': self._generate_token(),
+            'state': generate_token(),
             'auth0Client': 'eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS4xNC4zIn0='
         }
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8.',
-            'Referer': 'https://www.ikea.com/ru/ru/profile/login/'
+            'Referer': self.main_url
         }
         response = self.session.get(
             endpoint, params=params, headers=headers)
         check_response(response)
 
+        BeautifulSoup(response.text, 'html.parser').find(
+            'script', id='a0-config')
         encoded_config = BeautifulSoup(response.text, 'html.parser').find(
             'script', id='a0-config').get('data-config')
         session_config = loads(b64decode(encoded_config))
-        return {'session_config': session_config, 'url': response.url}
+        return {
+            'session_config': session_config,
+            'authorize_final_url': response.url
+        }
 
     def _usernamepassword_login(self, usr, pwd, session_config, authorize_final_url):
         """
         2. /usernamepassword/login
         Log in and get wctx and wresult params
         """
-        endpoint = 'https://ru.accounts.ikea.com/usernamepassword/login'
+        base_url = 'https://{}.accounts.ikea.com'.format(
+            self.country_code.lower())
+        endpoint = '{}/usernamepassword/login'.format(base_url)
         payload = {
             'state': session_config['extraParams']['state'],
             '_csrf': session_config['extraParams']['_csrf'],
@@ -137,7 +157,7 @@ class Auth:
             'Accept': '*/*',
             'Referer': authorize_final_url,
             'Auth0-Client': session_config['extraParams']['auth0Client'],
-            'Origin': 'https://ru.accounts.ikea.com'
+            'Origin': base_url
         }
         response = self.session.post(
             endpoint, headers=headers, json=payload)
@@ -152,17 +172,22 @@ class Auth:
         soup = BeautifulSoup(response.text, 'html.parser')
         wctx = soup.find('input', {'name': 'wctx'}).get('value')
         wresult = soup.find('input', {'name': 'wresult'}).get('value')
-        return {'wctx': wctx, 'wresult': wresult, 'url': response.url}
+        return {
+            'wctx': wctx,
+            'wresult': wresult,
+            'usernamepassword_login_final_url': response.url,
+            'base_url': base_url
+        }
 
-    def _login_callback(self, wctx, wresult, usernamepassword_login_final_url):
+    def _login_callback(self, wctx, wresult, usernamepassword_login_final_url, base_url):
         """
         3. /login/callback
         Get code parameter from callback
         """
-        endpoint = 'https://ru.accounts.ikea.com/login/callback'
+        endpoint = '{}/login/callback'.format(base_url)
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Origin': 'https://ru.accounts.ikea.com',
+            'Origin': base_url,
             'Referer': usernamepassword_login_final_url
         }
         payload = {
@@ -175,24 +200,28 @@ class Auth:
         check_response(response)
 
         code = parse_qs(urlparse(response.url).query)['code'][0]
-        return {'code': code, 'url': response.url}
+        return {
+            'callback_code': code,
+            'callback_final_url': response.url,
+            'base_url': base_url
+        }
 
-    def _oauth_token(self, callback_code, callback_final_url):
+    def _oauth_token(self, callback_code, callback_final_url, base_url):
         """
         4. /oauth/token
         Get access token
         """
-        endpoint = 'https://ru.accounts.ikea.com/oauth/token'
+        endpoint = '{}/oauth/token'.format(base_url)
         headers = {
             'Accept': '*/*',
             'Referer': callback_final_url,
             'Origin': 'https://www.ikea.com'
         }
         payload = {
-            'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
+            'client_id': self.client_id,
             'code_verifier': self.code_verifier,
             'code': callback_code,
-            'redirect_uri': 'https://www.ikea.com/ru/ru/profile/login/',
+            'redirect_uri': self.main_url,
             'scope': 'openid profile email',
             'grant_type': 'authorization_code'
         }

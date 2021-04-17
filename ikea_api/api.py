@@ -5,6 +5,7 @@ from .errors import (
     NotAuthenticatedError,
     TokenDecodeError
 )
+from .utils import get_config_values
 
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15'
 
@@ -19,9 +20,13 @@ class Api:
             'User-Agent': USER_AGENT,
             'Authorization': 'Bearer ' + token
         })
+        config = get_config_values()
+        self.country_code = config[0].lower()
+        self.language_code = config[1].lower()
 
     def error_handler(self, status_code, response_json):
         pass
+
 
     def basic_error_handler(self, status_code, response_json):
         err = None
