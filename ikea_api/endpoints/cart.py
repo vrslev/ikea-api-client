@@ -1,7 +1,6 @@
 from ..api import Api
 from ..utils import parse_item_code
-from ..errors import WrongItemCodeError
-
+from ..errors import WrongLanguageCodeError, WrongItemCodeError
 
 class Cart(Api):
     """
@@ -52,18 +51,11 @@ class Cart(Api):
             item = parse_item_code(item)
             if item:
                 items_templated.append(
-                '{itemNo: "%s", quantity: %s}' % (item, items[item]))
+                    '{itemNo: "%s", quantity: %s}' % (item, items[item]))
         data = {'query': 'mutation {addItems(items: ['
                 + ', '.join(items_templated) + ']) {quantity}}'}
         response = self.call_api(data=data)
-        try:
-            error = response['errors'][0]['extensions']['code']
-            # TODO: Check for known errors in utils.py all self.call_api()
-            if response['errors'][0]['extensions']['code'] == 'INVALID_ITEM_NUMBER' and response['errors'][0]['extensions']['data']['itemNos']:
-                raise WrongItemCodeError(
-                    response['errors'][0]['extensions']['data']['itemNos'])
-        except KeyError:
-            return response
+        return response
 
     def delete_items(self, items):
         """Delete items from cart."""

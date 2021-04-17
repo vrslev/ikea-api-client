@@ -1,10 +1,10 @@
 import re
-from .errors import NoItemsParsedError
+from .errors import NoItemsParsedError, WrongZipCodeError
 
 
 def check_response(response):
     if not response.ok:
-        raise Exception(response.status_code, response.content)
+        raise Exception(response.status_code, response.text)
 
 
 def parse_item_code(item_code):
@@ -31,3 +31,8 @@ def parse_item_code(item_code):
         if not parsed:
             raise NoItemsParsedError(item_code)
         return parsed
+
+
+def validate_zip_code(zip_code):
+    if len(re.findall(r'\d{6}', zip_code)) != 1:
+        raise WrongZipCodeError(zip_code)

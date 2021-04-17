@@ -1,5 +1,5 @@
-import string
-import json
+from json import loads
+from string import ascii_letters, digits
 from random import SystemRandom
 from base64 import urlsafe_b64encode, b64decode
 from hashlib import sha256
@@ -8,8 +8,13 @@ from urllib.parse import urlparse, parse_qs
 from requests import Session, post
 from bs4 import BeautifulSoup
 
-from .constants import Constants
+from .api import USER_AGENT
 from .utils import check_response
+from .errors import (
+    InvalidRetailUnitError,
+    UnauthorizedError,
+    NotAuthenticatedError
+)
 
 
 def get_guest_token():
@@ -22,12 +27,16 @@ def get_guest_token():
         'Origin': 'https://www.ikea.com',
         'Referer': 'https://www.ikea.com/',
         'Connection': 'keep-alive',
-        'User-Agent': Constants.USER_AGENT,
+        'User-Agent': USER_AGENT,
         'X-Client-Id': 'e026b58d-dd69-425f-a67f-1e9a5087b87b',
         'X-Client-Secret': 'cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB'
     }
     payload = {'retailUnit': 'ru'}
     response = post(url, headers=headers, json=payload)
+    if response.text == 'Invalid retail unit.':
+        raise InvalidRetailUnitError
+    if response.status_code == 401:
+        raise UnauthorizedError(response.json())
     check_response(response)
     token = response.json()['access_token']
     return token
@@ -45,7 +54,7 @@ class Auth:
             'Accept-Language': 'en-us',
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
-            'User-Agent': Constants.USER_AGENT
+            'User-Agent': USER_AGENT
         })
         auth0_authorize = self._auth0_authorize()
         usernamepassword_login = self._usernamepassword_login(
@@ -68,7 +77,7 @@ class Auth:
     def _generate_token(self):
         """https://github.com/lepture/authlib"""
         rand = SystemRandom()
-        return ''.join(rand.choice(string.ascii_letters + string.digits) for _ in range(48))
+        return ''.join(rand.choice(ascii_letters + digits) for _ in range(48))
 
     def _auth0_authorize(self):
         """
@@ -101,7 +110,7 @@ class Auth:
 
         encoded_config = BeautifulSoup(response.text, 'html.parser').find(
             'script', id='a0-config').get('data-config')
-        session_config = json.loads(b64decode(encoded_config))
+        session_config = loads(b64decode(encoded_config))
         return {'session_config': session_config, 'url': response.url}
 
     def _usernamepassword_login(self, usr, pwd, session_config, authorize_final_url):
@@ -132,6 +141,12 @@ class Auth:
         }
         response = self.session.post(
             endpoint, headers=headers, json=payload)
+        if response.status_code == 401:
+            response_json = response.json()
+            if 'description' in response_json:
+                raise NotAuthenticatedError(response_json['description'])
+            else:
+                raise NotAuthenticatedError
         check_response(response)
 
         soup = BeautifulSoup(response.text, 'html.parser')
