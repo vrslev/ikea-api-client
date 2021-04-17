@@ -1,7 +1,8 @@
-from ikea_api import get_guest_token, Cart
+from ikea_api import get_guest_token, Cart, OrderCapture
 
 token = get_guest_token()
 cart = Cart(token)
 cart.add_items({'30457903': 1})
-deliveries = cart.get_delivery_options('your_zip_code')
+order_capture = OrderCapture(token, 'your_zip_code')
+deliveries = order_capture.get_delivery_services()
 print(deliveries)
