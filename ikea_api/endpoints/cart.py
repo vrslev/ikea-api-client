@@ -2,6 +2,7 @@ from ..api import Api
 from ..utils import parse_item_code
 from ..errors import WrongLanguageCodeError, WrongItemCodeError
 
+
 class Cart(Api):
     """
     Can show, clear a cart, add or delete items, get delivery options.
@@ -10,7 +11,7 @@ class Cart(Api):
     def __init__(self, token):
         super().__init__(token, 'https://cart.oneweb.ingka.com/graphql')
         self.session.headers.update({
-            'Accept-Language': 'ru',
+            'Accept-Language': self.language_code,
             'Origin': 'https://www.ikea.com',
             'Referer': 'https://www.ikea.com/',
             'X-Client-Id': '66e4684a-dbcb-499c-8639-a72fa50ac0c3'
@@ -24,7 +25,7 @@ class Cart(Api):
             + '{\n    cart(languageCode: $languageCode) ' +
             self.cart_graphql_props,
             'variables': {
-                'languageCode': 'ru'
+                'languageCode': self.language_code
             }
         }
         return self.call_api(data=data)
@@ -36,7 +37,7 @@ class Cart(Api):
             + '{\n    clearItems(languageCode: $languageCode) ' +
             self.cart_graphql_props,
             'variables': {
-                'languageCode': 'ru'
+                'languageCode': self.language_code
             }
         }
         return self.call_api(data=data)
@@ -66,7 +67,7 @@ class Cart(Api):
             self.cart_graphql_props,
             'variables': {
                 'itemNos': items_parsed,
-                'languageCode': 'ru'
+                'languageCode': self.language_code
             }
         }
         return self.call_api(data=data)

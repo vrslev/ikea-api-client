@@ -6,10 +6,11 @@ class Profile(Api):
         super().__init__(token, 'https://purchase-history.ocp.ingka.ikea.com/graphql')
         self.session.headers.update({
             'Accept': '*/*',
-            'Accept-Language': 'ru-ru',
+            'Accept-Language': '{}-{}'.format(self.language_code, self.country_code),
             'Origin': 'https://order.ikea.com'
         })
-        self.base_referer = 'https://order.ikea.com/ru/ru/purchases/'
+        self.base_referer = 'https://order.ikea.com/{}/{}/purchases/'.format(
+            self.country_code, self.language_code)
 
     def purchase_history(self):
         headers = {'Referer': self.base_referer}

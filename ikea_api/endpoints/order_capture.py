@@ -11,6 +11,9 @@ class OrderCapture(Api):
 
     def __init__(self, token, zip_code):
         super().__init__(token, 'https://ordercapture.ikea.ru/ordercaptureapi/ru/checkouts')
+        if not self.country_code == 'ru':
+            self.endpoint = 'https://ordercapture.ingka.com/ordercaptureapi/{}/checkouts'.format(
+                self.country_code)
         self.zip_code = str(zip_code)
         validate_zip_code(zip_code)
         self.session.headers.update({
@@ -21,8 +24,9 @@ class OrderCapture(Api):
         })
 
     def error_handler(self, status_code, response_json):
-        if response_json['errorCode'] == 60004:
-            raise WrongZipCodeError
+        if 'errorCode' in response_json:
+            if response_json['errorCode'] == 60004:
+                raise WrongZipCodeError
 
     def _get_checkout(self):
         data = {
