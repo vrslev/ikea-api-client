@@ -7,3 +7,6 @@ class NotAuthenticatedError(Exception):
 
 class WrongItemCodeError(Exception):
     pass
+
+class NoItemsParsedError(Exception):
+    pass

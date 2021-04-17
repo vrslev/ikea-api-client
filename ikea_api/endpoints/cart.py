@@ -45,18 +45,20 @@ class Cart(Api):
     def add_items(self, items):
         """
         Add items to cart.
-        Required items list format: [{'item_no': quantity}, {...}]
+        Required items list format: [{'item_no': quantity, ...}]
         """
         items_templated = []
         for item in items:
             item = parse_item_code(item)
-            if item is not None:
+            if item:
                 items_templated.append(
-                    '{itemNo: "%s", quantity: %d}' % (item, items[item]))
+                '{itemNo: "%s", quantity: %s}' % (item, items[item]))
         data = {'query': 'mutation {addItems(items: ['
                 + ', '.join(items_templated) + ']) {quantity}}'}
         response = self.call_api(data=data)
-        try:  # TODO: Check for known errors in utils.py all self.call_api()
+        try:
+            error = response['errors'][0]['extensions']['code']
+            # TODO: Check for known errors in utils.py all self.call_api()
             if response['errors'][0]['extensions']['code'] == 'INVALID_ITEM_NUMBER' and response['errors'][0]['extensions']['data']['itemNos']:
                 raise WrongItemCodeError(
                     response['errors'][0]['extensions']['data']['itemNos'])
@@ -64,18 +66,14 @@ class Cart(Api):
             return response
 
     def delete_items(self, items):
-        """Delete items from cart"""
-        items_str = []
-        for item in items:
-            item = parse_item_code(item)
-            if item is not None:
-                items_str.append(item)
+        """Delete items from cart."""
+        items_parsed = parse_item_code(items)
         data = {
             'query': '\n  mutation RemoveItems(\n    $itemNos: [ID!]!\n    $languageCode: '
             + 'String\n  ){\n    removeItems(itemNos: $itemNos, languageCode: $languageCode) ' +
             self.cart_graphql_props,
             'variables': {
-                'itemNos': items,
+                'itemNos': items_parsed,
                 'languageCode': 'ru'
             }
         }
