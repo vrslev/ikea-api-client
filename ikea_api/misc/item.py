@@ -98,6 +98,8 @@ def _fetch_items_specs(input_items):
 
 
 def fetch_items_specs(input_items):
+    if type(input_items) is str:
+        input_items = [input_items]
     input_items = list(set(input_items))
     chunks = [input_items[x:x+90] for x in range(0, len(input_items), 90)]
     responses = []

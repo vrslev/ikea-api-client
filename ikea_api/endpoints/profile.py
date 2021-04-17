@@ -1,25 +1,15 @@
-from requests import Session
-from .constants import Constants
-from .utils import call_api as _utils_call_api
+from ..api import Api
 
 
-class Profile:
+class Profile(Api):
     def __init__(self, token):
-        self.endpoint = "https://purchase-history.ocp.ingka.ikea.com/graphql"
-        self.base_referer = 'https://order.ikea.com/ru/ru/purchases/'
-        self.session = Session()
+        super().__init__(token, 'https://purchase-history.ocp.ingka.ikea.com/graphql')
         self.session.headers.update({
             'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'ru-ru',
-            'Origin': 'https://order.ikea.com',
-            'Connection': 'keep-alive',
-            'User-Agent': Constants.USER_AGENT,
-            'Authorization': 'Bearer ' + token
+            'Origin': 'https://order.ikea.com'
         })
-
-    def _call_api(self, data, headers=None):
-        return _utils_call_api(self, data)
+        self.base_referer = 'https://order.ikea.com/ru/ru/purchases/'
 
     def purchase_history(self):
         headers = {'Referer': self.base_referer}
@@ -31,7 +21,7 @@ class Profile:
             },
             "query": "query History($skip: Int!, $take: Int!) {\n  history(skip: $skip, take: $take) {\n    id\n    dateAndTime {\n      ...DateAndTime\n      __typename\n    }\n    status\n    storeName\n    totalCost {\n      code\n      value\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment DateAndTime on DateAndTime {\n  time\n  date\n  formattedLocal\n  formattedShortDate\n  formattedLongDate\n  formattedShortDateTime\n  formattedLongDateTime\n  __typename\n}\n"
         }
-        return self._call_api(payload, headers)
+        return self.call_api(data=payload, headers=headers)
 
     def purchase_info(self, purchase_id):
         headers = {'Referer': '{}/{}/'.format(self.base_referer, purchase_id)}
@@ -53,4 +43,4 @@ class Profile:
                 "query": "query CostsOrder($orderNumber: String!, $liteId: String) {\n  order(orderNumber: $orderNumber, liteId: $liteId) {\n    id\n    costs {\n      ...Costs\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment Costs on Costs {\n  total {\n    ...Money\n    __typename\n  }\n  delivery {\n    ...Money\n    __typename\n  }\n  service {\n    ...Money\n    __typename\n  }\n  discount {\n    ...Money\n    __typename\n  }\n  sub {\n    ...Money\n    __typename\n  }\n  tax {\n    ...Money\n    __typename\n  }\n  taxRates {\n    ...TaxRate\n    __typename\n  }\n  __typename\n}\n\nfragment Money on Money {\n  code\n  value\n  __typename\n}\n\nfragment TaxRate on TaxRate {\n  percentage\n  name\n  amount {\n    ...Money\n    __typename\n  }\n  __typename\n}\n"
             }
         ]
-        return self._call_api(payload, headers)
+        return self.call_api(data=payload, headers=headers)
