@@ -61,6 +61,8 @@ class Cart(Api):
     def delete_items(self, items):
         """Delete items from cart."""
         items_parsed = parse_item_code(items)
+        if isinstance(items_parsed, str):
+            items_parsed = [items_parsed]
         data = {
             'query': '\n  mutation RemoveItems(\n    $itemNos: [ID!]!\n    $languageCode: '
             + 'String\n  ){\n    removeItems(itemNos: $itemNos, languageCode: $languageCode) ' +
