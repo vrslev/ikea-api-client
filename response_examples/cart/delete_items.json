@@ -1,0 +1,17 @@
+{
+    "data": {
+        "removeItems": {
+            "currency": null,
+            "checksum": "xbuTAV6IhIC88FNm19WrduV6BOaVLIPe",
+            "context": {
+                "userId": "2f50820c-30a2-46bf-b8b5-5dc9c9c9b927",
+                "isAnonymous": true,
+                "retailId": "ru"
+            },
+            "coupon": null,
+            "items": [],
+            "regularTotalPrice": null,
+            "familyTotalPrice": null
+        }
+    }
+}

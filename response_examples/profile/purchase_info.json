@@ -1,0 +1,102 @@
+[
+    {
+        "data": {
+            "order": {
+                "id": "11111111",
+                "dateAndTime": {
+                    "time": "10:12:00Z",
+                    "date": "2021-04-19",
+                    "formattedLocal": "19 апреля 2021, 13:12",
+                    "formattedShortDate": "19.04.2021",
+                    "formattedLongDate": "19 апреля 2021",
+                    "formattedShortDateTime": "19.04.2021 13:12",
+                    "formattedLongDateTime": "19 апреля 2021, 13:12",
+                    "__typename": "DateAndTime"
+                },
+                "status": "CREATED",
+                "services": [],
+                "deliveryMethods": [
+                    {
+                        "id": "-333333333",
+                        "serviceId": "SGR00000854",
+                        "status": "ON_ITS_WAY",
+                        "type": "PARCEL",
+                        "deliveryDate": {
+                            "actual": null,
+                            "estimatedFrom": {
+                                "time": "06:00:00Z",
+                                "date": "2021-04-24",
+                                "formattedLocal": "24 апреля 2021, 09:00",
+                                "formattedShortDate": "24.04.2021",
+                                "formattedLongDate": "24 апреля 2021",
+                                "formattedShortDateTime": "24.04.2021 09:00",
+                                "formattedLongDateTime": "24 апреля 2021, 09:00",
+                                "__typename": "DateAndTime"
+                            },
+                            "estimatedTo": {
+                                "time": "15:00:00Z",
+                                "date": "2021-04-24",
+                                "formattedLocal": "24 апреля 2021, 18:00",
+                                "formattedShortDate": "24.04.2021",
+                                "formattedLongDate": "24 апреля 2021",
+                                "formattedShortDateTime": "24.04.2021 18:00",
+                                "formattedLongDateTime": "24 апреля 2021, 18:00",
+                                "__typename": "DateAndTime"
+                            },
+                            "dateTimeRange": "24 апреля 2021, 09:00 - 18:00",
+                            "timeZone": "Europe/Moscow",
+                            "__typename": "DeliveryDate"
+                        },
+                        "__typename": "DeliveryMethod"
+                    }
+                ],
+                "__typename": "Purchase"
+            }
+        }
+    },
+    {
+        "data": {
+            "order": {
+                "id": "11111111",
+                "costs": {
+                    "total": {
+                        "code": "RUB",
+                        "value": 8326.0,
+                        "__typename": "Money"
+                    },
+                    "delivery": {
+                        "code": "RUB",
+                        "value": 399.0,
+                        "__typename": "Money"
+                    },
+                    "service": null,
+                    "discount": null,
+                    "sub": {
+                        "code": "RUB",
+                        "value": 7927.0,
+                        "__typename": "Money"
+                    },
+                    "tax": {
+                        "code": "RUB",
+                        "value": 1387.68,
+                        "__typename": "Money"
+                    },
+                    "taxRates": [
+                        {
+                            "percentage": "20",
+                            "name": "VAT",
+                            "amount": {
+                                "code": "RUB",
+                                "value": 1387.68,
+                                "__typename": "Money"
+                            },
+                            "__typename": "TaxRate"
+                        }
+                    ],
+                    "__typename": "Costs"
+                },
+                "__typename": "Purchase"
+            }
+        }
+    }
+]

@@ -1,0 +1,256 @@
+{
+    "data": {
+        "cart": {
+            "currency": "RUB",
+            "checksum": "SWtqNEzdsXNlbmRG5AlGeBwuiUFY/C6y",
+            "context": {
+                "userId": "2f50820c-30a2-46bf-b8b5-5dc9c9c9b927",
+                "isAnonymous": true,
+                "retailId": "ru"
+            },
+            "coupon": null,
+            "items": [
+                {
+                    "itemNo": "50497432",
+                    "quantity": 5,
+                    "type": "ART",
+                    "fees": null,
+                    "isFamilyItem": false,
+                    "childItems": [],
+                    "regularPrice": {
+                        "unit": {
+                            "inclTax": 4499,
+                            "exclTax": 0,
+                            "tax": null,
+                            "validFrom": null,
+                            "validTo": null,
+                            "isLowerPrice": false,
+                            "isTimeRestrictedOffer": false,
+                            "previousPrice": null
+                        },
+                        "subTotalExclDiscount": {
+                            "inclTax": 22495,
+                            "exclTax": 0,
+                            "tax": null
+                        },
+                        "subTotalInclDiscount": {
+                            "inclTax": 22495,
+                            "exclTax": 0,
+                            "tax": null
+                        },
+                        "subTotalDiscount": {
+                            "amount": 0
+                        },
+                        "discounts": null
+                    },
+                    "familyPrice": {
+                        "unit": {
+                            "inclTax": 4499,
+                            "exclTax": 0,
+                            "tax": null,
+                            "validFrom": null,
+                            "validTo": null
+                        },
+                        "subTotalExclDiscount": {
+                            "inclTax": 22495,
+                            "exclTax": 0,
+                            "tax": null
+                        },
+                        "subTotalInclDiscount": {
+                            "inclTax": 22495,
+                            "exclTax": 0,
+                            "tax": null
+                        },
+                        "subTotalDiscount": {
+                            "amount": 0
+                        },
+                        "discounts": null
+                    },
+                    "product": {
+                        "name": "SKÅNEVIK СКОНЕВИК",
+                        "globalName": "SKÅNEVIK",
+                        "isNew": false,
+                        "category": "комод с 3 ящиками",
+                        "description": "глянцевый серо-зеленый",
+                        "isBreathTaking": false,
+                        "formattedItemNo": "504.974.32",
+                        "displayUnit": null,
+                        "measurements": [
+                            {
+                                "metric": "70x72 см",
+                                "imperial": "27 1/2x28 3/8 дюйм"
+                            }
+                        ],
+                        "technicalDetails": null,
+                        "images": [
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968487_pe810456_s1.jpg",
+                                "quality": "S1",
+                                "width": 40
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968487_pe810456_s2.jpg",
+                                "quality": "S2",
+                                "width": 110
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968487_pe810456_s3.jpg",
+                                "quality": "S3",
+                                "width": 250
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968487_pe810456_s4.jpg",
+                                "quality": "S4",
+                                "width": 500
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968487_pe810456_s5.jpg",
+                                "quality": "S5",
+                                "width": 2000
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968488_pe810457_s1.jpg",
+                                "quality": "S1",
+                                "width": 40
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968488_pe810457_s2.jpg",
+                                "quality": "S2",
+                                "width": 110
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968488_pe810457_s3.jpg",
+                                "quality": "S3",
+                                "width": 250
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968488_pe810457_s4.jpg",
+                                "quality": "S4",
+                                "width": 500
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968488_pe810457_s5.jpg",
+                                "quality": "S5",
+                                "width": 2000
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968489_pe810458_s1.jpg",
+                                "quality": "S1",
+                                "width": 40
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968489_pe810458_s2.jpg",
+                                "quality": "S2",
+                                "width": 110
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968489_pe810458_s3.jpg",
+                                "quality": "S3",
+                                "width": 250
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968489_pe810458_s4.jpg",
+                                "quality": "S4",
+                                "width": 500
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968489_pe810458_s5.jpg",
+                                "quality": "S5",
+                                "width": 2000
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968490_pe810459_s1.jpg",
+                                "quality": "S1",
+                                "width": 40
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968490_pe810459_s2.jpg",
+                                "quality": "S2",
+                                "width": 110
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968490_pe810459_s3.jpg",
+                                "quality": "S3",
+                                "width": 250
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968490_pe810459_s4.jpg",
+                                "quality": "S4",
+                                "width": 500
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968490_pe810459_s5.jpg",
+                                "quality": "S5",
+                                "width": 2000
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968491_pe810465_s1.jpg",
+                                "quality": "S1",
+                                "width": 40
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968491_pe810465_s2.jpg",
+                                "quality": "S2",
+                                "width": 110
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968491_pe810465_s3.jpg",
+                                "quality": "S3",
+                                "width": 250
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968491_pe810465_s4.jpg",
+                                "quality": "S4",
+                                "width": 500
+                            },
+                            {
+                                "url": "https://www.ikea.com/ru/ru/images/products/skanevik-skonevik-komod-s-3-yashchikami-glyancevyy-sero-zelenyy__0968491_pe810465_s5.jpg",
+                                "quality": "S5",
+                                "width": 2000
+                            }
+                        ]
+                    }
+                }
+            ],
+            "regularTotalPrice": {
+                "totalExclDiscount": {
+                    "inclTax": 22495,
+                    "exclTax": 0,
+                    "tax": null
+                },
+                "totalInclDiscount": {
+                    "inclTax": 22495,
+                    "exclTax": 0,
+                    "tax": null
+                },
+                "totalDiscount": {
+                    "amount": 0
+                },
+                "totalSavingsDetails": {
+                    "familyDiscounts": 0
+                }
+            },
+            "familyTotalPrice": {
+                "totalExclDiscount": {
+                    "inclTax": 22495,
+                    "exclTax": 0,
+                    "tax": null
+                },
+                "totalInclDiscount": {
+                    "inclTax": 22495,
+                    "exclTax": 0,
+                    "tax": null
+                },
+                "totalDiscount": {
+                    "amount": 0
+                },
+                "totalSavingsDetails": {
+                    "familyDiscounts": 0
+                },
+                "totalSavingsInclDiscount": {
+                    "amount": 0
+                }
+            }
+        }
+    }
+}
