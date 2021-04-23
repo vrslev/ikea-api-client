@@ -21,12 +21,11 @@ class Api:
             'Authorization': 'Bearer ' + token
         })
         config = get_config_values()
-        self.country_code = config[0].lower()
-        self.language_code = config[1].lower()
+        self.country_code = config['country_code']
+        self.language_code = config['language_code']
 
     def error_handler(self, status_code, response_json):
         pass
-
 
     def basic_error_handler(self, status_code, response_json):
         err = None

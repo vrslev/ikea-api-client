@@ -88,10 +88,12 @@ def get_config_values():
         config.set(config_section, 'client_id', client_id)
         with open(config_path, 'w') as f:
             config.write(f)
-    res = []
-    for v in ['country_code', 'language_code', 'client_id']:
-        res.append(config.get('Settings', v))
-    return res
+
+    return {
+        'client_id': items['client_id'],
+        'country_code': items['country_code'].lower(),
+        'language_code': items['language_code'].lower()
+    }
 
 
 default_config = {
@@ -104,7 +106,7 @@ config_section = 'Settings'
 config = ConfigParser()
 config.read(config_path)
 if not config.has_section(config_section):
-    config.add_section('Settings')
+    config.add_section(config_section)
     for attr in default_config:
         config.set(config_section, attr, default_config[attr])
     with open(config_path, 'a+') as f:

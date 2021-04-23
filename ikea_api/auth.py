@@ -31,7 +31,7 @@ def get_guest_token():
         'X-Client-Id': 'e026b58d-dd69-425f-a67f-1e9a5087b87b',
         'X-Client-Secret': 'cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB'
     }
-    payload = {'retailUnit': get_config_values()[0]}
+    payload = {'retailUnit': get_config_values()['language_code']}
     response = post(url, headers=headers, json=payload)
     if response.text == 'Invalid retail unit.':
         raise InvalidRetailUnitError
@@ -73,9 +73,9 @@ class Auth:
             'User-Agent': USER_AGENT
         })
         config = get_config_values()
-        self.country_code = config[0]
-        self.language_code = config[1]
-        self.client_id = config[2]
+        self.client_id = config['client_id']
+        self.country_code = config['country_code']
+        self.language_code = config['language_code']
         try:
             auth0_authorize = self._auth0_authorize()
         except AttributeError:
