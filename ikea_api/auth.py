@@ -4,6 +4,7 @@ from random import SystemRandom
 from base64 import urlsafe_b64encode, b64decode
 from hashlib import sha256
 from urllib.parse import urlparse, parse_qs
+import re
 
 from requests import Session, post
 from bs4 import BeautifulSoup
@@ -58,6 +59,15 @@ def create_s256_code_challenge(code_verifier):
     return urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
 
 
+def decode_jwt(token):
+    matches = re.findall(r'\.(.*)\.', token)
+    if len(matches) != 1:
+        pass
+    payload = b64decode(matches[0])
+    decoded = loads(payload)
+    return decoded
+
+
 class Auth:
     """
     OAuth2 authorization
@@ -85,15 +95,13 @@ class Auth:
         usernamepassword_login = self._usernamepassword_login(
             username, password, **auth0_authorize)
         login_callback = self._login_callback(**usernamepassword_login)
-        oauth_token = self._oauth_token(**login_callback)
-        self.token = oauth_token
+        self._oauth_token(**login_callback)
 
     def _auth0_authorize(self):
         """
         1. /autorize
         Get Auth0 config
         """
-        # def authorize():
         self.code_verifier = generate_token()
         endpoint = 'https://{}.accounts.ikea.com/authorize'.format(
             self.country_code)
@@ -228,5 +236,6 @@ class Auth:
         response = self.session.post(endpoint, headers=headers, json=payload)
         check_response(response)
 
-        token = response.json()['access_token']
-        return token
+        self.token = response.json()['access_token']
+        self.jwt = decode_jwt(self.token)
+        return self.token
