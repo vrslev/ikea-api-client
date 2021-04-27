@@ -28,7 +28,7 @@ class OrderCapture(Api):
             error_code = response_json['errorCode']
             if error_code == 60004:
                 raise WrongZipCodeError
-            elif error_code == 60005:
+            elif error_code == 60005 or error_code == 60006:
                 raise NoDeliveryOptionsAvailableError
 
     def _get_checkout(self):
