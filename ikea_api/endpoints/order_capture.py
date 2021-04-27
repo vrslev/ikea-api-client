@@ -1,6 +1,6 @@
 from ..api import Api
 from ..utils import validate_zip_code
-from ..errors import WrongZipCodeError
+from ..errors import WrongZipCodeError, NoDeliveryOptionsAvailableError
 
 
 class OrderCapture(Api):
@@ -25,8 +25,11 @@ class OrderCapture(Api):
 
     def error_handler(self, status_code, response_json):
         if 'errorCode' in response_json:
-            if response_json['errorCode'] == 60004:
+            error_code = response_json['errorCode']
+            if error_code == 60004:
                 raise WrongZipCodeError
+            elif error_code == 60005:
+                raise NoDeliveryOptionsAvailableError
 
     def _get_checkout(self):
         data = {

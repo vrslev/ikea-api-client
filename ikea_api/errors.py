@@ -77,3 +77,7 @@ class UnauthorizedError(Exception):
         else:
             msg = response
         super().__init__(msg)
+
+
+class NoDeliveryOptionsAvailableError(Exception):
+    pass
