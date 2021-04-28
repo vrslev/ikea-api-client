@@ -1,19 +1,19 @@
 from ..api import Api
 
 
-class Profile(Api):
+class Purchases(Api):
     def __init__(self, token):
         super().__init__(token, 'https://purchase-history.ocp.ingka.ikea.com/graphql')
+        origin = 'https://order.ikea.com'
         self.session.headers.update({
             'Accept': '*/*',
             'Accept-Language': '{}-{}'.format(self.language_code, self.country_code),
-            'Origin': 'https://order.ikea.com'
+            'Origin': origin,
+            'Referer': '{}/{}/{}/purchases/'.format(
+                origin, self.country_code, self.language_code)
         })
-        self.base_referer = 'https://order.ikea.com/{}/{}/purchases/'.format(
-            self.country_code, self.language_code)
 
     def purchase_history(self):
-        headers = {'Referer': self.base_referer}
         payload = {
             "operationName": "History",
             "variables": {
@@ -22,10 +22,11 @@ class Profile(Api):
             },
             "query": "query History($skip: Int!, $take: Int!) {\n  history(skip: $skip, take: $take) {\n    id\n    dateAndTime {\n      ...DateAndTime\n      __typename\n    }\n    status\n    storeName\n    totalCost {\n      code\n      value\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment DateAndTime on DateAndTime {\n  time\n  date\n  formattedLocal\n  formattedShortDate\n  formattedLongDate\n  formattedShortDateTime\n  formattedLongDateTime\n  __typename\n}\n"
         }
-        return self.call_api(data=payload, headers=headers)
+        return self.call_api(data=payload)
 
     def purchase_info(self, purchase_id):
-        headers = {'Referer': '{}/{}/'.format(self.base_referer, purchase_id)}
+        headers = {
+            'Referer': '{}/{}/'.format(self.session.headers['Origin'], purchase_id)}
         payload = [
             {
                 "operationName": "StatusBannerOrder",

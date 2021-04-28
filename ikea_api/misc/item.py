@@ -1,6 +1,6 @@
 from requests import Session
 from ..utils import parse_item_code
-from ..api import USER_AGENT
+from ..constants import Constants
 
 
 class ItemFetchError(Exception):
@@ -19,22 +19,7 @@ def _build_url(items: dict):
     return endpoint + ';'.join(templated_list)
 
 
-def _fetch_items_specs(input_items: list):
-    session = Session()
-    session.headers.update({
-        'Accept': 'application/vnd.ikea.iows+json;version=2.0',
-        'Origin': 'https://www.ikea.com',
-        'Referer': 'https://www.ikea.com/ru/ru/shoppinglist/',
-        'Cache-Control': 'no-cache, no-store',
-        'Host': 'iows.ikea.com',
-        'Accept-Language': 'ru',
-        'User-Agent': USER_AGENT,
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-        'consumer': 'MAMMUT#ShoppingList',
-        'contract': '37249'
-    })
-
+def _fetch_items_specs(session, input_items: list):
     if len(input_items) == 0:
         return
     items = {}
@@ -91,17 +76,32 @@ def _fetch_items_specs(input_items: list):
 
 
 def fetch_items_specs(input_items):
+    session = Session()
+    session.headers.update({
+        'Accept': 'application/vnd.ikea.iows+json;version=2.0',
+        'Origin': Constants.BASE_URL,
+        'Referer': '{}/ru/ru/shoppinglist/'.format(Constants.BASE_URL),
+        'Cache-Control': 'no-cache, no-store',
+        'Accept-Language': 'ru',
+        'User-Agent': Constants.USER_AGENT,
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'consumer': 'MAMMUT#ShoppingCart',
+        'contract': '37249'
+    })
+
     if isinstance(input_items, str):
         input_items = [input_items]
     elif not isinstance(input_items, list):
         raise TypeError('String or list required')
 
+    input_items = [str(i) for i in input_items]
     input_items = list(set(input_items))
     input_items = parse_item_code(input_items)
 
     chunks = [input_items[x:x+90] for x in range(0, len(input_items), 90)]
     responses = []
     for chunk in chunks:
-        response = _fetch_items_specs(chunk)
+        response = _fetch_items_specs(session, chunk)
         responses += response
     return responses

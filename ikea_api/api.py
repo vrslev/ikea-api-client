@@ -6,8 +6,7 @@ from .errors import (
     TokenDecodeError
 )
 from .utils import get_config_values
-
-USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15'
+from .constants import Constants
 
 
 class Api:
@@ -17,7 +16,7 @@ class Api:
         self.session.headers.update({
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
-            'User-Agent': USER_AGENT,
+            'User-Agent': Constants.USER_AGENT,
             'Authorization': 'Bearer ' + token
         })
         config = get_config_values()

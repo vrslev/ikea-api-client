@@ -1,6 +1,7 @@
 from ..api import Api
 from ..utils import validate_zip_code
 from ..errors import WrongZipCodeError, NoDeliveryOptionsAvailableError
+from ..constants import Constants
 
 
 class OrderCapture(Api):
@@ -17,9 +18,9 @@ class OrderCapture(Api):
         self.zip_code = str(zip_code)
         validate_zip_code(zip_code)
         self.session.headers.update({
-            'Accept-Language': 'ru',
-            'Origin': 'https://www.ikea.com',
-            'Referer': 'https://www.ikea.com/',
+            'Accept-Language': self.language_code,
+            'Origin': Constants.BASE_URL,
+            'Referer': Constants.BASE_URL + '/',
             'X-Client-Id': 'af2525c3-1779-49be-8d7d-adf32cac1934'
         })
 

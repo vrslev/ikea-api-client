@@ -1,3 +1,3 @@
 from .cart import Cart
-from .profile import Profile
+from .purchases import Purchases
 from .order_capture import OrderCapture

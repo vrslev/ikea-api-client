@@ -9,7 +9,7 @@ import re
 from requests import Session, post
 from bs4 import BeautifulSoup
 
-from .api import USER_AGENT
+from .constants import Constants
 from .utils import check_response, get_config_values, get_client_id_from_login_page
 from .errors import (
     InvalidRetailUnitError,
@@ -25,10 +25,10 @@ def get_guest_token():
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-us',
-        'Origin': 'https://www.ikea.com',
-        'Referer': 'https://www.ikea.com/',
+        'Origin': Constants.BASE_URL,
+        'Referer': Constants.BASE_URL + '/',
         'Connection': 'keep-alive',
-        'User-Agent': USER_AGENT,
+        'User-Agent': Constants.USER_AGENT,
         'X-Client-Id': 'e026b58d-dd69-425f-a67f-1e9a5087b87b',
         'X-Client-Secret': 'cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB'
     }
@@ -80,7 +80,7 @@ class Auth:
             'Accept-Language': 'en-us',
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
-            'User-Agent': USER_AGENT
+            'User-Agent': Constants.USER_AGENT
         })
         config = get_config_values()
         self.client_id = config['client_id']
@@ -105,8 +105,8 @@ class Auth:
         self.code_verifier = generate_token()
         endpoint = 'https://{}.accounts.ikea.com/authorize'.format(
             self.country_code)
-        self.main_url = 'https://www.ikea.com/{}/{}/profile/login/'.format(
-            self.country_code, self.language_code)
+        self.main_url = '{}/{}/{}/profile/login/'.format(
+            Constants.BASE_URL, self.country_code, self.language_code)
         params = {
             'client_id': self.client_id,
             'redirect_uri': self.main_url,
@@ -223,7 +223,7 @@ class Auth:
         headers = {
             'Accept': '*/*',
             'Referer': callback_final_url,
-            'Origin': 'https://www.ikea.com'
+            'Origin': Constants.BASE_URL
         }
         payload = {
             'client_id': self.client_id,

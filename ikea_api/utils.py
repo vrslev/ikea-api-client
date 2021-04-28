@@ -2,6 +2,7 @@ import re
 from configparser import ConfigParser
 import requests
 from .errors import NoItemsParsedError, WrongZipCodeError
+from .constants import Constants
 
 
 def check_response(response):
@@ -41,8 +42,8 @@ def validate_zip_code(zip_code):
 
 
 def get_client_id_from_home_page(country_code, language_code):
-    base_url = 'https://www.ikea.com/{}/{}/'.format(
-        country_code.lower(), language_code.lower())
+    base_url = '{}/{}/{}/'.format(
+        Constants.BASE_URL, country_code.lower(), language_code.lower())
     home_page = requests.get(base_url)
     res = re.findall(
         '"({}token-service/[^.]+.js)"'.format(base_url), home_page.text)
@@ -61,14 +62,14 @@ def get_client_id_from_home_page(country_code, language_code):
 
 
 def get_client_id_from_login_page(country_code='ru', language_code='ru'):
-    login_url = 'https://www.ikea.com/{}/{}/profile/login/'.format(
-        country_code.lower(), language_code.lower())
+    login_url = '{}/{}/{}/profile/login/'.format(
+        Constants.BASE_URL, country_code.lower(), language_code.lower())
     login_page = requests.get(login_url)
     res = re.findall(
         '/{}/{}/profile/app-[^/]+.js'.format(country_code, language_code), login_page.text)
     if len(res) == 0:
         raise Exception
-    script = requests.get('https://www.ikea.com' + res[0])
+    script = requests.get(Constants.BASE_URL + res[0])
     try:
         client_id = re.findall(
             '{DOMAIN:"%s.accounts.ikea.com",CLIENT_ID:"([^"]+)"' % country_code, script.text)[1]
