@@ -97,18 +97,19 @@ def get_config_values():
     }
 
 
-default_config = {
-    'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
-    'country_code': 'ru',
-    'language_code': 'ru'
-}
-config_path = 'config.ini'
-config_section = 'Settings'
-config = ConfigParser()
-config.read(config_path)
-if not config.has_section(config_section):
-    config.add_section(config_section)
-    for attr in default_config:
-        config.set(config_section, attr, default_config[attr])
-    with open(config_path, 'a+') as f:
-        config.write(f)
+if __name__ == '__main__': 
+    default_config = {
+        'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
+        'country_code': 'ru',
+        'language_code': 'ru'
+    }
+    config_path = 'config.ini'
+    config_section = 'Settings'
+    config = ConfigParser()
+    config.read(config_path)
+    if not config.has_section(config_section):
+        config.add_section(config_section)
+        for attr in default_config:
+            config.set(config_section, attr, default_config[attr])
+        with open(config_path, 'a+') as f:
+            config.write(f)
