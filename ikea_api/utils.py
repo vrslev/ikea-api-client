@@ -41,26 +41,6 @@ def validate_zip_code(zip_code):
         raise WrongZipCodeError(zip_code)
 
 
-def get_client_id_from_home_page(country_code, language_code):
-    base_url = '{}/{}/{}/'.format(
-        Constants.BASE_URL, country_code.lower(), language_code.lower())
-    home_page = requests.get(base_url)
-    res = re.findall(
-        '"({}token-service/[^.]+.js)"'.format(base_url), home_page.text)
-    if len(res) == 0:
-        raise Exception
-    script = requests.get(res[0])
-    try:
-        client_id = re.search(
-            r'auth0:{[^}]+clientID:"([^"]+)"[^}]+}', script.text)[1]
-        config.set(config_section, 'client_id', client_id)
-        with open(config_path, 'w') as f:
-            config.write(f)
-    except IndexError:
-        raise Exception
-    return client_id
-
-
 def get_client_id_from_login_page(country_code='ru', language_code='ru'):
     login_url = '{}/{}/{}/profile/login/'.format(
         Constants.BASE_URL, country_code.lower(), language_code.lower())
@@ -70,46 +50,50 @@ def get_client_id_from_login_page(country_code='ru', language_code='ru'):
     if len(res) == 0:
         raise Exception
     script = requests.get(Constants.BASE_URL + res[0])
-    try:
-        client_id = re.findall(
-            '{DOMAIN:"%s.accounts.ikea.com",CLIENT_ID:"([^"]+)"' % country_code, script.text)[1]
-        config.set(config_section, 'client_id', client_id)
-        with open(config_path, 'w') as f:
-            config.write(f)
-    except IndexError:
-        raise Exception
+
+    client_id = re.findall(
+        '{DOMAIN:"%s.accounts.ikea.com",CLIENT_ID:"([^"]+)"' % country_code, script.text)[1]
     return client_id
 
 
-def get_config_values():
-    items = dict(config.items(section=config_section))
-    if not 'client_id' in items:
-        client_id = get_client_id_from_login_page(
-            items['country_code'], items['language_code'])
-        config.set(config_section, 'client_id', client_id)
-        with open(config_path, 'w') as f:
-            config.write(f)
-
-    return {
-        'client_id': items['client_id'],
-        'country_code': items['country_code'].lower(),
-        'language_code': items['language_code'].lower()
-    }
+config_path = 'config.ini'
+config_section = 'Settings'
 
 
-if __name__ == '__main__': 
+def get_config():
     default_config = {
         'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
         'country_code': 'ru',
         'language_code': 'ru'
     }
-    config_path = 'config.ini'
-    config_section = 'Settings'
+
     config = ConfigParser()
     config.read(config_path)
+
     if not config.has_section(config_section):
         config.add_section(config_section)
         for attr in default_config:
             config.set(config_section, attr, default_config[attr])
         with open(config_path, 'a+') as f:
             config.write(f)
+
+    return config
+
+
+def get_config_values():
+    config = get_config()
+    items = dict(config.items(section=config_section))
+    if not 'client_id' in items:
+        client_id = get_client_id_from_login_page(
+            items['country_code'], items['language_code'])
+        config.set(config_section, 'client_id', client_id)
+        with open(config_path, 'a+') as f:
+            config.write(f)
+
+    items = dict(config.items(section=config_section))
+
+    return {
+        'client_id': items['client_id'],
+        'country_code': items['country_code'].lower(),
+        'language_code': items['language_code'].lower()
+    }
