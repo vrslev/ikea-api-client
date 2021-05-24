@@ -1,10 +1,10 @@
-from requests import Session
-from ..utils import parse_item_code
-from ..constants import Constants
+"""IOWS Item API. Works only for Russian market"""
 
-
-class ItemFetchError(Exception):
-    pass
+from . import (
+    ItemFetchError,
+    generic_item_fetcher,
+    Constants
+)
 
 
 class WrongItemCodeError(Exception):
@@ -29,10 +29,12 @@ def _fetch_items_specs(session, input_items: list):
     for i in range(3):
         url = _build_url(items)
         response = session.get(url)
+        print('MADE REQUEST iows')
         if i == 0 and len(items) == 1 and not response.ok:
             items[item] = 'SPR'
             url = _build_url(items)
             response = session.get(url)
+            print('MADE REQUEST iows')
             if not response.ok:
                 raise WrongItemCodeError(input_items[0])
 
@@ -61,7 +63,7 @@ def _fetch_items_specs(session, input_items: list):
                     'ErrorAttribute' in err['ErrorAttributeList']
                 ]:
                     if not test:
-                        raise ItemFetchError(err, test)
+                        raise ItemFetchError(err)
 
                 attrs = {}
                 for attr in err['ErrorAttributeList']['ErrorAttribute']:
@@ -75,33 +77,12 @@ def _fetch_items_specs(session, input_items: list):
                     items.pop(item_code)
 
 
-def fetch_items_specs(input_items):
-    session = Session()
-    session.headers.update({
+def fetch(items):
+    headers = {
         'Accept': 'application/vnd.ikea.iows+json;version=2.0',
-        'Origin': Constants.BASE_URL,
         'Referer': '{}/ru/ru/shoppinglist/'.format(Constants.BASE_URL),
         'Cache-Control': 'no-cache, no-store',
-        'Accept-Language': 'ru',
-        'User-Agent': Constants.USER_AGENT,
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
         'consumer': 'MAMMUT#ShoppingCart',
         'contract': '37249'
-    })
-
-    if isinstance(input_items, str):
-        input_items = [input_items]
-    elif not isinstance(input_items, list):
-        raise TypeError('String or list required')
-
-    input_items = [str(i) for i in input_items]
-    input_items = list(set(input_items))
-    input_items = parse_item_code(input_items)
-
-    chunks = [input_items[x:x+90] for x in range(0, len(input_items), 90)]
-    responses = []
-    for chunk in chunks:
-        response = _fetch_items_specs(session, chunk)
-        responses += response
-    return responses
+    }
+    return generic_item_fetcher(items, headers, _fetch_items_specs, 90)
