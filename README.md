@@ -1,7 +1,6 @@
 # IKEA API Client
 
 Manage cart, check available delivery options.
-Note that all requests are made for Russian IKEA website. In future I'll add feature to change country. 
 
 ## Features
 ### Cart
