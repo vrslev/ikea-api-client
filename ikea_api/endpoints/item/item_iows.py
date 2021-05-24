@@ -34,8 +34,10 @@ def _fetch_items_specs(session, input_items: list):
             url = _build_url(items)
             response = session.get(url)
             if not response.ok:
-                raise WrongItemCodeError(input_items[0])
+                raise WrongItemCodeError
 
+        if not response.text:
+            raise WrongItemCodeError
         r_json = response.json()
 
         if 'RetailItemCommList' in r_json:
