@@ -41,7 +41,8 @@ def _async_fetch(urls, headers):
             res = await fetch_all(session)
             return res
 
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     res = loop.run_until_complete(main())
     return res
 
