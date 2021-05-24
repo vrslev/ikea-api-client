@@ -82,4 +82,8 @@ def fetch(items: dict):
     headers.pop('Origin')
     urls = [build_url(parse_item_code(i), items[i]) for i in items]
     responses = _async_fetch(urls, headers=headers)
-    return responses
+    res = []
+    for r in responses:
+        if r:
+            res.append(r)
+    return res

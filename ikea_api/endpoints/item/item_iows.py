@@ -29,12 +29,10 @@ def _fetch_items_specs(session, input_items: list):
     for i in range(3):
         url = _build_url(items)
         response = session.get(url)
-        print('MADE REQUEST iows')
         if i == 0 and len(items) == 1 and not response.ok:
             items[item] = 'SPR'
             url = _build_url(items)
             response = session.get(url)
-            print('MADE REQUEST iows')
             if not response.ok:
                 raise WrongItemCodeError(input_items[0])
 
