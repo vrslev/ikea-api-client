@@ -1,6 +1,10 @@
 from requests import Session
-from ...utils import parse_item_code
+from ...utils import parse_item_code, get_config_values
 from ...constants import Constants
+
+
+config = get_config_values()
+country_code, language_code = config['country_code'], config['language_code']
 
 
 class ItemFetchError(Exception):
@@ -12,7 +16,7 @@ def build_headers(headers):
         'Origin': Constants.BASE_URL,
         'User-Agent': Constants.USER_AGENT,
         'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'ru',
+        'Accept-Language': language_code,
         'Connection': 'keep-alive'
     }
     new_headers.update(headers)

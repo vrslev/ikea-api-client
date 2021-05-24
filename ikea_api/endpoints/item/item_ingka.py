@@ -1,10 +1,10 @@
-from ...constants import Constants
-from ...utils import get_config_values
-from . import ItemFetchError, generic_item_fetcher
-
-
-config = get_config_values()
-country_code, language_code = config['country_code'], config['language_code']
+from . import (
+    ItemFetchError,
+    generic_item_fetcher,
+    Constants,
+    language_code,
+    country_code
+)
 
 
 def _fetch_items_specs(session, items: list) -> dict:

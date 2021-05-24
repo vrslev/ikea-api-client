@@ -1,13 +1,15 @@
 import re
 import asyncio
 import aiohttp
-from ...constants import Constants
-from ...utils import get_config_values, parse_item_code
-from . import ItemFetchError, build_headers
 
-
-config = get_config_values()
-country_code, language_code = config['country_code'], config['language_code']
+from . import (
+    ItemFetchError,
+    build_headers,
+    parse_item_code,
+    Constants,
+    language_code,
+    country_code
+)
 
 
 def _async_fetch(urls, headers):
