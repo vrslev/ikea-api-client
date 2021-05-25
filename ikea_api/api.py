@@ -7,7 +7,7 @@ from .errors import (
 )
 from .utils import get_config_values
 from .constants import Constants
-
+from json.decoder import JSONDecodeError
 
 class Api:
     def __init__(self, token, endpoint):
@@ -70,13 +70,17 @@ class Api:
         """Call one of IKEA's API"""
         if not endpoint:
             endpoint = self.endpoint
+            
         if data:
             response = self.session.post(endpoint, headers=headers, json=data)
         else:
             response = self.session.get(endpoint, headers=headers)
-        if not response.text:
+
+        try:
+            response_json = response.json()
+        except JSONDecodeError:
             return
-        response_json = response.json()
+
         self.basic_error_handler(response.status_code, response_json)
         self.error_handler(response.status_code, response_json)
         if not response.ok:
