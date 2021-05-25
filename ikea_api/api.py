@@ -74,6 +74,8 @@ class Api:
             response = self.session.post(endpoint, headers=headers, json=data)
         else:
             response = self.session.get(endpoint, headers=headers)
+        if not response.text:
+            return
         response_json = response.json()
         self.basic_error_handler(response.status_code, response_json)
         self.error_handler(response.status_code, response_json)

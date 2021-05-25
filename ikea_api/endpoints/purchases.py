@@ -24,9 +24,10 @@ class Purchases(Api):
         }
         return self.call_api(data=payload)
 
-    def purchase_info(self, purchase_id):
+    def purchase_info(self, purchase_id, email=None):
         headers = {
-            'Referer': '{}/{}/'.format(self.session.headers['Origin'], purchase_id)}
+            'Referer': '{}/{}/'.format(self.session.headers['Origin'], purchase_id)
+        }
         payload = [
             {
                 "operationName": "StatusBannerOrder",
@@ -45,4 +46,10 @@ class Purchases(Api):
                 "query": "query CostsOrder($orderNumber: String!, $liteId: String) {\n  order(orderNumber: $orderNumber, liteId: $liteId) {\n    id\n    costs {\n      ...Costs\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment Costs on Costs {\n  total {\n    ...Money\n    __typename\n  }\n  delivery {\n    ...Money\n    __typename\n  }\n  service {\n    ...Money\n    __typename\n  }\n  discount {\n    ...Money\n    __typename\n  }\n  sub {\n    ...Money\n    __typename\n  }\n  tax {\n    ...Money\n    __typename\n  }\n  taxRates {\n    ...TaxRate\n    __typename\n  }\n  __typename\n}\n\nfragment Money on Money {\n  code\n  value\n  __typename\n}\n\nfragment TaxRate on TaxRate {\n  percentage\n  name\n  amount {\n    ...Money\n    __typename\n  }\n  __typename\n}\n"
             }
         ]
+
+        if email:
+            headers['Referer'] = self.session.headers['Referer'] + 'lookup'
+            for d in payload:
+                d['variables']['liteId'] = email
+
         return self.call_api(data=payload, headers=headers)
