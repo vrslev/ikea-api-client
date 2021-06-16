@@ -1,4 +1,4 @@
-requests
+aiohttp
 bs4
 brotli
-aiohttp
+requests
