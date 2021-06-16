@@ -1,16 +1,12 @@
-from json import loads
-from string import ascii_letters, digits
-from random import SystemRandom
+import json
 from base64 import urlsafe_b64encode, b64decode
-from hashlib import sha256
-from urllib.parse import urlparse, parse_qs
-import re
-
-from requests import Session, post
 from bs4 import BeautifulSoup
-
 from .constants import Constants
-from .utils import check_response, get_config_values, get_client_id_from_login_page
+from .utils import (
+    check_response,
+    get_config_values,
+    get_client_id_from_login_page
+)
 from .errors import (
     InvalidRetailUnitError,
     UnauthorizedError,
@@ -20,6 +16,7 @@ from .errors import (
 
 def get_guest_token():
     """Token expires in 30 days"""
+    from requests import post
     url = 'https://api.ingka.ikea.com/guest/token'
     headers = {
         'Accept': '*/*',
@@ -43,29 +40,12 @@ def get_guest_token():
     return token
 
 
-def generate_token():
-    """https://github.com/lepture/authlib"""
-    rand = SystemRandom()
-    return ''.join(rand.choice(ascii_letters + digits) for _ in range(48))
-
-
-def create_s256_code_challenge(code_verifier):
+def get_authorized_token(username, password):
     """
-    https://github.com/lepture/authlib
-    Create S256 code_challenge with the given code_verifier.
+    OAuth2 authorization
+    Token expires in 24 hours
     """
-    data = sha256(
-        bytes(code_verifier.encode('ascii', 'strict'))).digest()
-    return urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
-
-
-def decode_jwt(token):
-    matches = re.findall(r'\.(.*)\.', token)
-    if len(matches) != 1:
-        pass
-    payload = b64decode(matches[0])
-    decoded = loads(payload)
-    return decoded
+    return Auth(username, password).token
 
 
 class Auth:
@@ -75,6 +55,7 @@ class Auth:
     """
 
     def __init__(self, username, password):
+        from requests import Session
         self.session = Session()
         self.session.headers.update({
             'Accept-Language': 'en-us',
@@ -102,7 +83,7 @@ class Auth:
         1. /autorize
         Get Auth0 config
         """
-        self.code_verifier = generate_token()
+        self.code_verifier = self._generate_token()
         endpoint = 'https://{}.accounts.ikea.com/authorize'.format(
             self.country_code)
         self.main_url = '{}/{}/{}/profile/login/'.format(
@@ -112,13 +93,13 @@ class Auth:
             'redirect_uri': self.main_url,
             'response_type': 'code',
             'ui_locales': '{}-{}'.format(self.language_code, self.country_code.upper()),
-            'code_chalenge': create_s256_code_challenge(self.code_verifier),
+            'code_chalenge': self._create_s256_code_challenge(),
             'code_chalenge_method': 'S256',
             'scope': 'openid profile email',
             'audience': 'https://retail.api.ikea.com',
             'registration': '{"bveventid":null}',
             'consumer': 'OWF',
-            'state': generate_token(),
+            'state': self._generate_token(),
             'auth0Client': 'eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS4xNC4zIn0='
         }
         headers = {
@@ -133,7 +114,7 @@ class Auth:
             'script', id='a0-config')
         encoded_config = BeautifulSoup(response.text, 'html.parser').find(
             'script', id='a0-config').get('data-config')
-        session_config = loads(b64decode(encoded_config))
+        session_config = json.loads(b64decode(encoded_config))
         return {
             'session_config': session_config,
             'authorize_final_url': response.url
@@ -192,6 +173,7 @@ class Auth:
         3. /login/callback
         Get code parameter from callback
         """
+        from urllib.parse import urlparse, parse_qs
         endpoint = '{}/login/callback'.format(base_url)
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -237,5 +219,31 @@ class Auth:
         check_response(response)
 
         self.token = response.json()['access_token']
-        self.jwt = decode_jwt(self.token)
+        self._decode_and_set_jwt()
         return self.token
+
+    def _generate_token(self):
+        """From https://github.com/lepture/authlib"""
+        from string import ascii_letters, digits
+        from random import SystemRandom
+        rand = SystemRandom()
+        return ''.join(rand.choice(ascii_letters + digits) for _ in range(48))
+
+    def _create_s256_code_challenge(self):
+        """
+        From https://github.com/lepture/authlib
+        Create S256 code_challenge with the given code_verifier.
+        """
+        from hashlib import sha256
+        data = sha256(
+            bytes(self.code_verifier.encode('ascii', 'strict'))).digest()
+        return urlsafe_b64encode(data).rstrip(b'=').decode('utf-8', 'strict')
+
+    def _decode_and_set_jwt(self):
+        from re import findall
+        matches = findall(r'\.(.*)\.', self.token)
+        if len(matches) != 1:
+            pass
+        payload = b64decode(matches[0])
+        decoded = json.loads(payload)
+        self.jwt = decoded

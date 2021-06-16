@@ -34,14 +34,23 @@ class TokenDecodeError(Exception):
     pass
 
 
-class GraphqlValidationError(Exception):
+class GraphqlError(Exception):
     def __init__(self, err):
-        super().__init__(err['message'])
+        if 'path' in err:
+            msg = '{0}: {1}'.format(err['message'], err['path'])
+        elif 'locations' in err:
+            msg = '{0}: {1}'.format(err['message'], err['locations'])
+        else:
+            msg = err['message']
+        super().__init__(msg)
 
 
-class GraphqlParseError(Exception):
-    def __init__(self, err):
-        super().__init__(err['message'])
+class GraphqlValidationError(GraphqlError):
+    pass
+
+
+class GraphqlParseError(GraphqlError):
+    pass
 
 
 class WrongItemCodeError(Exception):
@@ -56,7 +65,8 @@ class WrongItemCodeError(Exception):
             msg = err['message']
         else:
             msg = None
-        super().__init__(msg) if msg else super().__init__()
+
+        super().__init__(msg)
 
 
 class InvalidRetailUnitError(Exception):
