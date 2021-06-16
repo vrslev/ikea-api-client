@@ -1,8 +1,8 @@
 {
     "data": {
-        "addItems": {
+        "updateItems": {
             "currency": "RUB",
-            "checksum": "WIiMPYm7hmJiArmNK59wr1y2VE+YqGnb",
+            "checksum": "WfxumtuAjcUc3qLJHu+gG8QYyESCkDrb",
             "context": {
                 "userId": "userId",
                 "isAnonymous": true,
@@ -12,7 +12,7 @@
             "items": [
                 {
                     "itemNo": "90428328",
-                    "quantity": 1,
+                    "quantity": 5,
                     "type": "ART",
                     "fees": null,
                     "isFamilyItem": false,
@@ -29,12 +29,12 @@
                             "previousPrice": null
                         },
                         "subTotalExclDiscount": {
-                            "inclTax": 599,
+                            "inclTax": 2995,
                             "exclTax": 0,
                             "tax": null
                         },
                         "subTotalInclDiscount": {
-                            "inclTax": 599,
+                            "inclTax": 2995,
                             "exclTax": 0,
                             "tax": null
                         },
@@ -52,12 +52,12 @@
                             "validTo": null
                         },
                         "subTotalExclDiscount": {
-                            "inclTax": 599,
+                            "inclTax": 2995,
                             "exclTax": 0,
                             "tax": null
                         },
                         "subTotalInclDiscount": {
-                            "inclTax": 599,
+                            "inclTax": 2995,
                             "exclTax": 0,
                             "tax": null
                         },
@@ -415,12 +415,12 @@
             ],
             "regularTotalPrice": {
                 "totalExclDiscount": {
-                    "inclTax": 599,
+                    "inclTax": 2995,
                     "exclTax": 0,
                     "tax": null
                 },
                 "totalInclDiscount": {
-                    "inclTax": 599,
+                    "inclTax": 2995,
                     "exclTax": 0,
                     "tax": null
                 },
@@ -433,12 +433,12 @@
             },
             "familyTotalPrice": {
                 "totalExclDiscount": {
-                    "inclTax": 599,
+                    "inclTax": 2995,
                     "exclTax": 0,
                     "tax": null
                 },
                 "totalInclDiscount": {
-                    "inclTax": 599,
+                    "inclTax": 2995,
                     "exclTax": 0,
                     "tax": null
                 },

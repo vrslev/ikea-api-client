@@ -10,17 +10,14 @@
                     "formattedShortDate": "19.04.2021",
                     "formattedLongDate": "19 апреля 2021",
                     "formattedShortDateTime": "19.04.2021 13:12",
-                    "formattedLongDateTime": "19 апреля 2021, 13:12",
-                    "__typename": "DateAndTime"
+                    "formattedLongDateTime": "19 апреля 2021, 13:12"
                 },
                 "status": "IN_PROGRESS",
                 "storeName": "IKEA",
                 "totalCost": {
                     "code": "RUB",
-                    "value": 8326.0,
-                    "__typename": "Money"
-                },
-                "__typename": "HistoricalPurchase"
+                    "value": 8326.0
+                }
             },
             {
                 "id": "111111110",
@@ -31,17 +28,14 @@
                     "formattedShortDate": "14.04.2021",
                     "formattedLongDate": "14 апреля 2021",
                     "formattedShortDateTime": "14.04.2021 21:16",
-                    "formattedLongDateTime": "14 апреля 2021, 21:16",
-                    "__typename": "DateAndTime"
+                    "formattedLongDateTime": "14 апреля 2021, 21:16"
                 },
                 "status": "COMPLETED",
                 "storeName": "IKEA",
                 "totalCost": {
                     "code": null,
-                    "value": null,
-                    "__typename": "Money"
-                },
-                "__typename": "HistoricalPurchase"
+                    "value": null
+                }
             }
         ]
     }

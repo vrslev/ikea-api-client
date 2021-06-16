@@ -1,359 +1,187 @@
 [
     {
-        "id": "d2b4ea76-b3c9-4e20-9b3f-1cb7219fb914",
-        "solutionId": "HD~3~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
+        "id": "4a36e175-797e-4a60-bc6d-5ca6cb540b67",
+        "solutionId": "HD~4~CURBSIDE",
+        "deliveryArrangementId": "20210616161048444872152",
         "fulfillmentMethodType": "HOME_DELIVERY",
         "servicePrice": {
-            "amount": "1999",
+            "amount": "999",
             "taxDetails": [
                 {
-                    "taxableAmount": "1665.83",
-                    "taxPercentage": "2E+1",
-                    "taxCode": "2",
-                    "taxAmount": "333.17",
-                    "taxType": "VAT"
-                }
-            ],
-            "currencyCode": "RUB",
-            "inclTax": 1999,
-            "exclTax": 1665.83,
-            "tax": 333.17
-        },
-        "price": {
-            "type": "SHIPPING_PRICE",
-            "inclTax": 1999,
-            "exclTax": 1665.83,
-            "tax": 333.17,
-            "regularPrice": {
-                "inclTax": 1999,
-                "exclTax": 1665.83,
-                "tax": 333.17,
-                "taxList": [
-                    {
-                        "taxJurisdiction": {
-                            "taxJurisdictionType": "CTY",
-                            "taxJurisdictionCode": "RU"
-                        },
-                        "type": "VAT",
-                        "code": "2",
-                        "taxPercentage": 20.0,
-                        "taxAmount": 333.17,
-                        "taxableAmount": 1665.83
-                    }
-                ],
-                "discountList": null,
-                "discountSummary": null,
-                "perItemPrice": null,
-                "perItemSalePrice": null,
-                "taxSummaryList": null,
-                "totalOrderSavings": null
-            },
-            "familyPrice": null,
-            "taxList": [
-                {
-                    "taxJurisdiction": {
-                        "taxJurisdictionType": "CTY",
-                        "taxJurisdictionCode": "RU"
-                    },
-                    "type": "VAT",
-                    "code": "2",
-                    "taxPercentage": 20.0,
-                    "taxAmount": 333.17,
-                    "taxableAmount": 1665.83
-                }
-            ],
-            "currencyCode": "RUB",
-            "discountList": null,
-            "rollUpPriceType": "REGULAR",
-            "taxSummaryList": null,
-            "discountSummary": null,
-            "totalOrderSavings": null
-        },
-        "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.792Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
-        "deliveries": [
-            {
-                "id": "80c57783-518f-4ca5-9b06-bc885b4c07a4",
-                "type": "TRUCK",
-                "deliveryItems": [
-                    {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
-                        "itemType": "ART",
-                        "itemId": "1",
-                        "parentId": null,
-                        "quantity": "4",
-                        "shipNode": "STO.344",
-                        "exceptionalQty": false
-                    }
-                ],
-                "deliveryPrice": {
-                    "amount": "1999",
-                    "taxDetails": [
-                        {
-                            "taxableAmount": "1665.83",
-                            "taxPercentage": "2E+1",
-                            "taxCode": "2",
-                            "taxAmount": "333.17",
-                            "taxType": "VAT"
-                        }
-                    ],
-                    "currencyCode": "RUB",
-                    "inclTax": 1999,
-                    "exclTax": 1665.83,
-                    "tax": 333.17
-                },
-                "price": {
-                    "type": "SHIPPING_PRICE",
-                    "inclTax": 1999,
-                    "exclTax": 1665.83,
-                    "tax": 333.17,
-                    "regularPrice": {
-                        "inclTax": 1999,
-                        "exclTax": 1665.83,
-                        "tax": 333.17,
-                        "taxList": [
-                            {
-                                "taxJurisdiction": {
-                                    "taxJurisdictionType": "CTY",
-                                    "taxJurisdictionCode": "RU"
-                                },
-                                "type": "VAT",
-                                "code": "2",
-                                "taxPercentage": 20.0,
-                                "taxAmount": 333.17,
-                                "taxableAmount": 1665.83
-                            }
-                        ],
-                        "discountList": null,
-                        "discountSummary": null,
-                        "perItemPrice": null,
-                        "perItemSalePrice": null,
-                        "taxSummaryList": null,
-                        "totalOrderSavings": null
-                    },
-                    "familyPrice": null,
-                    "taxList": [
-                        {
-                            "taxJurisdiction": {
-                                "taxJurisdictionType": "CTY",
-                                "taxJurisdictionCode": "RU"
-                            },
-                            "type": "VAT",
-                            "code": "2",
-                            "taxPercentage": 20.0,
-                            "taxAmount": 333.17,
-                            "taxableAmount": 1665.83
-                        }
-                    ],
-                    "currencyCode": "RUB",
-                    "discountList": null,
-                    "rollUpPriceType": "REGULAR",
-                    "taxSummaryList": null,
-                    "discountSummary": null,
-                    "totalOrderSavings": null
-                },
-                "serviceItemId": "SGR40000606",
-                "unitOfMeasure": "ORDERS",
-                "shipNode": null,
-                "fulfillmentDeliveryId": "HD~~~2",
-                "timeWindows": [
-                    {
-                        "id": "35ea274a-9e83-4646-83ff-0fcc014cfccf",
-                        "fromDateTime": "2021-04-23T08:00:00.000",
-                        "toDateTime": "2021-04-23T12:00:00.000",
-                        "resourcePoolId": "vKJWtcRtFEWVXg/MAQBT5g==",
-                        "node": "STO.344",
-                        "selected": true,
-                        "timeZone": "Europe/Moscow",
-                        "pageNum": null,
-                        "startTime": "2021-04-23T08:00:00",
-                        "endTime": null,
-                        "slotAttributeGroup": "HD~3~STANDARD~~~HD~~~2~344",
-                        "tspID": null,
-                        "tspName": null
-                    }
-                ],
-                "timeWindowsStartDate": null,
-                "selectedTimeWindow": {
-                    "id": "35ea274a-9e83-4646-83ff-0fcc014cfccf",
-                    "fromDateTime": "2021-04-23T08:00:00.000",
-                    "toDateTime": "2021-04-23T12:00:00.000",
-                    "resourcePoolId": "vKJWtcRtFEWVXg/MAQBT5g==",
-                    "node": "STO.344",
-                    "selected": true,
-                    "timeZone": "Europe/Moscow",
-                    "pageNum": null,
-                    "startTime": "2021-04-23T08:00:00",
-                    "endTime": null,
-                    "slotAttributeGroup": "HD~3~STANDARD~~~HD~~~2~344",
-                    "tspID": null,
-                    "tspName": null
-                },
-                "pickUpPoints": null,
-                "selectedPickupPoint": null,
-                "maxTWPageNum": null,
-                "rangeOfDays": false,
-                "exceptionalQty": false,
-                "exceptionalVolume": false,
-                "multifetchTimeWindows": false
-            }
-        ],
-        "selected": true,
-        "errorMessage": null,
-        "estimatedDeliveryDaysMin": null,
-        "estimatedDeliveryDaysMax": null,
-        "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
-    },
-    {
-        "id": "52a2f236-bc88-4160-abc2-d6c25c79fa2d",
-        "solutionId": "HD~3~CURBSIDE",
-        "deliveryArrangementId": "20210421154956306030840",
-        "fulfillmentMethodType": "HOME_DELIVERY",
-        "servicePrice": {
-            "amount": "1499",
-            "taxDetails": [
-                {
-                    "taxableAmount": "1249.17",
+                    "taxableAmount": "832.5",
                     "taxPercentage": "20",
                     "taxCode": "0",
-                    "taxAmount": "249.83",
+                    "taxAmount": "166.5",
                     "taxType": "VAT"
                 }
             ],
             "currencyCode": "RUB",
-            "inclTax": 1499,
-            "exclTax": 1249.17
+            "inclTax": 999,
+            "exclTax": 832.5
         },
         "price": null,
         "servicetype": "CURBSIDE",
-        "expiryTime": "2021-04-21T16:19:59.792Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
+        "expiryTime": "2021-06-16T16:40:52.499Z",
+        "unavailableItems": [
+            {
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
+            }
+        ],
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
         "deliveries": [
             {
-                "id": "47ffc7da-8fd1-4243-8fec-7472f4b39368",
+                "id": "dd812d9f-3a3d-460f-81b8-13e98f40af06",
                 "type": "TRUCK",
                 "deliveryItems": [
                     {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
                         "itemType": "ART",
-                        "itemId": "1",
+                        "itemId": "2",
                         "parentId": null,
                         "quantity": "4",
-                        "shipNode": "STO.344",
+                        "shipNode": "STO.335",
                         "exceptionalQty": false
                     }
                 ],
                 "deliveryPrice": {
-                    "amount": "1499",
+                    "amount": "999",
                     "taxDetails": [
                         {
-                            "taxableAmount": "1249.17",
+                            "taxableAmount": "832.5",
                             "taxPercentage": "20",
                             "taxCode": "0",
-                            "taxAmount": "249.83",
+                            "taxAmount": "166.5",
                             "taxType": "VAT"
                         }
                     ],
                     "currencyCode": "RUB",
-                    "inclTax": 1499,
-                    "exclTax": 1249.17
+                    "inclTax": 999,
+                    "exclTax": 832.5
                 },
                 "price": null,
                 "serviceItemId": "SGR90000897",
                 "unitOfMeasure": "ORDERS",
                 "shipNode": null,
-                "fulfillmentDeliveryId": "HD~~~16",
+                "fulfillmentDeliveryId": "HD~~~6",
                 "timeWindows": [
                     {
-                        "id": "35ea274a-9e83-4646-83ff-0fcc014cfccf",
-                        "fromDateTime": "2021-04-23T08:00:00.000",
-                        "toDateTime": "2021-04-23T12:00:00.000",
-                        "resourcePoolId": "vKJWtcRtFEWVXg/MAQBT5g==",
-                        "node": "STO.344",
+                        "id": "4f9b3695-af2d-497e-bafb-1019013be9b8",
+                        "fromDateTime": "2021-06-18T14:00:00.000",
+                        "toDateTime": "2021-06-18T18:00:00.000",
+                        "resourcePoolId": "W9bTJHpHZkm7cRAZASQfAg==",
+                        "node": "STO.335",
                         "selected": true,
                         "timeZone": "Europe/Moscow",
                         "pageNum": null,
-                        "startTime": "2021-04-23T08:00:00",
+                        "startTime": "2021-06-18T14:00:00",
                         "endTime": null,
-                        "slotAttributeGroup": "HD~3~CURBSIDE~~~HD~~~16~344",
-                        "tspID": null,
+                        "slotAttributeGroup": "HD~1~CURBSIDE~~~HD~~~8~335",
+                        "tspID": "50151",
                         "tspName": null
                     }
                 ],
                 "timeWindowsStartDate": null,
                 "selectedTimeWindow": {
-                    "id": "35ea274a-9e83-4646-83ff-0fcc014cfccf",
-                    "fromDateTime": "2021-04-23T08:00:00.000",
-                    "toDateTime": "2021-04-23T12:00:00.000",
-                    "resourcePoolId": "vKJWtcRtFEWVXg/MAQBT5g==",
-                    "node": "STO.344",
+                    "id": "4f9b3695-af2d-497e-bafb-1019013be9b8",
+                    "fromDateTime": "2021-06-18T14:00:00.000",
+                    "toDateTime": "2021-06-18T18:00:00.000",
+                    "resourcePoolId": "W9bTJHpHZkm7cRAZASQfAg==",
+                    "node": "STO.335",
                     "selected": true,
                     "timeZone": "Europe/Moscow",
                     "pageNum": null,
-                    "startTime": "2021-04-23T08:00:00",
+                    "startTime": "2021-06-18T14:00:00",
                     "endTime": null,
-                    "slotAttributeGroup": "HD~3~CURBSIDE~~~HD~~~16~344",
-                    "tspID": null,
+                    "slotAttributeGroup": "HD~1~CURBSIDE~~~HD~~~8~335",
+                    "tspID": "50151",
                     "tspName": null
                 },
                 "pickUpPoints": null,
                 "selectedPickupPoint": null,
                 "maxTWPageNum": null,
                 "rangeOfDays": false,
-                "exceptionalQty": false,
                 "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
             }
         ],
         "selected": false,
-        "errorMessage": null,
+        "errorMessage": {
+            "errorDescription": "Partially available delivery service",
+            "errorCode": "10127"
+        },
         "estimatedDeliveryDaysMin": null,
         "estimatedDeliveryDaysMax": null,
         "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
     },
     {
-        "id": "a7821e0d-46da-4ccd-b8cf-227c07267ca3",
-        "solutionId": "PUP~6~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
+        "id": "9fa299fe-f948-4564-8eed-0e8b5ec93d1f",
+        "solutionId": "PUP~4~STANDARD",
+        "deliveryArrangementId": "20210616161048444872152",
         "fulfillmentMethodType": "PUP",
         "servicePrice": {
-            "amount": "799",
+            "amount": "399",
             "taxDetails": [
                 {
-                    "taxableAmount": "665.83",
+                    "taxableAmount": "332.5",
                     "taxPercentage": "20",
                     "taxCode": "0",
-                    "taxAmount": "133.17",
+                    "taxAmount": "66.5",
                     "taxType": "VAT"
                 }
             ],
             "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
+            "inclTax": 399,
+            "exclTax": 332.5
         },
         "price": null,
         "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
+        "expiryTime": "2021-06-16T16:40:52.502Z",
+        "unavailableItems": [
+            {
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
+            }
+        ],
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
         "deliveries": [
             {
-                "id": "07ede45a-7f9e-4f20-8e59-f787174057f0",
+                "id": "b2e76403-8bd1-404a-ab83-d0fb09962817",
                 "type": "TRUCK",
                 "deliveryItems": [
                     {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
                         "itemType": "ART",
-                        "itemId": "1",
+                        "itemId": "2",
                         "parentId": null,
                         "quantity": "4",
                         "shipNode": "CDC.032",
@@ -361,19 +189,19 @@
                     }
                 ],
                 "deliveryPrice": {
-                    "amount": "799",
+                    "amount": "399",
                     "taxDetails": [
                         {
-                            "taxableAmount": "665.83",
+                            "taxableAmount": "332.5",
                             "taxPercentage": "20",
                             "taxCode": "0",
-                            "taxAmount": "133.17",
+                            "taxAmount": "66.5",
                             "taxType": "VAT"
                         }
                     ],
                     "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
+                    "inclTax": 399,
+                    "exclTax": 332.5
                 },
                 "price": null,
                 "serviceItemId": "SGR60000851",
@@ -382,35 +210,35 @@
                 "fulfillmentDeliveryId": "PUP~~~2",
                 "timeWindows": [
                     {
-                        "id": "4af9cab0-f40f-49d7-8308-0fe9014ab05b",
-                        "fromDateTime": "2021-04-26T09:00:00.000",
-                        "toDateTime": "2021-04-26T18:00:00.000",
-                        "resourcePoolId": "k38h6xS1Z0+OCw9wANy98g==",
-                        "node": "LSC.2175",
+                        "id": "c3a11fb8-634a-4af1-865b-103d0001a690",
+                        "fromDateTime": "2021-06-21T09:00:00.000",
+                        "toDateTime": "2021-06-21T18:00:00.000",
+                        "resourcePoolId": "G1SeyPffdUiW3hA8AV7uJQ==",
+                        "node": "LSC.2130",
                         "selected": true,
                         "timeZone": "Europe/Moscow",
                         "pageNum": null,
-                        "startTime": "2021-04-26T09:00:00",
+                        "startTime": "2021-06-21T09:00:00",
                         "endTime": null,
-                        "slotAttributeGroup": "PUP~6~STANDARD~~~PUP~~~2~2175",
-                        "tspID": null,
+                        "slotAttributeGroup": "PUP~4~STANDARD~~~PUP~~~2~2130",
+                        "tspID": "50021",
                         "tspName": null
                     }
                 ],
                 "timeWindowsStartDate": null,
                 "selectedTimeWindow": {
-                    "id": "4af9cab0-f40f-49d7-8308-0fe9014ab05b",
-                    "fromDateTime": "2021-04-26T09:00:00.000",
-                    "toDateTime": "2021-04-26T18:00:00.000",
-                    "resourcePoolId": "k38h6xS1Z0+OCw9wANy98g==",
-                    "node": "LSC.2175",
+                    "id": "c3a11fb8-634a-4af1-865b-103d0001a690",
+                    "fromDateTime": "2021-06-21T09:00:00.000",
+                    "toDateTime": "2021-06-21T18:00:00.000",
+                    "resourcePoolId": "G1SeyPffdUiW3hA8AV7uJQ==",
+                    "node": "LSC.2130",
                     "selected": true,
                     "timeZone": "Europe/Moscow",
                     "pageNum": null,
-                    "startTime": "2021-04-26T09:00:00",
+                    "startTime": "2021-06-21T09:00:00",
                     "endTime": null,
-                    "slotAttributeGroup": "PUP~6~STANDARD~~~PUP~~~2~2175",
-                    "tspID": null,
+                    "slotAttributeGroup": "PUP~4~STANDARD~~~PUP~~~2~2130",
+                    "tspID": "50021",
                     "tspName": null
                 },
                 "pickUpPoints": [
@@ -419,25 +247,25 @@
                         "identifier": "283@BUSINESSLINES_RU",
                         "zipCode": "109316",
                         "openingHoursThuTime": "09:00-20:00",
-                        "distance": 7.51,
+                        "distance": 7.44,
                         "city": "Москва",
                         "openingHoursSatTime": "",
                         "openingHoursWedTime": "09:00-20:00",
                         "openingHoursFriTime": "09:00-20:00",
                         "openingHoursTueTime": "09:00-20:00",
-                        "name": "Москва Восток",
-                        "addressLine1": "Волгоградский пр-кт, 42",
+                        "name": "Терминал Деловые Линии - Москва Восток",
+                        "addressLine1": "Волгоградский пр-кт, 42 корпус 23",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-20:00",
                         "addressLine3": "",
                         "id": "283",
-                        "selected": false,
+                        "selected": true,
                         "state": "",
                         "addressLine4": "корпус 23",
-                        "lsc": "LSC.2175",
-                        "latitude": "55.7094993591309",
-                        "longitude": "37.7095985412598"
+                        "lsc": "LSC.2130",
+                        "latitude": "55.7099990844727",
+                        "longitude": "37.7089004516602"
                     },
                     {
                         "country": "RU",
@@ -450,8 +278,8 @@
                         "openingHoursWedTime": "09:00-20:00",
                         "openingHoursFriTime": "09:00-20:00",
                         "openingHoursTueTime": "09:00-20:00",
-                        "name": "Москва Запад",
-                        "addressLine1": "Рябиновая ул, 37",
+                        "name": "Терминал Деловые Линии - Москва Запад",
+                        "addressLine1": "Рябиновая ул, 37 стр 1",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-20:00",
@@ -460,7 +288,7 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "стр 1",
-                        "lsc": "LSC.2176",
+                        "lsc": "LSC.2175",
                         "latitude": "55.7041015625",
                         "longitude": "37.4241981506348"
                     },
@@ -475,8 +303,8 @@
                         "openingHoursWedTime": "09:00-20:00",
                         "openingHoursFriTime": "09:00-20:00",
                         "openingHoursTueTime": "09:00-20:00",
-                        "name": "Балашиха",
-                        "addressLine1": "Западная коммунальная зона, Энтузиастов ш",
+                        "name": "Терминал Деловые Линии - Балашиха",
+                        "addressLine1": "Западная коммунальная зона, Энтузиастов ш владение 1А",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-20:00",
@@ -485,7 +313,7 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "владение 1А",
-                        "lsc": "LSC.2176",
+                        "lsc": "LSC.2175",
                         "latitude": "55.7849998474121",
                         "longitude": "37.8636016845703"
                     },
@@ -500,8 +328,8 @@
                         "openingHoursWedTime": "00:00-23:59",
                         "openingHoursFriTime": "00:00-23:59",
                         "openingHoursTueTime": "00:00-23:59",
-                        "name": "Москва Север",
-                        "addressLine1": "Лобненская ул",
+                        "name": "Терминал Деловые Линии - Москва Север",
+                        "addressLine1": "Лобненская ул 18",
                         "openingHoursSunTime": "11:00-16:00",
                         "addressLine2": "",
                         "openingHoursMonTime": "08:00-00:00",
@@ -525,8 +353,8 @@
                         "openingHoursWedTime": "00:00-23:59",
                         "openingHoursFriTime": "00:00-23:59",
                         "openingHoursTueTime": "00:00-23:59",
-                        "name": "Москва Юг 2",
-                        "addressLine1": "Подольских Курсантов ул., 17",
+                        "name": "Терминал Деловые Линии - Москва Юг 2",
+                        "addressLine1": "Подольских Курсантов ул., 17 к. 2",
                         "openingHoursSunTime": "00:00-23:59",
                         "addressLine2": "",
                         "openingHoursMonTime": "00:00-23:59",
@@ -550,8 +378,8 @@
                         "openingHoursWedTime": "08:00-20:00",
                         "openingHoursFriTime": "08:00-20:00",
                         "openingHoursTueTime": "08:00-20:00",
-                        "name": "Москва Капотня",
-                        "addressLine1": "Московская обл, Люберецкий р-н, г. Котельники, Дзержинское ш",
+                        "name": "Терминал Деловые Линии - Москва Капотня",
+                        "addressLine1": "Московская обл, Люберецкий р-н, г. Котельники, Дзержинское ш 14",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "08:00-20:00",
@@ -560,7 +388,7 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "14",
-                        "lsc": "LSC.2175",
+                        "lsc": "LSC.2130",
                         "latitude": "55.6463012695313",
                         "longitude": "37.8345985412598"
                     },
@@ -575,8 +403,8 @@
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Мытищи",
-                        "addressLine1": "г. Королев, ул. Пионерская, 2 (ориентир для навигаторов ул. Пионерская",
+                        "name": "Терминал Деловые Линии - Мытищи",
+                        "addressLine1": "г. Королев, ул. Пионерская, 2 (ориентир для навигаторов ул. Пионерская 4к125)",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -585,7 +413,7 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "4к125)",
-                        "lsc": "LSC.2175",
+                        "lsc": "LSC.2130",
                         "latitude": "55.9019012451172",
                         "longitude": "37.7957992553711"
                     },
@@ -600,8 +428,8 @@
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Красногорск",
-                        "addressLine1": "Пятницкое ш 7км",
+                        "name": "Терминал Деловые Линии - Красногорск",
+                        "addressLine1": "Пятницкое ш 7км владение 2",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -610,48 +438,48 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "владение 2",
-                        "lsc": "LSC.2175",
+                        "lsc": "LSC.2130",
                         "latitude": "55.8736991882324",
                         "longitude": "37.3354988098145"
                     },
                     {
                         "country": "RU",
-                        "identifier": "289@BUSINESSLINES_RU",
-                        "zipCode": "143985",
-                        "openingHoursThuTime": "09:00-18:00",
-                        "distance": 25.02,
-                        "city": "Железнодорожный",
-                        "openingHoursSatTime": "",
-                        "openingHoursWedTime": "09:00-18:00",
-                        "openingHoursFriTime": "09:00-18:00",
-                        "openingHoursTueTime": "09:00-18:00",
-                        "name": "Железнодорожный",
-                        "addressLine1": "г. Балашиха, мкр. Саввино, ул. Промышленная",
+                        "identifier": "369@BUSINESSLINES_RU",
+                        "zipCode": "143009",
+                        "openingHoursThuTime": "09:00-20:00",
+                        "distance": 26.61,
+                        "city": "Одинцово",
+                        "openingHoursSatTime": "11:00-16:00",
+                        "openingHoursWedTime": "09:00-20:00",
+                        "openingHoursFriTime": "09:00-20:00",
+                        "openingHoursTueTime": "09:00-20:00",
+                        "name": "Терминал Деловые Линии - Одинцово",
+                        "addressLine1": "ул. Западная 18",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
-                        "openingHoursMonTime": "09:00-18:00",
+                        "openingHoursMonTime": "09:00-20:00",
                         "addressLine3": "",
-                        "id": "289",
+                        "id": "369",
                         "selected": false,
                         "state": "",
-                        "addressLine4": "стр. 46",
-                        "lsc": "LSC.2176",
-                        "latitude": "55.7212982177734",
-                        "longitude": "38.0237007141113"
+                        "addressLine4": "18",
+                        "lsc": "LSC.2175",
+                        "latitude": "55.6721992492676",
+                        "longitude": "37.2349014282227"
                     },
                     {
                         "country": "RU",
                         "identifier": "263@BUSINESSLINES_RU",
                         "zipCode": "140060",
                         "openingHoursThuTime": "09:00-18:00",
-                        "distance": 27.36,
+                        "distance": 27.27,
                         "city": "Томилино",
                         "openingHoursSatTime": "11:00-16:00",
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Томилино",
-                        "addressLine1": "Московская обл., Люберецкий р-н., рп Октябрьский, ул. Ленина",
+                        "name": "Терминал Деловые Линии - Томилино",
+                        "addressLine1": "Московская обл., Люберецкий р-н., рп Октябрьский, ул. Ленина 47",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -660,9 +488,9 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "47",
-                        "lsc": "LSC.2176",
-                        "latitude": "55.6128997802734",
-                        "longitude": "37.9798011779785"
+                        "lsc": "LSC.2175",
+                        "latitude": "55.6119995117188",
+                        "longitude": "37.9766998291016"
                     },
                     {
                         "country": "RU",
@@ -675,8 +503,8 @@
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Пушкино",
-                        "addressLine1": "Кудринское ш",
+                        "name": "Терминал Деловые Линии - Пушкино",
+                        "addressLine1": "Кудринское ш 6",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -691,6 +519,31 @@
                     },
                     {
                         "country": "RU",
+                        "identifier": "250@BUSINESSLINES_RU",
+                        "zipCode": "142101",
+                        "openingHoursThuTime": "09:00-20:00",
+                        "distance": 33.11,
+                        "city": "Подольск",
+                        "openingHoursSatTime": "11:00-16:00",
+                        "openingHoursWedTime": "09:00-20:00",
+                        "openingHoursFriTime": "09:00-20:00",
+                        "openingHoursTueTime": "09:00-20:00",
+                        "name": "Терминал Деловые Линии - Подольск",
+                        "addressLine1": "Нефтебазовский проезд 8",
+                        "openingHoursSunTime": "",
+                        "addressLine2": "",
+                        "openingHoursMonTime": "09:00-20:00",
+                        "addressLine3": "",
+                        "id": "250",
+                        "selected": false,
+                        "state": "",
+                        "addressLine4": "8",
+                        "lsc": "LSC.2175",
+                        "latitude": "55.4639015197754",
+                        "longitude": "37.5761985778809"
+                    },
+                    {
+                        "country": "RU",
                         "identifier": "306@BUSINESSLINES_RU",
                         "zipCode": "124460",
                         "openingHoursThuTime": "09:00-18:00",
@@ -700,8 +553,8 @@
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Зеленоград",
-                        "addressLine1": "2-ой Западный проезд, 1",
+                        "name": "Терминал Деловые Линии - Зеленоград",
+                        "addressLine1": "2-ой Западный проезд, 1 стр. 2",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -719,14 +572,14 @@
                         "identifier": "261@BUSINESSLINES_RU",
                         "zipCode": "142400",
                         "openingHoursThuTime": "09:00-18:00",
-                        "distance": 50.68,
+                        "distance": 50.7,
                         "city": "Ногинск",
                         "openingHoursSatTime": "11:00-16:00",
                         "openingHoursWedTime": "09:00-18:00",
                         "openingHoursFriTime": "09:00-18:00",
                         "openingHoursTueTime": "09:00-18:00",
-                        "name": "Ногинск",
-                        "addressLine1": "Электростальское ш",
+                        "name": "Терминал Деловые Линии - Ногинск",
+                        "addressLine1": "Электростальское ш 1а",
                         "openingHoursSunTime": "",
                         "addressLine2": "",
                         "openingHoursMonTime": "09:00-18:00",
@@ -735,59 +588,9 @@
                         "selected": false,
                         "state": "",
                         "addressLine4": "1а",
-                        "lsc": "LSC.2176",
+                        "lsc": "LSC.2175",
                         "latitude": "55.8348999023438",
-                        "longitude": "38.429500579834"
-                    },
-                    {
-                        "country": "RU",
-                        "identifier": "253@BUSINESSLINES_RU",
-                        "zipCode": "141506",
-                        "openingHoursThuTime": "09:00-18:00",
-                        "distance": 64.75,
-                        "city": "Солнечногорск",
-                        "openingHoursSatTime": "",
-                        "openingHoursWedTime": "09:00-18:00",
-                        "openingHoursFriTime": "09:00-18:00",
-                        "openingHoursTueTime": "09:00-18:00",
-                        "name": "Солнечногорск",
-                        "addressLine1": "Красная ул",
-                        "openingHoursSunTime": "",
-                        "addressLine2": "",
-                        "openingHoursMonTime": "09:00-18:00",
-                        "addressLine3": "",
-                        "id": "253",
-                        "selected": false,
-                        "state": "",
-                        "addressLine4": "161",
-                        "lsc": "LSC.2177",
-                        "latitude": "56.1996994018555",
-                        "longitude": "36.9481010437012"
-                    },
-                    {
-                        "country": "RU",
-                        "identifier": "398@BUSINESSLINES_RU",
-                        "zipCode": "141304",
-                        "openingHoursThuTime": "09:00-18:00",
-                        "distance": 66.0,
-                        "city": "Сергиев Посад",
-                        "openingHoursSatTime": "",
-                        "openingHoursWedTime": "09:00-18:00",
-                        "openingHoursFriTime": "09:00-18:00",
-                        "openingHoursTueTime": "09:00-18:00",
-                        "name": "Сергиев Посад",
-                        "addressLine1": "ул. Фабричная",
-                        "openingHoursSunTime": "",
-                        "addressLine2": "",
-                        "openingHoursMonTime": "09:00-18:00",
-                        "addressLine3": "",
-                        "id": "398",
-                        "selected": false,
-                        "state": "",
-                        "addressLine4": "4А",
-                        "lsc": "LSC.2177",
-                        "latitude": "56.285701751709",
-                        "longitude": "38.1226005554199"
+                        "longitude": "38.4299011230469"
                     }
                 ],
                 "selectedPickupPoint": {
@@ -795,75 +598,96 @@
                     "identifier": "283@BUSINESSLINES_RU",
                     "zipCode": "109316",
                     "openingHoursThuTime": "09:00-20:00",
-                    "distance": 7.51,
+                    "distance": 7.44,
                     "city": "Москва",
                     "openingHoursSatTime": "",
                     "openingHoursWedTime": "09:00-20:00",
                     "openingHoursFriTime": "09:00-20:00",
                     "openingHoursTueTime": "09:00-20:00",
-                    "name": "Москва Восток",
-                    "addressLine1": "Волгоградский пр-кт, 42",
+                    "name": "Терминал Деловые Линии - Москва Восток",
+                    "addressLine1": "Волгоградский пр-кт, 42 корпус 23",
                     "openingHoursSunTime": "",
                     "addressLine2": "",
                     "openingHoursMonTime": "09:00-20:00",
                     "addressLine3": "",
                     "id": "283",
-                    "selected": false,
+                    "selected": true,
                     "state": "",
                     "addressLine4": "корпус 23",
-                    "lsc": "LSC.2175",
-                    "latitude": "55.7094993591309",
-                    "longitude": "37.7095985412598"
+                    "lsc": "LSC.2130",
+                    "latitude": "55.7099990844727",
+                    "longitude": "37.7089004516602"
                 },
                 "maxTWPageNum": null,
                 "rangeOfDays": false,
-                "exceptionalQty": false,
                 "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
             }
         ],
         "selected": false,
-        "errorMessage": null,
+        "errorMessage": {
+            "errorDescription": "Partially available delivery service",
+            "errorCode": "10127"
+        },
         "estimatedDeliveryDaysMin": null,
         "estimatedDeliveryDaysMax": null,
         "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
     },
     {
-        "id": "922e6aa6-8bf4-4237-9b25-0446e53e6834",
-        "solutionId": "PUOP~6~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
+        "id": "1cc5c0de-0a9c-4306-b589-68967e51521b",
+        "solutionId": "PUOP~4~STANDARD",
+        "deliveryArrangementId": "20210616161048444872152",
         "fulfillmentMethodType": "PUOP",
         "servicePrice": {
-            "amount": "799",
+            "amount": "199",
             "taxDetails": [
                 {
-                    "taxableAmount": "665.83",
+                    "taxableAmount": "165.83",
                     "taxPercentage": "20",
                     "taxCode": "0",
-                    "taxAmount": "133.17",
+                    "taxAmount": "33.17",
                     "taxType": "VAT"
                 }
             ],
             "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
+            "inclTax": 199,
+            "exclTax": 165.82999999999998
         },
         "price": null,
         "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
+        "expiryTime": "2021-06-16T16:40:52.508Z",
+        "unavailableItems": [
+            {
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
+            }
+        ],
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
         "deliveries": [
             {
-                "id": "385213ab-47d9-4df9-afa8-271e6efd5887",
+                "id": "10780d68-6801-4b0d-b710-e89e3edb66d1",
                 "type": "TRUCK",
                 "deliveryItems": [
                     {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
                         "itemType": "ART",
-                        "itemId": "1",
+                        "itemId": "2",
                         "parentId": null,
                         "quantity": "4",
                         "shipNode": "CDC.032",
@@ -871,19 +695,19 @@
                     }
                 ],
                 "deliveryPrice": {
-                    "amount": "799",
+                    "amount": "199",
                     "taxDetails": [
                         {
-                            "taxableAmount": "665.83",
+                            "taxableAmount": "165.83",
                             "taxPercentage": "20",
                             "taxCode": "0",
-                            "taxAmount": "133.17",
+                            "taxAmount": "33.17",
                             "taxType": "VAT"
                         }
                     ],
                     "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
+                    "inclTax": 199,
+                    "exclTax": 165.82999999999998
                 },
                 "price": null,
                 "serviceItemId": "SGR40000852",
@@ -892,35 +716,35 @@
                 "fulfillmentDeliveryId": "PUOP~~~2",
                 "timeWindows": [
                     {
-                        "id": "d32d427e-8bda-4216-85a2-0fe6014c2d26",
-                        "fromDateTime": "2021-04-23T15:00:00.000",
-                        "toDateTime": "2021-04-23T22:00:00.000",
+                        "id": "cac626df-13b5-46c1-b190-101e01399892",
+                        "fromDateTime": "2021-06-18T15:00:00.000",
+                        "toDateTime": "2021-06-18T22:00:00.000",
                         "resourcePoolId": "B2vO4DEZCUiM1g9wAO5bNA==",
                         "node": "LSC.2247",
                         "selected": true,
                         "timeZone": "Europe/Moscow",
                         "pageNum": null,
-                        "startTime": "2021-04-23T15:00:00",
+                        "startTime": "2021-06-18T15:00:00",
                         "endTime": null,
-                        "slotAttributeGroup": "PUOP~6~STANDARD~~~PUOP~~~2~2247",
-                        "tspID": null,
+                        "slotAttributeGroup": "PUOP~4~STANDARD~~~PUOP~~~2~2247",
+                        "tspID": "32087",
                         "tspName": null
                     }
                 ],
                 "timeWindowsStartDate": null,
                 "selectedTimeWindow": {
-                    "id": "d32d427e-8bda-4216-85a2-0fe6014c2d26",
-                    "fromDateTime": "2021-04-23T15:00:00.000",
-                    "toDateTime": "2021-04-23T22:00:00.000",
+                    "id": "cac626df-13b5-46c1-b190-101e01399892",
+                    "fromDateTime": "2021-06-18T15:00:00.000",
+                    "toDateTime": "2021-06-18T22:00:00.000",
                     "resourcePoolId": "B2vO4DEZCUiM1g9wAO5bNA==",
                     "node": "LSC.2247",
                     "selected": true,
                     "timeZone": "Europe/Moscow",
                     "pageNum": null,
-                    "startTime": "2021-04-23T15:00:00",
+                    "startTime": "2021-06-18T15:00:00",
                     "endTime": null,
-                    "slotAttributeGroup": "PUOP~6~STANDARD~~~PUOP~~~2~2247",
-                    "tspID": null,
+                    "slotAttributeGroup": "PUOP~4~STANDARD~~~PUOP~~~2~2247",
+                    "tspID": "32087",
                     "tspName": null
                 },
                 "pickUpPoints": [
@@ -942,7 +766,7 @@
                         "openingHoursMonTime": "10:00-22:00",
                         "addressLine3": "",
                         "id": "Икеа Сити в ТРЦ Мозайка",
-                        "selected": false,
+                        "selected": true,
                         "state": "",
                         "addressLine4": "9",
                         "lsc": "LSC.2247",
@@ -1018,7 +842,7 @@
                     "openingHoursMonTime": "10:00-22:00",
                     "addressLine3": "",
                     "id": "Икеа Сити в ТРЦ Мозайка",
-                    "selected": false,
+                    "selected": true,
                     "state": "",
                     "addressLine4": "9",
                     "lsc": "LSC.2247",
@@ -1027,53 +851,74 @@
                 },
                 "maxTWPageNum": null,
                 "rangeOfDays": false,
-                "exceptionalQty": false,
                 "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
             }
         ],
         "selected": false,
-        "errorMessage": null,
+        "errorMessage": {
+            "errorDescription": "Partially available delivery service",
+            "errorCode": "10127"
+        },
         "estimatedDeliveryDaysMin": null,
         "estimatedDeliveryDaysMax": null,
         "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
     },
     {
-        "id": "0750301f-cad6-43b7-a200-07a0c1c08be9",
-        "solutionId": "CCS~4~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
+        "id": "a698fdd1-7e56-4c5d-bc7b-82f03cc503ad",
+        "solutionId": "CCS~2~STANDARD",
+        "deliveryArrangementId": "20210616161048444872152",
         "fulfillmentMethodType": "CLICK_COLLECT_STORE",
         "servicePrice": {
-            "amount": "799",
+            "amount": "199",
             "taxDetails": [
                 {
-                    "taxableAmount": "665.83",
+                    "taxableAmount": "165.83",
                     "taxPercentage": "20",
                     "taxCode": "0",
-                    "taxAmount": "133.17",
+                    "taxAmount": "33.17",
                     "taxType": "VAT"
                 }
             ],
             "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
+            "inclTax": 199,
+            "exclTax": 165.82999999999998
         },
         "price": null,
         "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
+        "expiryTime": "2021-06-16T16:40:52.511Z",
+        "unavailableItems": [
+            {
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
+            }
+        ],
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
         "deliveries": [
             {
-                "id": "bb5216f7-06f5-41c1-b886-010a5c20f21c",
+                "id": "1312d7dc-53eb-452f-8801-c7fb65318d02",
                 "type": "TRUCK",
                 "deliveryItems": [
                     {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
                         "itemType": "ART",
-                        "itemId": "1",
+                        "itemId": "2",
                         "parentId": null,
                         "quantity": "4",
                         "shipNode": "STO.643",
@@ -1081,19 +926,19 @@
                     }
                 ],
                 "deliveryPrice": {
-                    "amount": "799",
+                    "amount": "199",
                     "taxDetails": [
                         {
-                            "taxableAmount": "665.83",
+                            "taxableAmount": "165.83",
                             "taxPercentage": "20",
                             "taxCode": "0",
-                            "taxAmount": "133.17",
+                            "taxAmount": "33.17",
                             "taxType": "VAT"
                         }
                     ],
                     "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
+                    "inclTax": 199,
+                    "exclTax": 165.82999999999998
                 },
                 "price": null,
                 "serviceItemId": "SGR50000875",
@@ -1102,35 +947,35 @@
                 "fulfillmentDeliveryId": "CCS~~~2",
                 "timeWindows": [
                     {
-                        "id": "b249d334-9e2c-4bcb-a99e-0fe5014bca8f",
-                        "fromDateTime": "2021-04-22T10:00:00.000",
-                        "toDateTime": "2021-04-22T12:00:00.000",
+                        "id": "2548b88a-2d00-4491-a6ff-101d013c8bd0",
+                        "fromDateTime": "2021-06-17T10:00:00.000",
+                        "toDateTime": "2021-06-17T12:00:00.000",
                         "resourcePoolId": "I0J/HtBkpkipOA/YATAO/Q==",
                         "node": "STO.643",
                         "selected": true,
                         "timeZone": "Europe/Moscow",
                         "pageNum": null,
-                        "startTime": "2021-04-22T10:00:00",
+                        "startTime": "2021-06-17T10:00:00",
                         "endTime": null,
-                        "slotAttributeGroup": "CCS~4~STANDARD~~~CCS~~~2~643",
-                        "tspID": null,
+                        "slotAttributeGroup": "CCS~2~STANDARD~~~CCS~~~2~643",
+                        "tspID": "32217",
                         "tspName": null
                     }
                 ],
                 "timeWindowsStartDate": null,
                 "selectedTimeWindow": {
-                    "id": "b249d334-9e2c-4bcb-a99e-0fe5014bca8f",
-                    "fromDateTime": "2021-04-22T10:00:00.000",
-                    "toDateTime": "2021-04-22T12:00:00.000",
+                    "id": "2548b88a-2d00-4491-a6ff-101d013c8bd0",
+                    "fromDateTime": "2021-06-17T10:00:00.000",
+                    "toDateTime": "2021-06-17T12:00:00.000",
                     "resourcePoolId": "I0J/HtBkpkipOA/YATAO/Q==",
                     "node": "STO.643",
                     "selected": true,
                     "timeZone": "Europe/Moscow",
                     "pageNum": null,
-                    "startTime": "2021-04-22T10:00:00",
+                    "startTime": "2021-06-17T10:00:00",
                     "endTime": null,
-                    "slotAttributeGroup": "CCS~4~STANDARD~~~CCS~~~2~643",
-                    "tspID": null,
+                    "slotAttributeGroup": "CCS~2~STANDARD~~~CCS~~~2~643",
+                    "tspID": "32217",
                     "tspName": null
                 },
                 "pickUpPoints": [
@@ -1152,7 +997,7 @@
                         "openingHoursMonTime": "10:00-22:00",
                         "addressLine3": "",
                         "id": "Икеа Ростокино (C&C)",
-                        "selected": false,
+                        "selected": true,
                         "state": "",
                         "addressLine4": "211, корп. 2",
                         "lsc": "STO.643",
@@ -1178,7 +1023,7 @@
                     "openingHoursMonTime": "10:00-22:00",
                     "addressLine3": "",
                     "id": "Икеа Ростокино (C&C)",
-                    "selected": false,
+                    "selected": true,
                     "state": "",
                     "addressLine4": "211, корп. 2",
                     "lsc": "STO.643",
@@ -1187,346 +1032,9 @@
                 },
                 "maxTWPageNum": null,
                 "rangeOfDays": false,
-                "exceptionalQty": false,
                 "exceptionalVolume": false,
-                "multifetchTimeWindows": false
-            }
-        ],
-        "selected": false,
-        "errorMessage": null,
-        "estimatedDeliveryDaysMin": null,
-        "estimatedDeliveryDaysMax": null,
-        "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
-    },
-    {
-        "id": "2c7e1b4a-2d0f-46e4-8435-68dde35fe9bc",
-        "solutionId": "CCS~1~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
-        "fulfillmentMethodType": "CLICK_COLLECT_STORE",
-        "servicePrice": {
-            "amount": "799",
-            "taxDetails": [
-                {
-                    "taxableAmount": "665.83",
-                    "taxPercentage": "20",
-                    "taxCode": "0",
-                    "taxAmount": "133.17",
-                    "taxType": "VAT"
-                }
-            ],
-            "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
-        },
-        "price": null,
-        "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
-        "deliveries": [
-            {
-                "id": "8873f23c-abe4-4dae-82f9-0e917fcff7e9",
-                "type": "TRUCK",
-                "deliveryItems": [
-                    {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
-                        "itemType": "ART",
-                        "itemId": "1",
-                        "parentId": null,
-                        "quantity": "4",
-                        "shipNode": "STO.335",
-                        "exceptionalQty": false
-                    }
-                ],
-                "deliveryPrice": {
-                    "amount": "799",
-                    "taxDetails": [
-                        {
-                            "taxableAmount": "665.83",
-                            "taxPercentage": "20",
-                            "taxCode": "0",
-                            "taxAmount": "133.17",
-                            "taxType": "VAT"
-                        }
-                    ],
-                    "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
-                },
-                "price": null,
-                "serviceItemId": "SGR50000875",
-                "unitOfMeasure": "ORDERS",
-                "shipNode": null,
-                "fulfillmentDeliveryId": "CCS~~~4",
-                "timeWindows": [
-                    {
-                        "id": "c9c76846-7be7-4139-b107-0fbb014be128",
-                        "fromDateTime": "2021-04-22T14:00:00.000",
-                        "toDateTime": "2021-04-22T16:00:00.000",
-                        "resourcePoolId": "UFBIzVnaMU2KPw9+APBM9Q==",
-                        "node": "STO.335",
-                        "selected": true,
-                        "timeZone": "Europe/Moscow",
-                        "pageNum": null,
-                        "startTime": "2021-04-22T14:00:00",
-                        "endTime": null,
-                        "slotAttributeGroup": "CCS~1~STANDARD~~~CCS~~~4~335",
-                        "tspID": null,
-                        "tspName": null
-                    }
-                ],
-                "timeWindowsStartDate": null,
-                "selectedTimeWindow": {
-                    "id": "c9c76846-7be7-4139-b107-0fbb014be128",
-                    "fromDateTime": "2021-04-22T14:00:00.000",
-                    "toDateTime": "2021-04-22T16:00:00.000",
-                    "resourcePoolId": "UFBIzVnaMU2KPw9+APBM9Q==",
-                    "node": "STO.335",
-                    "selected": true,
-                    "timeZone": "Europe/Moscow",
-                    "pageNum": null,
-                    "startTime": "2021-04-22T14:00:00",
-                    "endTime": null,
-                    "slotAttributeGroup": "CCS~1~STANDARD~~~CCS~~~4~335",
-                    "tspID": null,
-                    "tspName": null
-                },
-                "pickUpPoints": [
-                    {
-                        "country": "RU",
-                        "identifier": "ИКЕА Химки@IKEASTORE_RU",
-                        "zipCode": "141400",
-                        "openingHoursThuTime": "10:00-22:00",
-                        "distance": 22.05,
-                        "city": "Химки",
-                        "openingHoursSatTime": "10:00-22:00",
-                        "openingHoursWedTime": "10:00-22:00",
-                        "openingHoursFriTime": "10:00-22:00",
-                        "openingHoursTueTime": "10:00-22:00",
-                        "name": "ИКЕА Химки",
-                        "addressLine1": "м/р-н ИКЕА",
-                        "openingHoursSunTime": "10:00-22:00",
-                        "addressLine2": "",
-                        "openingHoursMonTime": "10:00-22:00",
-                        "addressLine3": "",
-                        "id": "ИКЕА Химки",
-                        "selected": false,
-                        "state": "",
-                        "addressLine4": "корпус 1",
-                        "lsc": "STO.335",
-                        "latitude": "55.9103355407715",
-                        "longitude": "37.3999977111816"
-                    }
-                ],
-                "selectedPickupPoint": {
-                    "country": "RU",
-                    "identifier": "ИКЕА Химки@IKEASTORE_RU",
-                    "zipCode": "141400",
-                    "openingHoursThuTime": "10:00-22:00",
-                    "distance": 22.05,
-                    "city": "Химки",
-                    "openingHoursSatTime": "10:00-22:00",
-                    "openingHoursWedTime": "10:00-22:00",
-                    "openingHoursFriTime": "10:00-22:00",
-                    "openingHoursTueTime": "10:00-22:00",
-                    "name": "ИКЕА Химки",
-                    "addressLine1": "м/р-н ИКЕА",
-                    "openingHoursSunTime": "10:00-22:00",
-                    "addressLine2": "",
-                    "openingHoursMonTime": "10:00-22:00",
-                    "addressLine3": "",
-                    "id": "ИКЕА Химки",
-                    "selected": false,
-                    "state": "",
-                    "addressLine4": "корпус 1",
-                    "lsc": "STO.335",
-                    "latitude": "55.9103355407715",
-                    "longitude": "37.3999977111816"
-                },
-                "maxTWPageNum": null,
-                "rangeOfDays": false,
-                "exceptionalQty": false,
-                "exceptionalVolume": false,
-                "multifetchTimeWindows": false
-            }
-        ],
-        "selected": false,
-        "errorMessage": null,
-        "estimatedDeliveryDaysMin": null,
-        "estimatedDeliveryDaysMax": null,
-        "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
-    },
-    {
-        "id": "f8198d0d-121f-47c6-8c7d-9fa21de69866",
-        "solutionId": "CCS~5~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
-        "fulfillmentMethodType": "CLICK_COLLECT_STORE",
-        "servicePrice": {
-            "amount": "799",
-            "taxDetails": [
-                {
-                    "taxableAmount": "665.83",
-                    "taxPercentage": "20",
-                    "taxCode": "0",
-                    "taxAmount": "133.17",
-                    "taxType": "VAT"
-                }
-            ],
-            "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
-        },
-        "price": null,
-        "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": [
-            {
-                "id": "1",
-                "itemNo": "50497432",
-                "lineId": 1,
-                "type": "ART",
-                "requiredQuantity": 4,
-                "availableQuantity": 2,
-                "unavailabilityReason": "OP_NO_DEL_SRVC_AVAIL",
-                "quantityType": null
-            }
-        ],
-        "unavailableLines": [
-            {
-                "unavailableQty": "2.0",
-                "itemLineId": "1",
-                "unavailableReasonCode": "OP_NO_DEL_SRVC_AVAIL"
-            }
-        ],
-        "deliveries": [
-            {
-                "id": "ac0fe362-eb97-46a4-ac92-3f74a245519a",
-                "type": "TRUCK",
-                "deliveryItems": [
-                    {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
-                        "itemType": "ART",
-                        "itemId": "1",
-                        "parentId": null,
-                        "quantity": "4",
-                        "shipNode": "STO.336",
-                        "exceptionalQty": false
-                    }
-                ],
-                "deliveryPrice": {
-                    "amount": "799",
-                    "taxDetails": [
-                        {
-                            "taxableAmount": "665.83",
-                            "taxPercentage": "20",
-                            "taxCode": "0",
-                            "taxAmount": "133.17",
-                            "taxType": "VAT"
-                        }
-                    ],
-                    "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
-                },
-                "price": null,
-                "serviceItemId": "SGR50000875",
-                "unitOfMeasure": "ORDERS",
-                "shipNode": null,
-                "fulfillmentDeliveryId": "CCS~~~6",
-                "timeWindows": [
-                    {
-                        "id": "9a8de9ad-5ff0-49a3-865d-0fbb014ccf04",
-                        "fromDateTime": "2021-04-22T21:00:00.000",
-                        "toDateTime": "2021-04-22T22:00:00.000",
-                        "resourcePoolId": "xzMo7ndf4k+CPA9+AP/Wqg==",
-                        "node": "STO.336",
-                        "selected": true,
-                        "timeZone": "Europe/Moscow",
-                        "pageNum": null,
-                        "startTime": "2021-04-22T21:00:00",
-                        "endTime": null,
-                        "slotAttributeGroup": "CCS~5~STANDARD~~~CCS~~~6~336",
-                        "tspID": null,
-                        "tspName": null
-                    }
-                ],
-                "timeWindowsStartDate": null,
-                "selectedTimeWindow": {
-                    "id": "9a8de9ad-5ff0-49a3-865d-0fbb014ccf04",
-                    "fromDateTime": "2021-04-22T21:00:00.000",
-                    "toDateTime": "2021-04-22T22:00:00.000",
-                    "resourcePoolId": "xzMo7ndf4k+CPA9+AP/Wqg==",
-                    "node": "STO.336",
-                    "selected": true,
-                    "timeZone": "Europe/Moscow",
-                    "pageNum": null,
-                    "startTime": "2021-04-22T21:00:00",
-                    "endTime": null,
-                    "slotAttributeGroup": "CCS~5~STANDARD~~~CCS~~~6~336",
-                    "tspID": null,
-                    "tspName": null
-                },
-                "pickUpPoints": [
-                    {
-                        "country": "RU",
-                        "identifier": "ИКЕА Тёплый Стан@IKEASTORE_RU",
-                        "zipCode": "108814",
-                        "openingHoursThuTime": "10:00-22:00",
-                        "distance": 19.43,
-                        "city": "Тёплый Стан",
-                        "openingHoursSatTime": "10:00-22:00",
-                        "openingHoursWedTime": "10:00-22:00",
-                        "openingHoursFriTime": "10:00-22:00",
-                        "openingHoursTueTime": "10:00-22:00",
-                        "name": "ИКЕА Тёплый Стан",
-                        "addressLine1": "Калужское шоссе, 21-й километр",
-                        "openingHoursSunTime": "10:00-22:00",
-                        "addressLine2": "",
-                        "openingHoursMonTime": "10:00-22:00",
-                        "addressLine3": "",
-                        "id": "ИКЕА Тёплый Стан",
-                        "selected": false,
-                        "state": "",
-                        "addressLine4": "строение 1",
-                        "lsc": "STO.336",
-                        "latitude": "55.6042327880859",
-                        "longitude": "37.4897804260254"
-                    }
-                ],
-                "selectedPickupPoint": {
-                    "country": "RU",
-                    "identifier": "ИКЕА Тёплый Стан@IKEASTORE_RU",
-                    "zipCode": "108814",
-                    "openingHoursThuTime": "10:00-22:00",
-                    "distance": 19.43,
-                    "city": "Тёплый Стан",
-                    "openingHoursSatTime": "10:00-22:00",
-                    "openingHoursWedTime": "10:00-22:00",
-                    "openingHoursFriTime": "10:00-22:00",
-                    "openingHoursTueTime": "10:00-22:00",
-                    "name": "ИКЕА Тёплый Стан",
-                    "addressLine1": "Калужское шоссе, 21-й километр",
-                    "openingHoursSunTime": "10:00-22:00",
-                    "addressLine2": "",
-                    "openingHoursMonTime": "10:00-22:00",
-                    "addressLine3": "",
-                    "id": "ИКЕА Тёплый Стан",
-                    "selected": false,
-                    "state": "",
-                    "addressLine4": "строение 1",
-                    "lsc": "STO.336",
-                    "latitude": "55.6042327880859",
-                    "longitude": "37.4897804260254"
-                },
-                "maxTWPageNum": null,
-                "rangeOfDays": false,
-                "exceptionalQty": false,
-                "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
             }
         ],
         "selected": false,
@@ -1537,203 +1045,61 @@
         "estimatedDeliveryDaysMin": null,
         "estimatedDeliveryDaysMax": null,
         "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
     },
     {
-        "id": "d81bf3f2-8e50-435d-b67e-a04709ffdfdb",
+        "id": "027849f2-479d-405f-99e6-20b2ccda05e2",
         "solutionId": "CCS~3~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
+        "deliveryArrangementId": "20210616161048444872152",
         "fulfillmentMethodType": "CLICK_COLLECT_STORE",
         "servicePrice": {
-            "amount": "799",
+            "amount": "199",
             "taxDetails": [
                 {
-                    "taxableAmount": "665.83",
+                    "taxableAmount": "165.83",
                     "taxPercentage": "20",
                     "taxCode": "0",
-                    "taxAmount": "133.17",
+                    "taxAmount": "33.17",
                     "taxType": "VAT"
                 }
             ],
             "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
+            "inclTax": 199,
+            "exclTax": 165.82999999999998
         },
         "price": null,
         "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
-        "deliveries": [
+        "expiryTime": "2021-06-16T16:40:52.512Z",
+        "unavailableItems": [
             {
-                "id": "3add2ca4-fa04-47ac-a86b-e0d4acfbea58",
-                "type": "TRUCK",
-                "deliveryItems": [
-                    {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
-                        "itemType": "ART",
-                        "itemId": "1",
-                        "parentId": null,
-                        "quantity": "4",
-                        "shipNode": "STO.344",
-                        "exceptionalQty": false
-                    }
-                ],
-                "deliveryPrice": {
-                    "amount": "799",
-                    "taxDetails": [
-                        {
-                            "taxableAmount": "665.83",
-                            "taxPercentage": "20",
-                            "taxCode": "0",
-                            "taxAmount": "133.17",
-                            "taxType": "VAT"
-                        }
-                    ],
-                    "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
-                },
-                "price": null,
-                "serviceItemId": "SGR50000875",
-                "unitOfMeasure": "ORDERS",
-                "shipNode": null,
-                "fulfillmentDeliveryId": "CCS~~~8",
-                "timeWindows": [
-                    {
-                        "id": "675cd172-66fb-4431-9cee-0fbb014b26cb",
-                        "fromDateTime": "2021-04-22T18:00:00.000",
-                        "toDateTime": "2021-04-22T20:00:00.000",
-                        "resourcePoolId": "judeyfbwL0Cgjg9+AR8OeA==",
-                        "node": "STO.344",
-                        "selected": true,
-                        "timeZone": "Europe/Moscow",
-                        "pageNum": null,
-                        "startTime": "2021-04-22T18:00:00",
-                        "endTime": null,
-                        "slotAttributeGroup": "CCS~3~STANDARD~~~CCS~~~8~344",
-                        "tspID": null,
-                        "tspName": null
-                    }
-                ],
-                "timeWindowsStartDate": null,
-                "selectedTimeWindow": {
-                    "id": "675cd172-66fb-4431-9cee-0fbb014b26cb",
-                    "fromDateTime": "2021-04-22T18:00:00.000",
-                    "toDateTime": "2021-04-22T20:00:00.000",
-                    "resourcePoolId": "judeyfbwL0Cgjg9+AR8OeA==",
-                    "node": "STO.344",
-                    "selected": true,
-                    "timeZone": "Europe/Moscow",
-                    "pageNum": null,
-                    "startTime": "2021-04-22T18:00:00",
-                    "endTime": null,
-                    "slotAttributeGroup": "CCS~3~STANDARD~~~CCS~~~8~344",
-                    "tspID": null,
-                    "tspName": null
-                },
-                "pickUpPoints": [
-                    {
-                        "country": "RU",
-                        "identifier": "ИКЕА Белая Дача@IKEASTORE_RU",
-                        "zipCode": "140089",
-                        "openingHoursThuTime": "10:00-22:00",
-                        "distance": 17.7,
-                        "city": "Котельники",
-                        "openingHoursSatTime": "10:00-22:00",
-                        "openingHoursWedTime": "10:00-22:00",
-                        "openingHoursFriTime": "10:00-22:00",
-                        "openingHoursTueTime": "10:00-22:00",
-                        "name": "ИКЕА Белая Дача",
-                        "addressLine1": "1-ый Покровский проезд",
-                        "openingHoursSunTime": "10:00-22:00",
-                        "addressLine2": "",
-                        "openingHoursMonTime": "10:00-22:00",
-                        "addressLine3": "",
-                        "id": "ИКЕА Белая Дача",
-                        "selected": false,
-                        "state": "",
-                        "addressLine4": "4",
-                        "lsc": "STO.344",
-                        "latitude": "55.6560974121094",
-                        "longitude": "37.8438339233398"
-                    }
-                ],
-                "selectedPickupPoint": {
-                    "country": "RU",
-                    "identifier": "ИКЕА Белая Дача@IKEASTORE_RU",
-                    "zipCode": "140089",
-                    "openingHoursThuTime": "10:00-22:00",
-                    "distance": 17.7,
-                    "city": "Котельники",
-                    "openingHoursSatTime": "10:00-22:00",
-                    "openingHoursWedTime": "10:00-22:00",
-                    "openingHoursFriTime": "10:00-22:00",
-                    "openingHoursTueTime": "10:00-22:00",
-                    "name": "ИКЕА Белая Дача",
-                    "addressLine1": "1-ый Покровский проезд",
-                    "openingHoursSunTime": "10:00-22:00",
-                    "addressLine2": "",
-                    "openingHoursMonTime": "10:00-22:00",
-                    "addressLine3": "",
-                    "id": "ИКЕА Белая Дача",
-                    "selected": false,
-                    "state": "",
-                    "addressLine4": "4",
-                    "lsc": "STO.344",
-                    "latitude": "55.6560974121094",
-                    "longitude": "37.8438339233398"
-                },
-                "maxTWPageNum": null,
-                "rangeOfDays": false,
-                "exceptionalQty": false,
-                "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
             }
         ],
-        "selected": false,
-        "errorMessage": null,
-        "estimatedDeliveryDaysMin": null,
-        "estimatedDeliveryDaysMax": null,
-        "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
-    },
-    {
-        "id": "80a411ed-3274-4e48-a888-fec83f731215",
-        "solutionId": "CCS~2~STANDARD",
-        "deliveryArrangementId": "20210421154956306030840",
-        "fulfillmentMethodType": "CLICK_COLLECT_STORE",
-        "servicePrice": {
-            "amount": "799",
-            "taxDetails": [
-                {
-                    "taxableAmount": "665.83",
-                    "taxPercentage": "20",
-                    "taxCode": "0",
-                    "taxAmount": "133.17",
-                    "taxType": "VAT"
-                }
-            ],
-            "currencyCode": "RUB",
-            "inclTax": 799,
-            "exclTax": 665.83
-        },
-        "price": null,
-        "servicetype": "STANDARD",
-        "expiryTime": "2021-04-21T16:19:59.793Z",
-        "unavailableItems": null,
-        "unavailableLines": null,
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
         "deliveries": [
             {
-                "id": "3263d631-19e0-4e0d-a7db-f6b7c5629e63",
+                "id": "da4e1946-ae0b-42ce-80e6-634bcdac6def",
                 "type": "TRUCK",
                 "deliveryItems": [
                     {
-                        "id": "fea2070a-3161-425b-a159-ec8c1feb2e27",
-                        "itemNo": "50497432",
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
                         "itemType": "ART",
-                        "itemId": "1",
+                        "itemId": "2",
                         "parentId": null,
                         "quantity": "4",
                         "shipNode": "STO.437",
@@ -1741,56 +1107,56 @@
                     }
                 ],
                 "deliveryPrice": {
-                    "amount": "799",
+                    "amount": "199",
                     "taxDetails": [
                         {
-                            "taxableAmount": "665.83",
+                            "taxableAmount": "165.83",
                             "taxPercentage": "20",
                             "taxCode": "0",
-                            "taxAmount": "133.17",
+                            "taxAmount": "33.17",
                             "taxType": "VAT"
                         }
                     ],
                     "currencyCode": "RUB",
-                    "inclTax": 799,
-                    "exclTax": 665.83
+                    "inclTax": 199,
+                    "exclTax": 165.82999999999998
                 },
                 "price": null,
                 "serviceItemId": "SGR50000875",
                 "unitOfMeasure": "ORDERS",
                 "shipNode": null,
-                "fulfillmentDeliveryId": "CCS~~~10",
+                "fulfillmentDeliveryId": "CCS~~~4",
                 "timeWindows": [
                     {
-                        "id": "82a71f84-3f73-452b-817e-0fe50149c7a9",
-                        "fromDateTime": "2021-04-22T12:00:00.000",
-                        "toDateTime": "2021-04-22T13:00:00.000",
+                        "id": "79412dee-d3ff-4f22-82b6-101d01392f7b",
+                        "fromDateTime": "2021-06-17T13:00:00.000",
+                        "toDateTime": "2021-06-17T14:00:00.000",
                         "resourcePoolId": "bmbmC+zfLEO2xg+EAFUCYA==",
                         "node": "STO.437",
                         "selected": true,
                         "timeZone": "Europe/Moscow",
                         "pageNum": null,
-                        "startTime": "2021-04-22T12:00:00",
+                        "startTime": "2021-06-17T13:00:00",
                         "endTime": null,
-                        "slotAttributeGroup": "CCS~2~STANDARD~~~CCS~~~10~437",
-                        "tspID": null,
+                        "slotAttributeGroup": "CCS~3~STANDARD~~~CCS~~~4~437",
+                        "tspID": "32217",
                         "tspName": null
                     }
                 ],
                 "timeWindowsStartDate": null,
                 "selectedTimeWindow": {
-                    "id": "82a71f84-3f73-452b-817e-0fe50149c7a9",
-                    "fromDateTime": "2021-04-22T12:00:00.000",
-                    "toDateTime": "2021-04-22T13:00:00.000",
+                    "id": "79412dee-d3ff-4f22-82b6-101d01392f7b",
+                    "fromDateTime": "2021-06-17T13:00:00.000",
+                    "toDateTime": "2021-06-17T14:00:00.000",
                     "resourcePoolId": "bmbmC+zfLEO2xg+EAFUCYA==",
                     "node": "STO.437",
                     "selected": true,
                     "timeZone": "Europe/Moscow",
                     "pageNum": null,
-                    "startTime": "2021-04-22T12:00:00",
+                    "startTime": "2021-06-17T13:00:00",
                     "endTime": null,
-                    "slotAttributeGroup": "CCS~2~STANDARD~~~CCS~~~10~437",
-                    "tspID": null,
+                    "slotAttributeGroup": "CCS~3~STANDARD~~~CCS~~~4~437",
+                    "tspID": "32217",
                     "tspName": null
                 },
                 "pickUpPoints": [
@@ -1812,7 +1178,7 @@
                         "openingHoursMonTime": "10:00-22:00",
                         "addressLine3": "",
                         "id": "ИКЕА Нижний Новгород",
-                        "selected": false,
+                        "selected": true,
                         "state": "",
                         "addressLine4": "",
                         "lsc": "STO.437",
@@ -1838,7 +1204,7 @@
                     "openingHoursMonTime": "10:00-22:00",
                     "addressLine3": "",
                     "id": "ИКЕА Нижний Новгород",
-                    "selected": false,
+                    "selected": true,
                     "state": "",
                     "addressLine4": "",
                     "lsc": "STO.437",
@@ -1847,16 +1213,201 @@
                 },
                 "maxTWPageNum": null,
                 "rangeOfDays": false,
-                "exceptionalQty": false,
                 "exceptionalVolume": false,
-                "multifetchTimeWindows": false
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
             }
         ],
         "selected": false,
-        "errorMessage": null,
+        "errorMessage": {
+            "errorDescription": "Partially available delivery service",
+            "errorCode": "10127"
+        },
         "estimatedDeliveryDaysMin": null,
         "estimatedDeliveryDaysMax": null,
         "deliveryServiceCheckSum": null,
-        "displayWheelchair": false
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
+    },
+    {
+        "id": "9bcd3c83-17f8-4860-93a3-6116ee8db4fb",
+        "solutionId": "CCS~1~STANDARD",
+        "deliveryArrangementId": "20210616161048444872152",
+        "fulfillmentMethodType": "CLICK_COLLECT_STORE",
+        "servicePrice": {
+            "amount": "199",
+            "taxDetails": [
+                {
+                    "taxableAmount": "165.83",
+                    "taxPercentage": "20",
+                    "taxCode": "0",
+                    "taxAmount": "33.17",
+                    "taxType": "VAT"
+                }
+            ],
+            "currencyCode": "RUB",
+            "inclTax": 199,
+            "exclTax": 165.82999999999998
+        },
+        "price": null,
+        "servicetype": "STANDARD",
+        "expiryTime": "2021-06-16T16:40:52.512Z",
+        "unavailableItems": [
+            {
+                "id": "1",
+                "itemNo": "50497432",
+                "lineId": 1,
+                "type": "ART",
+                "requiredQuantity": 1,
+                "availableQuantity": 0,
+                "unavailabilityReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+                "quantityType": null
+            }
+        ],
+        "unavailableLines": [
+            {
+                "unavailableQty": "1.0",
+                "itemLineId": "1",
+                "unavailableReasonCode": "OP_NOT_ENOUGH_PROD_CHOICES"
+            }
+        ],
+        "deliveries": [
+            {
+                "id": "b2eeeec4-a7e2-4cf5-8b79-30fd3ce76cdd",
+                "type": "TRUCK",
+                "deliveryItems": [
+                    {
+                        "id": "fe6e541a-9309-49b5-a67b-08534aba009e",
+                        "itemNo": "90428328",
+                        "itemType": "ART",
+                        "itemId": "2",
+                        "parentId": null,
+                        "quantity": "4",
+                        "shipNode": "STO.335",
+                        "exceptionalQty": false
+                    }
+                ],
+                "deliveryPrice": {
+                    "amount": "199",
+                    "taxDetails": [
+                        {
+                            "taxableAmount": "165.83",
+                            "taxPercentage": "20",
+                            "taxCode": "0",
+                            "taxAmount": "33.17",
+                            "taxType": "VAT"
+                        }
+                    ],
+                    "currencyCode": "RUB",
+                    "inclTax": 199,
+                    "exclTax": 165.82999999999998
+                },
+                "price": null,
+                "serviceItemId": "SGR50000875",
+                "unitOfMeasure": "ORDERS",
+                "shipNode": null,
+                "fulfillmentDeliveryId": "CCS~~~6",
+                "timeWindows": [
+                    {
+                        "id": "37c2f94e-f776-431b-8ae9-0ff3014ab444",
+                        "fromDateTime": "2021-06-17T14:00:00.000",
+                        "toDateTime": "2021-06-17T16:00:00.000",
+                        "resourcePoolId": "UFBIzVnaMU2KPw9+APBM9Q==",
+                        "node": "STO.335",
+                        "selected": true,
+                        "timeZone": "Europe/Moscow",
+                        "pageNum": null,
+                        "startTime": "2021-06-17T14:00:00",
+                        "endTime": null,
+                        "slotAttributeGroup": "CCS~1~STANDARD~~~CCS~~~6~335",
+                        "tspID": "32217",
+                        "tspName": null
+                    }
+                ],
+                "timeWindowsStartDate": null,
+                "selectedTimeWindow": {
+                    "id": "37c2f94e-f776-431b-8ae9-0ff3014ab444",
+                    "fromDateTime": "2021-06-17T14:00:00.000",
+                    "toDateTime": "2021-06-17T16:00:00.000",
+                    "resourcePoolId": "UFBIzVnaMU2KPw9+APBM9Q==",
+                    "node": "STO.335",
+                    "selected": true,
+                    "timeZone": "Europe/Moscow",
+                    "pageNum": null,
+                    "startTime": "2021-06-17T14:00:00",
+                    "endTime": null,
+                    "slotAttributeGroup": "CCS~1~STANDARD~~~CCS~~~6~335",
+                    "tspID": "32217",
+                    "tspName": null
+                },
+                "pickUpPoints": [
+                    {
+                        "country": "RU",
+                        "identifier": "ИКЕА Химки@IKEASTORE_RU",
+                        "zipCode": "141400",
+                        "openingHoursThuTime": "10:00-22:00",
+                        "distance": 22.05,
+                        "city": "Химки",
+                        "openingHoursSatTime": "10:00-22:00",
+                        "openingHoursWedTime": "10:00-22:00",
+                        "openingHoursFriTime": "10:00-22:00",
+                        "openingHoursTueTime": "10:00-22:00",
+                        "name": "ИКЕА Химки",
+                        "addressLine1": "м/р-н ИКЕА",
+                        "openingHoursSunTime": "10:00-22:00",
+                        "addressLine2": "",
+                        "openingHoursMonTime": "10:00-22:00",
+                        "addressLine3": "",
+                        "id": "ИКЕА Химки",
+                        "selected": true,
+                        "state": "",
+                        "addressLine4": "корпус 1",
+                        "lsc": "STO.335",
+                        "latitude": "55.9103355407715",
+                        "longitude": "37.3999977111816"
+                    }
+                ],
+                "selectedPickupPoint": {
+                    "country": "RU",
+                    "identifier": "ИКЕА Химки@IKEASTORE_RU",
+                    "zipCode": "141400",
+                    "openingHoursThuTime": "10:00-22:00",
+                    "distance": 22.05,
+                    "city": "Химки",
+                    "openingHoursSatTime": "10:00-22:00",
+                    "openingHoursWedTime": "10:00-22:00",
+                    "openingHoursFriTime": "10:00-22:00",
+                    "openingHoursTueTime": "10:00-22:00",
+                    "name": "ИКЕА Химки",
+                    "addressLine1": "м/р-н ИКЕА",
+                    "openingHoursSunTime": "10:00-22:00",
+                    "addressLine2": "",
+                    "openingHoursMonTime": "10:00-22:00",
+                    "addressLine3": "",
+                    "id": "ИКЕА Химки",
+                    "selected": true,
+                    "state": "",
+                    "addressLine4": "корпус 1",
+                    "lsc": "STO.335",
+                    "latitude": "55.9103355407715",
+                    "longitude": "37.3999977111816"
+                },
+                "maxTWPageNum": null,
+                "rangeOfDays": false,
+                "exceptionalVolume": false,
+                "multifetchTimeWindows": false,
+                "exceptionalQty": false
+            }
+        ],
+        "selected": false,
+        "errorMessage": {
+            "errorDescription": "Partially available delivery service",
+            "errorCode": "10127"
+        },
+        "estimatedDeliveryDaysMin": null,
+        "estimatedDeliveryDaysMax": null,
+        "deliveryServiceCheckSum": null,
+        "displayWheelchair": false,
+        "itemsAvailabilityStatus": "PARTIAL"
     }
 ]

@@ -1,12 +1,21 @@
 import re
 import json
 import os
-from ikea_api import (
-    get_guest_token, Cart,
-    OrderCapture, Auth, Profile)
+from ikea_api import OrderCapture, Cart
 
 token = ''
-auth_token = ''
+
+payloads = {
+    'add_items': {'90428328': 1},
+    'update_items': {'90428328': 5},
+    'remove_items': ['90428328']
+}
+
+class_args = {
+    'OrderCapture': ("101000")
+}
+
+functions_to_skip = ['error_handler', 'copy_items', 'set_coupon']
 
 
 def save_json(r, *args, **kwargs):
@@ -29,24 +38,13 @@ def save_json(r, *args, **kwargs):
         f.write(j)
 
 
-payloads = {
-    'add_items': {'50497432': 1},
-    'delete_items': '50497432',
-    'purchase_info': '111111111'
-}
-
-class_args = {
-    'OrderCapture': ("101000")
-}
-
-
 def save_responses_for_class(cl, token):
     for s in cl.__dict__:
         if cl.__name__ in class_args:
             cur_cl = cl(token, class_args[cl.__name__])
         else:
             cur_cl = cl(token)
-        if not re.match(r'_', s) and s != 'error_handler':
+        if not re.match(r'_', s) and s not in functions_to_skip:
             f = getattr(cur_cl, s)
             if s in payloads:
                 save_json(f, payloads[s])
@@ -58,7 +56,6 @@ def main():
     Cart(token).add_items(payloads['add_items'])
     for cl in OrderCapture, Cart:
         save_responses_for_class(cl, token)
-    save_responses_for_class(Profile, auth_token)
 
 
 if __name__ == '__main__':

@@ -10,8 +10,7 @@
                     "formattedShortDate": "19.04.2021",
                     "formattedLongDate": "19 апреля 2021",
                     "formattedShortDateTime": "19.04.2021 13:12",
-                    "formattedLongDateTime": "19 апреля 2021, 13:12",
-                    "__typename": "DateAndTime"
+                    "formattedLongDateTime": "19 апреля 2021, 13:12"
                 },
                 "status": "CREATED",
                 "services": [],
@@ -30,8 +29,7 @@
                                 "formattedShortDate": "24.04.2021",
                                 "formattedLongDate": "24 апреля 2021",
                                 "formattedShortDateTime": "24.04.2021 09:00",
-                                "formattedLongDateTime": "24 апреля 2021, 09:00",
-                                "__typename": "DateAndTime"
+                                "formattedLongDateTime": "24 апреля 2021, 09:00"
                             },
                             "estimatedTo": {
                                 "time": "15:00:00Z",
@@ -40,17 +38,13 @@
                                 "formattedShortDate": "24.04.2021",
                                 "formattedLongDate": "24 апреля 2021",
                                 "formattedShortDateTime": "24.04.2021 18:00",
-                                "formattedLongDateTime": "24 апреля 2021, 18:00",
-                                "__typename": "DateAndTime"
+                                "formattedLongDateTime": "24 апреля 2021, 18:00"
                             },
                             "dateTimeRange": "24 апреля 2021, 09:00 - 18:00",
-                            "timeZone": "Europe/Moscow",
-                            "__typename": "DeliveryDate"
-                        },
-                        "__typename": "DeliveryMethod"
+                            "timeZone": "Europe/Moscow"
+                        }
                     }
-                ],
-                "__typename": "Purchase"
+                ]
             }
         }
     },
@@ -61,25 +55,21 @@
                 "costs": {
                     "total": {
                         "code": "RUB",
-                        "value": 8326.0,
-                        "__typename": "Money"
+                        "value": 8326.0
                     },
                     "delivery": {
                         "code": "RUB",
-                        "value": 399.0,
-                        "__typename": "Money"
+                        "value": 399.0
                     },
                     "service": null,
                     "discount": null,
                     "sub": {
                         "code": "RUB",
-                        "value": 7927.0,
-                        "__typename": "Money"
+                        "value": 7927.0
                     },
                     "tax": {
                         "code": "RUB",
-                        "value": 1387.68,
-                        "__typename": "Money"
+                        "value": 1387.68
                     },
                     "taxRates": [
                         {
@@ -87,15 +77,11 @@
                             "name": "VAT",
                             "amount": {
                                 "code": "RUB",
-                                "value": 1387.68,
-                                "__typename": "Money"
-                            },
-                            "__typename": "TaxRate"
+                                "value": 1387.68
+                            }
                         }
-                    ],
-                    "__typename": "Costs"
-                },
-                "__typename": "Purchase"
+                    ]
+                }
             }
         }
     }

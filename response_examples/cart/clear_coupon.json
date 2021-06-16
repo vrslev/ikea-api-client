@@ -1,10 +1,10 @@
 {
     "data": {
-        "removeItems": {
+        "clearCoupon": {
             "currency": null,
-            "checksum": "xbuTAV6IhIC88FNm19WrduV6BOaVLIPe",
+            "checksum": "b4ZgUoYFJzuhgEwkSpiqnF03qXYo+Z48",
             "context": {
-                "userId": "2f50820c-30a2-46bf-b8b5-5dc9c9c9b927",
+                "userId": "userId",
                 "isAnonymous": true,
                 "retailId": "ru"
             },

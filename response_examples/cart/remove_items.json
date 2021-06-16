@@ -1,8 +1,8 @@
 {
     "data": {
-        "clearItems": {
+        "removeItems": {
             "currency": null,
-            "checksum": "nO/c85lNH36U4OoU5HrCed4bOkZ+nOia",
+            "checksum": "SCXkArZYyNUwmcL1GW62+Hhr6I7OWguW",
             "context": {
                 "userId": "userId",
                 "isAnonymous": true,

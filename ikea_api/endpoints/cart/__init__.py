@@ -34,7 +34,7 @@ class Cart(API):
                 data=self._build_payload(query, **variables))
         return inner
 
-    def make_templated_items(self, items):
+    def _make_templated_items(self, items):
         items_templated = []
         for item_code, qty in items.items():
             item_code = parse_item_code(item_code)
@@ -56,7 +56,7 @@ class Cart(API):
         Add items to cart.
         Required items list format: [{'item_no': quantity, ...}]
         """
-        items_templated = self.make_templated_items(items)
+        items_templated = self._make_templated_items(items)
         return mutations.add_items, {'items': items_templated}
 
     @_build_payload_and_call
@@ -65,7 +65,7 @@ class Cart(API):
         Replace quantity for given item to the new one.
         Required items list format: [{'item_no': quantity, ...}]
         """
-        items_templated = self.make_templated_items(items)
+        items_templated = self._make_templated_items(items)
         return mutations.update_items, {'items': items_templated}
 
     @_build_payload_and_call
