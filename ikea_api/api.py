@@ -33,8 +33,9 @@ class API:
         pass
 
     def basic_error_handler(self, status_code, response_json):
-        err = response_json.get('error')
-        if err and isinstance(err, str) and status_code == 401:
+        err = None
+        if 'error' in response_json and isinstance(err, str) and status_code == 401:
+            err = response_json['error']
             if err == 'Token has expired':
                 raise TokenExpiredError
             elif err == 'Token could not be decoded':
