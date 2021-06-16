@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
 	name='ikea_api',
-	version='0.0.6',
+	version='0.1',
 	description='IKEA Api Client',
     url='https://github.com/vrslev/ikea-api-client',
 	author='vrslev',
