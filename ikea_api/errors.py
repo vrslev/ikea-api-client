@@ -88,10 +88,15 @@ class NoDeliveryOptionsAvailableError(Exception):
     pass
 
 
+class ServerError(Exception):
+    pass
+
+
 CODES_TO_ERRORS = {
     'GRAPHQL_VALIDATION_FAILED': GraphqlValidationError,
     'INVALID_LANGUAGE_CODE': WrongLanguageCodeError,
     'GRAPHQL_PARSE_FAILED': GraphqlParseError,
     'INVALID_ITEM_NUMBER': WrongItemCodeError,
     'ITEM_NUMBER_NOT_FOUND': WrongItemCodeError,
+    'INTERNAL_ERROR': ServerError
 }
