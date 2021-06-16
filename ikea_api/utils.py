@@ -29,7 +29,7 @@ def parse_item_code(item_code):
         if len(res) == 0:
             raise NoItemsParsedError(item_code)
         return res
-    elif isinstance(item_code, str):
+    elif isinstance(item_code, str) or isinstance(item_code, int):
         parsed = parse(item_code)
         if not parsed:
             raise NoItemsParsedError(item_code)
