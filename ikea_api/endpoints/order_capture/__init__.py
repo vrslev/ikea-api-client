@@ -49,6 +49,7 @@ class OrderCapture(API):
         return items_templated
 
     def _get_checkout(self):
+        """Generate checkout for items"""
         items = self._get_items_for_checkout_request()
         if len(items) == 0:
             return
@@ -73,6 +74,7 @@ class OrderCapture(API):
             raise Exception('No resourceId for checkout')
 
     def _get_delivery_area(self, checkout):
+        """Generate delivery area for checkout from zip code"""
         response = self.call_api(
             endpoint='{}/checkouts/{}/delivery-areas'.format(
                 self.endpoint, checkout),
@@ -87,6 +89,7 @@ class OrderCapture(API):
             raise Exception('No resourceId for delivery area')
 
     def get_delivery_services(self):
+        """Get available delivery services"""
         checkout = self._get_checkout()
         delivery_area = self._get_delivery_area(checkout)
 

@@ -24,11 +24,23 @@ class Purchases(API):
         return payload
 
     def history(self, take=5, skip=0):
+        """
+        Get purchase history.
+
+        Parameters are for pagination.
+        If you want to see all your purchases set 'take' to 10000
+        """
         payload = self._build_payload(
             'History', queries.history, take=take, skip=skip)
         return self.call_api(data=payload)
 
     def order_info(self, order_number, email=None):
+        """
+        Get order information: status and costs.
+
+        :params order_number: ID of your purchase
+        :params email: Your email. If set, there's no need to get token — just pass None
+        """
         headers = {
             'Referer': '{}/{}/'.format(self.session.headers['Origin'], order_number)
         }

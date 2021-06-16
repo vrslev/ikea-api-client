@@ -5,9 +5,7 @@ from . import queries, mutations
 
 
 class Cart(API):
-    """
-    API for managing cart
-    """
+    """API for managing cart"""
 
     def __init__(self, token):
         super().__init__(token, 'https://cart.oneweb.ingka.com/graphql')
@@ -37,9 +35,6 @@ class Cart(API):
         return inner
 
     def make_templated_items(self, items):
-        """
-        Required items list format: [{'item_no': quantity, ...}]
-        """
         items_templated = []
         for item_code, qty in items.items():
             item_code = parse_item_code(item_code)
@@ -56,22 +51,33 @@ class Cart(API):
         return mutations.clear_items
 
     @_build_payload_and_call
-    def add_items(self, items):
+    def add_items(self, items: list[dict]):
+        """
+        Add items to cart.
+        Required items list format: [{'item_no': quantity, ...}]
+        """
         items_templated = self.make_templated_items(items)
         return mutations.add_items, {'items': items_templated}
 
     @_build_payload_and_call
-    def update_items(self, items):
+    def update_items(self, items: list[dict]):
+        """
+        Replace quantity for given item to the new one.
+        Required items list format: [{'item_no': quantity, ...}]
+        """
         items_templated = self.make_templated_items(items)
         return mutations.update_items, {'items': items_templated}
 
     @_build_payload_and_call
     def copy_items(self, source_user_id):
-        """Copies cart from another account"""
+        """Copy cart from another account"""
         return mutations.copy_items, {'sourceUserId': source_user_id}
 
     @_build_payload_and_call
     def remove_items(self, item_codes: list):
+        """
+        Remove items by item codes.
+        """
         items_parsed = parse_item_code(item_codes)
         return mutations.remove_items, {'itemNos': items_parsed}
 
