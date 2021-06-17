@@ -51,7 +51,7 @@ class Cart(API):
         return mutations.clear_items
 
     @_build_payload_and_call
-    def add_items(self, items: list[dict]):
+    def add_items(self, items):
         """
         Add items to cart.
         Required items list format: [{'item_no': quantity, ...}]
@@ -60,7 +60,7 @@ class Cart(API):
         return mutations.add_items, {'items': items_templated}
 
     @_build_payload_and_call
-    def update_items(self, items: list[dict]):
+    def update_items(self, items):
         """
         Replace quantity for given item to the new one.
         Required items list format: [{'item_no': quantity, ...}]
