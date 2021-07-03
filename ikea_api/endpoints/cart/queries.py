@@ -1,6 +1,5 @@
 from .fragments import cart_props
 
-
 cart = """
   query Cart(
     $languageCode: String
@@ -10,4 +9,6 @@ cart = """
     }
   }
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)

@@ -1,8 +1,10 @@
 import re
 from configparser import ConfigParser
+
 import requests
-from .errors import NoItemsParsedError, WrongZipCodeError
+
 from .constants import Constants
+from .errors import NoItemsParsedError, WrongZipCodeError
 
 
 def check_response(response):
@@ -12,10 +14,12 @@ def check_response(response):
 
 def parse_item_code(item_code):
     def parse(item_code):
+
         found = re.search(
-            r'\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}', str(item_code))
+            r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code)
+        )
         try:
-            clean = re.sub(r'[^0-9]+', '', found[0])
+            clean = re.sub(r"[^0-9]+", "", found[0]) # pyright: reportOptionalSubscript=false
         except TypeError:
             clean = None
         return clean
@@ -37,34 +41,38 @@ def parse_item_code(item_code):
 
 
 def validate_zip_code(zip_code):
-    if len(re.findall(r'[^0-9]', zip_code)) > 0:
+    if len(re.findall(r"[^0-9]", zip_code)) > 0:
         raise WrongZipCodeError(zip_code)
 
 
-def get_client_id_from_login_page(country_code='ru', language_code='ru'):
-    login_url = '{}/{}/{}/profile/login/'.format(
-        Constants.BASE_URL, country_code.lower(), language_code.lower())
+def get_client_id_from_login_page(country_code="ru", language_code="ru"):
+    login_url = "{}/{}/{}/profile/login/".format(
+        Constants.BASE_URL, country_code.lower(), language_code.lower()
+    )
     login_page = requests.get(login_url)
     res = re.findall(
-        '/{}/{}/profile/app-[^/]+.js'.format(country_code, language_code), login_page.text)
+        "/{}/{}/profile/app-[^/]+.js".format(country_code, language_code),
+        login_page.text,
+    )
     if len(res) == 0:
         raise Exception
     script = requests.get(Constants.BASE_URL + res[0])
 
     client_id = re.findall(
-        '{DOMAIN:"%s.accounts.ikea.com",CLIENT_ID:"([^"]+)"' % country_code, script.text)[1]
+        '{DOMAIN:"%s.accounts.ikea.com",CLIENT_ID:"([^"]+)"' % country_code, script.text
+    )[1]
     return client_id
 
 
-config_path = 'config.ini'
-config_section = 'Settings'
+config_path = "config.ini"
+config_section = "Settings"
 
 
 def get_config():
     default_config = {
-        'client_id': '72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl',
-        'country_code': 'ru',
-        'language_code': 'ru'
+        "client_id": "72m2pdyUAg9uLiRSl4c4b0b2tkVivhZl",
+        "country_code": "ru",
+        "language_code": "ru",
     }
 
     config = ConfigParser()
@@ -74,7 +82,7 @@ def get_config():
         config.add_section(config_section)
         for attr in default_config:
             config.set(config_section, attr, default_config[attr])
-        with open(config_path, 'a+') as f:
+        with open(config_path, "a+") as f:
             config.write(f)
 
     return config
@@ -83,17 +91,18 @@ def get_config():
 def get_config_values():
     config = get_config()
     items = dict(config.items(section=config_section))
-    if not 'client_id' in items:
+    if not "client_id" in items:
         client_id = get_client_id_from_login_page(
-            items['country_code'], items['language_code'])
-        config.set(config_section, 'client_id', client_id)
-        with open(config_path, 'a+') as f:
+            items["country_code"], items["language_code"]
+        )
+        config.set(config_section, "client_id", client_id)
+        with open(config_path, "a+") as f:
             config.write(f)
 
     items = dict(config.items(section=config_section))
 
     return {
-        'client_id': items['client_id'],
-        'country_code': items['country_code'].lower(),
-        'language_code': items['language_code'].lower()
+        "client_id": items["client_id"],
+        "country_code": items["country_code"].lower(),
+        "language_code": items["language_code"].lower(),
     }

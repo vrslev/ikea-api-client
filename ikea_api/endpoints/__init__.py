@@ -1,17 +1,18 @@
+# pyright: reportUnusedImport=false, reportGeneralTypeIssues=false
 from .cart import Cart
-from .purchases import Purchases
-from .order_capture import OrderCapture
-from .item.item_iows import fetch as _fetch_items_specs_iows
 from .item.item_ingka import fetch as _fetch_items_specs_ingka
+from .item.item_iows import fetch as _fetch_items_specs_iows
 from .item.item_pip import fetch as _fetch_item_specs_pip
+from .order_capture import OrderCapture
+from .purchases import Purchases
 
 
 class fetch_items_specs:
-    def ingka(items):
-        return _fetch_items_specs_ingka(items)
+    def ingka(self):
+        return _fetch_items_specs_ingka(self)
 
-    def iows(items):
-        return _fetch_items_specs_iows(items)
+    def iows(self):
+        return _fetch_items_specs_iows(self)
 
-    def pip(items):
-        return _fetch_item_specs_pip(items)
+    def pip(self):
+        return _fetch_item_specs_pip(self)

@@ -185,4 +185,8 @@ cart_props = """
   %s
   %s
   %s
-""" % (item_props, product_props, totals)
+""" % (
+    item_props,
+    product_props,
+    totals,
+)

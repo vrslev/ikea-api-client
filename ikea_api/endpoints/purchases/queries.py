@@ -1,6 +1,5 @@
 from . import fragments
 
-
 history = """
   query History($skip: Int!, $take: Int!) {
     history(skip: $skip, take: $take) {
@@ -18,7 +17,9 @@ history = """
   }
 
   %s
-""" % (fragments.date_and_time)
+""" % (
+    fragments.date_and_time
+)
 
 
 status_banner_order = """
@@ -42,8 +43,12 @@ status_banner_order = """
   %s
   %s
   %s
-""" % (fragments.date_and_time, fragments.delivery_date,
-       fragments.service_info, fragments.delivery_info)
+""" % (
+    fragments.date_and_time,
+    fragments.delivery_date,
+    fragments.service_info,
+    fragments.delivery_info,
+)
 
 
 costs_order = """
@@ -57,4 +62,6 @@ costs_order = """
   }
 
   %s
-""" % (fragments.costs)
+""" % (
+    fragments.costs
+)

@@ -98,4 +98,7 @@ costs = """
 
   %s
   %s
-""" % (money, tax_rate)
+""" % (
+    money,
+    tax_rate,
+)

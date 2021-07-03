@@ -1,14 +1,16 @@
-import re
 import asyncio
+import re
+from typing import Dict
+
 import aiohttp
 
 from . import (
+    Constants,
     ItemFetchError,
     build_headers,
-    parse_item_code,
-    Constants,
+    country_code,
     language_code,
-    country_code
+    parse_item_code,
 )
 
 
@@ -50,18 +52,18 @@ def _async_fetch(urls, headers):
 def build_url(item_code, is_combination):
     if not len(item_code) == 8:
         return
-    url = '{base_url}/{country}/{lang}/products/{folder}/{item_code}.json'.format(
+    url = "{base_url}/{country}/{lang}/products/{folder}/{item_code}.json".format(
         base_url=Constants.BASE_URL,
         country=country_code,
         lang=language_code,
         folder=item_code[5:],
-        item_code='s' + item_code if is_combination else item_code
+        item_code="s" + item_code if is_combination else item_code,
     )
     return url
 
 
 def build_opposite_url(url):
-    match = re.findall(r'([sS])(\d{8})', url)
+    match = re.findall(r"([sS])(\d{8})", url)
     if len(match) != 1:
         return
     match = match[0]
@@ -77,10 +79,10 @@ def build_opposite_url(url):
     return build_url(item_code, is_combination == False)
 
 
-def fetch(items: dict):
+def fetch(items: Dict[str, int]):
     # {'item_code': True (is SPR?)...}
-    headers = build_headers({'Accept': '*/*'})
-    headers.pop('Origin')
+    headers = build_headers({"Accept": "*/*"})
+    headers.pop("Origin")
     urls = [build_url(parse_item_code(i), items[i]) for i in items]
     responses = _async_fetch(urls, headers=headers)
     res = []

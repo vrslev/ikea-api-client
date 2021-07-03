@@ -12,14 +12,14 @@ class NoItemsParsedError(Exception):
 
 class WrongLanguageCodeError(Exception):
     def __init__(self, err):
-        ext = err['extensions']
+        ext = err["extensions"]
         msg = None
-        if 'data' in ext:
-            msg = ''
+        if "data" in ext:
+            msg = ""
             arr = []
-            for key in ext['data']:
-                arr.append('{}: {}'.format(key, ext['data'][key]))
-            msg = ', '.join(arr)
+            for key in ext["data"]:
+                arr.append("{}: {}".format(key, ext["data"][key]))
+            msg = ", ".join(arr)
         if msg:
             super().__init__(msg)
         else:
@@ -36,12 +36,12 @@ class TokenDecodeError(Exception):
 
 class GraphqlError(Exception):
     def __init__(self, err):
-        if 'path' in err:
-            msg = '{0}: {1}'.format(err['message'], err['path'])
-        elif 'locations' in err:
-            msg = '{0}: {1}'.format(err['message'], err['locations'])
+        if "path" in err:
+            msg = "{0}: {1}".format(err["message"], err["path"])
+        elif "locations" in err:
+            msg = "{0}: {1}".format(err["message"], err["locations"])
         else:
-            msg = err['message']
+            msg = err["message"]
         super().__init__(msg)
 
 
@@ -55,14 +55,14 @@ class GraphqlParseError(GraphqlError):
 
 class WrongItemCodeError(Exception):
     def __init__(self, err):
-        ext = err['extensions']
-        if 'data' in ext:
-            if 'itemNos' in ext['data']:
-                msg = ext['data']['itemNos']
+        ext = err["extensions"]
+        if "data" in ext:
+            if "itemNos" in ext["data"]:
+                msg = ext["data"]["itemNos"]
             else:
                 msg = None
-        elif 'message' in err:
-            msg = err['message']
+        elif "message" in err:
+            msg = err["message"]
         else:
             msg = None
 
@@ -77,8 +77,8 @@ class UnauthorizedError(Exception):
     """Used when somethings wrong with headers or data"""
 
     def __init__(self, response):
-        if 'moreInformation' in response:
-            msg = response['moreInformation']
+        if "moreInformation" in response:
+            msg = response["moreInformation"]
         else:
             msg = response
         super().__init__(msg)
@@ -89,14 +89,19 @@ class NoDeliveryOptionsAvailableError(Exception):
 
 
 class ServerError(Exception):
-    pass
+    def __init__(self, response):
+        if "message" in response:
+            msg = response["message"]
+        else:
+            msg = response
+        super().__init__(msg)
 
 
 CODES_TO_ERRORS = {
-    'GRAPHQL_VALIDATION_FAILED': GraphqlValidationError,
-    'INVALID_LANGUAGE_CODE': WrongLanguageCodeError,
-    'GRAPHQL_PARSE_FAILED': GraphqlParseError,
-    'INVALID_ITEM_NUMBER': WrongItemCodeError,
-    'ITEM_NUMBER_NOT_FOUND': WrongItemCodeError,
-    'INTERNAL_ERROR': ServerError
+    "GRAPHQL_VALIDATION_FAILED": GraphqlValidationError,
+    "INVALID_LANGUAGE_CODE": WrongLanguageCodeError,
+    "GRAPHQL_PARSE_FAILED": GraphqlParseError,
+    "INVALID_ITEM_NUMBER": WrongItemCodeError,
+    "ITEM_NUMBER_NOT_FOUND": WrongItemCodeError,
+    "INTERNAL_ERROR": ServerError,
 }
