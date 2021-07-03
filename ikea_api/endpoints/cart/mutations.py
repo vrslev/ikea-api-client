@@ -1,19 +1,20 @@
 from .fragments import cart_props
 
-
 add_items = """
   mutation AddItems(
     $items: [AddItemInput!]!
     $languageCode: String
   ) {
     addItems(items: $items, languageCode: $languageCode) {
-      ...CartProps
+      quantity
+      context {
+        userId
+        isAnonymous
+        retailId
+      }
     }
   }
-  
-  %s
-""" % (cart_props)
-
+"""
 
 clear_coupon = """
   mutation ClearCoupon(
@@ -25,7 +26,9 @@ clear_coupon = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
 
 
 clear_items = """
@@ -38,7 +41,9 @@ clear_items = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
 
 
 copy_items = """
@@ -52,7 +57,9 @@ copy_items = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
 
 
 remove_items = """
@@ -66,7 +73,9 @@ remove_items = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
 
 
 set_coupon = """
@@ -80,7 +89,9 @@ set_coupon = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
 
 
 update_items = """
@@ -94,4 +105,6 @@ update_items = """
   }
   
   %s
-""" % (cart_props)
+""" % (
+    cart_props
+)
