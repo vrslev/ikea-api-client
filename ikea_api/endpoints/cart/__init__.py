@@ -25,7 +25,7 @@ class Cart(API):
     # pyright: reportSelfClsParameterName=false
     def _build_payload_and_call(func):
         @wraps(func)
-        def inner(self: Cart, *args, **kwargs):
+        def inner(self, *args, **kwargs):
             res = func(self, *args, **kwargs)
             if isinstance(res, tuple):
                 query, variables = res
