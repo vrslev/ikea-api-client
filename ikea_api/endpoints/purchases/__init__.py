@@ -1,5 +1,7 @@
-from ...api import API
+from typing import Any, Dict, Union
+
 from . import queries
+from ...api import API
 
 
 class Purchases(API):
@@ -21,7 +23,7 @@ class Purchases(API):
 
     def _build_payload(
         self, operation_name, query, **variables
-    ) -> dict:  # pyright: reportMissingTypeArgument=false
+    ) -> Dict[str, Dict[str, Any]]:
         payload = {"operationName": operation_name, "variables": {}, "query": query}
         payload["variables"].update(variables)
         return payload
@@ -36,13 +38,14 @@ class Purchases(API):
         payload = self._build_payload("History", queries.history, take=take, skip=skip)
         return self.call_api(data=payload)
 
-    def order_info(self, order_number, email=None):
+    def order_info(self, order_number: Union[str, int], email=None):
         """
         Get order information: status and costs.
 
         :params order_number: ID of your purchase
         :params email: Your email. If set, there's no need to get token — just pass None
         """
+        order_number = str(order_number)
         headers = {
             "Referer": "{}/{}/".format(self.session.headers["Origin"], order_number)
         }

@@ -1,4 +1,5 @@
 from json.decoder import JSONDecodeError
+from typing import Any
 
 from requests import Session
 
@@ -80,7 +81,7 @@ class API:
 
     def call_api(
         self, endpoint=None, headers=None, data=None
-    ) -> dict:  # pyright: reportMissingTypeArgument=false
+    ) -> dict[str, Any]:
         """Wrapper for request's post/get with error handling"""
         if not endpoint:
             endpoint = self.endpoint

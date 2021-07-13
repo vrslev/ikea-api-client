@@ -1,10 +1,9 @@
-# pyright: reportGeneralTypeIssues=false
 from functools import wraps
-from typing import List
+from typing import Any, List
 
+from . import mutations, queries
 from ...api import API
 from ...utils import parse_item_code
-from . import mutations, queries
 
 
 class Cart(API):
@@ -22,10 +21,10 @@ class Cart(API):
         payload["variables"].update(variables)
         return payload
 
-    # pyright: reportSelfClsParameterName=false
     def _build_payload_and_call(func):
+        # pyright: reportSelfClsParameterName=false, reportGeneralTypeIssues=false
         @wraps(func)
-        def inner(self, *args, **kwargs):
+        def inner(self, *args, **kwargs) -> dict[str, Any]:
             res = func(self, *args, **kwargs)
             if isinstance(res, tuple):
                 query, variables = res
@@ -44,7 +43,7 @@ class Cart(API):
         return items_templated
 
     @_build_payload_and_call
-    def show(self):
+    def show(self) -> dict[str, Any]:
         return queries.cart
 
     @_build_payload_and_call

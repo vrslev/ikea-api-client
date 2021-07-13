@@ -24,7 +24,6 @@ def build_headers(headers):
 
 
 def generic_item_fetcher(items, headers, function, chunk_size):
-    # pyright: reportOptionalSubscript=false, reportGeneralTypeIssues=false
     session = Session()
     session.headers.update(build_headers(headers))
 
@@ -35,7 +34,7 @@ def generic_item_fetcher(items, headers, function, chunk_size):
 
     items = [str(i) for i in items]
     items = list(set(items))
-    items = parse_item_code(items)
+    items: list[str] = parse_item_code(items)  # pyright: reportGeneralTypeIssues=false
 
     chunks = [items[x : x + chunk_size] for x in range(0, len(items), chunk_size)]
     responses = []

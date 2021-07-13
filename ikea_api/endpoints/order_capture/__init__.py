@@ -35,7 +35,6 @@ class OrderCapture(API):
                 raise NoDeliveryOptionsAvailableError
 
     def _get_items_for_checkout_request(self):
-        # pyright: reportGeneralTypeIssues=false
         cart = Cart(self.token)
         cart_show = cart.show()
         items_templated = []
@@ -69,7 +68,7 @@ class OrderCapture(API):
         }
 
         response = self.call_api(
-            endpoint="{}/checkouts".format(self.endpoint),
+            endpoint=f"{self.endpoint}/checkouts",
             headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
             data=data,
         )
@@ -82,7 +81,7 @@ class OrderCapture(API):
     def _get_delivery_area(self, checkout):
         """Generate delivery area for checkout from zip code"""
         response = self.call_api(
-            endpoint="{}/checkouts/{}/delivery-areas".format(self.endpoint, checkout),
+            endpoint=f"{self.endpoint}/checkouts/{checkout}/delivery-areas",
             data={"zipCode": self.zip_code, "enableRangeOfDays": False},
         )
 
