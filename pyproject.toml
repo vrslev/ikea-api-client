@@ -9,6 +9,7 @@ author-email = "5225148+vrslev@users.noreply.github.com"
 home-page = "https://github.com/vrslev/ikea-api-client"
 classifiers = [
     "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -18,6 +19,9 @@ classifiers = [
 description-file = "README.md"
 requires-python = ">=3.7"
 requires = ["aiohttp>=3.7.4", "requests>=2.26.0", "brotli>=1.0.9", "bs4>=0.0.1"]
+
+[tool.flit.sdist]
+exclude = ["response_examples"]
 
 [tool.black]
 target-version = ["py37"]
