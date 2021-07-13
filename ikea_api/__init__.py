@@ -9,3 +9,5 @@ __all__ = [
     "Purchases",
     "fetch_items_specs",
 ]
+
+__version__ = "0.1.2"

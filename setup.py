@@ -3,12 +3,14 @@ from setuptools import (  # pyright: reportMissingTypeStubs=false
     setup,
 )
 
+from ikea_api import __version__ as VERSION
+
 with open("requirements.txt") as f:
     install_requires = f.read().strip().split("\n")
 
 setup(
     name="ikea_api",
-    version="0.1.1",
+    version=VERSION,
     description="IKEA Api Client",
     url="https://github.com/vrslev/ikea-api-client",
     author="vrslev",
