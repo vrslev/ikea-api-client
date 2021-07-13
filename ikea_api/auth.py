@@ -1,11 +1,19 @@
-import json
 from base64 import b64decode, urlsafe_b64encode
+import json
 
 from bs4 import BeautifulSoup  # pyright: reportMissingTypeStubs=false
 
 from .constants import Constants
-from .errors import InvalidRetailUnitError, NotAuthenticatedError, UnauthorizedError
-from .utils import check_response, get_client_id_from_login_page, get_config_values
+from .errors import (
+    InvalidRetailUnitError,
+    NotAuthenticatedError,
+    UnauthorizedError,
+)
+from .utils import (
+    check_response,
+    get_client_id_from_login_page,
+    get_config_values,
+)
 
 
 def get_guest_token():
@@ -84,7 +92,7 @@ class Auth:
         Get Auth0 config
         """
         self.code_verifier = self._generate_token()
-        endpoint = "https://{}.accounts.ikea.com/authorize".format(self.country_code)
+        endpoint = f"https://{self.country_code}.accounts.ikea.com/authorize"
         self.main_url = "{}/{}/{}/profile/login/".format(
             Constants.BASE_URL, self.country_code, self.language_code
         )
@@ -92,7 +100,7 @@ class Auth:
             "client_id": self.client_id,
             "redirect_uri": self.main_url,
             "response_type": "code",
-            "ui_locales": "{}-{}".format(self.language_code, self.country_code.upper()),
+            "ui_locales": f"{self.language_code}-{self.country_code.upper()}",
             "code_chalenge": self._create_s256_code_challenge(),
             "code_chalenge_method": "S256",
             "scope": "openid profile email",
@@ -123,8 +131,8 @@ class Auth:
         2. /usernamepassword/login
         Log in and get wctx and wresult params
         """
-        base_url = "https://{}.accounts.ikea.com".format(self.country_code.lower())
-        endpoint = "{}/usernamepassword/login".format(base_url)
+        base_url = f"https://{self.country_code.lower()}.accounts.ikea.com"
+        endpoint = f"{base_url}/usernamepassword/login"
         payload = {
             "state": session_config["extraParams"]["state"],
             "_csrf": session_config["extraParams"]["_csrf"],
@@ -172,7 +180,7 @@ class Auth:
         """
         from urllib.parse import parse_qs, urlparse
 
-        endpoint = "{}/login/callback".format(base_url)
+        endpoint = f"{base_url}/login/callback"
         headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Origin": base_url,
@@ -194,7 +202,7 @@ class Auth:
         4. /oauth/token
         Get access token
         """
-        endpoint = "{}/oauth/token".format(base_url)
+        endpoint = f"{base_url}/oauth/token"
         headers = {
             "Accept": "*/*",
             "Referer": callback_final_url,

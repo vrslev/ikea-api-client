@@ -1,17 +1,17 @@
 {
-    "data": {
-        "clearItems": {
-            "currency": null,
-            "checksum": "nO/c85lNH36U4OoU5HrCed4bOkZ+nOia",
-            "context": {
-                "userId": "userId",
-                "isAnonymous": true,
-                "retailId": "ru"
-            },
-            "coupon": null,
-            "items": [],
-            "regularTotalPrice": null,
-            "familyTotalPrice": null
-        }
+  "data": {
+    "clearItems": {
+      "currency": null,
+      "checksum": "nO/c85lNH36U4OoU5HrCed4bOkZ+nOia",
+      "context": {
+        "userId": "userId",
+        "isAnonymous": true,
+        "retailId": "ru"
+      },
+      "coupon": null,
+      "items": [],
+      "regularTotalPrice": null,
+      "familyTotalPrice": null
     }
+  }
 }

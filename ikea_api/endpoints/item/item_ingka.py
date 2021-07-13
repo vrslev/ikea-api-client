@@ -10,7 +10,7 @@ from . import (
 
 
 def _fetch_items_specs(session, items):
-    url = "https://api.ingka.ikea.com/salesitem/communications/{0}/{1}".format(
+    url = "https://api.ingka.ikea.com/salesitem/communications/{}/{}".format(
         country_code, language_code
     )
     params = {"itemNos": ",".join(items)}
@@ -38,7 +38,7 @@ def _fetch_items_specs(session, items):
 def fetch(items: List[Dict[str, str]]):
     headers = {
         "Accept": "*/*",
-        "Referer": "{0}/{1}/{2}/order/delivery/".format(
+        "Referer": "{}/{}/{}/order/delivery/".format(
             Constants.BASE_URL, country_code, language_code
         ),
         "x-client-id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",

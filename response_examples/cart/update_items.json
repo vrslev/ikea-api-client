@@ -1,457 +1,457 @@
 {
-    "data": {
-        "updateItems": {
-            "currency": "RUB",
-            "checksum": "WfxumtuAjcUc3qLJHu+gG8QYyESCkDrb",
-            "context": {
-                "userId": "userId",
-                "isAnonymous": true,
-                "retailId": "ru"
+  "data": {
+    "updateItems": {
+      "currency": "RUB",
+      "checksum": "WfxumtuAjcUc3qLJHu+gG8QYyESCkDrb",
+      "context": {
+        "userId": "userId",
+        "isAnonymous": true,
+        "retailId": "ru"
+      },
+      "coupon": null,
+      "items": [
+        {
+          "itemNo": "90428328",
+          "quantity": 5,
+          "type": "ART",
+          "fees": null,
+          "isFamilyItem": false,
+          "childItems": [],
+          "regularPrice": {
+            "unit": {
+              "inclTax": 599,
+              "exclTax": 0,
+              "tax": null,
+              "validFrom": null,
+              "validTo": null,
+              "isLowerPrice": false,
+              "isTimeRestrictedOffer": false,
+              "previousPrice": null
             },
-            "coupon": null,
-            "items": [
-                {
-                    "itemNo": "90428328",
-                    "quantity": 5,
-                    "type": "ART",
-                    "fees": null,
-                    "isFamilyItem": false,
-                    "childItems": [],
-                    "regularPrice": {
-                        "unit": {
-                            "inclTax": 599,
-                            "exclTax": 0,
-                            "tax": null,
-                            "validFrom": null,
-                            "validTo": null,
-                            "isLowerPrice": false,
-                            "isTimeRestrictedOffer": false,
-                            "previousPrice": null
-                        },
-                        "subTotalExclDiscount": {
-                            "inclTax": 2995,
-                            "exclTax": 0,
-                            "tax": null
-                        },
-                        "subTotalInclDiscount": {
-                            "inclTax": 2995,
-                            "exclTax": 0,
-                            "tax": null
-                        },
-                        "subTotalDiscount": {
-                            "amount": 0
-                        },
-                        "discounts": null
-                    },
-                    "familyPrice": {
-                        "unit": {
-                            "inclTax": 599,
-                            "exclTax": 0,
-                            "tax": null,
-                            "validFrom": null,
-                            "validTo": null
-                        },
-                        "subTotalExclDiscount": {
-                            "inclTax": 2995,
-                            "exclTax": 0,
-                            "tax": null
-                        },
-                        "subTotalInclDiscount": {
-                            "inclTax": 2995,
-                            "exclTax": 0,
-                            "tax": null
-                        },
-                        "subTotalDiscount": {
-                            "amount": 0
-                        },
-                        "discounts": null
-                    },
-                    "product": {
-                        "name": "HYLLIS ХИЛЛИС",
-                        "globalName": "HYLLIS",
-                        "isNew": false,
-                        "category": "стеллаж",
-                        "description": "д/дома/улицы",
-                        "isBreathTaking": true,
-                        "formattedItemNo": "904.283.28",
-                        "displayUnit": null,
-                        "unitCode": "PIECE",
-                        "measurements": [
-                            {
-                                "metric": "60x27x74 см",
-                                "imperial": "23 5/8x10 5/8x29 1/8 дюйм"
-                            }
-                        ],
-                        "technicalDetails": null,
-                        "images": [
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s1.jpg",
-                                "quality": "S1",
-                                "width": 30
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s2.jpg",
-                                "quality": "S2",
-                                "width": 83
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s3.jpg",
-                                "quality": "S3",
-                                "width": 188
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s4.jpg",
-                                "quality": "S4",
-                                "width": 375
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s5.jpg",
-                                "quality": "S5",
-                                "width": 1500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s1.jpg",
-                                "quality": "S1",
-                                "width": 40
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s2.jpg",
-                                "quality": "S2",
-                                "width": 110
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s3.jpg",
-                                "quality": "S3",
-                                "width": 250
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s4.jpg",
-                                "quality": "S4",
-                                "width": 500
-                            },
-                            {
-                                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s5.jpg",
-                                "quality": "S5",
-                                "width": 2000
-                            }
-                        ]
-                    }
-                }
+            "subTotalExclDiscount": {
+              "inclTax": 2995,
+              "exclTax": 0,
+              "tax": null
+            },
+            "subTotalInclDiscount": {
+              "inclTax": 2995,
+              "exclTax": 0,
+              "tax": null
+            },
+            "subTotalDiscount": {
+              "amount": 0
+            },
+            "discounts": null
+          },
+          "familyPrice": {
+            "unit": {
+              "inclTax": 599,
+              "exclTax": 0,
+              "tax": null,
+              "validFrom": null,
+              "validTo": null
+            },
+            "subTotalExclDiscount": {
+              "inclTax": 2995,
+              "exclTax": 0,
+              "tax": null
+            },
+            "subTotalInclDiscount": {
+              "inclTax": 2995,
+              "exclTax": 0,
+              "tax": null
+            },
+            "subTotalDiscount": {
+              "amount": 0
+            },
+            "discounts": null
+          },
+          "product": {
+            "name": "HYLLIS ХИЛЛИС",
+            "globalName": "HYLLIS",
+            "isNew": false,
+            "category": "стеллаж",
+            "description": "д/дома/улицы",
+            "isBreathTaking": true,
+            "formattedItemNo": "904.283.28",
+            "displayUnit": null,
+            "unitCode": "PIECE",
+            "measurements": [
+              {
+                "metric": "60x27x74 см",
+                "imperial": "23 5/8x10 5/8x29 1/8 дюйм"
+              }
             ],
-            "regularTotalPrice": {
-                "totalExclDiscount": {
-                    "inclTax": 2995,
-                    "exclTax": 0,
-                    "tax": null
-                },
-                "totalInclDiscount": {
-                    "inclTax": 2995,
-                    "exclTax": 0,
-                    "tax": null
-                },
-                "totalDiscount": {
-                    "amount": 0
-                },
-                "totalSavingsDetails": {
-                    "familyDiscounts": 0
-                }
-            },
-            "familyTotalPrice": {
-                "totalExclDiscount": {
-                    "inclTax": 2995,
-                    "exclTax": 0,
-                    "tax": null
-                },
-                "totalInclDiscount": {
-                    "inclTax": 2995,
-                    "exclTax": 0,
-                    "tax": null
-                },
-                "totalDiscount": {
-                    "amount": 0
-                },
-                "totalSavingsDetails": {
-                    "familyDiscounts": 0
-                },
-                "totalSavingsInclDiscount": {
-                    "amount": 0
-                }
-            }
+            "technicalDetails": null,
+            "images": [
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0639121_pe704408_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0715527_ph156576_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s1.jpg",
+                "quality": "S1",
+                "width": 30
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s2.jpg",
+                "quality": "S2",
+                "width": 83
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s3.jpg",
+                "quality": "S3",
+                "width": 188
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s4.jpg",
+                "quality": "S4",
+                "width": 375
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0935751_ph169678_s5.jpg",
+                "quality": "S5",
+                "width": 1500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911680_pe711416_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911683_pe711417_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911686_pe711418_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911689_pe711419_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745880_ph158835_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745878_ph159265_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0718459_ph157124_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0745882_ph156710_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0911659_pe618100_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s1.jpg",
+                "quality": "S1",
+                "width": 40
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s2.jpg",
+                "quality": "S2",
+                "width": 110
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s3.jpg",
+                "quality": "S3",
+                "width": 250
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s4.jpg",
+                "quality": "S4",
+                "width": 500
+              },
+              {
+                "url": "https://www.ikea.com/ru/ru/images/products/hyllis-hillis-stellazh-d-doma-ulicy__0943719_pe797007_s5.jpg",
+                "quality": "S5",
+                "width": 2000
+              }
+            ]
+          }
         }
+      ],
+      "regularTotalPrice": {
+        "totalExclDiscount": {
+          "inclTax": 2995,
+          "exclTax": 0,
+          "tax": null
+        },
+        "totalInclDiscount": {
+          "inclTax": 2995,
+          "exclTax": 0,
+          "tax": null
+        },
+        "totalDiscount": {
+          "amount": 0
+        },
+        "totalSavingsDetails": {
+          "familyDiscounts": 0
+        }
+      },
+      "familyTotalPrice": {
+        "totalExclDiscount": {
+          "inclTax": 2995,
+          "exclTax": 0,
+          "tax": null
+        },
+        "totalInclDiscount": {
+          "inclTax": 2995,
+          "exclTax": 0,
+          "tax": null
+        },
+        "totalDiscount": {
+          "amount": 0
+        },
+        "totalSavingsDetails": {
+          "familyDiscounts": 0
+        },
+        "totalSavingsInclDiscount": {
+          "amount": 0
+        }
+      }
     }
+  }
 }

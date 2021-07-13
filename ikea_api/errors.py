@@ -37,9 +37,9 @@ class TokenDecodeError(Exception):
 class GraphqlError(Exception):
     def __init__(self, err):
         if "path" in err:
-            msg = "{0}: {1}".format(err["message"], err["path"])
+            msg = "{}: {}".format(err["message"], err["path"])
         elif "locations" in err:
-            msg = "{0}: {1}".format(err["message"], err["locations"])
+            msg = "{}: {}".format(err["message"], err["locations"])
         else:
             msg = err["message"]
         super().__init__(msg)

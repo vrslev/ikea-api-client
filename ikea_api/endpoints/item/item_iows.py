@@ -14,7 +14,7 @@ def _build_url(items: Dict[str, str]):
     endpoint = "https://iows.ikea.com/retail/iows/ru/ru/catalog/items/"
     templated_list = []
     for item in items:
-        templated_list.append("{0},{1}".format(items[item], item))
+        templated_list.append(f"{items[item]},{item}")
     return endpoint + ";".join(templated_list)
 
 
@@ -79,7 +79,7 @@ def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
 def fetch(items: List[Dict[str, str]]):
     headers = {
         "Accept": "application/vnd.ikea.iows+json;version=2.0",
-        "Referer": "{}/ru/ru/shoppinglist/".format(Constants.BASE_URL),
+        "Referer": f"{Constants.BASE_URL}/ru/ru/shoppinglist/",
         "Cache-Control": "no-cache, no-store",
         "consumer": "MAMMUT#ShoppingCart",
         "contract": "37249",

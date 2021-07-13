@@ -6,20 +6,20 @@ Manage cart, check available delivery options, lookup your purchase history.
 
 ### Cart
 
-- add, delete and update items
-- copy cart from another user
-- set and delete coupon
-- show
-- clear
+-   add, delete and update items
+-   copy cart from another user
+-   set and delete coupon
+-   show
+-   clear
 
 ### Order Capture
 
-- get available delivery services
+-   get available delivery services
 
 ### Purchase
 
-- get history
-- get order info (can be used without authorization by login)
+-   get history
+-   get order info (can be used without authorization by login)
 
 ### Get items specs
 

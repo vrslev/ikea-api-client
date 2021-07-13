@@ -160,32 +160,32 @@ totals = """
 
 
 cart_props = """
-  fragment CartProps on Cart {
+  fragment CartProps on Cart {{
     currency
     checksum
-    context {
+    context {{
       userId
       isAnonymous
       retailId
-    }
-    coupon {
+    }}
+    coupon {{
       code
       validFrom
       validTo
       description
-    }
-    items {
+    }}
+    items {{
       ...ItemProps
-      product {
+      product {{
         ...ProductProps
-      }
-    }
+      }}
+    }}
     ...Totals
-  }
-  %s
-  %s
-  %s
-""" % (
+  }}
+  {}
+  {}
+  {}
+""".format(
     item_props,
     product_props,
     totals,

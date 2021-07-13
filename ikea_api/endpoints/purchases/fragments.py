@@ -72,33 +72,33 @@ tax_rate = """
 
 
 costs = """
-  fragment Costs on Costs {
-    total {
+  fragment Costs on Costs {{
+    total {{
       ...Money
-    }
-    delivery {
+    }}
+    delivery {{
       ...Money
-    }
-    service {
+    }}
+    service {{
       ...Money
-    }
-    discount {
+    }}
+    discount {{
       ...Money
-    }
-    sub {
+    }}
+    sub {{
       ...Money
-    }
-    tax {
+    }}
+    tax {{
       ...Money
-    }
-    taxRates {
+    }}
+    taxRates {{
       ...TaxRate
-    }
-  }
+    }}
+  }}
 
-  %s
-  %s
-""" % (
+  {}
+  {}
+""".format(
     money,
     tax_rate,
 )

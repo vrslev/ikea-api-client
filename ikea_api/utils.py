@@ -1,5 +1,5 @@
-import re
 from configparser import ConfigParser
+import re
 
 import requests
 
@@ -14,15 +14,14 @@ def check_response(response):
 
 def parse_item_code(item_code):
     def parse(item_code):
-
-        found = re.search(
-            r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code)
-        )
-        try:
-            clean = re.sub(r"[^0-9]+", "", found[0]) # pyright: reportOptionalSubscript=false
-        except TypeError:
-            clean = None
-        return clean
+        found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
+        res = ""
+        if found:
+            try:
+                res = re.sub(r"[^0-9]+", "", found[0])
+            except TypeError:
+                pass
+        return res
 
     if isinstance(item_code, list):
         res = []
@@ -33,11 +32,13 @@ def parse_item_code(item_code):
         if len(res) == 0:
             raise NoItemsParsedError(item_code)
         return res
-    elif isinstance(item_code, str) or isinstance(item_code, int):
+    elif isinstance(item_code, (str, int)):
         parsed = parse(item_code)
         if not parsed:
             raise NoItemsParsedError(item_code)
         return parsed
+    else:
+        return ""
 
 
 def validate_zip_code(zip_code):
@@ -51,7 +52,7 @@ def get_client_id_from_login_page(country_code="ru", language_code="ru"):
     )
     login_page = requests.get(login_url)
     res = re.findall(
-        "/{}/{}/profile/app-[^/]+.js".format(country_code, language_code),
+        f"/{country_code}/{language_code}/profile/app-[^/]+.js",
         login_page.text,
     )
     if len(res) == 0:
