@@ -4,7 +4,7 @@ import re
 
 from ikea_api import Cart, OrderCapture
 
-token = ""
+token = os.environ["TOKEN"]
 
 payloads = {
     "add_items": {"90428328": 1},
