@@ -79,7 +79,7 @@ def build_opposite_url(url):
     return build_url(item_code, is_combination == False)
 
 
-def fetch(items: Dict[str, int]):
+def fetch(items: Dict[str, bool]):
     # {'item_code': True (is SPR?)...}
     headers = build_headers({"Accept": "*/*"})
     headers.pop("Origin")
