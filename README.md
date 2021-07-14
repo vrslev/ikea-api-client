@@ -55,7 +55,7 @@ token = get_authorized_token('username', 'password')
 ## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/cart/__init__.py)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
-    
+
 -   Add, Delete and Update items
 -   Show cart
 -   Clear cart
@@ -150,7 +150,3 @@ There are many ways because information about some items is not available in som
 # [Response Examples](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
 
 You can review response examples for all endpoint before using it [here](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
-
-# License
-
-MIT
