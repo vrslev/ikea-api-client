@@ -5,7 +5,7 @@ from ...api import API
 
 
 class Purchases(API):
-    def __init__(self, token):
+    def __init__(self, token: str):
         super().__init__(token, "https://purchase-history.ocp.ingka.ikea.com/graphql")
         origin = "https://order.ikea.com"
         self.session.headers.update(

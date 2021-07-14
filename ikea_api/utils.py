@@ -7,7 +7,7 @@ from .constants import Constants
 from .errors import NoItemsParsedError, WrongZipCodeError
 
 
-def check_response(response):
+def check_response(response) -> None:
     if not response.ok:
         raise Exception(response.status_code, response.text)
 

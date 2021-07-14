@@ -16,7 +16,7 @@ from .utils import (
 )
 
 
-def get_guest_token():
+def get_guest_token() -> str:
     """Token expires in 30 days"""
     from requests import post
 
@@ -43,7 +43,7 @@ def get_guest_token():
     return token
 
 
-def get_authorized_token(username, password):
+def get_authorized_token(username, password) -> str:
     """
     OAuth2 authorization
     Token expires in 24 hours

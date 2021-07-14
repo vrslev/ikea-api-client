@@ -9,7 +9,7 @@ from ...utils import parse_item_code
 class Cart(API):
     """API for managing cart"""
 
-    def __init__(self, token):
+    def __init__(self, token: str):
         super().__init__(token, "https://cart.oneweb.ingka.com/graphql")
         self.session.headers["X-Client-Id"] = "66e4684a-dbcb-499c-8639-a72fa50ac0c3"
 

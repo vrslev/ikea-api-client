@@ -12,7 +12,7 @@ class OrderCapture(API):
     Use case — check available delivery services.
     """
 
-    def __init__(self, token, zip_code: Union[str, int]):
+    def __init__(self, token: str, zip_code: Union[str, int]):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
         if self.country_code != "ru":
