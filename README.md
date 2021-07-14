@@ -1,5 +1,10 @@
 Client for several IKEA APIs.
 
+[![License](https://img.shields.io/pypi/l/ikea_api?color=green)](https://github.com/vrslev/ikea-api-client/blob/master/LICENSE)
+[![Version](https://img.shields.io/pypi/v/ikea_api?color=green&label=version)](https://pypi.org/project/ikea_api/)
+[![Python Version](https://img.shields.io/pypi/pyversions/ikea_api?color=green)](https://pypi.org/project/ikea_api/)
+[![Downloads](https://img.shields.io/pypi/dm/ikea_api?color=green)](https://pypi.org/project/ikea_api/)
+
 # Features
 
 -   Authorization (as guest or as user)
@@ -27,9 +32,9 @@ flit install
 
 # Endpoints
 
-## [Authorization](ikea_api/auth.py)
+## [Authorization](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/auth.py)
 
-### Get Guest Token
+### [Get Guest Token](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/auth.py#L19-L19)
 
 ```python
 from ikea_api import get_guest_token
@@ -38,7 +43,7 @@ token = get_guest_token()
 
 First time you open IKEA.com guest token is being generated and stored in Cookies. It expires in 30 days.
 
-### Get Authorized Token
+### [Get Authorized Token](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/auth.py#L46-L46)
 
 IKEA uses OAuth2 to authorize their users. It lasts 1 day.
 
@@ -47,10 +52,10 @@ from ikea_api import get_authorized_token
 token = get_authorized_token('username', 'password')
 ```
 
-## [Cart](ikea_api/endpoints/cart)
+## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/cart/__init__.py)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
-
+    
 -   Add, Delete and Update items
 -   Show cart
 -   Clear cart
@@ -70,7 +75,7 @@ cart.add_items({'30457903': 1})
 print(cart.show())
 ```
 
-## [Order Capture](ikea_api/endpoints/order_capture)
+## [Order Capture](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/order_capture/__init__.py)
 
 Check availability for Pickup or Delivery. This is the only way.
 
@@ -89,9 +94,9 @@ services = order_capture.get_delivery_services()
 print(services)
 ```
 
-## [Purchases](ikea_api/endpoints/purchases)
+## [Purchases](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/purchases/__init__.py)
 
-### Order History
+### [Order History](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/endpoints/purchases/__init__.py#L31-L31)
 
 ```python
 from ikea_api import Purchases
@@ -102,7 +107,7 @@ purchases = Purchases(authorized_token)
 print(purchases.history())
 ```
 
-### Order Info
+### [Order Info](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/endpoints/purchases/__init__.py#L41-L41)
 
 ```python
 from ikea_api import Purchases
@@ -121,7 +126,7 @@ order = purchases.order_info(order_number, email="email@example.com")
 print(order)
 ```
 
-## [Item Specs](ikea_api/endpoints/item)
+## [Item Specs](https://github.com/vrslev/ikea-api-client/tree/master/ikea_api/endpoints/item)
 
 Get information about item by item number
 
@@ -142,6 +147,10 @@ items = fetch_items_specs.pip(item_codes_dict)
 
 There are many ways because information about some items is not available in some endpoints.
 
-# [Response Examples](response_examples)
+# [Response Examples](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
 
-You can review response examples for all endpoint before using it [here](response_examples)
+You can review response examples for all endpoint before using it [here](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
+
+# License
+
+MIT
