@@ -76,7 +76,7 @@ def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
                     items.pop(item_code)
 
 
-def fetch(items: list[str]):
+def fetch(items: List[str]):
     headers = {
         "Accept": "application/vnd.ikea.iows+json;version=2.0",
         "Referer": f"{Constants.BASE_URL}/ru/ru/shoppinglist/",

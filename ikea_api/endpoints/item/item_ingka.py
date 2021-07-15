@@ -1,3 +1,5 @@
+from typing import List
+
 from . import (
     Constants,
     ItemFetchError,
@@ -33,7 +35,7 @@ def _fetch_items_specs(session, items):
     return r_json
 
 
-def fetch(items: list[str]):
+def fetch(items: List[str]):
     headers = {
         "Accept": "*/*",
         "Referer": "{}/{}/{}/order/delivery/".format(

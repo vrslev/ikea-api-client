@@ -1,5 +1,5 @@
 from json.decoder import JSONDecodeError
-from typing import Any
+from typing import Any, Dict
 
 from requests import Session
 
@@ -79,7 +79,7 @@ class API:
                 else:
                     raise Exception(err)
 
-    def call_api(self, endpoint=None, headers=None, data=None) -> dict[str, Any]:
+    def call_api(self, endpoint=None, headers=None, data=None) -> Dict[str, Any]:
         """Wrapper for request's post/get with error handling"""
         if not endpoint:
             endpoint = self.endpoint

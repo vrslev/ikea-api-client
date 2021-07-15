@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Any, List
+from typing import Any, Dict, List
 
 from . import mutations, queries
 from ...api import API
@@ -24,7 +24,7 @@ class Cart(API):
     def _build_payload_and_call(func):
         # pyright: reportSelfClsParameterName=false, reportGeneralTypeIssues=false
         @wraps(func)
-        def inner(self, *args, **kwargs) -> dict[str, Any]:
+        def inner(self, *args, **kwargs) -> Dict[str, Any]:
             res = func(self, *args, **kwargs)
             if isinstance(res, tuple):
                 query, variables = res
@@ -43,7 +43,7 @@ class Cart(API):
         return items_templated
 
     @_build_payload_and_call
-    def show(self) -> dict[str, Any]:
+    def show(self) -> Dict[str, Any]:
         return queries.cart
 
     @_build_payload_and_call

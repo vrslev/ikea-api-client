@@ -27,7 +27,7 @@ This project uses [Flit](https://github.com/takluyver/flit) for distribution. To
 python3 -m pip install flit
 git clone https://github.com/vrslev/ikea-api-client
 cd ikea-api-client
-flit install
+flit install -s
 ```
 
 # Endpoints
