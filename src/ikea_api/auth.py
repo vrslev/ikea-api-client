@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from .constants import Constants
+from .constants import Constants, Secrets
 from .errors import InvalidRetailUnitError, UnauthorizedError
 
 _driver_packages_installed = True
@@ -24,7 +24,6 @@ except ImportError:
 
 
 def get_guest_token() -> str:  # TODO: Refactor
-    """Token expires in 30 days"""
     from requests import post
 
     url = "https://api.ingka.ikea.com/guest/token"
@@ -36,8 +35,8 @@ def get_guest_token() -> str:  # TODO: Refactor
         "Referer": Constants.BASE_URL + "/",
         "Connection": "keep-alive",
         "User-Agent": Constants.USER_AGENT,
-        "X-Client-Id": "e026b58d-dd69-425f-a67f-1e9a5087b87b",
-        "X-Client-Secret": "cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB",
+        "X-Client-Id": Secrets.auth_guest_token_x_client_id,
+        "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
     }
     payload = {"retailUnit": Constants.LANGUAGE_CODE}
     response = post(url, headers=headers, json=payload)
@@ -52,9 +51,6 @@ def get_guest_token() -> str:  # TODO: Refactor
 
 
 def get_authorized_token(username: str, password: str):
-    """
-    Token expires in 24 hours
-    """
     return Auth()(username, password)
 
 
@@ -63,8 +59,6 @@ class Auth:
     Authorization using Selenium.
     Required IKEA added complicated telemetry. Old implementaion:
     https://github.com/vrslev/ikea-api-client/blob/39fe5210305e28efd8f434dde4bfeb9881872d42/ikea_api/auth.py)
-
-    Token expires in 24 hours.
     """
 
     def __init__(self):
@@ -77,7 +71,7 @@ class Auth:
         self._install_driver()
 
         self._url = "https://www.ikea.com/ru/ru/profile/login/"
-        self._user_agent = (
+        self._user_agent = (  # Different user agent is required: it is Chrome
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
             " (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         )
@@ -87,7 +81,7 @@ class Auth:
     def _install_driver(self):
         chromedriver_autoinstaller.install()
 
-    def _create_driver(self):
+    def _create_driver(self):  # and make it undetectable
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--disable-blink-features=AutomationControlled")

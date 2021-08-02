@@ -2,7 +2,7 @@ from typing import List, Union
 
 from requests import Session
 
-from ikea_api.constants import Constants
+from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import ItemFetchError
 
 from . import generic_item_fetcher
@@ -37,9 +37,9 @@ def _fetch_items_specs(session: Session, items: List[str]):
 def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "*/*",
-        "Referer": "{}/{}/{}/order/delivery/".format(
+        "Referer": "{}/{}/{}/order/delivery/".format(  # TODO: Change to f-strings where is possible
             Constants.BASE_URL, Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE
         ),
-        "x-client-id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",
+        "x-client-id": Secrets.item_ingka_x_client_id,
     }
     return generic_item_fetcher(items, headers, _fetch_items_specs, 50)

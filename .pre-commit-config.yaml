@@ -30,6 +30,7 @@ repos:
     rev: 1.7.0
     hooks:
       - id: bandit
+        args: [-c, .bandit.yml]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.3.2

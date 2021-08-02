@@ -4,7 +4,7 @@ from typing import Dict, List, Union
 
 from requests import Session
 
-from ikea_api.constants import Constants
+from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import ItemFetchError, WrongItemCodeError
 
 from . import generic_item_fetcher
@@ -82,8 +82,8 @@ def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "application/vnd.ikea.iows+json;version=2.0",
         "Referer": f"{Constants.BASE_URL}/ru/ru/shoppinglist/",
-        "Cache-Control": "no-cache, no-store",
-        "consumer": "MAMMUT#ShoppingCart",
-        "contract": "37249",
+        "Cache-Control": "no-cache, no-store",  # TODO: Does this required?
+        "consumer": Secrets.item_iows_consumer,
+        "contract": Secrets.item_iows_contract,
     }
     return generic_item_fetcher(items, headers, _fetch_items_specs, 90)

@@ -2,6 +2,7 @@ from functools import wraps
 from typing import Any, Callable, Dict, List, Tuple, Union
 
 from ikea_api.api import API
+from ikea_api.constants import Secrets
 
 from . import mutations, queries
 from ..item import parse_item_code
@@ -22,11 +23,9 @@ def _build_payload_and_call(func: Callable[..., Any]):
 
 
 class Cart(API):
-    """API for managing cart"""
-
     def __init__(self, token: str):
         super().__init__(token, "https://cart.oneweb.ingka.com/graphql")
-        self._session.headers["X-Client-Id"] = "66e4684a-dbcb-499c-8639-a72fa50ac0c3"
+        self._session.headers["X-Client-Id"] = Secrets.cart_x_client_id
 
     def _build_payload(self, query: str, **variables: Any):
         payload = {

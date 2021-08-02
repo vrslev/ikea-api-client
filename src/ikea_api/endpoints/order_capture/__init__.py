@@ -2,17 +2,13 @@ import re
 from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
+from ikea_api.constants import Secrets
 from ikea_api.errors import NoDeliveryOptionsAvailableError, WrongZipCodeError
 
 from ..cart import Cart
 
 
 class OrderCapture(API):
-    """
-    API responsible for making an order.
-    Use case — check available delivery services.
-    """
-
     def __init__(self, token: str, zip_code: Union[str, int]):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
@@ -25,7 +21,7 @@ class OrderCapture(API):
         validate_zip_code(zip_code)
         self._zip_code = zip_code
 
-        self._session.headers["X-Client-Id"] = "af2525c3-1779-49be-8d7d-adf32cac1934"
+        self._session.headers["X-Client-Id"] = Secrets.purchases_x_client_id
 
     def __call__(self):
         return self.get_delivery_services()
@@ -73,7 +69,7 @@ class OrderCapture(API):
 
         response: Dict[str, str] = self._call_api(
             endpoint=f"{self._endpoint}/checkouts",
-            headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
+            headers={"X-Client-Id": Secrets.purchases_checkout_x_client_id},
             data=data,
         )
 
@@ -106,6 +102,6 @@ class OrderCapture(API):
         return response
 
 
-def validate_zip_code(zip_code: Union[str, int]):  # TODO: MOve to purchases
+def validate_zip_code(zip_code: Union[str, int]):
     if len(re.findall(r"[^0-9]", str(zip_code))) > 0:
         raise WrongZipCodeError(zip_code)
