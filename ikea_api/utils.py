@@ -2,12 +2,13 @@ from configparser import ConfigParser
 import re
 
 import requests
+from requests.models import Response
 
 from .constants import Constants
 from .errors import NoItemsParsedError, WrongZipCodeError
 
 
-def check_response(response) -> None:
+def check_response(response: Response) -> None:
     if not response.ok:
         raise Exception(response.status_code, response.text)
 
