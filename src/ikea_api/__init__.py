@@ -1,13 +1,4 @@
-from .auth import get_authorized_token, get_guest_token
-from .endpoints import Cart, OrderCapture, Purchases, fetch_items_specs
-
-__all__ = [
-    "get_authorized_token",
-    "get_guest_token",
-    "Cart",
-    "OrderCapture",
-    "Purchases",
-    "fetch_items_specs",
-]
+from .core import IkeaApi
 
 __version__ = "0.2.0"
+__all__ = ["IkeaApi"]
