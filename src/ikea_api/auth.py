@@ -2,7 +2,6 @@ from typing import Any, Dict, Optional
 
 from .constants import Constants
 from .errors import InvalidRetailUnitError, UnauthorizedError
-from .utils import check_response
 
 _driver_packages_installed = True
 try:
@@ -24,7 +23,7 @@ except ImportError:
 # pyright: reportOptionalMemberAccess=false
 
 
-def get_guest_token() -> str:
+def get_guest_token() -> str:  # TODO: Refactor
     """Token expires in 30 days"""
     from requests import post
 
@@ -46,7 +45,8 @@ def get_guest_token() -> str:
         raise InvalidRetailUnitError
     if response.status_code == 401:
         raise UnauthorizedError(response.json())
-    check_response(response)
+    if not response.ok:
+        raise Exception(response.status_code, response.text)
     token = response.json()["access_token"]
     return token
 
