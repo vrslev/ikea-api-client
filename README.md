@@ -8,10 +8,10 @@ Client for several IKEA APIs.
 # Features
 
 -   Authorization (as guest or as user)
--   Cart managing
--   Available Delivery Services checking
--   Purchase History and specific Purchase Info getting
--   Item Info fetching
+-   Manage Cart
+-   Check available Delivery Services
+-   Retrieve Purchases History and information about specific order
+-   Fetch Product information
 
 # Installation
 
