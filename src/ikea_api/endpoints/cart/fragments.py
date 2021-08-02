@@ -159,7 +159,7 @@ totals = """
 """
 
 
-cart_props = """
+cart_props = f"""
   fragment CartProps on Cart {{
     currency
     checksum
@@ -182,11 +182,7 @@ cart_props = """
     }}
     ...Totals
   }}
-  {}
-  {}
-  {}
-""".format(
-    item_props,
-    product_props,
-    totals,
-)
+  {item_props}
+  {product_props}
+  {totals}
+"""

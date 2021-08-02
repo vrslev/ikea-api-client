@@ -25,7 +25,7 @@ class WrongLanguageCodeError(IkeaApiError):
             msg = ""
             arr: List[str] = []
             for key in ext["data"]:
-                arr.append("{}: {}".format(key, ext["data"][key]))
+                arr.append(f"{key}: {ext['data'][key]}")
             msg = ", ".join(arr)
         if msg:
             super().__init__(msg)
@@ -44,9 +44,9 @@ class TokenDecodeError(IkeaApiError):
 class GraphqlError(IkeaApiError):
     def __init__(self, err: Dict[str, Any]):
         if "path" in err:
-            msg = "{}: {}".format(err["message"], err["path"])
+            msg = f"{err['message']}: {err['path']}"
         elif "locations" in err:
-            msg = "{}: {}".format(err["message"], err["locations"])
+            msg = f"{err['message']}: {err['locations']}"
         else:
             msg = err["message"]
         super().__init__(msg)

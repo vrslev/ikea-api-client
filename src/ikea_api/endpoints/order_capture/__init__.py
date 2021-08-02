@@ -3,7 +3,11 @@ from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
 from ikea_api.constants import Secrets
-from ikea_api.errors import NoDeliveryOptionsAvailableError, WrongZipCodeError
+from ikea_api.errors import (
+    IkeaApiError,
+    NoDeliveryOptionsAvailableError,
+    WrongZipCodeError,
+)
 
 from ..cart import Cart
 
@@ -13,8 +17,8 @@ class OrderCapture(API):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
         if self._country_code != "ru":
-            self._endpoint = "https://ordercapture.ingka.com/ordercaptureapi/{}".format(
-                self._country_code
+            self._endpoint = (
+                "https://ordercapture.ingka.com/ordercaptureapi/" + self._country_code
             )
 
         zip_code = str(zip_code)
@@ -75,7 +79,7 @@ class OrderCapture(API):
 
         if "resourceId" in response:
             return response["resourceId"]
-        raise Exception("No resourceId for checkout")  # TODO: Custom exception
+        raise IkeaApiError("No resourceId for checkout")  # TODO: Custom exception
 
     def _get_delivery_area(self, checkout: Optional[str]):
         """Generate delivery area for checkout from zip code"""
@@ -87,7 +91,7 @@ class OrderCapture(API):
         if "resourceId" in response:
             return response["resourceId"]
         else:
-            raise Exception("No resourceId for delivery area")
+            raise IkeaApiError("No resourceId for delivery area")
 
     def get_delivery_services(self):
         """Get available delivery services"""
@@ -95,9 +99,7 @@ class OrderCapture(API):
         delivery_area = self._get_delivery_area(checkout)
 
         response = self._call_api(
-            "{}/checkouts/{}/delivery-areas/{}/delivery-services".format(
-                self._endpoint, checkout, delivery_area
-            )
+            f"{self._endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"
         )
         return response
 

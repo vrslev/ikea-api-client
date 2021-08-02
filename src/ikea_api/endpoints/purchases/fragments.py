@@ -70,8 +70,7 @@ tax_rate = """
   }
 """
 
-
-costs = """
+costs = f"""
   fragment Costs on Costs {{
     total {{
       ...Money
@@ -96,9 +95,6 @@ costs = """
     }}
   }}
 
-  {}
-  {}
-""".format(
-    money,
-    tax_rate,
-)
+  {money}
+  {tax_rate}
+"""

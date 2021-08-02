@@ -9,8 +9,11 @@ from . import generic_item_fetcher
 
 
 def _fetch_items_specs(session: Session, items: List[str]):
-    url = "https://api.ingka.ikea.com/salesitem/communications/{}/{}".format(
-        Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE
+    url = (
+        "https://api.ingka.ikea.com/salesitem/communications/"
+        + Constants.COUNTRY_CODE
+        + "/"
+        + Constants.LANGUAGE_CODE
     )
     params = {"itemNos": ",".join(items)}
     response = session.get(url, params=params)
@@ -37,9 +40,7 @@ def _fetch_items_specs(session: Session, items: List[str]):
 def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "*/*",
-        "Referer": "{}/{}/{}/order/delivery/".format(  # TODO: Change to f-strings where is possible
-            Constants.BASE_URL, Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE
-        ),
+        "Referer": f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/order/delivery/",
         "x-client-id": Secrets.item_ingka_x_client_id,
     }
     return generic_item_fetcher(items, headers, _fetch_items_specs, 50)

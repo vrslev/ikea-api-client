@@ -21,8 +21,7 @@ history = """
     date_and_time
 )
 
-
-status_banner_order = """
+status_banner_order = f"""
   query StatusBannerOrder($orderNumber: String!, $liteId: String) {{
     order(orderNumber: $orderNumber, liteId: $liteId) {{
       id
@@ -39,16 +38,11 @@ status_banner_order = """
     }}
   }}
 
-  {}
-  {}
-  {}
-  {}
-""".format(
-    date_and_time,
-    delivery_date,
-    service_info,
-    delivery_info,
-)
+  {date_and_time}
+  {delivery_date}
+  {service_info}
+  {delivery_info}
+"""
 
 
 costs_order = """

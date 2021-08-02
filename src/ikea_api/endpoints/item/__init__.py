@@ -17,7 +17,7 @@ def parse_item_code(item_code: List[Any]) -> List[str]:
     ...
 
 
-def parse_item_code(item_code: Union[str, int, List[Any], Any]):  # TODO: Move to item?
+def parse_item_code(item_code: Union[str, int, List[Any], Any]):
     def parse(item_code: Any):
         found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
         res = ""
@@ -58,7 +58,7 @@ def build_headers(headers: Dict[str, str]):
     return new_headers
 
 
-def generic_item_fetcher(  # TODO: Refactor
+def generic_item_fetcher(
     items: Union[str, List[str]],
     headers: Dict[str, str],
     func: Callable[..., Any],

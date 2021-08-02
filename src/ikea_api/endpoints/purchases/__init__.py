@@ -12,13 +12,9 @@ class Purchases(API):
         self._session.headers.update(
             {
                 "Accept": "*/*",
-                "Accept-Language": "{}-{}".format(
-                    self._language_code, self._country_code
-                ),
+                "Accept-Language": self._language_code + "-" + self._country_code,
                 "Origin": origin,
-                "Referer": "{}/{}/{}/purchases/".format(
-                    origin, self._country_code, self._language_code
-                ),
+                "Referer": f"{origin}/{self._country_code}/{self._language_code}/purchases/",
             }
         )
 
@@ -51,9 +47,7 @@ class Purchases(API):
         :params email: Your email. If set, there's no need to get token — just pass None
         """
         order_number = str(order_number)
-        headers = {
-            "Referer": "{}/{}/".format(self._session.headers["Origin"], order_number)
-        }
+        headers = {"Referer": f"{self._session.headers['Origin']}/{order_number}/"}
         payload: List[Dict[str, Dict[str, Any]]] = [
             self._build_payload(
                 "StatusBannerOrder",
