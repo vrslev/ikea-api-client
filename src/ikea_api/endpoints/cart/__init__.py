@@ -2,9 +2,9 @@ from functools import wraps
 from typing import Any, Callable, Dict, List, Tuple, Union
 
 from ikea_api.api import API
-from ikea_api.utils import parse_item_code
 
 from . import mutations, queries
+from ..item import parse_item_code
 
 
 def _build_payload_and_call(func: Callable[..., Any]):

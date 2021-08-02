@@ -1,9 +1,49 @@
-from typing import Any, Callable, Dict, List, Union
+import re
+from typing import Any, Callable, Dict, List, Union, overload
 
 from requests import Session
 
 from ikea_api.constants import Constants
-from ikea_api.utils import parse_item_code
+from ikea_api.errors import NoItemsParsedError
+
+
+@overload
+def parse_item_code(item_code: Union[int, str]) -> str:
+    ...
+
+
+@overload
+def parse_item_code(item_code: List[Any]) -> List[str]:
+    ...
+
+
+def parse_item_code(item_code: Union[str, int, List[Any], Any]):  # TODO: Move to item?
+    def parse(item_code: Any):
+        found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
+        res = ""
+        if found:
+            try:
+                res = re.sub(r"[^0-9]+", "", found[0])
+            except TypeError:
+                pass
+        return res
+
+    if isinstance(item_code, list):
+        res: List[str] = []
+        for i in item_code:
+            parsed = parse(i)
+            if parsed:
+                res.append(parsed)
+        if len(res) == 0:
+            raise NoItemsParsedError(item_code)
+        return res
+    elif isinstance(item_code, (str, int)):
+        parsed = parse(item_code)
+        if not parsed:
+            raise NoItemsParsedError(item_code)
+        return parsed
+    else:
+        return ""
 
 
 def build_headers(headers: Dict[str, str]):
@@ -18,7 +58,7 @@ def build_headers(headers: Dict[str, str]):
     return new_headers
 
 
-def generic_item_fetcher(
+def generic_item_fetcher(  # TODO: Refactor
     items: Union[str, List[str]],
     headers: Dict[str, str],
     func: Callable[..., Any],

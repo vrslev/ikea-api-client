@@ -7,9 +7,8 @@ import aiohttp
 
 from ikea_api.constants import Constants
 from ikea_api.errors import ItemFetchError
-from ikea_api.utils import parse_item_code
 
-from . import build_headers
+from . import build_headers, parse_item_code
 
 
 def _async_fetch(urls: List[Union[str, None]], headers: Dict[str, str]):
