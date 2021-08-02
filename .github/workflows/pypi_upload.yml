@@ -31,4 +31,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
 
         run: |
-          twine upload -u '__token__' dist/*
+          twine upload -u '__token__' dist/* --skip-existing
