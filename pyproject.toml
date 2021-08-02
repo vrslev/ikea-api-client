@@ -18,7 +18,7 @@ classifiers = [
 ]
 description-file = "README.md"
 requires-python = ">=3.7"
-requires = ["aiohttp>=3.7.4", "requests>=2.26.0", "brotli>=1.0.9", "bs4>=0.0.1"]
+requires = ["aiohttp", "requests", "brotli", "bs4"]
 
 [tool.flit.sdist]
 exclude = ["response_examples"]
