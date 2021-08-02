@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
+from ikea_api.constants import Constants
 
 from . import queries
 
@@ -12,9 +13,11 @@ class Purchases(API):
         self._session.headers.update(
             {
                 "Accept": "*/*",
-                "Accept-Language": self._language_code + "-" + self._country_code,
+                "Accept-Language": Constants.LANGUAGE_CODE
+                + "-"
+                + Constants.COUNTRY_CODE,
                 "Origin": origin,
-                "Referer": f"{origin}/{self._country_code}/{self._language_code}/purchases/",
+                "Referer": f"{origin}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/purchases/",
             }
         )
 

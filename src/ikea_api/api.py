@@ -7,9 +7,6 @@ from requests import Session
 from .constants import Constants
 from .errors import GraphqlError, IkeaApiError, UnauthorizedError
 
-## pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
-## pyright: reportGeneralTypeIssues=false
-
 
 class Method(Enum):
     POST = "POST"
@@ -17,17 +14,16 @@ class Method(Enum):
 
 
 class API:
+    """Generic API class"""
+
     def __init__(self, token: str, endpoint: str):
         self._token, self._endpoint = token, endpoint
-
-        self._country_code = Constants.COUNTRY_CODE
-        self._language_code = Constants.LANGUAGE_CODE
 
         self._session = Session()
         self._session.headers.update(
             {
                 "Accept-Encoding": "gzip, deflate, br",
-                "Accept-Language": self._language_code,
+                "Accept-Language": Constants.LANGUAGE_CODE,
                 "Connection": "keep-alive",
                 "User-Agent": Constants.USER_AGENT,
                 "Authorization": "Bearer " + token,

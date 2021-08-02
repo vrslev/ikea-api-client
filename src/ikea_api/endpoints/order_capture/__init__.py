@@ -2,7 +2,7 @@ import re
 from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
-from ikea_api.constants import Secrets
+from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import IkeaApiError, OrderCaptureError
 
 from ..cart import Cart
@@ -12,9 +12,10 @@ class OrderCapture(API):
     def __init__(self, token: str, zip_code: Union[str, int]):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
-        if self._country_code != "ru":
+        if Constants.COUNTRY_CODE != "ru":
             self._endpoint = (
-                "https://ordercapture.ingka.com/ordercaptureapi/" + self._country_code
+                "https://ordercapture.ingka.com/ordercaptureapi/"
+                + Constants.COUNTRY_CODE
             )
 
         zip_code = str(zip_code)
@@ -71,7 +72,7 @@ class OrderCapture(API):
 
         if "resourceId" in response:
             return response["resourceId"]
-        raise IkeaApiError("No resourceId for checkout")  # TODO: Custom exception
+        raise IkeaApiError("No resourceId for checkout")
 
     def _get_delivery_area(self, checkout: Optional[str]):
         """Generate delivery area for checkout from zip code"""

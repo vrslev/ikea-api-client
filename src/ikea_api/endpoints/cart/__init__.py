@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Any, Callable, Dict, List, Tuple, Union
 
 from ikea_api.api import API
-from ikea_api.constants import Secrets
+from ikea_api.constants import Constants, Secrets
 
 from . import mutations, queries
 from ..item import parse_item_code
@@ -30,7 +30,7 @@ class Cart(API):
     def _build_payload(self, query: str, **variables: Any):
         payload = {
             "query": query,
-            "variables": {"languageCode": self._language_code, **variables},
+            "variables": {"languageCode": Constants.LANGUAGE_CODE, **variables},
         }
         return payload
 
