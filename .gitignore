@@ -7,5 +7,3 @@ __pycache__/
 
 dist/
 venv/
-
-config.ini
