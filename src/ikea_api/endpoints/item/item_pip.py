@@ -1,22 +1,23 @@
 import asyncio
+from asyncio.tasks import Task
 import re
-from typing import Dict
+from typing import Any, Dict, List, Optional, Union
 
 import aiohttp
 
-from . import (
-    Constants,
-    ItemFetchError,
-    build_headers,
-    country_code,
-    language_code,
-    parse_item_code,
-)
+from ikea_api.constants import Constants
+from ikea_api.errors import ItemFetchError
+from ikea_api.utils import parse_item_code
+
+from . import build_headers, country_code, language_code
 
 
-def _async_fetch(urls, headers):
+def _async_fetch(urls: List[Union[str, None]], headers: Dict[str, str]):
     async def main():
-        async def fetch(session, url):
+        async def fetch(session: aiohttp.ClientSession, url: Optional[str]):
+            if not url:
+                return
+
             async with session.get(url=url, headers=headers) as response:
                 try:
                     if response.status == 404:
@@ -25,13 +26,20 @@ def _async_fetch(urls, headers):
                         return await response.json()
                 except ItemFetchError as e:
                     url = e.args[0]
-                    r = await session.get(build_opposite_url(url), headers=headers)
+                    if not url:
+                        return
+
+                    opposite_url = build_opposite_url(url)
+                    if not opposite_url:
+                        return
+
+                    r = await session.get(opposite_url, headers=headers)
                     if not r.ok:
                         raise ItemFetchError(parse_item_code(url))
                     return await r.json()
 
-        async def fetch_all(session):
-            tasks = []
+        async def fetch_all(session: aiohttp.ClientSession):
+            tasks: List[Task[Any]] = []
             loop = asyncio.get_event_loop()
             for url in urls:
                 task = loop.create_task(fetch(session, url))
@@ -49,7 +57,7 @@ def _async_fetch(urls, headers):
     return res
 
 
-def build_url(item_code, is_combination):
+def build_url(item_code: str, is_combination: bool):
     if not len(item_code) == 8:
         return
     url = "{base_url}/{country}/{lang}/products/{folder}/{item_code}.json".format(
@@ -62,7 +70,7 @@ def build_url(item_code, is_combination):
     return url
 
 
-def build_opposite_url(url):
+def build_opposite_url(url: str):
     match = re.findall(r"([sS])(\d{8})", url)
     if len(match) != 1:
         return
@@ -83,10 +91,8 @@ def fetch(items: Dict[str, bool]):
     # {'item_code': True (is SPR?)...}
     headers = build_headers({"Accept": "*/*"})
     headers.pop("Origin")
-    urls = [build_url(parse_item_code(i), items[i]) for i in items]
+    urls: List[Union[str, None]] = [
+        build_url(parse_item_code(i), items[i]) for i in items
+    ]
     responses = _async_fetch(urls, headers=headers)
-    res = []
-    for r in responses:
-        if r:
-            res.append(r)
-    return res
+    return [r for r in responses if r]

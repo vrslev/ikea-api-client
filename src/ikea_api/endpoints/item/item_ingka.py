@@ -1,15 +1,14 @@
-from typing import List
+from typing import List, Union
 
-from . import (
-    Constants,
-    ItemFetchError,
-    country_code,
-    generic_item_fetcher,
-    language_code,
-)
+from requests import Session
+
+from ikea_api.constants import Constants
+from ikea_api.errors import ItemFetchError
+
+from . import country_code, generic_item_fetcher, language_code
 
 
-def _fetch_items_specs(session, items):
+def _fetch_items_specs(session: Session, items: List[str]):
     url = "https://api.ingka.ikea.com/salesitem/communications/{}/{}".format(
         country_code, language_code
     )
@@ -35,7 +34,7 @@ def _fetch_items_specs(session, items):
     return r_json
 
 
-def fetch(items: List[str]):
+def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "*/*",
         "Referer": "{}/{}/{}/order/delivery/".format(

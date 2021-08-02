@@ -1,27 +1,29 @@
 """IOWS Item API. Works only for Russian market"""
 
-from . import Constants, ItemFetchError, generic_item_fetcher
+from typing import Dict, List, Union
 
+from requests import Session
 
-class WrongItemCodeError(Exception):
-    pass
+from ikea_api.constants import Constants
+from ikea_api.errors import ItemFetchError, WrongItemCodeError
 
+from . import generic_item_fetcher
 
-from typing import Dict, List
+# pyright: reportUnknownVariableType=false, reportUnknownArgumentType=false
 
 
 def _build_url(items: Dict[str, str]):
     endpoint = "https://iows.ikea.com/retail/iows/ru/ru/catalog/items/"
-    templated_list = []
+    templated_list: List[str] = []
     for item in items:
         templated_list.append(f"{items[item]},{item}")
     return endpoint + ";".join(templated_list)
 
 
-def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
+def _fetch_items_specs(session: Session, input_items: List[str]):
     if len(input_items) == 0:
         return
-    items = {}
+    items: Dict[str, str] = {}
     for item in input_items:
         items[item] = "ART"
 
@@ -29,7 +31,7 @@ def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
         url = _build_url(items)
         response = session.get(url)
         if i == 0 and len(items) == 1 and not response.ok:
-            items[item] = "SPR"  # pyright: reportUnboundVariable=false
+            items[item] = "SPR"  # type: ignore
             url = _build_url(items)
             response = session.get(url)
             if not response.ok:
@@ -68,7 +70,7 @@ def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
                 for attr in err["ErrorAttributeList"]["ErrorAttribute"]:
                     attrs[attr["Name"]["$"]] = attr["Value"]["$"]
                 item_code = str(attrs["ITEM_NO"])
-                item_type = attrs["ITEM_TYPE"]
+                item_type: str = attrs["ITEM_TYPE"]
 
                 if i == 0:
                     items[item_code] = "SPR" if item_type == "ART" else "ART"
@@ -76,7 +78,7 @@ def _fetch_items_specs(session, input_items: List[Dict[str, str]]):
                     items.pop(item_code)
 
 
-def fetch(items: List[str]):
+def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "application/vnd.ikea.iows+json;version=2.0",
         "Referer": f"{Constants.BASE_URL}/ru/ru/shoppinglist/",

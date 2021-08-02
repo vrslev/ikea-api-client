@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 import re
+from typing import Any, List, Union, overload
 
 import requests
 from requests.models import Response
@@ -13,8 +14,18 @@ def check_response(response: Response) -> None:
         raise Exception(response.status_code, response.text)
 
 
-def parse_item_code(item_code):
-    def parse(item_code):
+@overload
+def parse_item_code(item_code: Union[int, str]) -> str:
+    ...
+
+
+@overload
+def parse_item_code(item_code: List[Any]) -> List[str]:
+    ...
+
+
+def parse_item_code(item_code: Union[str, int, List[Any], Any]):
+    def parse(item_code: Any):
         found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
         res = ""
         if found:
@@ -25,7 +36,7 @@ def parse_item_code(item_code):
         return res
 
     if isinstance(item_code, list):
-        res = []
+        res: List[str] = []
         for i in item_code:
             parsed = parse(i)
             if parsed:
@@ -42,12 +53,12 @@ def parse_item_code(item_code):
         return ""
 
 
-def validate_zip_code(zip_code):
-    if len(re.findall(r"[^0-9]", zip_code)) > 0:
+def validate_zip_code(zip_code: Union[str, int]):
+    if len(re.findall(r"[^0-9]", str(zip_code))) > 0:
         raise WrongZipCodeError(zip_code)
 
 
-def get_client_id_from_login_page(country_code="ru", language_code="ru"):
+def get_client_id_from_login_page(country_code: str = "ru", language_code: str = "ru"):
     login_url = "{}/{}/{}/profile/login/".format(
         Constants.BASE_URL, country_code.lower(), language_code.lower()
     )

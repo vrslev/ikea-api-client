@@ -1,5 +1,5 @@
 from json.decoder import JSONDecodeError
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional, Union
 
 from requests import Session
 
@@ -11,6 +11,9 @@ from .errors import (
     TokenExpiredError,
 )
 from .utils import get_config_values
+
+# pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
+# pyright: reportGeneralTypeIssues=false
 
 
 class API:
@@ -34,11 +37,11 @@ class API:
             }
         )
 
-    def error_handler(self, status_code, response_json):
+    def error_handler(self, status_code: int, response_json: Any):
         pass
 
-    def basic_error_handler(self, status_code, response_json):
-        err = None
+    def basic_error_handler(self, status_code: int, response_json: Any):
+        err: Any = None
         if "error" in response_json and isinstance(err, str) and status_code == 401:
             err = response_json["error"]
             if err == "Token has expired":
@@ -64,7 +67,7 @@ class API:
             if isinstance(err, list):
                 err = err[0]
 
-            ext = err.get("extensions")
+            ext: Any = err.get("extensions")
             if ext:
                 if "errorCode" in ext and ext["errorCode"] == 401:
                     raise NotAuthenticatedError
@@ -79,7 +82,12 @@ class API:
                 else:
                     raise Exception(err)
 
-    def call_api(self, endpoint=None, headers=None, data=None) -> Dict[str, Any]:
+    def call_api(
+        self,
+        endpoint: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None,
+        data: Optional[Union[Dict[Any, Any], List[Any]]] = None,
+    ):
         """Wrapper for request's post/get with error handling"""
         if not endpoint:
             endpoint = self.endpoint
@@ -90,7 +98,7 @@ class API:
             response = self.session.get(endpoint, headers=headers)
 
         try:
-            response_json = response.json()
+            response_json: Dict[Any, Any] = response.json()
         except JSONDecodeError:
             raise Exception(response.text)
 

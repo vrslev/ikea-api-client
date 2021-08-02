@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from typing import Any
 
 from ikea_api import Cart, OrderCapture
 
@@ -17,7 +18,7 @@ class_args = {"OrderCapture": ("101000")}
 functions_to_skip = ["error_handler", "copy_items", "set_coupon"]
 
 
-def save_json(r, *args, **kwargs):
+def save_json(r: Any, *args: Any, **kwargs: Any):
     directory = "response_examples"
     try:
         os.mkdir(directory)
@@ -29,7 +30,7 @@ def save_json(r, *args, **kwargs):
     except FileExistsError:
         pass
     path = os.path.join(directory, module, r.__name__ + ".json")
-    res = r(*args, **kwargs)
+    res: Any = r(*args, **kwargs)
     with open(path, "a+") as f:
         f.seek(0)
         f.truncate()
@@ -37,7 +38,7 @@ def save_json(r, *args, **kwargs):
         f.write(j)
 
 
-def save_responses_for_class(cl, token):
+def save_responses_for_class(cl: Any, token: str):
     for s in cl.__dict__:
         if cl.__name__ in class_args:
             cur_cl = cl(token, class_args[cl.__name__])

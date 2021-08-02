@@ -1,8 +1,9 @@
-from typing import Union
+from typing import Any, Dict, List, Optional, Union
 
-from ...api import API
-from ...errors import NoDeliveryOptionsAvailableError, WrongZipCodeError
-from ...utils import validate_zip_code
+from ikea_api.api import API
+from ikea_api.errors import NoDeliveryOptionsAvailableError, WrongZipCodeError
+from ikea_api.utils import validate_zip_code
+
 from ..cart import Cart
 
 
@@ -26,7 +27,7 @@ class OrderCapture(API):
 
         self.session.headers["X-Client-Id"] = "af2525c3-1779-49be-8d7d-adf32cac1934"
 
-    def error_handler(self, status_code, response_json):
+    def error_handler(self, status_code: int, response_json: Dict[Any, Any]):
         if "errorCode" in response_json:
             error_code = response_json["errorCode"]
             if error_code == 60004:
@@ -37,7 +38,7 @@ class OrderCapture(API):
     def _get_items_for_checkout_request(self):
         cart = Cart(self.token)
         cart_show = cart.show()
-        items_templated = []
+        items_templated: List[Dict[str, Any]] = []
         try:
             if cart_show.get("data"):
                 for d in cart_show["data"]["cart"]["items"]:
@@ -67,7 +68,7 @@ class OrderCapture(API):
             "deliveryArea": None,
         }
 
-        response = self.call_api(
+        response: Dict[str, str] = self.call_api(
             endpoint=f"{self.endpoint}/checkouts",
             headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
             data=data,
@@ -75,10 +76,9 @@ class OrderCapture(API):
 
         if "resourceId" in response:
             return response["resourceId"]
-        else:
-            raise Exception("No resourceId for checkout")
+        raise Exception("No resourceId for checkout")  # TODO: Custom exception
 
-    def _get_delivery_area(self, checkout):
+    def _get_delivery_area(self, checkout: Optional[str]):
         """Generate delivery area for checkout from zip code"""
         response = self.call_api(
             endpoint=f"{self.endpoint}/checkouts/{checkout}/delivery-areas",
@@ -92,7 +92,7 @@ class OrderCapture(API):
 
     def get_delivery_services(self):
         """Get available delivery services"""
-        checkout = self._get_checkout()
+        checkout: Optional[str] = self._get_checkout()
         delivery_area = self._get_delivery_area(checkout)
 
         response = self.call_api(

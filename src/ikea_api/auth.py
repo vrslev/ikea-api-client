@@ -4,8 +4,6 @@ from .constants import Constants
 from .errors import InvalidRetailUnitError, UnauthorizedError
 from .utils import check_response, get_config_values
 
-# pyright: reportMissingImports=false
-
 _driver_packages_installed = True
 try:
     import chromedriver_autoinstaller
@@ -31,6 +29,11 @@ try:
     from .utils import get_client_id_from_login_page
 except ImportError:
     _old_auth_loaded = False
+
+
+# pyright: reportMissingTypeStubs=false, reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false, reportGeneralTypeIssues=false
+# pyright: reportOptionalMemberAccess=false
 
 
 def get_guest_token() -> str:
@@ -131,13 +134,13 @@ class Auth:
         username_el.send_keys(self.username)
 
         password_el = self._driver.find_element_by_css_selector("input#password")
-        password_el.click()  # type: ignore
-        password_el.send_keys(self.password)  # type: ignore
-        password_el.send_keys(Keys.ENTER)  # type: ignore
+        password_el.click()
+        password_el.send_keys(self.password)
+        password_el.send_keys(Keys.ENTER)
 
         self._cookie: Optional[Dict[str, Any]] = None
         for i in range(10):  # type: ignore
-            self._cookie = self._driver.get_cookie("idp_reguser")  # type: ignore
+            self._cookie = self._driver.get_cookie("idp_reguser")
             if self._cookie:
                 self._driver.close()
                 break
@@ -155,7 +158,7 @@ class Auth:
         return self.token
 
 
-def _old_get_authorized_token(username, password) -> str:  # type: ignore
+def _old_get_authorized_token(username: str, password: str):  # type: ignore
     """
     OAuth2 authorization
     Token expires in 24 hours
@@ -172,7 +175,7 @@ class _OldAuth:
           Use Auth instead. Keeping it in case something will change
     """
 
-    def __init__(self, username, password):
+    def __init__(self, username: str, password: str):
         if not _old_auth_loaded:
             raise RuntimeError(
                 '"bs4" package is not installed. ' 'Run "pip install bs4" to proceed.'
@@ -199,7 +202,7 @@ class _OldAuth:
                 self.country_code, self.language_code
             )
             auth0_authorize = self._auth0_authorize()
-        usernamepassword_login = self._usernamepassword_login(
+        usernamepassword_login = self._usernamepassword_login(  # type: ignore
             username, password, **auth0_authorize
         )
         login_callback = self._login_callback(**usernamepassword_login)
@@ -238,10 +241,16 @@ class _OldAuth:
 
         bs = BeautifulSoup(response.text, "html.parser").find("script", id="a0-config")
         encoded_config: str = bs.find("script", id="a0-config").get("data-config")  # type: ignore
-        session_config = json.loads(b64decode(encoded_config))
+        session_config: Any = json.loads(b64decode(encoded_config))
         return {"session_config": session_config, "authorize_final_url": response.url}
 
-    def _usernamepassword_login(self, usr, pwd, session_config, authorize_final_url):
+    def _usernamepassword_login(
+        self,
+        usr: str,
+        pwd: str,
+        session_config: Dict[str, Any],
+        authorize_final_url: str,
+    ):
         """
         2. /usernamepassword/login
         Log in and get wctx and wresult params
@@ -277,8 +286,8 @@ class _OldAuth:
                 raise NotAuthenticatedError
         check_response(response)
         soup = BeautifulSoup(response.text, "html.parser")
-        wctx = soup.find("input", {"name": "wctx"}).get("value")  # type: ignore
-        wresult = soup.find("input", {"name": "wresult"}).get("value")  # type: ignore
+        wctx: Any = soup.find("input", {"name": "wctx"}).get("value")  # type: ignore
+        wresult: Any = soup.find("input", {"name": "wresult"}).get("value")  # type: ignore
         return {
             "wctx": wctx,
             "wresult": wresult,
@@ -287,7 +296,11 @@ class _OldAuth:
         }
 
     def _login_callback(
-        self, wctx, wresult, usernamepassword_login_final_url, base_url
+        self,
+        wctx: Any,
+        wresult: Any,
+        usernamepassword_login_final_url: str,
+        base_url: str,
     ):
         """
         3. /login/callback
@@ -312,7 +325,7 @@ class _OldAuth:
             "base_url": base_url,
         }
 
-    def _oauth_token(self, callback_code, callback_final_url, base_url):
+    def _oauth_token(self, callback_code: str, callback_final_url: str, base_url: str):
         """
         4. /oauth/token
         Get access token
@@ -334,7 +347,7 @@ class _OldAuth:
         response = self.session.post(endpoint, headers=headers, json=payload)
         check_response(response)
 
-        self.token = response.json()["access_token"]
+        self.token: str = response.json()["access_token"]
         self._decode_and_set_jwt()
         return self.token
 
