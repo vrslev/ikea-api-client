@@ -27,6 +27,9 @@ class OrderCapture(API):
 
         self._session.headers["X-Client-Id"] = "af2525c3-1779-49be-8d7d-adf32cac1934"
 
+    def __call__(self):
+        return self.get_delivery_services()
+
     def _error_handler(self, status_code: int, response_json: Dict[Any, Any]):
         if "errorCode" in response_json:
             error_code = response_json["errorCode"]
