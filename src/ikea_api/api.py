@@ -6,6 +6,7 @@ from requests import Session
 from .constants import Constants
 from .errors import (
     CODES_TO_ERRORS,
+    IkeaApiError,
     NotAuthenticatedError,
     TokenDecodeError,
     TokenExpiredError,
@@ -38,7 +39,9 @@ class API:
     def _error_handler(self, status_code: int, response_json: Any):
         pass
 
-    def _basic_error_handler(self, status_code: int, response_json: Any):
+    def _basic_error_handler(
+        self, status_code: int, response_json: Any
+    ):  # TODO: Such error handlers are messy
         err: Any = None
         if "error" in response_json and isinstance(err, str) and status_code == 401:
             err = response_json["error"]
@@ -73,12 +76,12 @@ class API:
                     if ext["code"] in CODES_TO_ERRORS:
                         raise CODES_TO_ERRORS[ext["code"]](err)
                     else:
-                        raise Exception(ext["code"] + ", " + str(err))
+                        raise IkeaApiError(ext["code"] + ", " + str(err))
             else:
                 if "message" in err:
-                    raise Exception(err["message"])
+                    raise IkeaApiError(err["message"])
                 else:
-                    raise Exception(err)
+                    raise IkeaApiError(err)
 
     def _call_api(
         self,
@@ -98,12 +101,12 @@ class API:
         try:
             response_json: Dict[Any, Any] = response.json()
         except JSONDecodeError:
-            raise Exception(response.text)
+            raise IkeaApiError(response.text)
 
         self._basic_error_handler(response.status_code, response_json)
         self._error_handler(response.status_code, response_json)
 
         if not response.ok:
-            raise Exception(response.status_code, response.text)
+            raise IkeaApiError(response.status_code, response.text)
 
         return response_json
