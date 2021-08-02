@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
+from .api import API
 from .constants import Constants, Secrets
-from .errors import IkeaApiError, UnauthorizedError
 
 _driver_packages_installed = True
 try:
@@ -23,35 +23,33 @@ except ImportError:
 # pyright: reportOptionalMemberAccess=false
 
 
-def get_guest_token() -> str:  # TODO: Make endpoint out of it
-    from requests import post
-
-    response = post(
-        url="https://api.ingka.ikea.com/guest/token",
-        headers={
-            "Accept": "*/*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "en-us",
-            "Origin": Constants.BASE_URL,
-            "Referer": Constants.BASE_URL + "/",
-            "Connection": "keep-alive",
-            "User-Agent": Constants.USER_AGENT,
-            "X-Client-Id": Secrets.auth_guest_token_x_client_id,
-            "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
-        },
-        json={"retailUnit": Constants.LANGUAGE_CODE},
-    )
-
-    if response.status_code == 401:
-        raise UnauthorizedError(response.json())
-    elif not response.ok:
-        raise IkeaApiError(response.status_code, response.text)
-
-    return response.json()["access_token"]
+def get_guest_token():
+    return GuestAuth()()
 
 
 def get_authorized_token(username: str, password: str):
     return Auth()(username, password)
+
+
+class GuestAuth(API):
+    def __init__(self):
+        super().__init__(None, "https://api.ingka.ikea.com/guest/token")
+        self._session.headers.update(
+            {
+                "Accept": "*/*",
+                "Accept-Language": "en-us",
+                "X-Client-Id": Secrets.auth_guest_token_x_client_id,
+                "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
+            }
+        )
+
+    def get_token(self):
+        response = self._call_api(data={"retailUnit": Constants.LANGUAGE_CODE})
+        self._token = response["access_token"]
+        return self._token
+
+    def __call__(self) -> str:
+        return self.get_token()
 
 
 class Auth:

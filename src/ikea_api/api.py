@@ -16,7 +16,7 @@ class Method(Enum):
 class API:
     """Generic API class"""
 
-    def __init__(self, token: str, endpoint: str):
+    def __init__(self, token: Union[str, None], endpoint: str):
         self._token, self._endpoint = token, endpoint
 
         self._session = Session()
@@ -26,11 +26,12 @@ class API:
                 "Accept-Language": Constants.LANGUAGE_CODE,
                 "Connection": "keep-alive",
                 "User-Agent": Constants.USER_AGENT,
-                "Authorization": "Bearer " + token,
                 "Origin": Constants.BASE_URL,
                 "Referer": Constants.BASE_URL + "/",
             }
         )
+        if token is not None:
+            self._session.headers["Authorization"] = "Bearer " + token
 
     def _error_handler(self, status_code: int, response_json: Any):
         pass

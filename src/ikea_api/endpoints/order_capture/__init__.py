@@ -32,7 +32,7 @@ class OrderCapture(API):
             raise OrderCaptureError(response_json)
 
     def _get_items_for_checkout_request(self):
-        cart = Cart(self._token)
+        cart = Cart(self._token)  # type: ignore
         cart_show = cart.show()
         items_templated: List[Dict[str, Any]] = []
         try:
