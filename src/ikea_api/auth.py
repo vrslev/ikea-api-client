@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, Optional
 
 from .api import API
@@ -130,6 +131,10 @@ class Auth:
     def _get_token(self):
         if self._cookie:
             self.token: Optional[str] = self._cookie.get("value")
+        else:
+            fpath = os.path.abspath("login_error_screenshot.png")
+            self._driver.save_screenshot(fpath)
+            raise RuntimeError(f"Cannot log in. See the screenshot: {fpath}")
 
     def __call__(self, username: str, password: str):
         self.username = username
