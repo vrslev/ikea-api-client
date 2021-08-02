@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [tool.flit.metadata]
 module = "ikea_api"
 author = "vrslev"
-author-email = "5225148+vrslev@users.noreply.github.com"
+author-email = "mail@vrslev.com"
 home-page = "https://github.com/vrslev/ikea-api-client"
 classifiers = [
     "License :: OSI Approved :: MIT License",
