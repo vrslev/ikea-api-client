@@ -2,7 +2,6 @@
 
 name: pypi_upload
 
-# Controls when the workflow will run
 on:
   release:
     types: created
@@ -32,4 +31,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
 
         run: |
-          twine upload --verbose -u '__token__' dist/*
+          twine upload -u '__token__' dist/*
