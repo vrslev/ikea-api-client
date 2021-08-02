@@ -3,10 +3,7 @@ from typing import Any, Callable, Dict, List, Union
 from requests import Session
 
 from ikea_api.constants import Constants
-from ikea_api.utils import get_config_values, parse_item_code
-
-config = get_config_values()
-country_code, language_code = config["country_code"], config["language_code"]
+from ikea_api.utils import parse_item_code
 
 
 def build_headers(headers: Dict[str, str]):
@@ -14,7 +11,7 @@ def build_headers(headers: Dict[str, str]):
         "Origin": Constants.BASE_URL,
         "User-Agent": Constants.USER_AGENT,
         "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": language_code,
+        "Accept-Language": Constants.LANGUAGE_CODE,
         "Connection": "keep-alive",
     }
     new_headers.update(headers)

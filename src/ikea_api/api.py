@@ -10,7 +10,6 @@ from .errors import (
     TokenDecodeError,
     TokenExpiredError,
 )
-from .utils import get_config_values
 
 # pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
 # pyright: reportGeneralTypeIssues=false
@@ -20,9 +19,8 @@ class API:
     def __init__(self, token: str, endpoint: str):
         self._token, self._endpoint = token, endpoint
 
-        config = get_config_values()
-        self._country_code = config["country_code"]
-        self._language_code = config["language_code"]
+        self._country_code = Constants.COUNTRY_CODE
+        self._language_code = Constants.LANGUAGE_CODE
 
         self._session = Session()
         self._session.headers.update(
