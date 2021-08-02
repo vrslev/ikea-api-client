@@ -1,27 +1,6 @@
 [build-system]
-requires = ["flit_core >=2,<4"]
-build-backend = "flit_core.buildapi"
-
-[tool.flit.metadata]
-module = "ikea_api"
-author = "vrslev"
-author-email = "mail@vrslev.com"
-home-page = "https://github.com/vrslev/ikea-api-client"
-classifiers = [
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10"
-]
-description-file = "README.md"
-requires-python = ">=3.7"
-requires = ["aiohttp", "requests", "brotli", "bs4"]
-
-[tool.flit.sdist]
-exclude = ["response_examples"]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 target-version = ["py37"]
