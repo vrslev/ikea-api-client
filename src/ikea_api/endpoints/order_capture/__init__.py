@@ -1,8 +1,8 @@
+import re
 from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
 from ikea_api.errors import NoDeliveryOptionsAvailableError, WrongZipCodeError
-from ikea_api.utils import validate_zip_code
 
 from ..cart import Cart
 
@@ -104,3 +104,8 @@ class OrderCapture(API):
             )
         )
         return response
+
+
+def validate_zip_code(zip_code: Union[str, int]):  # TODO: MOve to purchases
+    if len(re.findall(r"[^0-9]", str(zip_code))) > 0:
+        raise WrongZipCodeError(zip_code)
