@@ -9,7 +9,7 @@ from ikea_api.constants import Constants
 from ikea_api.errors import ItemFetchError
 from ikea_api.utils import parse_item_code
 
-from . import build_headers, country_code, language_code
+from . import build_headers
 
 
 def _async_fetch(urls: List[Union[str, None]], headers: Dict[str, str]):
@@ -62,8 +62,8 @@ def build_url(item_code: str, is_combination: bool):
         return
     url = "{base_url}/{country}/{lang}/products/{folder}/{item_code}.json".format(
         base_url=Constants.BASE_URL,
-        country=country_code,
-        lang=language_code,
+        country=Constants.COUNTRY_CODE,
+        lang=Constants.LANGUAGE_CODE,
         folder=item_code[5:],
         item_code="s" + item_code if is_combination else item_code,
     )

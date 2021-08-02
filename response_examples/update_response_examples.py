@@ -3,7 +3,7 @@ import os
 import re
 from typing import Any
 
-from ikea_api import Cart, OrderCapture
+from ikea_api.endpoints import Cart, OrderCapture
 
 token = os.environ["TOKEN"]
 

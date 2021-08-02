@@ -5,12 +5,12 @@ from requests import Session
 from ikea_api.constants import Constants
 from ikea_api.errors import ItemFetchError
 
-from . import country_code, generic_item_fetcher, language_code
+from . import generic_item_fetcher
 
 
 def _fetch_items_specs(session: Session, items: List[str]):
     url = "https://api.ingka.ikea.com/salesitem/communications/{}/{}".format(
-        country_code, language_code
+        Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE
     )
     params = {"itemNos": ",".join(items)}
     response = session.get(url, params=params)
@@ -38,7 +38,7 @@ def fetch(items: Union[str, List[str]]):
     headers = {
         "Accept": "*/*",
         "Referer": "{}/{}/{}/order/delivery/".format(
-            Constants.BASE_URL, country_code, language_code
+            Constants.BASE_URL, Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE
         ),
         "x-client-id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",
     }
