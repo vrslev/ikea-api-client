@@ -1,7 +1,7 @@
 import re
 from typing import Any, Dict, List, Optional, Union
 
-from ikea_api.api import API
+from ikea_api.api import API, Method
 from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import IkeaApiError, OrderCaptureError
 
@@ -92,7 +92,8 @@ class OrderCapture(API):
         delivery_area = self._get_delivery_area(checkout)
 
         response = self._call_api(
-            f"{self._endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"
+            f"{self._endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services",
+            method=Method.GET,
         )
         return response
 
