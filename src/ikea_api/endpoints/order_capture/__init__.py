@@ -16,18 +16,18 @@ class OrderCapture(API):
     def __init__(self, token: str, zip_code: Union[str, int]):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
-        if self.country_code != "ru":
-            self.endpoint = "https://ordercapture.ingka.com/ordercaptureapi/{}".format(
-                self.country_code
+        if self._country_code != "ru":
+            self._endpoint = "https://ordercapture.ingka.com/ordercaptureapi/{}".format(
+                self._country_code
             )
 
         zip_code = str(zip_code)
         validate_zip_code(zip_code)
-        self.zip_code = zip_code
+        self._zip_code = zip_code
 
-        self.session.headers["X-Client-Id"] = "af2525c3-1779-49be-8d7d-adf32cac1934"
+        self._session.headers["X-Client-Id"] = "af2525c3-1779-49be-8d7d-adf32cac1934"
 
-    def error_handler(self, status_code: int, response_json: Dict[Any, Any]):
+    def _error_handler(self, status_code: int, response_json: Dict[Any, Any]):
         if "errorCode" in response_json:
             error_code = response_json["errorCode"]
             if error_code == 60004:
@@ -36,7 +36,7 @@ class OrderCapture(API):
                 raise NoDeliveryOptionsAvailableError
 
     def _get_items_for_checkout_request(self):
-        cart = Cart(self.token)
+        cart = Cart(self._token)
         cart_show = cart.show()
         items_templated: List[Dict[str, Any]] = []
         try:
@@ -68,8 +68,8 @@ class OrderCapture(API):
             "deliveryArea": None,
         }
 
-        response: Dict[str, str] = self.call_api(
-            endpoint=f"{self.endpoint}/checkouts",
+        response: Dict[str, str] = self._call_api(
+            endpoint=f"{self._endpoint}/checkouts",
             headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
             data=data,
         )
@@ -80,9 +80,9 @@ class OrderCapture(API):
 
     def _get_delivery_area(self, checkout: Optional[str]):
         """Generate delivery area for checkout from zip code"""
-        response = self.call_api(
-            endpoint=f"{self.endpoint}/checkouts/{checkout}/delivery-areas",
-            data={"zipCode": self.zip_code, "enableRangeOfDays": False},
+        response = self._call_api(
+            endpoint=f"{self._endpoint}/checkouts/{checkout}/delivery-areas",
+            data={"zipCode": self._zip_code, "enableRangeOfDays": False},
         )
 
         if "resourceId" in response:
@@ -95,9 +95,9 @@ class OrderCapture(API):
         checkout: Optional[str] = self._get_checkout()
         delivery_area = self._get_delivery_area(checkout)
 
-        response = self.call_api(
+        response = self._call_api(
             "{}/checkouts/{}/delivery-areas/{}/delivery-services".format(
-                self.endpoint, checkout, delivery_area
+                self._endpoint, checkout, delivery_area
             )
         )
         return response

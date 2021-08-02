@@ -14,3 +14,4 @@ line_length = 79
 [tool.pyright]
 typeCheckingMode = "strict"
 pythonVersion = "3.7"
+reportPrivateUsage = false

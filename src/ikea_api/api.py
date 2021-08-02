@@ -18,17 +18,17 @@ from .utils import get_config_values
 
 class API:
     def __init__(self, token: str, endpoint: str):
-        self.token, self.endpoint = token, endpoint
+        self._token, self._endpoint = token, endpoint
 
         config = get_config_values()
-        self.country_code = config["country_code"]
-        self.language_code = config["language_code"]
+        self._country_code = config["country_code"]
+        self._language_code = config["language_code"]
 
-        self.session = Session()
-        self.session.headers.update(
+        self._session = Session()
+        self._session.headers.update(
             {
                 "Accept-Encoding": "gzip, deflate, br",
-                "Accept-Language": self.language_code,
+                "Accept-Language": self._language_code,
                 "Connection": "keep-alive",
                 "User-Agent": Constants.USER_AGENT,
                 "Authorization": "Bearer " + token,
@@ -37,10 +37,10 @@ class API:
             }
         )
 
-    def error_handler(self, status_code: int, response_json: Any):
+    def _error_handler(self, status_code: int, response_json: Any):
         pass
 
-    def basic_error_handler(self, status_code: int, response_json: Any):
+    def _basic_error_handler(self, status_code: int, response_json: Any):
         err: Any = None
         if "error" in response_json and isinstance(err, str) and status_code == 401:
             err = response_json["error"]
@@ -82,7 +82,7 @@ class API:
                 else:
                     raise Exception(err)
 
-    def call_api(
+    def _call_api(
         self,
         endpoint: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
@@ -90,20 +90,20 @@ class API:
     ):
         """Wrapper for request's post/get with error handling"""
         if not endpoint:
-            endpoint = self.endpoint
+            endpoint = self._endpoint
 
         if data:
-            response = self.session.post(endpoint, headers=headers, json=data)
+            response = self._session.post(endpoint, headers=headers, json=data)
         else:
-            response = self.session.get(endpoint, headers=headers)
+            response = self._session.get(endpoint, headers=headers)
 
         try:
             response_json: Dict[Any, Any] = response.json()
         except JSONDecodeError:
             raise Exception(response.text)
 
-        self.basic_error_handler(response.status_code, response_json)
-        self.error_handler(response.status_code, response_json)
+        self._basic_error_handler(response.status_code, response_json)
+        self._error_handler(response.status_code, response_json)
 
         if not response.ok:
             raise Exception(response.status_code, response.text)

@@ -9,15 +9,15 @@ class Purchases(API):
     def __init__(self, token: str):
         super().__init__(token, "https://purchase-history.ocp.ingka.ikea.com/graphql")
         origin = "https://order.ikea.com"
-        self.session.headers.update(
+        self._session.headers.update(
             {
                 "Accept": "*/*",
                 "Accept-Language": "{}-{}".format(
-                    self.language_code, self.country_code
+                    self._language_code, self._country_code
                 ),
                 "Origin": origin,
                 "Referer": "{}/{}/{}/purchases/".format(
-                    origin, self.country_code, self.language_code
+                    origin, self._country_code, self._language_code
                 ),
             }
         )
@@ -41,7 +41,7 @@ class Purchases(API):
         If you want to see all your purchases set 'take' to 10000
         """
         payload = self._build_payload("History", queries.history, take=take, skip=skip)
-        return self.call_api(data=payload)
+        return self._call_api(data=payload)
 
     def order_info(self, order_number: Union[str, int], email: Optional[str] = None):
         """
@@ -52,7 +52,7 @@ class Purchases(API):
         """
         order_number = str(order_number)
         headers = {
-            "Referer": "{}/{}/".format(self.session.headers["Origin"], order_number)
+            "Referer": "{}/{}/".format(self._session.headers["Origin"], order_number)
         }
         payload: List[Dict[str, Dict[str, Any]]] = [
             self._build_payload(
@@ -66,8 +66,8 @@ class Purchases(API):
         ]
 
         if email:
-            headers["Referer"] = self.session.headers["Referer"] + "lookup"
+            headers["Referer"] = self._session.headers["Referer"] + "lookup"
             for d in payload:
                 d["variables"]["liteId"] = email
 
-        return self.call_api(headers=headers, data=payload)
+        return self._call_api(headers=headers, data=payload)

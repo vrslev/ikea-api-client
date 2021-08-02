@@ -16,9 +16,7 @@ def _build_payload_and_call(func: Callable[..., Any]):
         else:
             query, variables = res, {}
 
-        return self.call_api(
-            data=self._build_payload(query, **variables)  # type: ignore
-        )
+        return self._call_api(data=self._build_payload(query, **variables))
 
     return inner
 
@@ -28,12 +26,12 @@ class Cart(API):
 
     def __init__(self, token: str):
         super().__init__(token, "https://cart.oneweb.ingka.com/graphql")
-        self.session.headers["X-Client-Id"] = "66e4684a-dbcb-499c-8639-a72fa50ac0c3"
+        self._session.headers["X-Client-Id"] = "66e4684a-dbcb-499c-8639-a72fa50ac0c3"
 
     def _build_payload(self, query: str, **variables: Any):
         payload = {
             "query": query,
-            "variables": {"languageCode": self.language_code, **variables},
+            "variables": {"languageCode": self._language_code, **variables},
         }
         return payload
 

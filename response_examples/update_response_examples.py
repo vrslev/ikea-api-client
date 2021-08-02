@@ -15,7 +15,7 @@ payloads = {
 
 class_args = {"OrderCapture": ("101000")}
 
-functions_to_skip = ["error_handler", "copy_items", "set_coupon"]
+functions_to_skip = ["_error_handler", "copy_items", "set_coupon"]
 
 
 def save_json(r: Any, *args: Any, **kwargs: Any):
