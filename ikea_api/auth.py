@@ -1,19 +1,36 @@
-from base64 import b64decode, urlsafe_b64encode
-import json
-
-from bs4 import BeautifulSoup  # pyright: reportMissingTypeStubs=false
+from typing import Any, Dict, Optional
 
 from .constants import Constants
-from .errors import (
-    InvalidRetailUnitError,
-    NotAuthenticatedError,
-    UnauthorizedError,
-)
-from .utils import (
-    check_response,
-    get_client_id_from_login_page,
-    get_config_values,
-)
+from .errors import InvalidRetailUnitError, UnauthorizedError
+from .utils import check_response, get_config_values
+
+# pyright: reportMissingImports=false
+
+_driver_packages_installed = True
+try:
+    import chromedriver_autoinstaller
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.common.keys import Keys
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.support.ui import WebDriverWait
+
+    import time  # isort: skip
+except ImportError:
+    _driver_packages_installed = False
+
+
+_old_auth_loaded = True
+try:
+    from bs4 import BeautifulSoup  # isort: skip
+    from base64 import b64decode, urlsafe_b64encode
+    import json
+
+    from .errors import NotAuthenticatedError
+    from .utils import get_client_id_from_login_page
+except ImportError:
+    _old_auth_loaded = False
 
 
 def get_guest_token() -> str:
@@ -43,21 +60,123 @@ def get_guest_token() -> str:
     return token
 
 
-def get_authorized_token(username, password) -> str:
+def get_authorized_token(username: str, password: str):
     """
-    OAuth2 authorization
     Token expires in 24 hours
     """
-    return Auth(username, password).token
+    return Auth()(username, password)
 
 
 class Auth:
     """
+    Authorization using Selenium.
+    Required since old class is deprecated (now it is `_OldAuth`)
+
+    Token expires in 24 hours.
+    """
+
+    def __init__(self):
+        if not _driver_packages_installed:
+            raise RuntimeError(
+                '"selenium" and "chromedriver_autoinstaller" packages are not'
+                'installed. Run "pip install ikea_api[driver]" to proceed.'
+            )
+
+        self._install_driver()
+
+        self._url = "https://www.ikea.com/ru/ru/profile/login/"
+        self._user_agent = (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+            " (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+        )
+
+        self._create_driver()
+
+    def _install_driver(self):
+        chromedriver_autoinstaller.install()
+
+    def _create_driver(self):
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--window-size=2560x1600")
+
+        self._driver = webdriver.Chrome(options=options)
+        self._driver.execute_cdp_cmd(
+            "Network.setUserAgentOverride", {"userAgent": self._user_agent}
+        )
+        self._driver.execute_cdp_cmd(
+            "Page.addScriptToEvaluateOnNewDocument",
+            {
+                "source": """
+                    chrome = { runtime: {} };
+                    const originalQuery = navigator.permissions.query;
+                    navigator.permissions.query = (parameters) =>
+                    parameters.name === "notifications"
+                        ? Promise.resolve({ state: Notification.permission })
+                        : originalQuery(parameters);
+                    navigator.plugins = [1, 2, 3, 4, 5];
+                    navigator.languages = ["en-US", "en"];
+            """
+            },
+        )
+
+    def _get_cookie(self):
+        self._driver.get(self._url)
+
+        username_el = WebDriverWait(self._driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "input#username"))
+        )
+        username_el.click()
+        username_el.send_keys(self.username)
+
+        password_el = self._driver.find_element_by_css_selector("input#password")
+        password_el.click()  # type: ignore
+        password_el.send_keys(self.password)  # type: ignore
+        password_el.send_keys(Keys.ENTER)  # type: ignore
+
+        self._cookie: Optional[Dict[str, Any]] = None
+        for i in range(10):  # type: ignore
+            self._cookie = self._driver.get_cookie("idp_reguser")  # type: ignore
+            if self._cookie:
+                self._driver.close()
+                break
+            time.sleep(0.5)
+
+    def _get_token(self):
+        if self._cookie:
+            self.token: Optional[str] = self._cookie.get("value")
+
+    def __call__(self, username: str, password: str):
+        self.username = username
+        self.password = password
+        self._get_cookie()
+        self._get_token()
+        return self.token
+
+
+def _old_get_authorized_token(username, password) -> str:  # type: ignore
+    """
     OAuth2 authorization
     Token expires in 24 hours
     """
+    return _OldAuth(username, password).token
+
+
+class _OldAuth:
+    """
+    OAuth2 authorization
+    Token expires in 24 hours
+
+    v0.2.0. Deprecated due to really complicated telemetry that IKEA added.
+          Use Auth instead. Keeping it in case something will change
+    """
 
     def __init__(self, username, password):
+        if not _old_auth_loaded:
+            raise RuntimeError(
+                '"bs4" package is not installed. ' 'Run "pip install bs4" to proceed.'
+            )
         from requests import Session
 
         self.session = Session()
@@ -117,12 +236,8 @@ class Auth:
         response = self.session.get(endpoint, params=params, headers=headers)
         check_response(response)
 
-        BeautifulSoup(response.text, "html.parser").find("script", id="a0-config")
-        encoded_config = (
-            BeautifulSoup(response.text, "html.parser")
-            .find("script", id="a0-config")
-            .get("data-config")
-        )  # pyright: reportOptionalMemberAccess=false
+        bs = BeautifulSoup(response.text, "html.parser").find("script", id="a0-config")
+        encoded_config: str = bs.find("script", id="a0-config").get("data-config")  # type: ignore
         session_config = json.loads(b64decode(encoded_config))
         return {"session_config": session_config, "authorize_final_url": response.url}
 
@@ -162,8 +277,8 @@ class Auth:
                 raise NotAuthenticatedError
         check_response(response)
         soup = BeautifulSoup(response.text, "html.parser")
-        wctx = soup.find("input", {"name": "wctx"}).get("value")
-        wresult = soup.find("input", {"name": "wresult"}).get("value")
+        wctx = soup.find("input", {"name": "wctx"}).get("value")  # type: ignore
+        wresult = soup.find("input", {"name": "wresult"}).get("value")  # type: ignore
         return {
             "wctx": wctx,
             "wresult": wresult,
