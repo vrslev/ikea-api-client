@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 from .constants import Constants, Secrets
-from .errors import IkeaApiError, InvalidRetailUnitError, UnauthorizedError
+from .errors import IkeaApiError, UnauthorizedError
 
 _driver_packages_installed = True
 try:
@@ -23,7 +23,7 @@ except ImportError:
 # pyright: reportOptionalMemberAccess=false
 
 
-def get_guest_token() -> str:
+def get_guest_token() -> str:  # TODO: Make endpoint out of it
     from requests import post
 
     response = post(
@@ -42,9 +42,7 @@ def get_guest_token() -> str:
         json={"retailUnit": Constants.LANGUAGE_CODE},
     )
 
-    if response.text == "Invalid retail unit.":
-        raise InvalidRetailUnitError
-    elif response.status_code == 401:
+    if response.status_code == 401:
         raise UnauthorizedError(response.json())
     elif not response.ok:
         raise IkeaApiError(response.status_code, response.text)

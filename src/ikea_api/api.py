@@ -4,16 +4,10 @@ from typing import Any, Dict, List, Optional, Union
 from requests import Session
 
 from .constants import Constants
-from .errors import (
-    CODES_TO_ERRORS,
-    IkeaApiError,
-    NotAuthenticatedError,
-    TokenDecodeError,
-    TokenExpiredError,
-)
+from .errors import GraphqlError, IkeaApiError, UnauthorizedError
 
-# pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
-# pyright: reportGeneralTypeIssues=false
+## pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
+## pyright: reportGeneralTypeIssues=false
 
 
 class API:
@@ -40,50 +34,15 @@ class API:
         pass
 
     def _basic_error_handler(
-        self, status_code: int, response_json: Any
-    ):  # TODO: Such error handlers are messy
-        err: Any = None
-        if "error" in response_json and isinstance(err, str) and status_code == 401:
-            err = response_json["error"]
-            if err == "Token has expired":
-                raise TokenExpiredError
-            elif err == "Token could not be decoded":
-                raise TokenDecodeError
-            else:
-                raise NotAuthenticatedError(response_json["error"])
+        self, status_code: int, response_json: Union[Any, Dict[str, Any]]
+    ):
+        if status_code == 401:  # Token did not passed
+            raise UnauthorizedError(response_json)
 
-        if (
-            isinstance(response_json, list)
-            and len(response_json) > 0
-            and isinstance(response_json[0], dict)
-            and response_json[0].get("errors")
-        ):
-            err = response_json[0]["errors"]
+        if "errors" in response_json:  # GraphQL error
+            raise GraphqlError(response_json)
 
-        if isinstance(response_json, dict):
-            if "errors" in response_json:
-                err = response_json["errors"]
-
-        if err:
-            if isinstance(err, list):
-                err = err[0]
-
-            ext: Any = err.get("extensions")
-            if ext:
-                if "errorCode" in ext and ext["errorCode"] == 401:
-                    raise NotAuthenticatedError
-                elif "code" in ext:
-                    if ext["code"] in CODES_TO_ERRORS:
-                        raise CODES_TO_ERRORS[ext["code"]](err)
-                    else:
-                        raise IkeaApiError(ext["code"] + ", " + str(err))
-            else:
-                if "message" in err:
-                    raise IkeaApiError(err["message"])
-                else:
-                    raise IkeaApiError(err)
-
-    def _call_api(
+    def _call_api(  # TODO: Add choice between GET and POST
         self,
         endpoint: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,

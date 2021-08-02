@@ -5,7 +5,7 @@ from typing import Dict, List, Union
 from requests import Session
 
 from ikea_api.constants import Constants, Secrets
-from ikea_api.errors import ItemFetchError, WrongItemCodeError
+from ikea_api.errors import ItemFetchError
 
 from . import generic_item_fetcher
 
@@ -34,11 +34,11 @@ def _fetch_items_specs(session: Session, input_items: List[str]):
             items[item] = "SPR"  # type: ignore
             url = _build_url(items)
             response = session.get(url)
-            if not response.ok:
-                raise WrongItemCodeError
+            if not response.ok:  # TODO: Bad move
+                raise ItemFetchError("Wrong Item Code")
 
         if not response.text:
-            raise WrongItemCodeError
+            raise ItemFetchError("Wrong Item Code")
         r_json = response.json()
 
         if "RetailItemCommList" in r_json:

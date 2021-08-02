@@ -3,11 +3,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from ikea_api.api import API
 from ikea_api.constants import Secrets
-from ikea_api.errors import (
-    IkeaApiError,
-    NoDeliveryOptionsAvailableError,
-    WrongZipCodeError,
-)
+from ikea_api.errors import IkeaApiError, OrderCaptureError
 
 from ..cart import Cart
 
@@ -32,11 +28,7 @@ class OrderCapture(API):
 
     def _error_handler(self, status_code: int, response_json: Dict[Any, Any]):
         if "errorCode" in response_json:
-            error_code = response_json["errorCode"]
-            if error_code == 60004:
-                raise WrongZipCodeError
-            elif error_code == 60005 or error_code == 60006:
-                raise NoDeliveryOptionsAvailableError
+            raise OrderCaptureError(response_json)
 
     def _get_items_for_checkout_request(self):
         cart = Cart(self._token)
@@ -106,4 +98,4 @@ class OrderCapture(API):
 
 def validate_zip_code(zip_code: Union[str, int]):
     if len(re.findall(r"[^0-9]", str(zip_code))) > 0:
-        raise WrongZipCodeError(zip_code)
+        raise ValueError(f"Invalid zip code: {zip_code}")

@@ -4,7 +4,6 @@ from typing import Any, Callable, Dict, List, Union, overload
 from requests import Session
 
 from ikea_api.constants import Constants
-from ikea_api.errors import NoItemsParsedError
 
 
 @overload
@@ -28,6 +27,7 @@ def parse_item_code(item_code: Union[str, int, List[Any], Any]):
                 pass
         return res
 
+    err_msg = f"No items parsed: {str(item_code)}"
     if isinstance(item_code, list):
         res: List[str] = []
         for i in item_code:
@@ -35,15 +35,13 @@ def parse_item_code(item_code: Union[str, int, List[Any], Any]):
             if parsed:
                 res.append(parsed)
         if len(res) == 0:
-            raise NoItemsParsedError(item_code)
+            raise ValueError(err_msg)
         return res
     elif isinstance(item_code, (str, int)):
         parsed = parse(item_code)
         if not parsed:
-            raise NoItemsParsedError(item_code)
+            raise ValueError(err_msg)
         return parsed
-    else:
-        return ""
 
 
 def build_headers(headers: Dict[str, str]):
@@ -69,7 +67,7 @@ def generic_item_fetcher(
 
     if isinstance(items, str):
         items = [items]
-    elif not isinstance(items, list):  # type: ignore
+    elif not isinstance(items, list):  # type: ignore # TODO: Remove this
         raise TypeError("String or list required")
 
     items = [str(i) for i in items]
