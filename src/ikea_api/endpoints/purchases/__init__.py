@@ -23,10 +23,9 @@ class Purchases(API):
     ) -> Dict[str, Dict[str, Any]]:
         payload: Dict[str, Any] = {
             "operationName": operation_name,
-            "variables": {},
+            "variables": {**variables},
             "query": query,
         }
-        payload["variables"].update(variables)
         return payload
 
     def history(self, take: int = 5, skip: int = 0):
