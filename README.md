@@ -1,7 +1,5 @@
 Client for several IKEA APIs.
 
-<!-- TODO Update blob links to GitHub code -->
-
 [![License](https://img.shields.io/pypi/l/ikea_api?color=green)](https://github.com/vrslev/ikea-api-client/blob/master/LICENSE)
 [![Version](https://img.shields.io/pypi/v/ikea_api?color=green&label=version)](https://pypi.org/project/ikea_api/)
 [![Python Version](https://img.shields.io/pypi/pyversions/ikea_api?color=green)](https://pypi.org/project/ikea_api/)
@@ -27,7 +25,7 @@ If you are planning to use log in as registered user, you need to install Seleni
 pip install ikea_api[driver]
 ```
 
-# Initialisation
+# Initialization
 
 ```python
 from ikea_api import IkeaApi
@@ -41,9 +39,9 @@ api = IkeaApi(
 
 # Endpoints
 
-## [Authorization](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/auth.py)
+## [Authorization](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/auth.py)
 
-### [As Guest](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/auth.py#L19-L19)
+### [As Guest](https://github.com/vrslev/ikea-api-client/blob/03c1add4fd03fc41a7fef41c35bd2aa9c0c36d4b/src/ikea_api/auth.py#L35-L35)
 
 ```python
 api.login_as_guest()
@@ -51,7 +49,7 @@ api.login_as_guest()
 
 First time you open IKEA.com guest token is being generated and stored in Cookies. It expires in 30 days.
 
-### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/auth.py#L46-L46)
+### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/03c1add4fd03fc41a7fef41c35bd2aa9c0c36d4b/src/ikea_api/auth.py#L56-L56)
 
 Token lasts 1 day. It may take a while to get authorized token because of Selenium usage.
 
@@ -59,7 +57,7 @@ Token lasts 1 day. It may take a while to get authorized token because of Seleni
 api.login(username=..., password=...)
 ```
 
-## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/cart/__init__.py)
+## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/cart/__init__.py)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
 
@@ -79,7 +77,7 @@ cart.add_items({"30457903": 1})
 print(cart.show())
 ```
 
-## [Order Capture](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/order_capture/__init__.py)
+## [Order Capture](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/order_capture/__init__.py)
 
 Check availability for Pickup or Delivery. This is the only way.
 
@@ -89,16 +87,16 @@ If you need to know whether items are available in stores, check out [ikea-avail
 api.OrderCapture(zip_code="101000")
 ```
 
-## [Purchases](https://github.com/vrslev/ikea-api-client/blob/master/ikea_api/endpoints/purchases/__init__.py)
+## [Purchases](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/purchases/__init__.py)
 
-### [Order History](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/endpoints/purchases/__init__.py#L31-L31)
+### [Order History](https://github.com/vrslev/ikea-api-client/blob/fc264640ca1f27f4a58c1c57891a917414518a7d/src/ikea_api/endpoints/purchases/__init__.py#L34-L34)
 
 ```python
 api.login(username=..., password=...)
 history = api.Purchases.history()
 ```
 
-### [Order Info](https://github.com/vrslev/ikea-api-client/blob/f466ccc2e77a44cf9d87c0ffeab109e51690c491/ikea_api/endpoints/purchases/__init__.py#L41-L41)
+### [Order Info](https://github.com/vrslev/ikea-api-client/blob/fc264640ca1f27f4a58c1c57891a917414518a7d/src/ikea_api/endpoints/purchases/__init__.py#L44-L44)
 
 ```python
 api.login(username=..., password=...)
@@ -109,7 +107,7 @@ api.login_as_guest()
 order = api.order_info(order_number=..., email=...)
 ```
 
-## [Item Specs](https://github.com/vrslev/ikea-api-client/tree/master/ikea_api/endpoints/item)
+## [Item Specs](https://github.com/vrslev/ikea-api-client/tree/master/src/ikea_api/endpoints/item)
 
 Get information about item by item number
 
@@ -128,6 +126,6 @@ items = api.fetch_items_specs.pip(item_codes_dict)
 
 There are many ways because information about some items is not available in some endpoints.
 
-# [Response Examples](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
+# Response Examples
 
 You can review response examples for all endpoint before using it [here](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
