@@ -1,22 +1,29 @@
-class TokenExpiredError(Exception):
-    pass
+from typing import Any, Dict, List, Optional
 
 
-class NotAuthenticatedError(Exception):
-    pass
+class IkeaApiError(Exception):
+    ...
 
 
-class NoItemsParsedError(Exception):
-    pass
+class TokenExpiredError(IkeaApiError):
+    ...
 
 
-class WrongLanguageCodeError(Exception):
-    def __init__(self, err):
+class NotAuthenticatedError(IkeaApiError):
+    ...
+
+
+class NoItemsParsedError(IkeaApiError):
+    ...
+
+
+class WrongLanguageCodeError(IkeaApiError):
+    def __init__(self, err: Dict[str, Any]):
         ext = err["extensions"]
         msg = None
         if "data" in ext:
             msg = ""
-            arr = []
+            arr: List[str] = []
             for key in ext["data"]:
                 arr.append("{}: {}".format(key, ext["data"][key]))
             msg = ", ".join(arr)
@@ -26,16 +33,16 @@ class WrongLanguageCodeError(Exception):
             super().__init__()
 
 
-class WrongZipCodeError(Exception):
-    pass
+class WrongZipCodeError(IkeaApiError):
+    ...
 
 
-class TokenDecodeError(Exception):
-    pass
+class TokenDecodeError(IkeaApiError):
+    ...
 
 
-class GraphqlError(Exception):
-    def __init__(self, err):
+class GraphqlError(IkeaApiError):
+    def __init__(self, err: Dict[str, Any]):
         if "path" in err:
             msg = "{}: {}".format(err["message"], err["path"])
         elif "locations" in err:
@@ -46,37 +53,37 @@ class GraphqlError(Exception):
 
 
 class GraphqlValidationError(GraphqlError):
-    pass
+    ...
 
 
 class GraphqlParseError(GraphqlError):
-    pass
+    ...
 
 
-class WrongItemCodeError(Exception):
-    def __init__(self, err):
-        ext = err["extensions"]
-        if "data" in ext:
-            if "itemNos" in ext["data"]:
-                msg = ext["data"]["itemNos"]
-            else:
-                msg = None
-        elif "message" in err:
-            msg = err["message"]
-        else:
-            msg = None
+class WrongItemCodeError(IkeaApiError):
+    def __init__(self, err: Optional[Dict[str, Any]] = None):
+        msg = None
+        if err:
+            ext = err["extensions"]
+            if "data" in ext:
+                if "itemNos" in ext["data"]:
+                    msg = ext["data"]["itemNos"]
+                else:
+                    msg = None
+            elif "message" in err:
+                msg = err["message"]
 
         super().__init__(msg)
 
 
-class InvalidRetailUnitError(Exception):
-    pass
+class InvalidRetailUnitError(IkeaApiError):
+    ...
 
 
-class UnauthorizedError(Exception):
+class UnauthorizedError(IkeaApiError):
     """Used when somethings wrong with headers or data"""
 
-    def __init__(self, response):
+    def __init__(self, response: Dict[str, Any]):
         if "moreInformation" in response:
             msg = response["moreInformation"]
         else:
@@ -84,17 +91,21 @@ class UnauthorizedError(Exception):
         super().__init__(msg)
 
 
-class NoDeliveryOptionsAvailableError(Exception):
-    pass
+class NoDeliveryOptionsAvailableError(IkeaApiError):
+    ...
 
 
-class ServerError(Exception):
-    def __init__(self, response):
+class ServerError(IkeaApiError):
+    def __init__(self, response: Dict[str, Any]):
         if "message" in response:
             msg = response["message"]
         else:
             msg = response
         super().__init__(msg)
+
+
+class ItemFetchError(IkeaApiError):
+    ...
 
 
 CODES_TO_ERRORS = {
