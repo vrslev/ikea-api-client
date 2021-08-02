@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 from .constants import Constants, Secrets
-from .errors import InvalidRetailUnitError, UnauthorizedError
+from .errors import IkeaApiError, InvalidRetailUnitError, UnauthorizedError
 
 _driver_packages_installed = True
 try:
@@ -23,31 +23,33 @@ except ImportError:
 # pyright: reportOptionalMemberAccess=false
 
 
-def get_guest_token() -> str:  # TODO: Refactor
+def get_guest_token() -> str:
     from requests import post
 
-    url = "https://api.ingka.ikea.com/guest/token"
-    headers = {
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "en-us",
-        "Origin": Constants.BASE_URL,
-        "Referer": Constants.BASE_URL + "/",
-        "Connection": "keep-alive",
-        "User-Agent": Constants.USER_AGENT,
-        "X-Client-Id": Secrets.auth_guest_token_x_client_id,
-        "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
-    }
-    payload = {"retailUnit": Constants.LANGUAGE_CODE}
-    response = post(url, headers=headers, json=payload)
+    response = post(
+        url="https://api.ingka.ikea.com/guest/token",
+        headers={
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "en-us",
+            "Origin": Constants.BASE_URL,
+            "Referer": Constants.BASE_URL + "/",
+            "Connection": "keep-alive",
+            "User-Agent": Constants.USER_AGENT,
+            "X-Client-Id": Secrets.auth_guest_token_x_client_id,
+            "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
+        },
+        json={"retailUnit": Constants.LANGUAGE_CODE},
+    )
+
     if response.text == "Invalid retail unit.":
         raise InvalidRetailUnitError
-    if response.status_code == 401:
+    elif response.status_code == 401:
         raise UnauthorizedError(response.json())
-    if not response.ok:
-        raise Exception(response.status_code, response.text)
-    token = response.json()["access_token"]
-    return token
+    elif not response.ok:
+        raise IkeaApiError(response.status_code, response.text)
+
+    return response.json()["access_token"]
 
 
 def get_authorized_token(username: str, password: str):
