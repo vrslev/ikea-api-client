@@ -1,3 +1,4 @@
+from enum import Enum
 from json.decoder import JSONDecodeError
 from typing import Any, Dict, List, Optional, Union
 
@@ -8,6 +9,11 @@ from .errors import GraphqlError, IkeaApiError, UnauthorizedError
 
 ## pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
 ## pyright: reportGeneralTypeIssues=false
+
+
+class Method(Enum):
+    POST = "POST"
+    GET = "GET"
 
 
 class API:
@@ -42,9 +48,10 @@ class API:
         if "errors" in response_json:  # GraphQL error
             raise GraphqlError(response_json)
 
-    def _call_api(  # TODO: Add choice between GET and POST
+    def _call_api(
         self,
         endpoint: Optional[str] = None,
+        method: Method = Method.POST,
         headers: Optional[Dict[str, str]] = None,
         data: Optional[Union[Dict[Any, Any], List[Any]]] = None,
     ):
@@ -52,10 +59,10 @@ class API:
         if not endpoint:
             endpoint = self._endpoint
 
-        if data:
+        if method == Method.GET:
+            response = self._session.get(endpoint, headers=headers, params=data)
+        elif method == Method.POST:
             response = self._session.post(endpoint, headers=headers, json=data)
-        else:
-            response = self._session.get(endpoint, headers=headers)
 
         try:
             response_json: Dict[Any, Any] = response.json()
