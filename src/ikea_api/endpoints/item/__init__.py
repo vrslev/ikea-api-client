@@ -5,6 +5,8 @@ from requests import Session
 
 from ikea_api.constants import Constants
 
+# TODO: Refactor all item endpoints
+
 
 @overload
 def parse_item_code(item_code: Union[int, str]) -> str:
@@ -67,8 +69,6 @@ def generic_item_fetcher(
 
     if isinstance(items, str):
         items = [items]
-    elif not isinstance(items, list):  # type: ignore # TODO: Remove this
-        raise TypeError("String or list required")
 
     items = [str(i) for i in items]
     items = list(set(items))
