@@ -1,3 +1,8 @@
+#
+# tatusBannerOrder
+#
+
+# also History
 date_and_time = """
   fragment DateAndTime on DateAndTime {
     time
@@ -52,6 +57,10 @@ delivery_info = """
 """
 
 
+#
+# CostsOrder
+#
+
 money = """
   fragment Money on Money {
     code
@@ -70,31 +79,73 @@ tax_rate = """
   }
 """
 
-costs = f"""
-  fragment Costs on Costs {{
-    total {{
+costs = """
+  fragment Costs on Costs {
+    total {
       ...Money
-    }}
-    delivery {{
+    }
+    delivery {
       ...Money
-    }}
-    service {{
+    }
+    service {
       ...Money
-    }}
-    discount {{
+    }
+    discount {
       ...Money
-    }}
-    sub {{
+    }
+    sub {
       ...Money
-    }}
-    tax {{
+    }
+    tax {
       ...Money
-    }}
-    taxRates {{
+    }
+    taxRates {
       ...TaxRate
-    }}
-  }}
+    }
+  }
+  %s
+  %s
+""" % (
+    money,
+    tax_rate,
+)
 
-  {money}
-  {tax_rate}
+
+#
+# ProductListOrder
+#
+
+article = """
+  fragment Article on Product {
+    name
+    description
+    href
+    quantity
+    decimalQuantity
+    priceUnitText
+    id
+    splitDelivery
+    image {
+      small
+      medium
+      large
+    }
+  }
 """
+
+product = """
+  fragment Product on Product {
+    ...Article
+    unitPrice @skip(if: $skipPrice) {
+      formatted
+    }
+    totalPrice @skip(if: $skipPrice) {
+      formatted
+    }
+    assemblyRequired
+  }
+
+  %s
+""" % (
+    article
+)

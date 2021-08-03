@@ -12,6 +12,7 @@ history = """
       totalCost {
         code
         value
+        formatted
       }
     }
   }
@@ -20,6 +21,7 @@ history = """
 """ % (
     date_and_time
 )
+
 
 status_banner_order = f"""
   query StatusBannerOrder($orderNumber: String!, $liteId: String) {{
@@ -56,6 +58,47 @@ costs_order = """
   }
 
   %s
+
 """ % (
-    costs
+    costs,
+)
+
+
+product_list_order = """
+  query ProductListOrder(
+    $orderNumber: String!
+    $liteId: String
+    $skip: Int!
+    $take: Int!
+    $skipPrice: Boolean!
+  ) {
+    order(orderNumber: $orderNumber, liteId: $liteId) {
+      id
+      articles {
+        ... on AnyDirectionProducts {
+          quantity
+          direction
+          any(skip: $skip, take: $take) {
+            ...Product
+          }
+        }
+        ... on ExchangeProducts {
+          numberOfInboundElements
+          numberOfOutboundElements
+          inboundQuantity
+          outboundQuantity
+          inbound(skip: $skip, take: $take) {
+            ...Product
+          }
+          outbound(skip: $skip, take: $take) {
+            ...Product
+          }
+        }
+      }
+    }
+  }
+
+  %s
+""" % (
+    product
 )
