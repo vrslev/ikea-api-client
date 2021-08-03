@@ -24,7 +24,7 @@ clear_coupon = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
@@ -39,7 +39,7 @@ clear_items = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
@@ -55,7 +55,7 @@ copy_items = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
@@ -71,7 +71,7 @@ remove_items = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
@@ -87,7 +87,7 @@ set_coupon = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
@@ -103,7 +103,7 @@ update_items = """
       ...CartProps
     }
   }
-  
+
   %s
 """ % (
     cart_props
