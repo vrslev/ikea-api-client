@@ -19,9 +19,8 @@ except ImportError:
     _driver_packages_installed = False
 
 
-# pyright: reportMissingTypeStubs=false, reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false, reportGeneralTypeIssues=false
-# pyright: reportOptionalMemberAccess=false
+# pyright: reportUnknownMemberType=false, reportUnknownVariableType=false
+# pyright: reportGeneralTypeIssues=false, reportOptionalMemberAccess=false
 
 
 def get_guest_token():
@@ -56,7 +55,7 @@ class GuestAuth(API):
 class Auth:
     """
     Authorization using Selenium.
-    Required IKEA added complicated telemetry. Old implementaion:
+    Required IKEA added complicated telemetry. Old implementation:
     https://github.com/vrslev/ikea-api-client/blob/39fe5210305e28efd8f434dde4bfeb9881872d42/ikea_api/auth.py)
     """
 

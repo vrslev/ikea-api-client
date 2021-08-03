@@ -16,6 +16,7 @@ exclude = ['venv']
 typeCheckingMode = "strict"
 pythonVersion = "3.7"
 reportPrivateUsage = false
+reportMissingTypeStubs = false
 
 [tool.semantic_release]
 branch = "main"
