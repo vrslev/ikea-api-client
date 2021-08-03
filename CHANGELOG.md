@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2021-08-03)
+### Feature
+* **Purchases:** Add ProductListOrder query, allow choosing queries in request, add helpful comments in `fragments` ([`90a94c6`](https://github.com/vrslev/ikea-api-client/commit/90a94c6ad90bd634df3e3277048770209157892e))
+
+### Fix
+* Show status code on JSONDecodeError ([`f70a664`](https://github.com/vrslev/ikea-api-client/commit/f70a664a50b3f2e3111fc14c2c3ef2636d8d14f1))
+
 ## v0.3.0 (2021-08-03)
 ### Feature
 * **README:** Improve features list ([`70ac22a`](https://github.com/vrslev/ikea-api-client/commit/70ac22af6bdcdc5ce38f6c58e910c6ca188a78ed))
