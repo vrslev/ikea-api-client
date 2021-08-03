@@ -16,3 +16,8 @@ exclude = ['venv']
 typeCheckingMode = "strict"
 pythonVersion = "3.7"
 reportPrivateUsage = false
+
+[tool.semantic_release]
+branch = "main"
+version_variable = "src/ikea_api/__init__.py:__version__"
+build_command = "pip install build && build"
