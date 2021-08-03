@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2021-08-03)
+### Fix
+* **OrderCapture:** Add error code to exception ([`455c055`](https://github.com/vrslev/ikea-api-client/commit/455c055694c87403ee2da185d4f8430013386373))
+
 ## v0.4.0 (2021-08-03)
 ### Feature
 * **Purchases:** Add ProductListOrder query, allow choosing queries in request, add helpful comments in `fragments` ([`90a94c6`](https://github.com/vrslev/ikea-api-client/commit/90a94c6ad90bd634df3e3277048770209157892e))
