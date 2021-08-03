@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     if: github.ref == 'refs/heads/main'
-    needs:
-      - pre-commit
     steps:
       - uses: actions/checkout@v2
         with:
