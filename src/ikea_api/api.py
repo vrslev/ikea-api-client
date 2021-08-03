@@ -64,7 +64,7 @@ class API:
         try:
             response_json: Dict[Any, Any] = response.json()
         except JSONDecodeError:
-            raise IkeaApiError(response.text)
+            raise IkeaApiError(response.status_code, response.text)
 
         self._basic_error_handler(response.status_code, response_json)
         self._error_handler(response.status_code, response_json)
