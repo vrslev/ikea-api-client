@@ -2,11 +2,35 @@ default_language_version:
   python: python3.7
 
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-yaml
+
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.21.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - id: codespell
+        types_or: [python, markdown]
+
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright
+        entry: pyright
+        language: node
+        pass_filenames: false
+        types: [python]
+        additional_dependencies: ["pyright"]
 
   - repo: https://github.com/psf/black
     rev: 21.6b0
@@ -18,7 +42,6 @@ repos:
     rev: 5.9.2
     hooks:
       - id: isort
-        name: isort (python)
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.0
@@ -30,3 +53,8 @@ repos:
     rev: v2.3.2
     hooks:
       - id: prettier
+
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.17.0
+    hooks:
+      - id: setup-cfg-fmt
