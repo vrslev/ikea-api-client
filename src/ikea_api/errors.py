@@ -36,6 +36,7 @@ class ItemFetchError(IkeaApiError):
 
 class OrderCaptureError(IkeaApiError):
     def __init__(self, response: Dict[str, Any]):
+        self.error_code = response["errorCode"]
         details = (
             ""
             if response["message"] == response["details"]
