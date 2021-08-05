@@ -8,6 +8,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Install Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
       - name: Cache
         uses: actions/cache@v2
         with:
@@ -15,12 +21,11 @@ jobs:
             ~/.cache/pre-commit
             ~/.cache/pip
           key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.7"
-      - name: Install package
+
+      - name: Install dependencies
         run: |
-          python -m pip install -q -U pip -e ."[driver]"
+          pip install -U pip pre-commit
+          pip install -e ."[driver]"
+
       - name: Run pre-commit
-        uses: pre-commit/action@v2.0.3
+        run: pre-commit run --all-files

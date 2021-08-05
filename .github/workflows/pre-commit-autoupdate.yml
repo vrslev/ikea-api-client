@@ -1,22 +1,28 @@
-# Run pre-commit autoupdate every day at midnight
-# and create a pull request if any changes
-# Source: https://github.com/pydanny/cookiecutter-django/blob/master/.github/workflows/pre-commit-autoupdate.yml
-
 name: Pre-commit auto-update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: 0 7 * * 1
 
 jobs:
   update-pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2.2.2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Python 3.7
+        uses: actions/setup-python@v2
         with:
           python-version: 3.7
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pip
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install pre-commit
         run: pip install pre-commit
@@ -29,7 +35,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: update/pre-commit-autoupdate
-          title: Auto-update pre-commit hooks
-          commit-message: Auto-update pre-commit hooks
-          body: Update versions of tools in pre-commit configs to latest version
-          # labels: update # TODO
+          title: "chore(deps): Update pre-commit hooks"
+          commit-message: "chore(deps): Update pre-commit hooks"
+          body: Update versions of pre-commit hooks
+          labels: dependencies,github_actions
+          delete-branch: True
