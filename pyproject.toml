@@ -22,3 +22,5 @@ reportMissingTypeStubs = false
 branch = "main"
 version_variable = "src/ikea_api/__init__.py:__version__"
 build_command = "python -m pip install build && python -m build"
+commit_subject = "сhore: Update version to {version}"
+commit_author = "semantic-release <semantic-release>"
