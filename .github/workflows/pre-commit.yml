@@ -23,9 +23,7 @@ jobs:
           key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install dependencies
-        run: |
-          pip install -U pip pre-commit
-          pip install -e ."[driver]"
+        run: pip install pre-commit -e ."[driver]"
 
       - name: Run pre-commit
         run: pre-commit run --all-files
