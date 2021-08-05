@@ -3,6 +3,7 @@ name: Pre-commit auto-update
 on:
   schedule:
     - cron: 0 7 * * 1
+  workflow_dispatch:
 
 jobs:
   update-pre-commit:
@@ -33,3 +34,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: update/pre-commit-autoupdate
           title: "chore(deps): Update pre-commit hooks"
+          labels: dependencies,github_actions

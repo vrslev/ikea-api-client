@@ -40,7 +40,7 @@ repos:
         args: [--quiet]
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.9.3
+    rev: 5.9.2
     hooks:
       - id: isort
 
