@@ -3,16 +3,23 @@ name: Pre-commit auto-update
 on:
   schedule:
     - cron: 0 7 * * 1
-  workflow_dispatch:
 
 jobs:
   update-pre-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2.2.2
+
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.7
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pip
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install pre-commit
         run: pip install pre-commit
