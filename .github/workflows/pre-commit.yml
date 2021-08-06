@@ -19,14 +19,11 @@ jobs:
         with:
           path: |
             ~/.cache/pip
-            ~/.cache/pypoetry
             ~/.cache/pre-commit
           key: ${{ runner.os }}-${{ matrix.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install dependencies
-        run: |
-          pip install poetry
-          poetry install
+        run: pip install pre-commit
 
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files --color=always
