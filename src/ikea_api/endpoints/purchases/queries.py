@@ -1,4 +1,11 @@
-from .fragments import *
+from .fragments import (
+    costs,
+    date_and_time,
+    delivery_date,
+    delivery_info,
+    product,
+    service_info,
+)
 
 history = """
   query History($skip: Int!, $take: Int!) {
