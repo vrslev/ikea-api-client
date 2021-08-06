@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.0 (2021-08-06)
+### Feature
+* Use Poetry as package manager ([`02d45f4`](https://github.com/vrslev/ikea-api-client/commit/02d45f47caad1050c13b513e2966c04d03cf29c8))
+
 ## v0.4.1 (2021-08-03)
 ### Fix
 * **OrderCapture:** Add error code to exception ([`455c055`](https://github.com/vrslev/ikea-api-client/commit/455c055694c87403ee2da185d4f8430013386373))
