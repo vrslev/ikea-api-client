@@ -85,7 +85,7 @@ def build_opposite_url(url: str):
         is_combination = True
     else:
         return
-    return build_url(item_code, is_combination == False)
+    return build_url(item_code, not is_combination)
 
 
 def fetch(items: dict[str, bool]):

@@ -18,7 +18,7 @@ def _fetch_items_specs(session: Session, items: list[str]):
     params = {"itemNos": ",".join(items)}
     response = session.get(url, params=params)
     r_json = response.json()
-    if not "data" in r_json and "error" in r_json:
+    if "data" not in r_json and "error" in r_json:
         err_msg = None
         if "message" in r_json["error"]:
             error = r_json["error"]
