@@ -120,7 +120,7 @@ items = api.fetch_items_specs.iows(item_codes)
 items = api.fetch_items_specs.ingka(item_codes)
 
 # or
-item_codes_dict = {d: True for d in items} # True — is SPR i. e. combination
+item_codes_dict = {d: True for d in items}  # True — is SPR i. e. combination
 items = api.fetch_items_specs.pip(item_codes_dict)
 ```
 
