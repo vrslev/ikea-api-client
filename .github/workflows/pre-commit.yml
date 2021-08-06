@@ -18,12 +18,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/pre-commit
             ~/.cache/pip
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+            ~/.cache/pypoetry
+            ~/.cache/pre-commit
+          key: ${{ runner.os }}-${{ matrix.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install dependencies
-        run: pip install pre-commit -e ."[driver]"
+        run: |
+          pip install poetry
+          poetry install
 
       - name: Run pre-commit
-        run: pre-commit run --all-files
+        run: poetry run pre-commit run --all-files --color=always

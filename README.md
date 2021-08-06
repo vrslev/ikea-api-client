@@ -7,11 +7,11 @@ Client for several IKEA APIs.
 
 # Features
 
--   Authorization (as guest or as user)
--   Manage Cart
--   Check available Delivery Services
--   Retrieve Purchases History and information about specific order
--   Fetch Product information
+- Authorization (as guest or as user)
+- Manage Cart
+- Check available Delivery Services
+- Retrieve Purchases History and information about specific order
+- Fetch Product information
 
 # Installation
 
@@ -61,11 +61,11 @@ api.login(username=..., password=...)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
 
--   Add, Delete and Update items
--   Show cart
--   Clear cart
--   Set and Delete Coupon
--   Copy cart from another user
+- Add, Delete and Update items
+- Show cart
+- Clear cart
+- Set and Delete Coupon
+- Copy cart from another user
 
 Works with and without authorization. If you logged in all changes apply to the _real_ cart. Use case: programmatically add items to cart and order it manually on IKEA.com.
 

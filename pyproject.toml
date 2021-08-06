@@ -1,18 +1,42 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+[tool.poetry]
+name = "ikea-api"
+version = "0.4.1"
+description = "IKEA API Client"
+license = "MIT"
+authors = ["vrslev <mail@vrslev.com>"]
+readme = "README.md"
+repository = "https://github.com/vrslev/ikea-api-client"
+keywords = ["IKEA", "IKEA API", "API", "API client"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+aiohttp = "^3.7.4"
+requests = ">=2.25.0"
+Brotli = "^1.0.9"
+chromedriver-autoinstaller = "^0.2.2"
+selenium = "^3.141.0"
+
+[tool.poetry.dev-dependencies]
+black = "^21.7b0"
+pre-commit = "^2.13.0"
 
 [tool.black]
-target-version = ["py37"]
+target-version = ["py37", "py38", "py39"]
 
 [tool.isort]
 profile = "black"
-force_sort_within_sections = true
-include_trailing_comma = true
-line_length = 79
 
 [tool.pyright]
-exclude = ['venv']
+exclude = ["venv"]
 typeCheckingMode = "strict"
 pythonVersion = "3.7"
 reportPrivateUsage = false
@@ -20,6 +44,10 @@ reportMissingTypeStubs = false
 
 [tool.semantic_release]
 branch = "main"
-version_variable = "src/ikea_api/__init__.py:__version__"
-build_command = "python -m pip install build && python -m build"
+version_toml = "pyproject.toml:tool.poetry.version"
+build_command = "poetry build"
 commit_subject = "сhore: Update version to {version}"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
