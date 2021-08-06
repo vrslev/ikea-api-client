@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import asyncio
-from asyncio.tasks import Task
 import re
+from asyncio.tasks import Task
 from typing import Any
 
 import aiohttp
