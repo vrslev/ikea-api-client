@@ -55,18 +55,18 @@ status_banner_order = f"""
 
 
 costs_order = """
-  query CostsOrder($orderNumber: String!, $liteId: String) {
-    order(orderNumber: $orderNumber, liteId: $liteId) {
+  query CostsOrder($orderNumber: String!, $liteId: String) {{
+    order(orderNumber: $orderNumber, liteId: $liteId) {{
       id
-      costs {
+      costs {{
         ...Costs
-      }
-    }
-  }
+      }}
+    }}
+  }}
 
-  %s
+  {}
 
-""" % (
+""".format(
     costs,
 )
 
