@@ -1,4 +1,5 @@
 {
   "python.analysis.diagnosticMode": "workspace",
+  "python.formatting.provider": "black",
   "python.pythonPath": "venv/bin/python"
 }
