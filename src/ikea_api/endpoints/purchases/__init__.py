@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from enum import Enum
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from ikea_api.api import API
 from ikea_api.constants import Constants
@@ -29,9 +31,9 @@ class Purchases(API):
         )
 
     def _build_payload(
-        self, operation_name: Union[str, OrderInfoQuery], query: str, **variables: Any
+        self, operation_name: str | OrderInfoQuery, query: str, **variables: Any
     ):
-        payload: Dict[str, Any] = {
+        payload: dict[str, Any] = {
             "operationName": operation_name,
             "variables": {**variables},
             "query": query,
@@ -50,9 +52,9 @@ class Purchases(API):
 
     def order_info(
         self,
-        order_number: Union[str, int],
-        email: Optional[str] = None,
-        queries: List[OrderInfoQuery] = [
+        order_number: str | int,
+        email: str | None = None,
+        queries: list[OrderInfoQuery] = [
             OrderInfoQuery.StatusBannerOrder,
             OrderInfoQuery.CostsOrder,
             OrderInfoQuery.ProductListOrder,
@@ -74,7 +76,7 @@ class Purchases(API):
         order_number = str(order_number)
         headers = {"Referer": f"{self._session.headers['Origin']}/{order_number}/"}
 
-        payload: List[Dict[str, Dict[str, Any]]] = []
+        payload: list[dict[str, dict[str, Any]]] = []
         if OrderInfoQuery.StatusBannerOrder in queries:
             payload.append(
                 self._build_payload(

@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from enum import Enum
 from json.decoder import JSONDecodeError
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from requests import Session
 
@@ -16,7 +18,7 @@ class Method(Enum):
 class API:
     """Generic API class"""
 
-    def __init__(self, token: Union[str, None], endpoint: str):
+    def __init__(self, token: str | None, endpoint: str):
         self._token, self._endpoint = token, endpoint
 
         self._session = Session()
@@ -37,7 +39,7 @@ class API:
         pass
 
     def _basic_error_handler(
-        self, status_code: int, response_json: Union[Any, Dict[str, Any]]
+        self, status_code: int, response_json: Any | dict[str, Any]
     ):
         if status_code == 401:  # Token did not passed
             raise UnauthorizedError(response_json)
@@ -47,10 +49,10 @@ class API:
 
     def _call_api(
         self,
-        endpoint: Optional[str] = None,
+        endpoint: str | None = None,
         method: Method = Method.POST,
-        headers: Optional[Dict[str, str]] = None,
-        data: Optional[Union[Dict[Any, Any], List[Any]]] = None,
+        headers: dict[str, str] | None = None,
+        data: dict[Any, Any] | list[Any] | None = None,
     ):
         """Wrapper for request's post/get with error handling"""
         if not endpoint:
@@ -62,7 +64,7 @@ class API:
             response = self._session.post(endpoint, headers=headers, json=data)
 
         try:
-            response_json: Dict[Any, Any] = response.json()
+            response_json: dict[Any, Any] = response.json()
         except JSONDecodeError:
             raise IkeaApiError(response.status_code, response.text)
 

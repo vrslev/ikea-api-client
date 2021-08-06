@@ -1,6 +1,6 @@
 """IOWS Item API. Works only for Russian market"""
 
-from typing import Dict, List, Union
+from __future__ import annotations
 
 from requests import Session
 
@@ -12,18 +12,18 @@ from . import generic_item_fetcher
 # pyright: reportUnknownVariableType=false, reportUnknownArgumentType=false
 
 
-def _build_url(items: Dict[str, str]):
+def _build_url(items: dict[str, str]):
     endpoint = "https://iows.ikea.com/retail/iows/ru/ru/catalog/items/"
-    templated_list: List[str] = []
+    templated_list: list[str] = []
     for item in items:
         templated_list.append(f"{items[item]},{item}")
     return endpoint + ";".join(templated_list)
 
 
-def _fetch_items_specs(session: Session, input_items: List[str]):
+def _fetch_items_specs(session: Session, input_items: list[str]):
     if len(input_items) == 0:
         return
-    items: Dict[str, str] = {}
+    items: dict[str, str] = {}
     for item in input_items:
         items[item] = "ART"
 
@@ -78,7 +78,7 @@ def _fetch_items_specs(session: Session, input_items: List[str]):
                     items.pop(item_code)
 
 
-def fetch(items: Union[str, List[str]]):
+def fetch(items: str | list[str]):
     headers = {
         "Accept": "application/vnd.ikea.iows+json;version=2.0",
         "Referer": f"{Constants.BASE_URL}/ru/ru/shoppinglist/",

@@ -1,4 +1,6 @@
-from typing import Any, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from .constants import Constants
 
@@ -6,7 +8,7 @@ from .constants import Constants
 class IkeaApi:
     def __init__(
         self,
-        token: Optional[str] = None,
+        token: str | None = None,
         country_code: str = "ru",
         language_code: str = "ru",
     ):

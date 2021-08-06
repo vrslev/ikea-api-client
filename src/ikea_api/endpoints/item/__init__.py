@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import re
-from typing import Any, Callable, Dict, List, Union, overload
+from typing import Any, Callable, overload
 
 from requests import Session
 
@@ -9,16 +11,16 @@ from ikea_api.constants import Constants
 
 
 @overload
-def parse_item_code(item_code: Union[int, str]) -> str:
+def parse_item_code(item_code: int | str) -> str:
     ...
 
 
 @overload
-def parse_item_code(item_code: List[Any]) -> List[str]:
+def parse_item_code(item_code: list[Any]) -> list[str]:
     ...
 
 
-def parse_item_code(item_code: Union[str, int, List[Any], Any]):
+def parse_item_code(item_code: str | int | list[Any] | Any):
     def parse(item_code: Any):
         found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
         res = ""
@@ -31,7 +33,7 @@ def parse_item_code(item_code: Union[str, int, List[Any], Any]):
 
     err_msg = f"No items parsed: {str(item_code)}"
     if isinstance(item_code, list):
-        res: List[str] = []
+        res: list[str] = []
         for i in item_code:
             parsed = parse(i)
             if parsed:
@@ -46,7 +48,7 @@ def parse_item_code(item_code: Union[str, int, List[Any], Any]):
         return parsed
 
 
-def build_headers(headers: Dict[str, str]):
+def build_headers(headers: dict[str, str]):
     new_headers = {
         "Origin": Constants.BASE_URL,
         "User-Agent": Constants.USER_AGENT,
@@ -59,8 +61,8 @@ def build_headers(headers: Dict[str, str]):
 
 
 def generic_item_fetcher(
-    items: Union[str, List[str]],
-    headers: Dict[str, str],
+    items: str | list[str],
+    headers: dict[str, str],
     func: Callable[..., Any],
     chunk_size: int,
 ):
@@ -75,7 +77,7 @@ def generic_item_fetcher(
     items = parse_item_code(items)
 
     chunks = [items[x : x + chunk_size] for x in range(0, len(items), chunk_size)]
-    responses: List[Any] = []
+    responses: list[Any] = []
     for chunk in chunks:
         response = func(session, chunk)
         if isinstance(response, list):

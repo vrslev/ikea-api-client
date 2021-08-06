@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import os
-from typing import Any, Dict, Optional
+from typing import Any
 
 from .api import API
 from .constants import Constants, Secrets
@@ -119,7 +121,7 @@ class Auth:
         password_el.send_keys(self.password)
         password_el.send_keys(Keys.ENTER)
 
-        self._cookie: Optional[Dict[str, Any]] = None
+        self._cookie: dict[str, Any] | None = None
         for i in range(10):  # type: ignore
             self._cookie = self._driver.get_cookie("idp_reguser")
             if self._cookie:
@@ -129,7 +131,7 @@ class Auth:
 
     def _get_token(self):
         if self._cookie:
-            self.token: Optional[str] = self._cookie.get("value")
+            self.token: str | None = self._cookie.get("value")
         else:
             fpath = os.path.abspath("login_error_screenshot.png")
             self._driver.save_screenshot(fpath)

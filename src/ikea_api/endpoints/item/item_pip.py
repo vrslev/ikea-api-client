@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import asyncio
 from asyncio.tasks import Task
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import aiohttp
 
@@ -11,9 +13,9 @@ from ikea_api.errors import ItemFetchError
 from . import build_headers, parse_item_code
 
 
-def _async_fetch(urls: List[Union[str, None]], headers: Dict[str, str]):
+def _async_fetch(urls: list[str | None], headers: dict[str, str]):
     async def main():
-        async def fetch(session: aiohttp.ClientSession, url: Optional[str]):
+        async def fetch(session: aiohttp.ClientSession, url: str | None):
             if not url:
                 return
 
@@ -38,7 +40,7 @@ def _async_fetch(urls: List[Union[str, None]], headers: Dict[str, str]):
                     return await r.json()
 
         async def fetch_all(session: aiohttp.ClientSession):
-            tasks: List[Task[Any]] = []
+            tasks: list[Task[Any]] = []
             loop = asyncio.get_event_loop()
             for url in urls:
                 task = loop.create_task(fetch(session, url))
@@ -86,12 +88,10 @@ def build_opposite_url(url: str):
     return build_url(item_code, is_combination == False)
 
 
-def fetch(items: Dict[str, bool]):
+def fetch(items: dict[str, bool]):
     # {'item_code': True (is SPR?)...}
     headers = build_headers({"Accept": "*/*"})
     headers.pop("Origin")
-    urls: List[Union[str, None]] = [
-        build_url(parse_item_code(i), items[i]) for i in items
-    ]
+    urls: list[str | None] = [build_url(parse_item_code(i), items[i]) for i in items]
     responses = _async_fetch(urls, headers=headers)
     return [r for r in responses if r]

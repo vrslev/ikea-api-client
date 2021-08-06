@@ -1,4 +1,6 @@
-from typing import Any, Dict, List
+from __future__ import annotations
+
+from typing import Any
 
 
 class IkeaApiError(Exception):
@@ -8,9 +10,9 @@ class IkeaApiError(Exception):
 class GraphqlError(IkeaApiError):
     """Generic GraphQL exception"""
 
-    def __init__(self, response: Dict[str, Any]):
-        errors: List[Dict[str, Any]] = response["errors"]
-        pretty_errors: List[str] = ["\\"]
+    def __init__(self, response: dict[str, Any]):
+        errors: list[dict[str, Any]] = response["errors"]
+        pretty_errors: list[str] = ["\\"]
         for e in errors:
             description = None
             if "path" in e:
@@ -25,7 +27,7 @@ class GraphqlError(IkeaApiError):
 class UnauthorizedError(IkeaApiError):
     """Exception that is being called when cannot log in"""
 
-    def __init__(self, response: Dict[str, Any]):
+    def __init__(self, response: dict[str, Any]):
         msg = response.get("moreInformation") or response.get("error") or response
         super().__init__(msg)
 
@@ -35,7 +37,7 @@ class ItemFetchError(IkeaApiError):
 
 
 class OrderCaptureError(IkeaApiError):
-    def __init__(self, response: Dict[str, Any]):
+    def __init__(self, response: dict[str, Any]):
         self.error_code = response["errorCode"]
         details = (
             ""
