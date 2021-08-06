@@ -45,7 +45,7 @@ reportMissingTypeStubs = false
 [tool.semantic_release]
 branch = "main"
 version_toml = "pyproject.toml:tool.poetry.version"
-build_command = "poetry build"
+build_command = "pip install -U pip poetry && poetry build"
 commit_subject = "сhore: Update version to {version}"
 
 [build-system]
