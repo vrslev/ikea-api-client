@@ -22,8 +22,8 @@ jobs:
             ~/.cache/pre-commit
           key: ${{ runner.os }}-${{ matrix.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - name: Install dependencies
+      - name: Install pre-commit
         run: pip install pre-commit
 
       - name: Run pre-commit
-        run: poetry run pre-commit run --all-files --color=always
+        run: pre-commit run --all-files --color=always

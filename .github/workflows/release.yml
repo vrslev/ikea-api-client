@@ -9,8 +9,9 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    # - main
+  workflow_dispatch:
 
 jobs:
   release:
@@ -23,8 +24,29 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Semantic Release
-        uses: relekang/python-semantic-release@master
+      - name: Install Python 3.7
+        uses: actions/setup-python@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          python-version: 3.7
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-${{ matrix.python-version }}-pre-commit-${{ hashFiles('poetry.lock') }}
+
+      - name: Install dependencies
+        run: |
+          pip install -U pip python-semantic-release
+          pip install .
+
+      - name: Semantic Release
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "action@github.com"
+          semantic-release publish -v INFO -D commit_author="github-actions <action@github.com>"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
