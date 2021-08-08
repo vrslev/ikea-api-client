@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.1 (2021-08-08)
+### Fix
+* GraphqlError—add "errors" attr, error message not causing TypeError ([`6258b70`](https://github.com/vrslev/ikea-api-client/commit/6258b7078aa06df379a26c334793d31666a5d412))
+
 ## v0.5.0 (2021-08-06)
 ### Feature
 * Use Poetry as package manager ([`02d45f4`](https://github.com/vrslev/ikea-api-client/commit/02d45f47caad1050c13b513e2966c04d03cf29c8))
