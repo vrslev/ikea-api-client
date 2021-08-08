@@ -11,14 +11,14 @@ class GraphqlError(IkeaApiError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: dict[str, Any]):
-        errors: list[dict[str, Any]] = response["errors"]
+        self.errors: list[dict[str, Any]] = response["errors"]
         pretty_errors: list[str] = ["\\"]
-        for e in errors:
+        for e in self.errors:
             description = None
             if "path" in e:
-                description = e["path"]
+                description = e["path"][0]
             elif "locations" in response:
-                description = e["locations"]
+                description = str(e["locations"][0])
             msg = f"{e['extensions']['code']} {e['message']}{': ' + description if description else ''}"
             pretty_errors.append(msg)
         super().__init__("\n".join(pretty_errors))
