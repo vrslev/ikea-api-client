@@ -51,7 +51,7 @@ First time you open IKEA.com guest token is being generated and stored in Cookie
 
 ### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/03c1add4fd03fc41a7fef41c35bd2aa9c0c36d4b/src/ikea_api/auth.py#L56-L56)
 
-Token lasts 1 day. It may take a while to get authorized token because of Selenium usage.
+Token lasts 1 day. It may take a while to get authorized token because of it uses headless Chrome to proceed. Note, that Chrome is required to login.
 
 ```python
 api.login(username=..., password=...)

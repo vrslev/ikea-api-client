@@ -19,7 +19,7 @@ def _build_payload_and_call(func: Callable[..., Any]):
         else:
             query, variables = res, {}
 
-        return self._call_api(data=self._build_payload(query, **variables))
+        return self._call_api(data=self._build_payload(query, **variables))  # type: ignore
 
     return inner
 
