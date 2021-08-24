@@ -19,11 +19,7 @@ Client for several IKEA APIs.
 pip install ikea_api
 ```
 
-If you are planning to use log in as registered user, you need to install Selenium and chromedriver:
-
-```bash
-pip install ikea_api[driver]
-```
+To use authorization you need to have Chrome on board.
 
 # Initialization
 
