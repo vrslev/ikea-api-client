@@ -5,9 +5,8 @@ from typing import Any
 
 from ikea_api.api import API, Method
 from ikea_api.constants import Constants, Secrets
+from ikea_api.endpoints.cart import Cart
 from ikea_api.errors import IkeaApiError, OrderCaptureError
-
-from ..cart import Cart
 
 
 class OrderCapture(API):

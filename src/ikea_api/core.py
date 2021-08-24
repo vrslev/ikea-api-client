@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .constants import Constants
+from ikea_api.constants import Constants
 
 
 class IkeaApi:
@@ -24,13 +24,13 @@ class IkeaApi:
         Since this method is using Selenium, you would have to wait up to 30 seconds.
         """
 
-        from .auth import get_authorized_token
+        from ikea_api.auth import get_authorized_token
 
         self._token = get_authorized_token(username, password)
 
     def login_as_guest(self):
         """Token expires in 30 days."""
-        from .auth import get_guest_token
+        from ikea_api.auth import get_guest_token
 
         self._token = get_guest_token()
 
@@ -52,14 +52,14 @@ class IkeaApi:
     def Cart(self):
         """Manage cart."""
         if not hasattr(self, "_cart"):
-            from .endpoints import Cart
+            from ikea_api.endpoints import Cart
 
             self._cart = Cart(self._token)
         return self._cart
 
     def OrderCapture(self, zip_code: str):
         """Get available delivery services. Object is callable."""
-        from .endpoints import OrderCapture
+        from ikea_api.endpoints import OrderCapture
 
         return OrderCapture(self._token, zip_code)()
 
@@ -67,7 +67,7 @@ class IkeaApi:
     def Purchases(self):
         """Get information about your purchases."""
         if not hasattr(self, "_purchases"):
-            from .endpoints import Purchases
+            from ikea_api.endpoints import Purchases
 
             self._purchases = Purchases(self._token)
         return self._purchases
@@ -76,7 +76,7 @@ class IkeaApi:
     def fetch_items_specs(self):
         """Get information about items."""
         if not hasattr(self, "_fetch_items_specs"):
-            from .endpoints import fetch_items_specs
+            from ikea_api.endpoints import fetch_items_specs
 
             self._fetch_items_specs = fetch_items_specs
         return self._fetch_items_specs

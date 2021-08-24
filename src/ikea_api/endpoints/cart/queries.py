@@ -1,4 +1,4 @@
-from .fragments import cart_props
+from ikea_api.endpoints.cart.fragments import cart_props
 
 cart = """
   query Cart(

@@ -5,8 +5,7 @@ from typing import Any
 
 from ikea_api.api import API
 from ikea_api.constants import Constants
-
-from . import queries as _queries
+from ikea_api.endpoints.purchases import queries as _queries
 
 
 class OrderInfoQuery(Enum):

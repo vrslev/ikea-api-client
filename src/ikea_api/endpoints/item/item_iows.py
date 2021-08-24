@@ -7,9 +7,8 @@ from typing import Any
 from requests import Session
 
 from ikea_api.constants import Constants, Secrets
+from ikea_api.endpoints.item import generic_item_fetcher
 from ikea_api.errors import ItemFetchError
-
-from . import generic_item_fetcher
 
 
 def _build_url(items: dict[str, str]):

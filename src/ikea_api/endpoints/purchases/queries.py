@@ -1,4 +1,4 @@
-from .fragments import (
+from ikea_api.endpoints.purchases.fragments import (
     costs,
     date_and_time,
     delivery_date,

@@ -8,8 +8,8 @@ from pyppeteer import launch
 from pyppeteer.browser import Browser
 from pyppeteer.page import Page
 
-from .api import API
-from .constants import Constants, Secrets
+from ikea_api.api import API
+from ikea_api.constants import Constants, Secrets
 
 
 def get_guest_token():

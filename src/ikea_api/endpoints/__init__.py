@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from .cart import Cart
-from .item.item_ingka import fetch as _fetch_items_specs_ingka
-from .item.item_iows import fetch as _fetch_items_specs_iows
-from .item.item_pip import fetch as _fetch_items_specs_pip
-from .order_capture import OrderCapture
-from .purchases import Purchases
+from ikea_api.endpoints.cart import Cart
+from ikea_api.endpoints.item.item_ingka import fetch as _fetch_items_specs_ingka
+from ikea_api.endpoints.item.item_iows import fetch as _fetch_items_specs_iows
+from ikea_api.endpoints.item.item_pip import fetch as _fetch_items_specs_pip
+from ikea_api.endpoints.order_capture import OrderCapture
+from ikea_api.endpoints.purchases import Purchases
 
 
 class fetch_items_specs:

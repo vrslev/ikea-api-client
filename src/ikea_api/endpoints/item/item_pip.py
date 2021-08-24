@@ -8,9 +8,8 @@ from typing import Any
 import aiohttp
 
 from ikea_api.constants import Constants
+from ikea_api.endpoints.item import build_headers, parse_item_code
 from ikea_api.errors import ItemFetchError
-
-from . import build_headers, parse_item_code
 
 
 def _async_fetch(urls: list[str | None], headers: dict[str, str]):

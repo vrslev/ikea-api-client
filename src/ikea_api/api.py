@@ -6,8 +6,8 @@ from typing import Any
 
 from requests import Session
 
-from .constants import Constants
-from .errors import GraphqlError, IkeaApiError, UnauthorizedError
+from ikea_api.constants import Constants
+from ikea_api.errors import GraphqlError, IkeaApiError, UnauthorizedError
 
 
 class Method(Enum):

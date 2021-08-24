@@ -5,9 +5,8 @@ from typing import Any, Callable
 
 from ikea_api.api import API
 from ikea_api.constants import Constants, Secrets
-
-from ..item import parse_item_code
-from . import mutations, queries
+from ikea_api.endpoints.cart import mutations, queries
+from ikea_api.endpoints.item import parse_item_code
 
 
 def _build_payload_and_call(func: Callable[..., Any]):
