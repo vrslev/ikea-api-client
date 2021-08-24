@@ -11,17 +11,17 @@ from ikea_api.constants import Constants
 
 
 @overload
-def parse_item_code(item_code: int | str) -> str:
+def parse_item_code(item_code: str | int) -> str:
     ...
 
 
 @overload
-def parse_item_code(item_code: list[Any]) -> list[str]:
+def parse_item_code(item_code: list[str | int] | list[str]) -> list[str]:
     ...
 
 
-def parse_item_code(item_code: str | int | list[Any] | Any):
-    def parse(item_code: Any):
+def parse_item_code(item_code: str | int | list[str | int] | list[str]):
+    def _parse(item_code: Any):
         found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
         res = ""
         if found:
@@ -33,16 +33,17 @@ def parse_item_code(item_code: str | int | list[Any] | Any):
 
     err_msg = f"No items parsed: {str(item_code)}"
     if isinstance(item_code, list):
+        item_code = list(set(item_code))
         res: list[str] = []
         for i in item_code:
-            parsed = parse(i)
+            parsed = _parse(i)
             if parsed:
                 res.append(parsed)
-        if len(res) == 0:
+        if not res:
             raise ValueError(err_msg)
         return res
-    elif isinstance(item_code, (str, int)):
-        parsed = parse(item_code)
+    else:
+        parsed = _parse(item_code)
         if not parsed:
             raise ValueError(err_msg)
         return parsed
