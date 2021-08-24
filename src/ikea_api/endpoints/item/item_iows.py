@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from requests import Session
 
 from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import ItemFetchError
 
 from . import generic_item_fetcher
-
-# pyright: reportUnknownVariableType=false, reportUnknownArgumentType=false
 
 
 def _build_url(items: dict[str, str]):
@@ -31,7 +31,7 @@ def _fetch_items_specs(session: Session, input_items: list[str]):
         url = _build_url(items)
         response = session.get(url)
         if i == 0 and len(items) == 1 and not response.ok:
-            items[item] = "SPR"  # type: ignore
+            items[list(items.keys())[0]] = "SPR"
             url = _build_url(items)
             response = session.get(url)
             if not response.ok:  # TODO: Bad move
@@ -51,7 +51,7 @@ def _fetch_items_specs(session: Session, input_items: list[str]):
             return [r_json["RetailItemComm"]]
 
         elif "ErrorList" in r_json:
-            errors = r_json["ErrorList"]["Error"]
+            errors: list[dict[str, Any]] | dict[str, Any] = r_json["ErrorList"]["Error"]
             if not isinstance(errors, list):
                 errors = [errors]
 
@@ -66,7 +66,7 @@ def _fetch_items_specs(session: Session, input_items: list[str]):
                     if not test:
                         raise ItemFetchError(err)
 
-                attrs = {}
+                attrs: dict[str, Any] = {}
                 for attr in err["ErrorAttributeList"]["ErrorAttribute"]:
                     attrs[attr["Name"]["$"]] = attr["Value"]["$"]
                 item_code = str(attrs["ITEM_NO"])

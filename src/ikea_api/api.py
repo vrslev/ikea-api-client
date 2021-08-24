@@ -18,7 +18,7 @@ class Method(Enum):
 class API:
     """Generic API class"""
 
-    def __init__(self, token: str | None, endpoint: str):
+    def __init__(self, token: str, endpoint: str):
         self._token, self._endpoint = token, endpoint
 
         self._session = Session()
@@ -35,17 +35,15 @@ class API:
         if token is not None:
             self._session.headers["Authorization"] = "Bearer " + token
 
-    def _error_handler(self, status_code: int, response_json: Any):
+    def _error_handler(self, status_code: int, response: Any):
         pass
 
-    def _basic_error_handler(
-        self, status_code: int, response_json: Any | dict[str, Any]
-    ):
+    def _basic_error_handler(self, status_code: int, response: Any | dict[str, Any]):
         if status_code == 401:  # Token did not passed
-            raise UnauthorizedError(response_json)
+            raise UnauthorizedError(response)
 
-        if "errors" in response_json:  # GraphQL error
-            raise GraphqlError(response_json)
+        if "errors" in response:  # GraphQL error
+            raise GraphqlError(response)
 
     def _call_api(
         self,
@@ -64,14 +62,14 @@ class API:
             response = self._session.post(endpoint, headers=headers, json=data)
 
         try:
-            response_json: dict[Any, Any] = response.json()
+            response_dict: Any = response.json()
         except JSONDecodeError:
             raise IkeaApiError(response.status_code, response.text)
 
-        self._basic_error_handler(response.status_code, response_json)
-        self._error_handler(response.status_code, response_json)
+        self._basic_error_handler(response.status_code, response_dict)
+        self._error_handler(response.status_code, response_dict)
 
         if not response.ok:
             raise IkeaApiError(response.status_code, response.text)
 
-        return response_json
+        return response_dict

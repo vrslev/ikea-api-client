@@ -26,15 +26,15 @@ class OrderCapture(API):
 
         self._session.headers["X-Client-Id"] = Secrets.purchases_x_client_id
 
-    def __call__(self):
+    def __call__(self) -> list[dict[str, Any]]:
         return self.get_delivery_services()
 
-    def _error_handler(self, status_code: int, response_json: dict[Any, Any]):
-        if "errorCode" in response_json:
-            raise OrderCaptureError(response_json)
+    def _error_handler(self, status_code: int, response: dict[Any, Any]):
+        if "errorCode" in response:
+            raise OrderCaptureError(response)
 
     def _get_items_for_checkout_request(self):
-        cart = Cart(self._token)  # type: ignore
+        cart = Cart(self._token)
         cart_show = cart.show()
         items_templated: list[dict[str, Any]] = []
         try:

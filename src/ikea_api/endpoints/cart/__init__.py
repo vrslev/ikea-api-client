@@ -13,9 +13,9 @@ from . import mutations, queries
 def _build_payload_and_call(func: Callable[..., Any]):
     @wraps(func)
     def inner(self: Cart, *args: Any, **kwargs: Any):
-        res: str | tuple[str] = func(self, *args, **kwargs)
+        res: str | tuple[str, dict[str, Any]] = func(self, *args, **kwargs)
         if isinstance(res, tuple):
-            query, variables = res  # type: ignore
+            query, variables = res
         else:
             query, variables = res, {}
 
