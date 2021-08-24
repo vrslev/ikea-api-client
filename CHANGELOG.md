@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.0 (2021-08-24)
+### Feature
+* **Auth:** Use pyppeteer for authorization ([`9c25d97`](https://github.com/vrslev/ikea-api-client/commit/9c25d9796b2ec5be7d4db28f07cea5460fa0518f))
+
+### Fix
+* **Item:** Use `staticmethod` for various item fetch types ([`2555866`](https://github.com/vrslev/ikea-api-client/commit/2555866921d707ae0d2cac747c83131094104eb6))
+* **Item:** If `item_code` param is list, get unique item codes in `parse_item_code` ([`6cbbd06`](https://github.com/vrslev/ikea-api-client/commit/6cbbd06a01e1914cf225a284b6f5f8d932f04e18))
+
 ## v0.5.1 (2021-08-08)
 ### Fix
 * GraphqlError—add "errors" attr, error message not causing TypeError ([`6258b70`](https://github.com/vrslev/ikea-api-client/commit/6258b7078aa06df379a26c334793d31666a5d412))
