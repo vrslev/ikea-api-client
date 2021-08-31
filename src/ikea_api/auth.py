@@ -115,4 +115,6 @@ async def _main(username: str, password: str):
 
 
 def get_authorized_token(username: str, password: str):
-    return asyncio.get_event_loop().run_until_complete(_main(username, password))
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return loop.run_until_complete(_main(username, password))
