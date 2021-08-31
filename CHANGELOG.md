@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.1 (2021-08-31)
+### Fix
+* Don't handle SIGINT, SIGTERM, SIGHUP when running pypupeteer in some cases ([`7eb142d`](https://github.com/vrslev/ikea-api-client/commit/7eb142d109f1cbb5913a24dd2d5fb07184f64347))
+
 ## v0.6.0 (2021-08-24)
 ### Feature
 * **Auth:** Use pyppeteer for authorization ([`9c25d97`](https://github.com/vrslev/ikea-api-client/commit/9c25d9796b2ec5be7d4db28f07cea5460fa0518f))
