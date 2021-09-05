@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.3 (2021-09-05)
+### Fix
+* **Auth:** Guest token payload ([`f316dfd`](https://github.com/vrslev/ikea-api-client/commit/f316dfd1425ba4bc59cd62f655231706b6cc778b))
+
 ## v0.6.2 (2021-08-31)
 ### Fix
 * Create new asyncio event loop when using pyppeteer ([`13e67e9`](https://github.com/vrslev/ikea-api-client/commit/13e67e9b05d88b91a3230ddfd319ac5115ca3058))
