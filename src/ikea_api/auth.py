@@ -30,7 +30,7 @@ class GuestAuth(API):
 
     def get_token(self) -> str:
         response: dict[str, str] = self._call_api(
-            data={"retailUnit": Constants.LANGUAGE_CODE}
+            data={"retailUnit": Constants.COUNTRY_CODE}
         )
         self._token = response["access_token"]
         return self._token
