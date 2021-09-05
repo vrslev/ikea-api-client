@@ -57,11 +57,11 @@ class IkeaApi:
             self._cart = Cart(self._token)
         return self._cart
 
-    def OrderCapture(self, zip_code: str):
+    def OrderCapture(self, zip_code: str, state_code: str = ""):
         """Get available delivery services. Object is callable."""
         from ikea_api.endpoints import OrderCapture
 
-        return OrderCapture(self._token, zip_code)()
+        return OrderCapture(self._token, zip_code, state_code)()
 
     @property
     def Purchases(self):
