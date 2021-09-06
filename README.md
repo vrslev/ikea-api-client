@@ -129,7 +129,3 @@ items = api.fetch_items_specs.pip(item_codes_dict)
 ```
 
 There are many ways because information about some items is not available in some endpoints.
-
-# Response Examples
-
-You can review response examples for all endpoint before using it [here](https://github.com/vrslev/ikea-api-client/tree/master/response_examples)
