@@ -53,6 +53,8 @@ Token lasts 1 day. It may take a while to get authorized token because of it use
 api.login(username=..., password=...)
 ```
 
+📌 You should store your tokens yourself. This package doesn't store them, and you probably don't want to re-login every time (this is quite suspicious behavior from IKEA's perspective).
+
 ## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/cart/__init__.py)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
@@ -75,13 +77,19 @@ print(cart.show())
 
 ## [Order Capture](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/order_capture/__init__.py)
 
-Check availability for Pickup or Delivery. This is the only way.
-
-If you need to know whether items are available in stores, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
+Check availability for Pickup or Delivery.
 
 ```python
 api.OrderCapture(zip_code="101000")
 ```
+
+Pass State Code if you're in the US:
+
+```python
+api.OrderCapture(zip_code="02215", state_code="MA")
+```
+
+If you need to know whether items are available in stores, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
 
 ## [Purchases](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/purchases/__init__.py)
 
