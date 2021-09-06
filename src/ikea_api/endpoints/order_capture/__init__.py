@@ -10,7 +10,7 @@ from ikea_api.errors import IkeaApiError, OrderCaptureError
 
 
 class OrderCapture(API):
-    def __init__(self, token: str, zip_code: str | int, state_code: str):
+    def __init__(self, token: str, zip_code: str | int, state_code: str | None = None):
         super().__init__(token, "https://ordercapture.ikea.ru/ordercaptureapi/ru")
 
         if Constants.COUNTRY_CODE != "ru":
@@ -23,8 +23,7 @@ class OrderCapture(API):
         validate_zip_code(zip_code)
         self._zip_code = zip_code
 
-        if state_code != "":
-            validate_state_code(state_code)
+        validate_state_code(state_code)
         self._state_code = state_code
 
         self._session.headers["X-Client-Id"] = Secrets.purchases_x_client_id
@@ -80,10 +79,12 @@ class OrderCapture(API):
         raise IkeaApiError("No resourceId for checkout")
 
     def _get_delivery_area(self, checkout: str | None):
-        """Generate delivery area for checkout from zip code"""
+        """Generate delivery area for checkout from Zip Code and State Code"""
+        data = {"enableRangeOfDays": False, "zipCode": self._zip_code}
+        if self._state_code is not None:
+            data["stateCode"] = self._state_code
         response = self._call_api(
-            endpoint=f"{self._endpoint}/checkouts/{checkout}/delivery-areas",
-            data={"zipCode": self._zip_code, "enableRangeOfDays": False, "stateCode": self._state_code},
+            f"{self._endpoint}/checkouts/{checkout}/delivery-areas", data=data
         )
 
         if "resourceId" in response:
@@ -108,6 +109,7 @@ def validate_zip_code(zip_code: str | int):
         raise ValueError(f"Invalid zip code: {zip_code}")
 
 
-def validate_state_code(state_code: str):
-    if state_code.isdigit() or len(state_code) != 2:
-        raise ValueError(f"Invalid state code: {state_code}")
+def validate_state_code(state_code: str | None):
+    if state_code is not None:
+        if len(state_code) != 2 or len(re.findall(r"[^A-z]+", state_code)) > 0:
+            raise ValueError(f"Invalid state code: {state_code}")
