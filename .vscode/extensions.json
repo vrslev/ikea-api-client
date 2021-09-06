@@ -1,10 +1,7 @@
 {
   "recommendations": [
-    "bungcip.better-toml",
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
-    "bodil.prettier-toml",
     "ms-python.python",
-    "redhat.vscode-yaml"
   ]
 }
