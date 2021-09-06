@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2021-09-06)
+### Feature
+* Add `state_code` field to OrderCapture (merge PR #34) (closes #33) ([`1b9de6e`](https://github.com/vrslev/ikea-api-client/commit/1b9de6e95caa7f4da2c2d25adec5f5817f37a1ef))
+
 ## v0.6.3 (2021-09-05)
 ### Fix
 * **Auth:** Guest token payload ([`f316dfd`](https://github.com/vrslev/ikea-api-client/commit/f316dfd1425ba4bc59cd62f655231706b6cc778b))
