@@ -1,3 +1,4 @@
+<!-- prettier-ignore-start -->
 # Changelog
 
 <!--next-version-placeholder-->
@@ -69,3 +70,5 @@
 * **Item:** Annotations, linting issues with `fetch_items_specs` ([`d80bb39`](https://github.com/vrslev/ikea-api-client/commit/d80bb3926248ed2234c4fffb42d61db473d11c5c))
 * Python 3.7 support ([`d11258c`](https://github.com/vrslev/ikea-api-client/commit/d11258c1e068c2459e753221bc7e2eb101becdb5))
 * Basic error handler ([`bef8498`](https://github.com/vrslev/ikea-api-client/commit/bef8498db5da2d66c89ac3b90f3387a10463efe3))
+
+<!-- prettier-ignore-end -->
