@@ -33,7 +33,6 @@ repos:
     rev: 1.7.0
     hooks:
       - id: bandit
-        args: [-x, src/ikea_api/constants.py]
 
   - repo: https://github.com/asottile/blacken-docs
     rev: v1.11.0
@@ -45,7 +44,6 @@ repos:
     rev: v2.3.2
     hooks:
       - id: prettier
-        exclude: CHANGELOG.md
 
   - repo: https://github.com/asottile/setup-cfg-fmt
     rev: v1.17.0
