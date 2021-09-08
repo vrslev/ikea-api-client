@@ -1,17 +1,17 @@
 Client for several IKEA APIs.
 
-[![License](https://img.shields.io/pypi/l/ikea_api?color=green)](https://github.com/vrslev/ikea-api-client/blob/master/LICENSE)
 [![Version](https://img.shields.io/pypi/v/ikea_api?color=green&label=version)](https://pypi.org/project/ikea_api/)
 [![Python Version](https://img.shields.io/pypi/pyversions/ikea_api?color=green)](https://pypi.org/project/ikea_api/)
 [![Downloads](https://img.shields.io/pypi/dm/ikea_api?color=green)](https://pypi.org/project/ikea_api/)
+[![License](https://img.shields.io/pypi/l/ikea_api?color=green)](https://github.com/vrslev/ikea-api-client/blob/main/LICENSE)
 
 # Features
 
-- Authorization (as guest or as user)
-- Manage Cart
-- Check available Delivery Services
-- Retrieve Purchases History and information about specific order
-- Fetch Product information
+- Log In (as guest or as user),
+- Manage Cart,
+- Check available Delivery Services,
+- Retrieve Purchases History and information about specific order,
+- Get Product information.
 
 # Installation
 
@@ -19,113 +19,114 @@ Client for several IKEA APIs.
 pip install ikea_api
 ```
 
-To use authorization you need to have Chrome on board.
+To use authorization as registered user you need to have Chrome on board.
 
-# Initialization
+# Usage
 
 ```python
 from ikea_api import IkeaApi
 
-api = IkeaApi(
-    token=...,  # If you already have a token and stored it somewhere
-    country_code="ru",
-    language_code="ru",
+ikea = IkeaApi(
+    token=None,
+    country_code="us",
+    language_code="en",
 )
 ```
 
-# Endpoints
+Examples below don't show everything you can do, but this package is almost fully typed and quite small. So, better browse code or use autocompletion in your IDE 😄
 
-## [Authorization](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/auth.py)
+## Endpoints
 
-### [As Guest](https://github.com/vrslev/ikea-api-client/blob/03c1add4fd03fc41a7fef41c35bd2aa9c0c36d4b/src/ikea_api/auth.py#L35-L35)
+### 🔑 Authorization
+
+#### [As Guest](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/auth.py#L19)
+
+First time you open IKEA.com, guest token is being generated and stored in cookies. It expires in 30 days.
 
 ```python
-api.login_as_guest()
+ikea.login_as_guest()
 ```
 
-First time you open IKEA.com guest token is being generated and stored in Cookies. It expires in 30 days.
-
-### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/03c1add4fd03fc41a7fef41c35bd2aa9c0c36d4b/src/ikea_api/auth.py#L56-L56)
+#### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/auth.py#L117)
 
 Token lasts 1 day. It may take a while to get authorized token because of it uses headless Chrome to proceed. Note, that Chrome is required to login.
 
 ```python
-api.login(username=..., password=...)
+ikea.login(username=..., password=...)
 ```
 
-📌 You should store your tokens yourself. This package doesn't store them, and you probably don't want to re-login every time (this is quite suspicious behavior from IKEA's perspective).
+📌 You probably don't want to re-login every time (this is quite suspicious behavior from IKEA's perspective). This package doesn't store tokens, so, make sure to take care of it yourself.
 
-## [Cart](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/cart/__init__.py)
+To show token, use this method:
+
+```python
+ikea.reveal_token()
+```
+
+### [🛒 Cart](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/cart/__init__.py#L26)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
 
-- Add, Delete and Update items
-- Show cart
-- Clear cart
-- Set and Delete Coupon
-- Copy cart from another user
+- Add, delete and update items,
+- Set or delete Coupon,
+- Show it,
+- Clear it,
+- And even copy another user's cart.
 
-Works with and without authorization. If you logged in all changes apply to the _real_ cart. Use case: programmatically add items to cart and order it manually on IKEA.com.
+Authorization as user is optional. All changes apply to the _real_ cart if you're logged in. **Use case:** programmatically add items to cart and order it manually on IKEA.com.
 
-Example:
+Simple example:
 
 ```python
-cart = api.Cart
-cart.add_items({"30457903": 1})
-print(cart.show())
+ikea.Cart.add_items({"30457903": 1})  # { item_code: quantity }
+print(ikea.Cart.show())
 ```
 
-## [Order Capture](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/order_capture/__init__.py)
+### [🚛 Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/order_capture/__init__.py#L12)
 
-Check availability for Pickup or Delivery.
-
-```python
-api.OrderCapture(zip_code="101000")
-```
-
-Pass State Code if you're in the US:
+Check Pickup or Delivery availability.
 
 ```python
-api.OrderCapture(zip_code="02215", state_code="MA")
+ikea.OrderCapture(
+    zip_code="02215",
+    state_code="MA",  # pass state code only if you're in USA
+)
 ```
 
 If you need to know whether items are available in stores, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
 
-## [Purchases](https://github.com/vrslev/ikea-api-client/blob/master/src/ikea_api/endpoints/purchases/__init__.py)
+### 📦 Purchases
 
-### [Order History](https://github.com/vrslev/ikea-api-client/blob/fc264640ca1f27f4a58c1c57891a917414518a7d/src/ikea_api/endpoints/purchases/__init__.py#L34-L34)
+#### [Order History](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/purchases/__init__.py#L42)
 
 ```python
-api.login(username=..., password=...)
-history = api.Purchases.history()
+ikea.Purchases.history()
 ```
 
-### [Order Info](https://github.com/vrslev/ikea-api-client/blob/fc264640ca1f27f4a58c1c57891a917414518a7d/src/ikea_api/endpoints/purchases/__init__.py#L44-L44)
+#### [Order Info](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/purchases/__init__.py#L52)
 
 ```python
-api.login(username=..., password=...)
-order = api.Purchases.order_info(order_number=...)
+ikea.Purchases.order_info(order_number=...)
 
 # Or use it without authorization, email is required
-api.login_as_guest()
-order = api.order_info(order_number=..., email=...)
+ikea.Purchases.order_info(order_number=..., email=...)
 ```
 
-## [Item Specs](https://github.com/vrslev/ikea-api-client/tree/master/src/ikea_api/endpoints/item)
+### [🪑 Item Information](https://github.com/vrslev/ikea-api-client/tree/main/src/ikea_api/endpoints/item)
 
-Get information about item by item number
-
-```python
-item_codes = ["30457903"]
-
-items = api.fetch_items_specs.iows(item_codes)
-
-# or
-items = api.fetch_items_specs.ingka(item_codes)
-
-# or
-item_codes_dict = {d: True for d in items}  # True — is SPR i. e. combination
-items = api.fetch_items_specs.pip(item_codes_dict)
-```
+Get information about Item by item number.
 
 There are many ways because information about some items is not available in some endpoints.
+
+```python
+item_codes = ("30457903",)
+
+items = ikea.fetch_items_specs.iows(item_codes)
+
+# or
+items = ikea.fetch_items_specs.ingka(item_codes)
+
+# or
+item_codes_dict = {"30457903": False}  # { item_code: is_combination }
+items = ikea.fetch_items_specs.pip(item_codes_dict)
+```
