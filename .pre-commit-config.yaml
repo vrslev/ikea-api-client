@@ -18,13 +18,11 @@ repos:
     rev: v2.1.0
     hooks:
       - id: codespell
-        args: [--write-changes]
 
   - repo: https://github.com/psf/black
     rev: 21.8b0
     hooks:
       - id: black
-        args: [--quiet]
 
   - repo: https://github.com/pycqa/isort
     rev: 5.9.3
@@ -48,3 +46,8 @@ repos:
     hooks:
       - id: prettier
         exclude: CHANGELOG.md
+
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.17.0
+    hooks:
+      - id: setup-cfg-fmt
