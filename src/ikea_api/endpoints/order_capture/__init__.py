@@ -63,7 +63,7 @@ class OrderCapture(API):
             "shoppingType": "ONLINE",
             "channel": "WEBAPP",
             "checkoutType": "STANDARD",
-            "languageCode": "ru",
+            "languageCode": Constants.LANGUAGE_CODE,
             "items": items,
             "deliveryArea": None,
         }
