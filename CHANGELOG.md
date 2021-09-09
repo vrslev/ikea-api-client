@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.2 (2021-09-09)
+### Fix
+* Stop trying to show pretty error message ([`e6e5f57`](https://github.com/vrslev/ikea-api-client/commit/e6e5f57a6ff5648dbda48c9150e9f73d6573a61b))
+
 ## v0.7.1 (2021-09-09)
 ### Fix
 * OrderCapture for Sweden (merge PR #40) ([`4821a5e`](https://github.com/vrslev/ikea-api-client/commit/4821a5eb86dd431f75b89d43ca6e9a7e4587997e))
