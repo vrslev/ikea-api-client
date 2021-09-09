@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.1 (2021-09-09)
+### Fix
+* OrderCapture for Sweden (merge PR #40) ([`4821a5e`](https://github.com/vrslev/ikea-api-client/commit/4821a5eb86dd431f75b89d43ca6e9a7e4587997e))
+
 ## v0.7.0 (2021-09-06)
 ### Feature
 * Add `state_code` field to OrderCapture (merge PR #34) (closes #33) ([`1b9de6e`](https://github.com/vrslev/ikea-api-client/commit/1b9de6e95caa7f4da2c2d25adec5f5817f37a1ef))
