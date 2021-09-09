@@ -5,9 +5,9 @@ from typing import Any
 
 from typing_extensions import TypedDict
 
-from ikea_api.api import API
+from ikea_api._api import API
+from ikea_api._endpoints.cart import Cart
 from ikea_api.constants import Constants, Secrets
-from ikea_api.endpoints.cart import Cart
 from ikea_api.errors import IkeaApiError, OrderCaptureError
 
 

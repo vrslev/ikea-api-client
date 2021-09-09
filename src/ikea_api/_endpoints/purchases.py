@@ -4,7 +4,7 @@ from typing import Any
 
 from typing_extensions import Literal
 
-from ikea_api.api import API, GraphQLResponse
+from ikea_api._api import API, GraphQLResponse
 from ikea_api.constants import Constants
 
 

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from ikea_api.constants import Constants
-from ikea_api.endpoints import (
+from ikea_api._endpoints import (
     Cart,
     Items,
     OrderCapture,
@@ -9,6 +8,7 @@ from ikea_api.endpoints import (
     get_authorized_token,
     get_guest_token,
 )
+from ikea_api.constants import Constants
 
 __version__ = "0.7.2"
 __all__ = ["IkeaApi"]
