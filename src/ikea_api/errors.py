@@ -11,17 +11,12 @@ class GraphqlError(IkeaApiError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: dict[str, Any]):
-        self.errors: list[dict[str, Any]] = response["errors"]
-        pretty_errors: list[str] = ["\\"]
-        for e in self.errors:
-            description = None
-            if "path" in e:
-                description = e["path"][0]
-            elif "locations" in response:
-                description = str(e["locations"][0])
-            msg = f"{e['extensions']['code']} {e['message']}{': ' + description if description else ''}"
-            pretty_errors.append(msg)
-        super().__init__("\n".join(pretty_errors))
+        self.errors: list[dict[str, Any]] | None = response.get("errors")
+        if self.errors:
+            msg = "\\\n" + "\n".join(str(e) for e in self.errors)
+        else:
+            msg = response
+        super().__init__(msg)
 
 
 class UnauthorizedError(IkeaApiError):
@@ -33,16 +28,10 @@ class UnauthorizedError(IkeaApiError):
 
 
 class ItemFetchError(IkeaApiError):
-    ...
+    pass
 
 
 class OrderCaptureError(IkeaApiError):
     def __init__(self, response: dict[str, Any]):
-        self.error_code = response["errorCode"]
-        details = (
-            ""
-            if response["message"] == response["details"]
-            else ": " + response["details"]
-        )
-        msg = f"{response['message']}{details}"
-        super().__init__(msg)
+        self.error_code = response.get("errorCode")
+        super().__init__(response)
