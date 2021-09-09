@@ -7,7 +7,7 @@ class IkeaApiError(Exception):
     """Generic API related exception."""
 
 
-class GraphqlError(IkeaApiError):
+class GraphQLError(IkeaApiError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: dict[str, Any]):

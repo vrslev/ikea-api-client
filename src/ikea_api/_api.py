@@ -7,7 +7,7 @@ from requests import Session
 from typing_extensions import TypedDict
 
 from ikea_api.constants import DEFAULT_HEADERS
-from ikea_api.errors import GraphqlError, IkeaApiError, UnauthorizedError
+from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 
 
 class API:
@@ -31,9 +31,9 @@ class API:
         if status_code == 401:  # Token did not passed
             raise UnauthorizedError(response)
         if "errors" in response:
-            raise GraphqlError(response)
+            raise GraphQLError(response)
 
-    def _error_handler(self, status_code: int, response: Any):
+    def _error_handler(self, status_code: int, response: Any):  # pragma: no cover
         pass
 
     def _request(
