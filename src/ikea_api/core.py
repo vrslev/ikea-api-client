@@ -73,6 +73,15 @@ class IkeaApi:
         return self._purchases
 
     @property
+    def Search(self):
+        """Search the IKEA product catalog by product name"""
+        if not hasattr(self, "_search"):
+            from ikea_api.endpoints import Search
+
+            self._search = Search()
+        return self._search
+
+    @property
     def fetch_items_specs(self):
         """Get information about items."""
         if not hasattr(self, "_fetch_items_specs"):
