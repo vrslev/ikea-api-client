@@ -32,7 +32,7 @@ class API:
                 "Referer": Constants.BASE_URL + "/",
             }
         )
-        if token is not "":
+        if token is not None:
             self._session.headers["Authorization"] = "Bearer " + token
 
     def _error_handler(self, status_code: int, response: Any):

@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from ikea_api.constants import Constants
+from ikea_api.endpoints.search import SearchTypes
 
 
 class IkeaApi:
@@ -72,14 +73,13 @@ class IkeaApi:
             self._purchases = Purchases(self._token)
         return self._purchases
 
-    @property
-    def Search(self):
+    def Search(
+        self, query: str, limit: int = 24, types: list[SearchTypes] = ["PRODUCT"]
+    ):
         """Search the IKEA product catalog by product name"""
-        if not hasattr(self, "_search"):
-            from ikea_api.endpoints import Search
+        from ikea_api.endpoints import Search
 
-            self._search = Search()
-        return self._search
+        return Search()(query=query, limit=limit, types=types)
 
     @property
     def fetch_items_specs(self):
