@@ -4,39 +4,32 @@ import asyncio
 import os
 import time
 
+import requests
 from pyppeteer import launch
 from pyppeteer.browser import Browser
 from pyppeteer.page import Page
 
-from ikea_api.api import API
-from ikea_api.constants import Constants, Secrets
+from ikea_api.constants import DEFAULT_HEADERS, Constants, Secrets
 
 
-def get_guest_token():
-    return GuestAuth().get_token()
+def get_guest_token() -> str:
+    resp = requests.post(
+        url="https://api.ingka.ikea.com/guest/token",
+        headers={
+            **DEFAULT_HEADERS,
+            "Accept": "*/*",
+            "Accept-Language": "en-us",
+            "X-Client-Id": Secrets.auth_guest_token_x_client_id,
+            "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
+        },
+        json={"retailUnit": Constants.COUNTRY_CODE},
+    )
+    resp.reason = resp.text
+    resp.raise_for_status()
+    return resp.json()["access_token"]
 
 
-class GuestAuth(API):
-    def __init__(self):
-        super().__init__(None, "https://api.ingka.ikea.com/guest/token")  # type: ignore
-        self._session.headers.update(
-            {
-                "Accept": "*/*",
-                "Accept-Language": "en-us",
-                "X-Client-Id": Secrets.auth_guest_token_x_client_id,
-                "X-Client-Secret": Secrets.auth_guest_token_x_client_secret,
-            }
-        )
-
-    def get_token(self) -> str:
-        response: dict[str, str] = self._call_api(
-            data={"retailUnit": Constants.COUNTRY_CODE}
-        )
-        self._token = response["access_token"]
-        return self._token
-
-
-script = """
+_script = """
     chrome = { runtime: {} };
     const originalQuery = navigator.permissions.query;
     navigator.permissions.query = (parameters) =>
@@ -68,7 +61,7 @@ async def _get_driver():
 
 async def _open_page(browser: Browser):
     page = await browser.newPage()
-    await page.evaluateOnNewDocument(script)
+    await page.evaluateOnNewDocument(_script)
     await page.goto(
         f"https://www.ikea.com/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/profile/login/"
     )
@@ -114,7 +107,7 @@ async def _main(username: str, password: str):
     return token
 
 
-def get_authorized_token(username: str, password: str):
+def get_authorized_token(username: str, password: str) -> str:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     return loop.run_until_complete(_main(username, password))

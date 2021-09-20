@@ -7,7 +7,7 @@ class IkeaApiError(Exception):
     """Generic API related exception."""
 
 
-class GraphqlError(IkeaApiError):
+class GraphQLError(IkeaApiError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: dict[str, Any]):
@@ -23,7 +23,12 @@ class UnauthorizedError(IkeaApiError):
     """Exception that is being called when cannot log in"""
 
     def __init__(self, response: dict[str, Any]):
-        msg = response.get("moreInformation") or response.get("error") or response
+        msg = (
+            response.get("moreInformation")
+            or response.get("error")
+            or response.get("title")  # From Cart
+            or response
+        )
         super().__init__(msg)
 
 
