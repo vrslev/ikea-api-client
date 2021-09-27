@@ -136,10 +136,8 @@ items = ikea.fetch_items_specs.pip(item_codes_dict)
 Search for products in the IKEA product catalog by product name. Optionally also specify a maximum amount of returned search results (defaults to 24).
 
 ```python
-
-search_results = ikea.Search("Billy")               # Retrieves (at most) 24 search results
+search_results = ikea.Search("Billy")  # Retrieves (at most) 24 search results
 
 # or
-search_results = ikea.Search("Billy", 10)   # Retrieves (at most) 10 search results
-
+search_results = ikea.Search("Billy", 10)  # Retrieves (at most) 10 search results
 ```
