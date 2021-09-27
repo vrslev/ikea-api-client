@@ -3,7 +3,6 @@ name: Autoupdate pre-commit hooks
 on:
   schedule:
     - cron: 0 7 * * 1
-  workflow_dispatch:
 
 jobs:
   pre-commit-autoupdate:
