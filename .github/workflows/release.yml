@@ -1,10 +1,3 @@
-# Semantic Release
-# - Update CHANGELOG.md
-# - Update version in __init__.py
-# - Create Git Tag
-# - Create GitHub Release
-# - Publish to PyPI
-
 name: Release
 
 on:
@@ -18,13 +11,24 @@ jobs:
     concurrency: release
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: Semantic Release
-        uses: relekang/python-semantic-release@master
+      - uses: actions/setup-python@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          python-version: 3.9
+
+      - name: Set git user
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "action@github.com"
+
+      - name: Install semantic-release
+        run: pip install python-semantic-release
+
+      - name: Release
+        run: semantic-release publish -D commit_author="github-actions <action@github.com>"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
