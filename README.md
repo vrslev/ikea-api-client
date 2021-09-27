@@ -130,3 +130,16 @@ items = ikea.fetch_items_specs.ingka(item_codes)
 item_codes_dict = {"30457903": False}  # { item_code: is_combination }
 items = ikea.fetch_items_specs.pip(item_codes_dict)
 ```
+
+### [🔎 Search for Products](https://github.com/vrslev/ikea-api-client/tree/main/src/ikea_api/endpoints/search/__init__.py#L8)
+
+Search for products in the IKEA product catalog by product name. Optionally also specify a maximum amount of returned search results (defaults to 24).
+
+```python
+
+search_results = ikea.Search("Billy")               # Retrieves (at most) 24 search results
+
+# or
+search_results = ikea.Search("Billy", 10)   # Retrieves (at most) 10 search results
+
+```

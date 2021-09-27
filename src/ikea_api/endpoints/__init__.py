@@ -6,6 +6,7 @@ from ikea_api.endpoints.item.item_iows import fetch as _fetch_items_specs_iows
 from ikea_api.endpoints.item.item_pip import fetch as _fetch_items_specs_pip
 from ikea_api.endpoints.order_capture import OrderCapture
 from ikea_api.endpoints.purchases import Purchases
+from ikea_api.endpoints.search import Search
 
 
 class fetch_items_specs:
@@ -22,4 +23,4 @@ class fetch_items_specs:
         return _fetch_items_specs_pip(items)
 
 
-__all__ = ["Cart", "OrderCapture", "Purchases", "fetch_items_specs"]
+__all__ = ["Cart", "OrderCapture", "Purchases", "Search", "fetch_items_specs"]
