@@ -11,7 +11,7 @@ if __name__ == "__main__":
         ],
         extras_require={
             "dev": [
-                "black==21.8b0",
+                "black==21.9b0",
                 "pre-commit==2.15.0",
             ]
         },
