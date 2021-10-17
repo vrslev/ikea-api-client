@@ -19,16 +19,16 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Set git user
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "action@github.com"
-
-      - name: Install semantic-release
+      - name: Install python-semantic-release
         run: pip install python-semantic-release
 
+      - name: Setup git config
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+
       - name: Release
-        run: semantic-release publish -D commit_author="github-actions <action@github.com>"
+        run: semantic-release publish -D commit_author="github-actions <github-actions@github.com>"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
