@@ -15,8 +15,9 @@ from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 class API:
     """Generic API class"""
 
-    def __init__(self, token: str | None, endpoint: str):
-        self.__token, self._endpoint = token, endpoint
+    def __init__(self, endpoint: str, token: str | None = None):
+        self._endpoint = endpoint
+        self.__token = token
 
         self._session = Session()
         self._session.headers.update(DEFAULT_HEADERS)

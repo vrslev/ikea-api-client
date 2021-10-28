@@ -10,7 +10,9 @@ from ikea_api.constants import Constants
 
 class Purchases(API):
     def __init__(self, token: str):
-        super().__init__(token, "https://purchase-history.ocp.ingka.ikea.com/graphql")
+        super().__init__(
+            endpoint="https://purchase-history.ocp.ingka.ikea.com/graphql", token=token
+        )
         self._session.headers.update(
             {
                 "Accept": "*/*",

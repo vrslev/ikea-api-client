@@ -13,18 +13,25 @@ from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 
 @pytest.fixture
 def api():
-    return API("some token", "https://example.com")
+    return API("https://example.com", "some token")
 
 
 def test_api_init_token_endpoint():
-    token, endpoint = "some token", "https://example.com"
-    api = API(token, endpoint)
+    endpoint, token = "https://example.com", "some token"
+    api = API(endpoint, token)
     assert api._API__token == token  # type: ignore
     assert api._endpoint == endpoint
 
 
-def test_api_init_headers_without_token():
-    api = API(None, "")
+def test_api_init_headers_token_is_none():
+    api = API(endpoint="", token=None)
+    exp_headers = Session().headers
+    exp_headers.update(DEFAULT_HEADERS)
+    assert api._session.headers == exp_headers
+
+
+def test_api_init_headers_token_not_set():
+    api = API("")
     exp_headers = Session().headers
     exp_headers.update(DEFAULT_HEADERS)
     assert api._session.headers == exp_headers
@@ -32,7 +39,7 @@ def test_api_init_headers_without_token():
 
 def test_api_init_headers_with_token():
     token = "some token"  # nosec
-    api = API(token, "")
+    api = API("", token)
     exp_headers = Session().headers
     exp_headers.update(DEFAULT_HEADERS)
     exp_headers["Authorization"] = "Bearer " + token
@@ -40,14 +47,14 @@ def test_api_init_headers_with_token():
 
 
 def test_api_token_property_raises():
-    api = API(None, "")
+    api = API(endpoint="", token=None)
     with pytest.raises(RuntimeError, match="No token provided"):
         api._token
 
 
 def test_api_token_property_not_raises():
     token = "some token"  # nosec
-    api = API(token, "")
+    api = API("", token)
     assert api._token == token
 
 
@@ -74,6 +81,7 @@ def test_api_request_endpoint_not_set(api: API):
 @pytest.mark.parametrize("method", ("GET", "POST"))
 @responses.activate
 def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
+    # TODO: Check if headers and data passed
     response = {"test": "test"}
     responses.add(method, api._endpoint, json=response)
     assert api._request(method=method) == response
@@ -116,7 +124,7 @@ def test_api_request_error_handlers_called():
             nonlocal called_error_handler
             called_error_handler = True
 
-    api = MockAPI("some token", "https://example.com")
+    api = MockAPI("https://example.com", "some token")
     responses.add(responses.POST, api._endpoint, json=response)
     api._request()
 

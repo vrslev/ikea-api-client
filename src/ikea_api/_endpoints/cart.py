@@ -9,7 +9,7 @@ from ikea_api.constants import Constants, Secrets
 
 class Cart(API):
     def __init__(self, token: str):
-        super().__init__(token, "https://cart.oneweb.ingka.com/graphql")
+        super().__init__(endpoint="https://cart.oneweb.ingka.com/graphql", token=token)
         self._session.headers["X-Client-Id"] = Secrets.cart_x_client_id
 
     def _call_api(self, query: str, **variables: Any) -> GraphQLResponse:

@@ -13,8 +13,7 @@ SearchTypes = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSW
 class Search(API):
     def __init__(self):
         super().__init__(
-            token=None,
-            endpoint=f"https://sik.search.blue.cdtapps.com/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/search-result-page",
+            f"https://sik.search.blue.cdtapps.com/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/search-result-page",
         )
 
     def __call__(

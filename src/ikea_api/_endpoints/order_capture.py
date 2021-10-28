@@ -28,8 +28,8 @@ class OrderCapture(API):
 
         host = "ikea.ru" if Constants.COUNTRY_CODE == "ru" else "ingka.com"
         super().__init__(
-            token,
-            f"https://ordercapture.{host}/ordercaptureapi/{Constants.COUNTRY_CODE}",
+            endpoint=f"https://ordercapture.{host}/ordercaptureapi/{Constants.COUNTRY_CODE}",
+            token=token,
         )
         self._session.headers["X-Client-Id"] = Secrets.order_capture_x_client_id
 
