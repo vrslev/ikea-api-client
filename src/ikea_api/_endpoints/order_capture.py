@@ -3,28 +3,19 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from typing_extensions import TypedDict
-
-from ikea_api._api import API
+from ikea_api._api import AuthorizedAPI
 from ikea_api._endpoints.cart import Cart
 from ikea_api.constants import Constants, Secrets
-from ikea_api.errors import IkeaApiError, OrderCaptureError
+from ikea_api.errors import OrderCaptureError
+from ikea_api.types import CustomResponse, OrderCaptureErrorDict
 
 
-class OrderCaptureErrorDict(TypedDict):
-    timestamp: int
-    message: str
-    detailsMap: dict[str, Any]
-    errorCode: int
-    details: str | None
-    gaErrorList: list[dict[str, Any]] | None
-
-
-class OrderCapture(API):
+class OrderCapture(AuthorizedAPI):
     def __init__(self, token: str, zip_code: str, state_code: str | None = None):
         _validate_zip_code(zip_code)
         _validate_state_code(state_code)
-        self._zip_code, self._state_code = zip_code, state_code
+        self._zip_code = zip_code
+        self._state_code = state_code
 
         host = "ikea.ru" if Constants.COUNTRY_CODE == "ru" else "ingka.com"
         super().__init__(
@@ -33,14 +24,14 @@ class OrderCapture(API):
         )
         self._session.headers["X-Client-Id"] = Secrets.order_capture_x_client_id
 
-    def _error_handler(self, status_code: int, response: dict[Any, Any]):
-        if "errorCode" in response:
+    def _error_handler(self, response: CustomResponse):
+        if "errorCode" in response._json:
             raise OrderCaptureError(response)
 
     def _get_items_for_checkout(self) -> list[dict[str, str | int]]:
-        cart = Cart(self._token).show()
-        if not cart.get("data", {}).get("cart", {}).get("items"):
-            raise IkeaApiError("Cannot get items for Order Capture")
+        cart = Cart(self.token).show()
+        if not cart["data"].get("cart", {}).get("items"):
+            raise RuntimeError("Cannot get items for Order Capture")
         return [
             {
                 "quantity": item["quantity"],
@@ -52,10 +43,10 @@ class OrderCapture(API):
 
     def _get_checkout(self, items: list[dict[str, str | int]]) -> str:
         """Generate checkout for items"""
-        resp: dict[str, str] = self._request(
+        resp: dict[str, str] = self._post(
             f"{self.endpoint}/checkouts",
             headers={"X-Client-Id": Secrets.order_capture_checkout_x_client_id},
-            data={
+            json={
                 "channel": "WEBAPP",
                 "checkoutType": "STANDARD",
                 "shoppingType": "ONLINE",
@@ -65,7 +56,7 @@ class OrderCapture(API):
             },
         )
         if "resourceId" not in resp:
-            raise IkeaApiError("No resourceId for checkout")
+            raise RuntimeError("No resourceId for checkout")
         return resp["resourceId"]
 
     def _get_delivery_area(self, checkout: str | None) -> str:
@@ -73,20 +64,19 @@ class OrderCapture(API):
         data = {"enableRangeOfDays": False, "zipCode": self._zip_code}
         if self._state_code is not None:
             data["stateCode"] = self._state_code
-        resp: dict[str, str] = self._request(
-            f"{self.endpoint}/checkouts/{checkout}/delivery-areas", data=data
+        resp: dict[str, str] = self._post(
+            f"{self.endpoint}/checkouts/{checkout}/delivery-areas", json=data
         )
         if "resourceId" not in resp:
-            raise IkeaApiError("No resourceId for delivery area")
+            raise RuntimeError("No resourceId for delivery area")
         return resp["resourceId"]
 
     def _get_delivery_services(
         self, checkout: str, delivery_area: str
     ) -> list[dict[str, Any]] | OrderCaptureErrorDict:
         """Get available delivery services"""
-        return self._request(
-            f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services",
-            method="GET",
+        return self._get(
+            f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"
         )
 
     def __call__(self):

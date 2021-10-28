@@ -34,10 +34,10 @@ def _fetch_items_specs(session: Session, input_items: list[str]):
             url = _build_url(items)
             response = session.get(url)
             if not response.ok:  # TODO: Bad move
-                raise ItemFetchError("Wrong Item Code")
+                raise ItemFetchError(response, "Wrong Item Code")
 
         if not response.text:
-            raise ItemFetchError("Wrong Item Code")
+            raise ItemFetchError(response, "Wrong Item Code")
         r_json = response.json()
 
         if "RetailItemCommList" in r_json:
@@ -63,7 +63,7 @@ def _fetch_items_specs(session: Session, input_items: list[str]):
                     "ErrorAttribute" in err["ErrorAttributeList"],
                 ]:
                     if not test:
-                        raise ItemFetchError(err)
+                        raise ItemFetchError(response, err)
 
                 attrs: dict[str, Any] = {}
                 for attr in err["ErrorAttributeList"]["ErrorAttribute"]:

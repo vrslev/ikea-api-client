@@ -49,13 +49,13 @@ def test_api_init_headers_with_token():
 def test_api_token_property_raises():
     api = API(endpoint="", token=None)
     with pytest.raises(RuntimeError, match="No token provided"):
-        api._token
+        api.token
 
 
 def test_api_token_property_not_raises():
     token = "some token"  # nosec
     api = API("", token)
-    assert api._token == token
+    assert api.token == token
 
 
 def test_api_basic_error_handler_unauthorized(api: API):

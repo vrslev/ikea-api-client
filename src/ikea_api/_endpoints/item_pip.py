@@ -12,14 +12,12 @@ class ItemPip(API):
 
     def _request_item(self, item_code: str, is_combination: bool):
         prefix = "s" if is_combination else ""
-        return self._request(
-            f"{self.endpoint}/{item_code[5:]}/{prefix}{item_code}.json", method="GET"
-        )
+        return self._get(f"{self.endpoint}/{item_code[5:]}/{prefix}{item_code}.json")
 
     def __call__(self, item_code: str):
         try:
             return self._request_item(item_code, True)
         except IkeaApiError as exc:
-            if not exc.args[0] == 404:
+            if not exc.response.status_code == 404:
                 raise
             return self._request_item(item_code, False)

@@ -2,19 +2,19 @@ from __future__ import annotations
 
 from typing import Any
 
-from ikea_api._api import API, GraphQLResponse
+from ikea_api._api import GraphQLAPI
 from ikea_api._endpoints.item import parse_item_code
 from ikea_api.constants import Constants, Secrets
 
 
-class Cart(API):
+class Cart(GraphQLAPI):
     def __init__(self, token: str):
         super().__init__(endpoint="https://cart.oneweb.ingka.com/graphql", token=token)
         self._session.headers["X-Client-Id"] = Secrets.cart_x_client_id
 
-    def _call_api(self, query: str, **variables: Any) -> GraphQLResponse:
-        return self._request(
-            data={
+    def _call_api(self, query: str, **variables: Any):
+        return self._post(
+            json={
                 "query": query,
                 "variables": {"languageCode": Constants.LANGUAGE_CODE, **variables},
             }
@@ -379,6 +379,6 @@ class Queries:
         }
     }
   %s
-""" % (
+    """ % (
         Fragments.cart_props
     )

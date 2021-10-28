@@ -4,10 +4,10 @@ from json.decoder import JSONDecodeError
 from typing import Any
 
 from requests import Session
-from typing_extensions import Literal, TypedDict
 
 from ikea_api.constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
+from ikea_api.types import CustomResponse, GraphQLResponse
 
 # TODO: Add GraphQLAPI to transfer error handling and response type hints there
 
@@ -15,59 +15,82 @@ from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 class API:
     """Generic API class"""
 
-    def __init__(self, endpoint: str, token: str | None = None):
+    def __init__(self, endpoint: str):
         self.endpoint = endpoint
-        self.__token = token
-
         self._session = Session()
         self._session.headers.update(DEFAULT_HEADERS)
+
+    def _basic_error_handler(self, response: CustomResponse):
+        if response.status_code == 401:  # Token did not passed
+            raise UnauthorizedError(response)
+
+    def _error_handler(self, response: CustomResponse):  # pragma: no cover
+        pass
+
+    def _handle_response(self, response: CustomResponse):
+        try:
+            resp_json = response.json()
+        except JSONDecodeError:
+            raise IkeaApiError(response)
+        response._json = resp_json
+        self._basic_error_handler(response)
+        self._error_handler(response)
+        if not response.ok:
+            raise IkeaApiError(response)
+        return response._json
+
+    def _get(
+        self,
+        endpoint: str | None = None,
+        headers: dict[str, str] | None = None,
+        params: dict[str, Any] | None = None,
+    ):
+        if not endpoint:
+            endpoint = self.endpoint
+        response: CustomResponse = self._session.get(  # type: ignore
+            url=endpoint, headers=headers, params=params
+        )
+        return self._handle_response(response)
+
+    def _post(
+        self,
+        endpoint: str | None = None,
+        headers: dict[str, str] | None = None,
+        json: Any = None,
+    ):
+        if not endpoint:
+            endpoint = self.endpoint
+        response: CustomResponse = self._session.post(  # type: ignore
+            url=endpoint, headers=headers, json=json
+        )
+        return self._handle_response(response)
+
+
+class AuthorizedAPI(API):
+    def __init__(self, endpoint: str, token: str | None = None):
+        super().__init__(endpoint)
+
+        self._token = token
         if token is not None:
             self._session.headers["Authorization"] = "Bearer " + token
 
     @property
-    def _token(self):
-        if not self.__token:
+    def token(self):
+        if not self._token:
             raise RuntimeError("No token provided")
-        return self.__token
+        return self._token
 
-    def _basic_error_handler(self, status_code: int, response: dict[Any, Any]):
-        if status_code == 401:  # Token did not passed
-            raise UnauthorizedError(response)
-        if "errors" in response:
+
+class GraphQLAPI(AuthorizedAPI):
+    def _basic_error_handler(self, response: CustomResponse):
+        super()._basic_error_handler(response)
+        if "errors" in response._json:
             raise GraphQLError(response)
 
-    def _error_handler(self, status_code: int, response: Any):  # pragma: no cover
-        pass
-
-    def _request(
+    def _post(
         self,
         endpoint: str | None = None,
-        method: Literal["GET", "POST"] = "POST",
         headers: dict[str, str] | None = None,
-        data: dict[Any, Any] | list[Any] | None = None,
-    ):
-        """Call API and handle errors"""
-        if not endpoint:
-            endpoint = self.endpoint
-
-        if method == "GET":
-            resp = self._session.get(endpoint, headers=headers, params=data)
-        elif method == "POST":
-            resp = self._session.post(endpoint, headers=headers, json=data)
-        else:
-            raise RuntimeError(f'Unsupported method: "{method}"')
-
-        try:
-            resp_json: Any = resp.json()
-        except JSONDecodeError:
-            raise IkeaApiError(resp.status_code, resp.text)
-        self._basic_error_handler(resp.status_code, resp_json)
-        self._error_handler(resp.status_code, resp_json)
-        if not resp.ok:
-            raise IkeaApiError(resp.status_code, resp.text)
-        return resp_json
-
-
-class GraphQLResponse(TypedDict):
-    data: dict[str, Any]
-    errors: list[dict[str, Any]] | None
+        json: Any = None,
+    ) -> GraphQLResponse:
+        return super()._post(endpoint=endpoint, headers=headers, json=json)

@@ -4,11 +4,11 @@ from typing import Any
 
 from typing_extensions import Literal
 
-from ikea_api._api import API, GraphQLResponse
+from ikea_api._api import GraphQLAPI, GraphQLResponse
 from ikea_api.constants import Constants
 
 
-class Purchases(API):
+class Purchases(GraphQLAPI):
     def __init__(self, token: str):
         super().__init__(
             endpoint="https://purchase-history.ocp.ingka.ikea.com/graphql", token=token
@@ -25,12 +25,12 @@ class Purchases(API):
     def _build_payload(self, operation_name: str, query: str, **variables: Any):
         return {"operationName": operation_name, "variables": variables, "query": query}
 
-    def history(self, take: int = 5, skip: int = 0) -> GraphQLResponse:
+    def history(self, take: int = 5, skip: int = 0):
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
         payload = self._build_payload("History", Queries.history, take=take, skip=skip)
-        return self._request(data=payload)
+        return self._post(json=payload)
 
     def order_info(
         self,
@@ -66,7 +66,9 @@ class Purchases(API):
         if "CostsOrder" in queries:
             payload.append(
                 self._build_payload(
-                    "CostsOrder", Queries.costs_order, orderNumber=order_number
+                    "CostsOrder",
+                    Queries.costs_order,
+                    orderNumber=order_number,
                 )
             )
         if "ProductListOrder" in queries:
@@ -87,7 +89,7 @@ class Purchases(API):
             for chunk in payload:
                 chunk["variables"]["liteId"] = email
 
-        return self._request(headers=headers, data=payload)
+        return self._post(headers=headers, json=payload)  # type: ignore
 
 
 class Fragments:
