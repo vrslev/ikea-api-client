@@ -1,3 +1,6 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
 [tool.black]
 target-version = ["py37", "py38", "py39"]
 
@@ -17,5 +20,13 @@ version_variable = "src/ikea_api/__init__.py:__version__"
 build_command = "pip install build && python -m build"
 commit_subject = "сhore: Update version to {version}"
 
-[build-system]
-requires = ["setuptools", "wheel"]
+[tool.pytest.ini_options]
+addopts = []
+cache_dir = "tests/.cache"
+
+[tool.coverage.run]
+data_file = "tests/.cache/.coverage"
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = true

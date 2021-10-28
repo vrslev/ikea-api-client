@@ -21,3 +21,5 @@ dist/
 .venv
 env/
 venv/
+
+tests/.cache/
