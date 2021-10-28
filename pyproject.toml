@@ -10,7 +10,7 @@ profile = "black"
 [tool.pyright]
 exclude = ["venv"]
 typeCheckingMode = "strict"
-pythonVersion = "3.7"
+pythonVersion = "3.9"
 reportMissingTypeStubs = false
 reportPrivateUsage = false
 
