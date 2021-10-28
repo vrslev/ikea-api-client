@@ -4,10 +4,12 @@ from json.decoder import JSONDecodeError
 from typing import Any
 
 from requests import Session
-from typing_extensions import TypedDict
+from typing_extensions import Literal, TypedDict
 
 from ikea_api.constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
+
+# TODO: Add GraphQLAPI to transfer error handling and response type hints there
 
 
 class API:
@@ -39,7 +41,7 @@ class API:
     def _request(
         self,
         endpoint: str | None = None,
-        method: str = "POST",
+        method: Literal["GET", "POST"] = "POST",
         headers: dict[str, str] | None = None,
         data: dict[Any, Any] | list[Any] | None = None,
     ):
