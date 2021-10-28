@@ -16,7 +16,7 @@ class API:
     """Generic API class"""
 
     def __init__(self, endpoint: str, token: str | None = None):
-        self._endpoint = endpoint
+        self.endpoint = endpoint
         self.__token = token
 
         self._session = Session()
@@ -48,7 +48,7 @@ class API:
     ):
         """Call API and handle errors"""
         if not endpoint:
-            endpoint = self._endpoint
+            endpoint = self.endpoint
 
         if method == "GET":
             resp = self._session.get(endpoint, headers=headers, params=data)

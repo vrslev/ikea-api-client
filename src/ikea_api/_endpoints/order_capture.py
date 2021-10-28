@@ -53,7 +53,7 @@ class OrderCapture(API):
     def _get_checkout(self, items: list[dict[str, str | int]]) -> str:
         """Generate checkout for items"""
         resp: dict[str, str] = self._request(
-            f"{self._endpoint}/checkouts",
+            f"{self.endpoint}/checkouts",
             headers={"X-Client-Id": Secrets.order_capture_checkout_x_client_id},
             data={
                 "channel": "WEBAPP",
@@ -74,7 +74,7 @@ class OrderCapture(API):
         if self._state_code is not None:
             data["stateCode"] = self._state_code
         resp: dict[str, str] = self._request(
-            f"{self._endpoint}/checkouts/{checkout}/delivery-areas", data=data
+            f"{self.endpoint}/checkouts/{checkout}/delivery-areas", data=data
         )
         if "resourceId" not in resp:
             raise IkeaApiError("No resourceId for delivery area")
@@ -85,7 +85,7 @@ class OrderCapture(API):
     ) -> list[dict[str, Any]] | OrderCaptureErrorDict:
         """Get available delivery services"""
         return self._request(
-            f"{self._endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services",
+            f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services",
             method="GET",
         )
 

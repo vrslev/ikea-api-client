@@ -20,7 +20,7 @@ def test_api_init_token_endpoint():
     endpoint, token = "https://example.com", "some token"
     api = API(endpoint, token)
     assert api._API__token == token  # type: ignore
-    assert api._endpoint == endpoint
+    assert api.endpoint == endpoint
 
 
 def test_api_init_headers_token_is_none():
@@ -74,7 +74,7 @@ def test_api_basic_error_handler_graphqlerror(api: API):
 @responses.activate
 def test_api_request_endpoint_not_set(api: API):
     response = {"test": "test"}
-    responses.add(responses.POST, api._endpoint, json=response)
+    responses.add(responses.POST, api.endpoint, json=response)
     assert api._request() == response
 
 
@@ -83,7 +83,7 @@ def test_api_request_endpoint_not_set(api: API):
 def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
     # TODO: Check if headers and data passed
     response = {"test": "test"}
-    responses.add(method, api._endpoint, json=response)
+    responses.add(method, api.endpoint, json=response)
     assert api._request(method=method) == response
 
 
@@ -91,7 +91,7 @@ def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
 def test_api_request_method_fail(api: API):
     response = {"test": "test"}
     method = "OPTIONS"
-    responses.add(method, api._endpoint, json=response)
+    responses.add(method, api.endpoint, json=response)
     with pytest.raises(RuntimeError, match=f'Unsupported method: "{method}"'):
         assert api._request(method=method) == response  # type: ignore
 
@@ -99,7 +99,7 @@ def test_api_request_method_fail(api: API):
 @responses.activate
 def test_api_request_method_not_json(api: API):
     response = "test"
-    responses.add(responses.POST, api._endpoint, body=response)
+    responses.add(responses.POST, api.endpoint, body=response)
     with pytest.raises(IkeaApiError) as exc:
         api._request()
     assert exc.value.args == (200, response)
@@ -125,7 +125,7 @@ def test_api_request_error_handlers_called():
             called_error_handler = True
 
     api = MockAPI("https://example.com", "some token")
-    responses.add(responses.POST, api._endpoint, json=response)
+    responses.add(responses.POST, api.endpoint, json=response)
     api._request()
 
     assert called_basic_error_handler
@@ -136,7 +136,7 @@ def test_api_request_error_handlers_called():
 def test_api_request_method_not_ok(api: API):
     response = {"test": "test"}
     status = 404
-    responses.add(responses.POST, api._endpoint, json=response, status=status)
+    responses.add(responses.POST, api.endpoint, json=response, status=status)
     with pytest.raises(IkeaApiError) as exc:
         api._request()
     assert exc.value.args == (status, json.dumps(response))
