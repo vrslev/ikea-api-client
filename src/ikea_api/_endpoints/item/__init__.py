@@ -5,7 +5,7 @@ from typing import Any, Callable, overload
 
 from requests import Session
 
-from ikea_api.constants import Constants
+from ikea_api.constants import DEFAULT_HEADERS
 
 # TODO: Refactor all item endpoints
 
@@ -49,18 +49,6 @@ def parse_item_code(item_code: str | int | list[str | int] | list[str]):
         return parsed
 
 
-def build_headers(headers: dict[str, str]):
-    new_headers = {
-        "Origin": Constants.BASE_URL,
-        "User-Agent": Constants.USER_AGENT,
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": Constants.LANGUAGE_CODE,
-        "Connection": "keep-alive",
-    }
-    new_headers.update(headers)
-    return new_headers
-
-
 def generic_item_fetcher(
     items: str | list[str],
     headers: dict[str, str],
@@ -68,7 +56,8 @@ def generic_item_fetcher(
     chunk_size: int,
 ):
     session = Session()
-    session.headers.update(build_headers(headers))
+    session.headers.update(DEFAULT_HEADERS)
+    session.headers.update(headers)
 
     if isinstance(items, str):
         items = [items]

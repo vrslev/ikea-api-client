@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+# TODO: Better errors (include response, status code etc)
+
 
 class IkeaApiError(Exception):
     """Generic API related exception."""
