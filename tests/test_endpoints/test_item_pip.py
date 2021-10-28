@@ -6,7 +6,9 @@ from ikea_api.errors import IkeaApiError
 
 
 def test_item_pip_init():
-    assert ItemPip().endpoint == f"https://www.ikea.com/ru/ru/products"
+    item_pip = ItemPip()
+    assert item_pip.endpoint == f"https://www.ikea.com/ru/ru/products"
+    assert item_pip._session.headers["Accept"] == "*/*"
 
 
 @pytest.mark.parametrize(

@@ -8,6 +8,7 @@ class ItemPip(API):
         super().__init__(
             f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/products"
         )
+        self._session.headers["Accept"] = "*/*"
 
     def _request_item(self, item_code: str, is_combination: bool):
         prefix = "s" if is_combination else ""
