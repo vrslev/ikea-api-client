@@ -7,6 +7,7 @@ from ikea_api._endpoints.item.item_iows import fetch as _fetch_items_specs_iows
 from ikea_api._endpoints.item.item_pip import fetch as _fetch_items_specs_pip
 from ikea_api._endpoints.order_capture import OrderCapture
 from ikea_api._endpoints.purchases import Purchases
+from ikea_api._endpoints.search import Search
 
 
 class Items:
@@ -28,6 +29,7 @@ __all__ = [
     "OrderCapture",
     "Purchases",
     "Items",
+    "Search",
     "get_guest_token",
     "get_authorized_token",
 ]

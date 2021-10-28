@@ -1,42 +1,20 @@
-name: Pre-commit auto-update
+name: Autoupdate pre-commit hooks
 
 on:
   schedule:
     - cron: 0 7 * * 1
 
 jobs:
-  update-pre-commit:
+  pre-commit-autoupdate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install Python 3.7
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: vrslev/pre-commit-autoupdate@v1.0.0
+      - uses: peter-evans/create-pull-request@v3
         with:
-          python-version: 3.7
-
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/pre-commit
-            ~/.cache/pip
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-
-      - name: Install pre-commit
-        run: pip install pre-commit
-
-      - name: Run pre-commit autoupdate
-        run: pre-commit autoupdate
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update/pre-commit-autoupdate
+          branch: pre-commit-autoupdate
           title: "chore(deps): Update pre-commit hooks"
           commit-message: "chore(deps): Update pre-commit hooks"
-          body: Update versions of pre-commit hooks
+          body: Update pre-commit hooks
           labels: dependencies,github_actions
           delete-branch: True

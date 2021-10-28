@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.0 (2021-09-27)
+### Feature
+* Add search functionality ([#44](https://github.com/vrslev/ikea-api-client/issues/44)) ([`c30e3a7`](https://github.com/vrslev/ikea-api-client/commit/c30e3a794c796aa7a092c0c8ac47c19615f2836f))
+
 ## v0.7.2 (2021-09-09)
 ### Fix
 * Stop trying to show pretty error message ([`e6e5f57`](https://github.com/vrslev/ikea-api-client/commit/e6e5f57a6ff5648dbda48c9150e9f73d6573a61b))

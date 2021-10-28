@@ -5,12 +5,14 @@ from ikea_api._endpoints import (
     Items,
     OrderCapture,
     Purchases,
+    Search,
     get_authorized_token,
     get_guest_token,
 )
+from ikea_api._endpoints.search import SearchTypes
 from ikea_api.constants import Constants
 
-__version__ = "0.7.2"
+__version__ = "0.8.0"
 __all__ = ["IkeaApi"]
 
 
@@ -47,6 +49,12 @@ class IkeaApi:
     def order_capture(self, zip_code: str, state_code: str | None = None):
         """Get available delivery services."""
         return OrderCapture(self._token, zip_code, state_code)()
+
+    def search(
+        self, query: str, limit: int = 24, types: list[SearchTypes] = ["PRODUCT"]
+    ):
+        """Search the IKEA product catalog by product name"""
+        return Search()(query=query, limit=limit, types=types)
 
     @property
     def purchases(self):
