@@ -7,7 +7,7 @@ from requests import Session
 from typing_extensions import Literal
 
 from ikea_api._api import API
-from ikea_api.constants import DEFAULT_HEADERS
+from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 
 

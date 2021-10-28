@@ -5,7 +5,7 @@ from typing import Any
 
 from requests import Session
 
-from ikea_api.constants import DEFAULT_HEADERS
+from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 from ikea_api.types import CustomResponse, GraphQLResponse
 

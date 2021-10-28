@@ -5,7 +5,7 @@ from typing import Any, Callable, overload
 
 from requests import Session
 
-from ikea_api.constants import DEFAULT_HEADERS
+from ikea_api._constants import DEFAULT_HEADERS
 
 # TODO: Refactor all item endpoints
 

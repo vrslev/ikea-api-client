@@ -6,8 +6,8 @@ from typing import Any
 
 from requests import Session
 
+from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.item import generic_item_fetcher
-from ikea_api.constants import Constants, Secrets
 from ikea_api.errors import ItemFetchError
 
 

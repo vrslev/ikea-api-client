@@ -5,7 +5,7 @@ from typing import Any
 from typing_extensions import Literal
 
 from ikea_api._api import GraphQLAPI, GraphQLResponse
-from ikea_api.constants import Constants
+from ikea_api._constants import Constants
 
 
 class Purchases(GraphQLAPI):

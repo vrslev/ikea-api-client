@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from ikea_api import IkeaApi
-from ikea_api.constants import Constants
+from ikea_api._constants import Constants
 
 
 @pytest.mark.parametrize(

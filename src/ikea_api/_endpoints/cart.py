@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Any
 
 from ikea_api._api import GraphQLAPI
+from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.item import parse_item_code
-from ikea_api.constants import Constants, Secrets
 
 
 class Cart(GraphQLAPI):
