@@ -1,5 +1,5 @@
 import json
-from typing import Literal
+import sys
 
 import pytest
 import requests
@@ -9,6 +9,11 @@ from ikea_api._api import API, AuthorizedAPI, GraphQLAPI
 from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.exceptions import GraphQLError, IkeaApiError, UnauthorizedError
 from ikea_api.types import CustomResponse
+
+if sys.version_info < (3, 8):
+    from typing_extensions import Literal
+else:
+    from typing import Literal
 
 
 @pytest.fixture

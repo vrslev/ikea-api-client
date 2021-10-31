@@ -1,9 +1,16 @@
-from typing import Annotated
+from __future__ import annotations
+
+import sys
 
 from ikea_api._api import API
 from ikea_api._constants import Constants, Secrets
 from ikea_api.exceptions import ItemFetchError
 from ikea_api.types import CustomResponse
+
+if sys.version_info < (3, 9):
+    from typing_extensions import Annotated
+else:
+    from typing import Annotated
 
 
 class IngkaItems(API):

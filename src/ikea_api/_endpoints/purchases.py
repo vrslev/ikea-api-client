@@ -1,9 +1,15 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+import sys
+from typing import Any
 
 from ikea_api._api import GraphQLAPI, GraphQLResponse
 from ikea_api._constants import Constants
+
+if sys.version_info < (3, 8):
+    from typing_extensions import Literal
+else:
+    from typing import Literal
 
 
 class Purchases(GraphQLAPI):

@@ -1,8 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Literal, TypedDict
+import sys
+from typing import Any
 
 from requests import Response
+
+if sys.version_info < (3, 8):
+    from typing_extensions import Literal, TypedDict
+else:
+    from typing import Literal, TypedDict
 
 
 class CustomResponse(Response):
