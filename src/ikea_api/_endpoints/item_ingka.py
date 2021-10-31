@@ -23,7 +23,7 @@ class IngkaItems(API):
         if "error" in response._json:
             try:
                 item_codes = response._json["error"]["details"][0]["value"]["keys"]
-            except (KeyError, TypeError):
+            except (KeyError, TypeError, IndexError):
                 item_codes = None
             raise ItemFetchError(response, item_codes)
 
