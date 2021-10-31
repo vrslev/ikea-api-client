@@ -41,7 +41,7 @@ _script = """
 """
 
 
-async def _get_driver():
+async def _get_driver():  # pragma: no cover
     return await launch(
         handleSIGINT=False,
         handleSIGTERM=False,
@@ -59,7 +59,7 @@ async def _get_driver():
 # pyright: reportUnknownMemberType = false
 
 
-async def _open_page(browser: Browser):
+async def _open_page(browser: Browser):  # pragma: no cover
     page = await browser.newPage()
     await page.evaluateOnNewDocument(_script)
     await page.goto(
@@ -68,7 +68,7 @@ async def _open_page(browser: Browser):
     return page
 
 
-async def _get_token_from_cookie(page: Page):
+async def _get_token_from_cookie(page: Page):  # pragma: no cover
     token: str | None = None
     for _ in range(200):
         cookies = await page.cookies()
@@ -81,7 +81,7 @@ async def _get_token_from_cookie(page: Page):
     return token
 
 
-async def _fill_form(page: Page, username: str, password: str):
+async def _fill_form(page: Page, username: str, password: str):  # pragma: no cover
     usr_el, pswd_el = "input#username", "input#password"
     await page.click(usr_el)
     await page.type(usr_el, username)
@@ -90,13 +90,13 @@ async def _fill_form(page: Page, username: str, password: str):
     await page.click("button[type=submit]")
 
 
-async def _save_error_screenshot(page: Page):
+async def _save_error_screenshot(page: Page):  # pragma: no cover
     fpath = os.path.abspath("login_error_screenshot.png")
     await page.screenshot(path=fpath)
     raise RuntimeError(f"Cannot log in. Take look at the screenshot: {fpath}")
 
 
-async def _main(username: str, password: str):
+async def _main(username: str, password: str):  # pragma: no cover
     browser = await _get_driver()
     page = await _open_page(browser)
     await _fill_form(page, username, password)
@@ -107,7 +107,7 @@ async def _main(username: str, password: str):
     return token
 
 
-def get_authorized_token(username: str, password: str) -> str:
+def get_authorized_token(username: str, password: str) -> str:  # pragma: no cover
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     return loop.run_until_complete(_main(username, password))
