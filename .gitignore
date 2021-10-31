@@ -4,4 +4,6 @@ __pycache__/
 *.egg-info/
 venv/
 
-tests/.cache/
+.coverage
+.pytest_cache/
+.tox/
