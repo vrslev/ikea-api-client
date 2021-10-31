@@ -3,7 +3,7 @@ import requests
 import responses
 
 from ikea_api._endpoints.item_pip import PipItem
-from ikea_api.errors import IkeaApiError
+from ikea_api.exceptions import IkeaApiError
 
 
 def test_item_pip_init():

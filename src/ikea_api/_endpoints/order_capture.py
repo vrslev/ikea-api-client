@@ -6,7 +6,7 @@ from typing import Any
 from ikea_api._api import AuthorizedAPI
 from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.cart import Cart
-from ikea_api.errors import OrderCaptureError
+from ikea_api.exceptions import OrderCaptureError
 from ikea_api.types import CustomResponse, OrderCaptureErrorDict
 
 

@@ -6,7 +6,7 @@ from requests import Response
 
 from ikea_api._api import API
 from ikea_api._constants import Constants, Secrets
-from ikea_api.errors import ItemFetchError
+from ikea_api.exceptions import ItemFetchError
 
 
 class IowsItems(API):
