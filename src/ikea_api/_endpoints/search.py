@@ -17,13 +17,7 @@ class Search(API):
         self,
         query: str,
         limit: int = 24,
-        types: list[SearchType] = [
-            "PRODUCT",
-            "CONTENT",
-            "PLANNER",
-            "REFINED_SEARCHES",
-            "ANSWER",
-        ],
+        types: list[SearchType] = ["PRODUCT"],
     ) -> dict[str, dict[str, Any] | list[Any]]:
         return self._get(
             params={

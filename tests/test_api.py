@@ -1,10 +1,9 @@
 import json
-from typing import Any
+from typing import Any, Literal
 
 import pytest
 import responses
 from requests import Session
-from typing_extensions import Literal
 
 from ikea_api._api import API
 from ikea_api._constants import DEFAULT_HEADERS

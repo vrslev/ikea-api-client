@@ -9,8 +9,6 @@ from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
 from ikea_api.types import CustomResponse, GraphQLResponse
 
-# TODO: Add GraphQLAPI to transfer error handling and response type hints there
-
 
 class API:
     """Generic API class"""

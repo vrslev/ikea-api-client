@@ -3,7 +3,6 @@ from __future__ import annotations
 from ikea_api._constants import Constants
 from ikea_api._endpoints import (
     Cart,
-    Items,
     OrderCapture,
     Purchases,
     Search,
@@ -50,12 +49,6 @@ class IkeaApi:
         """Get available delivery services."""
         return OrderCapture(self._token, zip_code, state_code)()
 
-    def search(
-        self, query: str, limit: int = 24, types: list[SearchType] = ["PRODUCT"]
-    ):
-        """Search the IKEA product catalog by product name"""
-        return Search()(query=query, limit=limit, types=types)
-
     @property
     def purchases(self):
         """Get information about your purchases."""
@@ -63,9 +56,8 @@ class IkeaApi:
             self._purchases = Purchases(self._token)
         return self._purchases
 
-    @property
-    def items(self):
-        """Get information about items."""
-        if not hasattr(self, "_items"):
-            self._items = Items
-        return self._items
+    def search(
+        self, query: str, limit: int = 24, types: list[SearchType] = ["PRODUCT"]
+    ):
+        """Search the IKEA product catalog by product name"""
+        return Search()(query=query, limit=limit, types=types)

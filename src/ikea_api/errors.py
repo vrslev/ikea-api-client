@@ -6,8 +6,6 @@ from requests import Response
 
 from ikea_api.types import CustomResponse
 
-# TODO: Better errors (include response, status code etc)
-
 
 class IkeaApiError(Exception):
     """Generic API related exception."""

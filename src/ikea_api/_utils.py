@@ -1,13 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Callable, overload
-
-from requests import Session
-
-from ikea_api._constants import DEFAULT_HEADERS
-
-# TODO: Refactor all item endpoints
+from typing import Any, overload
 
 
 @overload
@@ -47,31 +41,3 @@ def parse_item_code(item_code: str | int | list[str | int] | list[str]):
         if not parsed:
             raise ValueError(err_msg)
         return parsed
-
-
-def generic_item_fetcher(
-    items: str | list[str],
-    headers: dict[str, str],
-    func: Callable[..., Any],
-    chunk_size: int,
-):
-    session = Session()
-    session.headers.update(DEFAULT_HEADERS)
-    session.headers.update(headers)
-
-    if isinstance(items, str):
-        items = [items]
-
-    items = [str(i) for i in items]
-    items = list(set(items))
-    items = parse_item_code(items)
-
-    chunks = [items[x : x + chunk_size] for x in range(0, len(items), chunk_size)]
-    responses: list[Any] = []
-    for chunk in chunks:
-        response = func(session, chunk)
-        if isinstance(response, list):
-            responses += response
-        else:
-            responses.append(response)
-    return responses

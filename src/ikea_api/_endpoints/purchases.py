@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
-
-from typing_extensions import Literal
+from typing import Any, Literal
 
 from ikea_api._api import GraphQLAPI, GraphQLResponse
 from ikea_api._constants import Constants

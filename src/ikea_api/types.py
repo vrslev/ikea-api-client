@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal, TypedDict
 
 from requests import Response
-from typing_extensions import Literal, TypedDict
 
 
 class CustomResponse(Response):

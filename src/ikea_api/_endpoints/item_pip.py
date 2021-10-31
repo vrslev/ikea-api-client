@@ -3,7 +3,7 @@ from ikea_api._constants import Constants
 from ikea_api.errors import IkeaApiError
 
 
-class ItemPip(API):
+class PipItem(API):
     def __init__(self):
         super().__init__(
             f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/products"

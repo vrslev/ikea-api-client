@@ -4,7 +4,6 @@ from typing import Any
 
 from ikea_api._api import GraphQLAPI
 from ikea_api._constants import Constants, Secrets
-from ikea_api._endpoints.item import parse_item_code
 
 
 class Cart(GraphQLAPI):
@@ -27,12 +26,9 @@ class Cart(GraphQLAPI):
         return self._call_api(Mutations.clear_items)
 
     def _make_templated_items(self, items: dict[str, int]):
-        items_templated: list[dict[str, Any]] = []
-        for item_code, qty in items.items():
-            item_code = parse_item_code(item_code)
-            if item_code:
-                items_templated.append({"itemNo": item_code, "quantity": qty})
-        return items_templated
+        return [
+            {"itemNo": item_code, "quantity": qty} for item_code, qty in items.items()
+        ]
 
     def add_items(self, items: dict[str, int]):
         """
@@ -60,8 +56,7 @@ class Cart(GraphQLAPI):
         """
         Remove items by item codes.
         """
-        items_parsed = parse_item_code(item_codes)
-        return self._call_api(Mutations.remove_items, itemNos=items_parsed)
+        return self._call_api(Mutations.remove_items, itemNos=item_codes)
 
     def set_coupon(self, code: str):
         return self._call_api(Mutations.set_coupon, code=code)
