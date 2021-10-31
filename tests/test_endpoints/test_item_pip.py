@@ -63,11 +63,11 @@ def test_item_pip_call_ok_second_time():
     assert called_request_item
 
 
-def test_item_pip_call_not_ok():
+@pytest.mark.parametrize("exp_status", (404, 403))
+def test_item_pip_call_not_ok(exp_status: int):
     exp_item_code = "1111111"
     called_request_item = False
     exp_msg = "some msg"
-    exp_status = 404
 
     class MockPipItem(PipItem):
         def _request_item(self, item_code: str, is_combination: bool):
