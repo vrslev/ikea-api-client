@@ -1,80 +1,51 @@
 import json
-from typing import Any, Literal
+from typing import Literal
 
 import pytest
+import requests
 import responses
-from requests import Session
 
-from ikea_api._api import API
+from ikea_api._api import API, AuthorizedAPI, GraphQLAPI
 from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.errors import GraphQLError, IkeaApiError, UnauthorizedError
+from ikea_api.types import CustomResponse
 
 
 @pytest.fixture
 def api():
-    return API("https://example.com", "some token")
+    return API("https://example.com")
 
 
-def test_api_init_token_endpoint():
-    endpoint, token = "https://example.com", "some token"
-    api = API(endpoint, token)
-    assert api._API__token == token  # type: ignore
-    assert api.endpoint == endpoint
+def test_api_init_endpoint():
+    assert API("test").endpoint == "test"
 
 
-def test_api_init_headers_token_is_none():
-    api = API(endpoint="", token=None)
-    exp_headers = Session().headers
+def test_api_basic_error_handler_raises(api: API):
+    response = CustomResponse()
+    response.status_code = 401
+    response._json = {}
+    with pytest.raises(UnauthorizedError, match=str(response._json)):
+        api._basic_error_handler(response)
+
+
+def test_api_basic_error_handler_passes(api: API):
+    response = CustomResponse()
+    response.status_code = 400
+    response._json = {}
+    api._basic_error_handler(response)
+
+
+def test_api_init_headers(api: API):
+    exp_headers = requests.Session().headers
     exp_headers.update(DEFAULT_HEADERS)
     assert api._session.headers == exp_headers
-
-
-def test_api_init_headers_token_not_set():
-    api = API("")
-    exp_headers = Session().headers
-    exp_headers.update(DEFAULT_HEADERS)
-    assert api._session.headers == exp_headers
-
-
-def test_api_init_headers_with_token():
-    token = "some token"  # nosec
-    api = API("", token)
-    exp_headers = Session().headers
-    exp_headers.update(DEFAULT_HEADERS)
-    exp_headers["Authorization"] = "Bearer " + token
-    assert api._session.headers == exp_headers
-
-
-def test_api_token_property_raises():
-    api = API(endpoint="", token=None)
-    with pytest.raises(RuntimeError, match="No token provided"):
-        api.token
-
-
-def test_api_token_property_not_raises():
-    token = "some token"  # nosec
-    api = API("", token)
-    assert api.token == token
-
-
-def test_api_basic_error_handler_unauthorized(api: API):
-    status_code = 401
-    response: dict[Any, Any] = {}
-    with pytest.raises(UnauthorizedError, match=str(response)):
-        api._basic_error_handler(status_code, response)
-
-
-def test_api_basic_error_handler_graphqlerror(api: API):
-    status_code, response = 200, {"errors": None}
-    with pytest.raises(GraphQLError, match=str(response)):
-        api._basic_error_handler(status_code, response)
 
 
 @responses.activate
 def test_api_request_endpoint_not_set(api: API):
     response = {"test": "test"}
     responses.add(responses.POST, api.endpoint, json=response)
-    assert api._request() == response
+    assert api._post() == response
 
 
 @pytest.mark.parametrize("method", ("GET", "POST"))
@@ -83,16 +54,8 @@ def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
     # TODO: Check if headers and data passed
     response = {"test": "test"}
     responses.add(method, api.endpoint, json=response)
-    assert api._request(method=method) == response
-
-
-@responses.activate
-def test_api_request_method_fail(api: API):
-    response = {"test": "test"}
-    method = "OPTIONS"
-    responses.add(method, api.endpoint, json=response)
-    with pytest.raises(RuntimeError, match=f'Unsupported method: "{method}"'):
-        assert api._request(method=method) == response  # type: ignore
+    func = api._get if method == "GET" else api._post
+    assert func() == response
 
 
 @responses.activate
@@ -100,32 +63,32 @@ def test_api_request_method_not_json(api: API):
     response = "test"
     responses.add(responses.POST, api.endpoint, body=response)
     with pytest.raises(IkeaApiError) as exc:
-        api._request()
-    assert exc.value.args == (200, response)
+        api._post()
+    assert exc.value.args == ((200, response),)
 
 
 @responses.activate
 def test_api_request_error_handlers_called():
-    response = {"test": "test"}
+    exp_response = {"test": "test"}
     called_basic_error_handler = False
     called_error_handler = False
 
     class MockAPI(API):
-        def _basic_error_handler(self, status_code: int, response: dict[Any, Any]):
-            assert status_code == 200
-            assert response == response
+        def _basic_error_handler(self, response: CustomResponse):
+            assert response.status_code == 200
+            assert response._json == exp_response
             nonlocal called_basic_error_handler
             called_basic_error_handler = True
 
-        def _error_handler(self, status_code: int, response: dict[Any, Any]):  # type: ignore
-            assert status_code == 200
-            assert response == response
+        def _error_handler(self, response: CustomResponse):
+            assert response.status_code == 200
+            assert response._json == exp_response
             nonlocal called_error_handler
             called_error_handler = True
 
-    api = MockAPI("https://example.com", "some token")
-    responses.add(responses.POST, api.endpoint, json=response)
-    api._request()
+    api = MockAPI("https://example.com")
+    responses.add(responses.POST, api.endpoint, json=exp_response)
+    api._post()
 
     assert called_basic_error_handler
     assert called_error_handler
@@ -137,5 +100,32 @@ def test_api_request_method_not_ok(api: API):
     status = 404
     responses.add(responses.POST, api.endpoint, json=response, status=status)
     with pytest.raises(IkeaApiError) as exc:
-        api._request()
-    assert exc.value.args == (status, json.dumps(response))
+        api._post()
+    assert exc.value.args == ((status, json.dumps(response)),)
+
+
+def test_authorized_api_init():
+    token = "some token"  # nosec
+    api = AuthorizedAPI("", token)
+    assert api._session.headers["Authorization"] == "Bearer " + token
+
+
+def test_authorized_api_token_property_raises():
+    api = AuthorizedAPI(endpoint="", token=None)
+    with pytest.raises(RuntimeError, match="No token provided"):
+        api.token
+
+
+def test_authorized_token_property_not_raises():
+    token = "some token"  # nosec
+    api = AuthorizedAPI("", token)
+    assert api.token == token
+
+
+def test_graphql_api_basic_error_handler_graphqlerror():
+    api = GraphQLAPI("https://example.com", "some token")
+    response = CustomResponse()
+    response.status_code = 200
+    response._json = {"errors": None}
+    with pytest.raises(GraphQLError, match=str(response._json)):
+        api._basic_error_handler(response)

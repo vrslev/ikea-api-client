@@ -65,9 +65,8 @@ class API:
 
 
 class AuthorizedAPI(API):
-    def __init__(self, endpoint: str, token: str | None = None):
+    def __init__(self, endpoint: str, token: str | None):
         super().__init__(endpoint)
-
         self._token = token
         if token is not None:
             self._session.headers["Authorization"] = "Bearer " + token
@@ -90,5 +89,5 @@ class GraphQLAPI(AuthorizedAPI):
         endpoint: str | None = None,
         headers: dict[str, str] | None = None,
         json: Any = None,
-    ) -> GraphQLResponse:
+    ) -> GraphQLResponse:  # pragma: no cover
         return super()._post(endpoint=endpoint, headers=headers, json=json)
