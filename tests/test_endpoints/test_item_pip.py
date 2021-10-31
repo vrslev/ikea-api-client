@@ -6,12 +6,6 @@ from ikea_api._endpoints.item_pip import PipItem
 from ikea_api.exceptions import IkeaApiError
 
 
-def test_item_pip_init():
-    pip_item = PipItem()
-    assert pip_item.endpoint == f"https://www.ikea.com/ru/ru/products"
-    assert pip_item._session.headers["Accept"] == "*/*"
-
-
 @pytest.mark.parametrize(
     "is_combintaion,exp_url",
     ((True, "/111/s11111111.json"), (False, "/111/11111111.json")),

@@ -5,16 +5,7 @@ from typing import Any
 import pytest
 
 from ikea_api import Constants
-from ikea_api._constants import Secrets
 from ikea_api._endpoints.cart import Cart, Mutations, Queries
-
-
-def test_cart_init():
-    token = "test_token"  # nosec
-    cart = Cart(token)
-    assert cart.token == token
-    assert cart.endpoint == "https://cart.oneweb.ingka.com/graphql"
-    assert cart._session.headers["X-Client-Id"] == Secrets.cart_x_client_id
 
 
 @pytest.fixture
