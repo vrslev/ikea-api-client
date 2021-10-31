@@ -16,7 +16,7 @@ __all__ = ["IkeaApi"]
 
 
 class IkeaApi:
-    _token: str
+    token: str
 
     def __init__(
         self,
@@ -24,7 +24,7 @@ class IkeaApi:
         country_code: str = "ru",
         language_code: str = "ru",
     ):
-        self._token = token  # type: ignore
+        self.token = token  # type: ignore
         Constants.COUNTRY_CODE = country_code
         Constants.LANGUAGE_CODE = language_code
 
@@ -32,28 +32,28 @@ class IkeaApi:
         """Log in as registered user. Token expires in 24 hours.
         Since it uses Pyppeteer, it could take a while to proceed.
         """
-        self._token = get_authorized_token(username, password)
+        self.token = get_authorized_token(username, password)
 
     def login_as_guest(self):
         """Log in as guest. Token expires in 30 days."""
-        self._token = get_guest_token()
+        self.token = get_guest_token()
 
     @property
     def cart(self):
         """Manage cart."""
         if not hasattr(self, "_cart"):
-            self._cart = Cart(self._token)
+            self._cart = Cart(self.token)
         return self._cart
 
     def order_capture(self, zip_code: str, state_code: str | None = None):
         """Get available delivery services."""
-        return OrderCapture(self._token, zip_code, state_code)()
+        return OrderCapture(self.token, zip_code, state_code)()
 
     @property
     def purchases(self):
         """Get information about your purchases."""
         if not hasattr(self, "_purchases"):
-            self._purchases = Purchases(self._token)
+            self._purchases = Purchases(self.token)
         return self._purchases
 
     def search(
