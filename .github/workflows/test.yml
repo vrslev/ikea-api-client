@@ -20,7 +20,7 @@ jobs:
           path: |
             ~/.cache/pre-commit
             ~/.cache/pip
-          key: pre-commit-${{ env.PY }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          key: lint-${{ env.PY }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install dependencies
         run: pip install -U pre-commit
