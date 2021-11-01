@@ -2,7 +2,7 @@
 requires = ["setuptools", "wheel"]
 
 [tool.black]
-target-version = ["py37", "py38", "py39", "py310"]
+target-version = ["py37", "py38", "py39"]
 
 [tool.isort]
 profile = "black"
@@ -23,3 +23,7 @@ commit_subject = "сhore: Update version to {version}"
 [tool.coverage.report]
 skip_covered = true
 show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if sys.version_info",
+]
