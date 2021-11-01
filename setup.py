@@ -12,7 +12,6 @@ if __name__ == "__main__":
             "dev": [
                 "black==21.9b0",
                 "pre-commit==2.15.0",
-                "tox==3.24.4",
             ],
             "test": [
                 "pytest==6.2.5",

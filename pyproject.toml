@@ -23,24 +23,3 @@ commit_subject = "сhore: Update version to {version}"
 [tool.coverage.report]
 skip_covered = true
 show_missing = true
-
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-envlist = py37, py38, py39, py310, pypy3
-
-[testenv]
-commands = pytest
-setenv =
-    PIP_DISABLE_PIP_VERSION_CHECK = 1
-    COVERAGE_FILE = {env:COVERAGE_FILE:{toxworkdir}/.coverage.{envname}}
-extras = test
-
-[gh-actions]
-python =
-    3.7: py37
-    3.8: py38
-    3.9: py39
-    3.10: py310
-    pypy-3.7: pypy3
-"""
