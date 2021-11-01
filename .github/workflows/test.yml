@@ -15,6 +15,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: test-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
+
       - name: Install dependencies
         run: pip install -e ".[test]"
 
