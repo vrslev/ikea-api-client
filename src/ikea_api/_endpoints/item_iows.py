@@ -87,3 +87,7 @@ class IowsItems(API):
         if "RetailItemCommList" in resp:
             return resp["RetailItemCommList"]["RetailItemComm"]
         return [resp]
+
+
+if __name__ == "__main__":
+    IowsItems()(["30457903", "59443623"])
