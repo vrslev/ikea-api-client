@@ -108,9 +108,9 @@ async def _main(username: str, password: str):
     page = await _open_page(browser)
     await _fill_form(page, username, password)
     token = await _get_token_from_cookie(page)
-    await browser.close()
     if not token:
         return await _save_error_screenshot(page)
+    await browser.close()
     return token
 
 
