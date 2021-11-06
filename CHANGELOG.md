@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.9.0 (2021-11-06)
+### Feature
+* Remove code relevant to authorized token ([`8ed46be`](https://github.com/vrslev/ikea-api-client/commit/8ed46bec9d0d27d695dd9c66f68f25e02299f60c))
+
 ## v0.8.1 (2021-11-06)
 ### Fix
 * **auth:** Save screenshot ([`05e0651`](https://github.com/vrslev/ikea-api-client/commit/05e06514c77b41c5e98614c6877a53f1ea336bb5))
