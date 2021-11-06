@@ -19,8 +19,6 @@ Client for several IKEA APIs.
 pip install ikea_api
 ```
 
-To use authorization as registered user you need to have Chrome on board.
-
 # Usage
 
 ```python
@@ -47,21 +45,9 @@ First time you open IKEA.com, guest token is being generated and stored in cooki
 ikea.login_as_guest()
 ```
 
-#### [As Registered User](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/auth.py#L117)
+#### As Registered User
 
-Token lasts 1 day. It may take a while to get authorized token because of it uses headless Chrome to proceed. Note, that Chrome is required to login.
-
-```python
-ikea.login(username=..., password=...)
-```
-
-📌 You probably don't want to re-login every time (this is quite suspicious behavior from IKEA's perspective). This package doesn't store tokens, so, make sure to take care of it yourself.
-
-To show token, use this method:
-
-```python
-ikea.reveal_token()
-```
+You can't do this automatically with this package. IKEA made it nearly impossible to get authorized token. Copy-paste token from ikea.com cookies.
 
 ### [🛒 Cart](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/cart/__init__.py#L26)
 

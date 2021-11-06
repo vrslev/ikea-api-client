@@ -17,18 +17,6 @@ class IkeaApi:
 
         Constants.COUNTRY_CODE, Constants.LANGUAGE_CODE = country_code, language_code
 
-    def login(self, username: str, password: str):
-        """
-        Log in as registered user.
-        Token expires in 24 hours.
-
-        Since this method is using Selenium, you would have to wait up to 30 seconds.
-        """
-
-        from ikea_api.auth import get_authorized_token
-
-        self._token = get_authorized_token(username, password)
-
     def login_as_guest(self):
         """Token expires in 30 days."""
         from ikea_api.auth import get_guest_token
