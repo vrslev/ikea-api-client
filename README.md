@@ -36,7 +36,7 @@ Examples below don't show everything you can do, but this package is almost full
 
 ### 🔑 Authorization
 
-#### [As Guest](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/auth.py#L19)
+#### [As Guest](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/auth.py)
 
 First time you open IKEA.com, guest token is being generated and stored in cookies. It expires in 30 days.
 
@@ -48,7 +48,7 @@ ikea.login_as_guest()
 
 You can't do this automatically with this package. IKEA made it nearly impossible to get authorized token. Copy-paste token from ikea.com cookies.
 
-### [🛒 Cart](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/cart/__init__.py#L26)
+### [🛒 Cart](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/cart.py)
 
 This API endpoint allows you to do everything you would be able to do on the site, and even more:
 
@@ -67,7 +67,7 @@ ikea.Cart.add_items({"30457903": 1})  # { item_code: quantity }
 print(ikea.Cart.show())
 ```
 
-### [🚛 Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/order_capture/__init__.py#L12)
+### [🚛 Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/order_capture.py)
 
 Check Pickup or Delivery availability.
 
@@ -82,13 +82,13 @@ If you need to know whether items are available in stores, check out [ikea-avail
 
 ### 📦 Purchases
 
-#### [Order History](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/purchases/__init__.py#L42)
+#### [Order History](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/purchases.py#L32)
 
 ```python
 ikea.Purchases.history()
 ```
 
-#### [Order Info](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/endpoints/purchases/__init__.py#L52)
+#### [Order Info](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/purchases.py#L39)
 
 ```python
 ikea.Purchases.order_info(order_number=...)
@@ -97,7 +97,7 @@ ikea.Purchases.order_info(order_number=...)
 ikea.Purchases.order_info(order_number=..., email=...)
 ```
 
-### [🪑 Item Information](https://github.com/vrslev/ikea-api-client/tree/main/src/ikea_api/endpoints/item)
+### 🪑 Item Information
 
 Get information about Item by item number.
 
@@ -116,7 +116,7 @@ item_codes_dict = {"30457903": False}  # { item_code: is_combination }
 items = ikea.fetch_items_specs.pip(item_codes_dict)
 ```
 
-### [🔎 Search for Products](https://github.com/vrslev/ikea-api-client/tree/main/src/ikea_api/endpoints/search/__init__.py#L8)
+### [🔎 Search](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/search.py)
 
 Search for products in the IKEA product catalog by product name. Optionally also specify a maximum amount of returned search results (defaults to 24).
 
