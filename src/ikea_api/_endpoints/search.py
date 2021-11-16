@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+import sys
 from typing import Any
 
 from ikea_api._api import API
 from ikea_api._constants import Constants
-from ikea_api.types import SearchType
+
+if sys.version_info < (3, 8):
+    from typing_extensions import Literal
+else:
+    from typing import Literal
+
+SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWER"]
 
 
 class Search(API):

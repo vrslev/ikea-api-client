@@ -7,7 +7,7 @@ from ikea_api import IkeaApi
 from ikea_api._constants import Constants
 from ikea_api._endpoints.cart import Cart
 from ikea_api._endpoints.purchases import Purchases
-from ikea_api.types import SearchType
+from ikea_api._endpoints.search import SearchType
 
 
 @pytest.mark.parametrize(

@@ -49,6 +49,7 @@ typeCheckingMode = "strict"
 pythonVersion = "3.10"
 reportMissingTypeStubs = false
 reportPrivateUsage = false
+reportImportCycles = false
 
 [tool.semantic_release]
 branch = "main"

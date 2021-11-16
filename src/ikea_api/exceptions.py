@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from requests import Response
 
-from ikea_api.types import CustomResponse
+if TYPE_CHECKING:
+    from ikea_api._api import CustomResponse
 
 
 class IkeaApiError(Exception):
