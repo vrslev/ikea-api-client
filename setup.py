@@ -4,7 +4,7 @@ if __name__ == "__main__":
     setup(
         name="ikea_api",
         install_requires=[
-            "aiohttp==3.7.4.post0",
+            "aiohttp==3.8.1",
             "requests==2.26.0",
             "typing-extensions==4.0.0; python_version < '3.9'",
         ],
