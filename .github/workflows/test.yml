@@ -47,14 +47,21 @@ jobs:
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: ~/.cache/pip
-          key: typing-${{ hashFiles('setup.py') }}
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: typing-${{ hashFiles('pyproject.toml') }}
 
       - name: Setup Node
         uses: actions/setup-node@v2
 
+      - name: Install Poetry
+        run: |
+          pip install -U poetry
+          poetry config virtualenvs.create false
+
       - name: Install package
-        run: pip install -e .[test]
+        run: poetry install --no-dev -E test
 
       - name: Install Pyright
         run: npm install -g --no-package-lock --no-save pyright
@@ -79,11 +86,18 @@ jobs:
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: ~/.cache/pip
-          key: test-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: Install Poetry
+        run: |
+          pip install -U poetry
+          poetry config virtualenvs.create false
 
       - name: Install package
-        run: pip install -e .[test]
+        run: poetry install --no-dev -E test
 
       - name: Test
         run: pytest --cov --color=yes

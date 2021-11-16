@@ -3,7 +3,9 @@
 
 __pycache__/
 *.egg-info/
-venv/
+.venv/
 
 .coverage
 .pytest_cache/
+
+poetry.lock
