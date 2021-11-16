@@ -3,6 +3,24 @@
 
 <!--next-version-placeholder-->
 
+## v0.10.0 (2021-11-16)
+### Feature
+* Move to Poetry, improve CI ([#59](https://github.com/vrslev/ikea-api-client/issues/59)) ([`9f136a7`](https://github.com/vrslev/ikea-api-client/commit/9f136a79a9b78aa5bf438d32b04b7bbcff0ec7f5))
+* Refactoring, tests ([#42](https://github.com/vrslev/ikea-api-client/issues/42)) ([`63b029c`](https://github.com/vrslev/ikea-api-client/commit/63b029c20fbfd593ee44b1b6132ca26a69264729))
+
+### Build
+* Remove aiohttp dependency ([`17bec36`](https://github.com/vrslev/ikea-api-client/commit/17bec369741e26c75245ce9273590cd4b4117528))
+
+### Chore
+* **README:** Change link in Version badge ([`c29a515`](https://github.com/vrslev/ikea-api-client/commit/c29a51531e2c0cdc2788a081329f0f1f7aa5feae))
+* **README:** Add Test badge, change colors and names ([`69a5277`](https://github.com/vrslev/ikea-api-client/commit/69a52777320ce1b8e00f7df4a8c47fe62b5823f5))
+* **README:** Fix GitHub permalinks ([`3711377`](https://github.com/vrslev/ikea-api-client/commit/3711377b55c86f4b40415716e9708703931df060))
+* Remove "Log In" feature from README ([`61147b4`](https://github.com/vrslev/ikea-api-client/commit/61147b4af229af189881a869b2ce12f6a7750bc6))
+* **deps:** Update responses requirement from ^0.15.0 to ^0.16.0 ([`6b3a543`](https://github.com/vrslev/ikea-api-client/commit/6b3a543442c48d80891253cb34e756bd82b6b870))
+* **deps-dev:** Bump black from 21.9b0 to 21.10b0 ([`af5b114`](https://github.com/vrslev/ikea-api-client/commit/af5b114aa83e1b7766b00f8bdb536d38e1c1adaf))
+* **deps:** Bump typing-extensions from 3.10.0.2 to 4.0.0 ([#58](https://github.com/vrslev/ikea-api-client/issues/58)) ([`e39d51c`](https://github.com/vrslev/ikea-api-client/commit/e39d51ccbd3b2f74096495e1abdd422dbf311cfe))
+* **deps:** Update pre-commit hooks ([`defd52e`](https://github.com/vrslev/ikea-api-client/commit/defd52ed0f6c427ab8774f563bb34dbc62ec9792))
+
 ## v0.9.0 (2021-11-06)
 ### Feature
 * Remove code relevant to authorized token ([`8ed46be`](https://github.com/vrslev/ikea-api-client/commit/8ed46bec9d0d27d695dd9c66f68f25e02299f60c))
