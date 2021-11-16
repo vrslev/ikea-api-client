@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ikea_api._constants import Constants
-from ikea_api._endpoints.auth import get_authorized_token, get_guest_token
+from ikea_api._endpoints.auth import get_guest_token
 from ikea_api._endpoints.cart import Cart
 from ikea_api._endpoints.item_ingka import IngkaItems
 from ikea_api._endpoints.item_iows import IowsItems
@@ -31,12 +31,6 @@ class IkeaApi:
         self.token = token  # type: ignore
         Constants.COUNTRY_CODE = country_code
         Constants.LANGUAGE_CODE = language_code
-
-    def login(self, username: str, password: str):
-        """Log in as registered user. Token expires in 24 hours.
-        Since it uses Pyppeteer, it could take a while to proceed.
-        """
-        self.token = get_authorized_token(username, password)
 
     def login_as_guest(self):
         """Log in as guest. Token expires in 30 days."""
