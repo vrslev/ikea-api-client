@@ -1,3 +1,6 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
 [tool.black]
 target-version = ["py37", "py38", "py39"]
 
@@ -7,8 +10,9 @@ profile = "black"
 [tool.pyright]
 exclude = ["venv"]
 typeCheckingMode = "strict"
-pythonVersion = "3.7"
+pythonVersion = "3.10"
 reportMissingTypeStubs = false
+reportPrivateUsage = false
 
 [tool.semantic_release]
 branch = "main"
@@ -16,5 +20,10 @@ version_variable = "src/ikea_api/__init__.py:__version__"
 build_command = "pip install build && python -m build"
 commit_subject = "сhore: Update version to {version}"
 
-[build-system]
-requires = ["setuptools", "wheel"]
+[tool.coverage.report]
+skip_covered = true
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if sys.version_info",
+]
