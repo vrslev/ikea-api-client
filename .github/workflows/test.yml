@@ -28,7 +28,7 @@ jobs:
   pyright:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@2
+      - uses: actions/setup-node@v2
       - run: npm install -g pyright
       - run: pyright
 
