@@ -43,8 +43,3 @@ repos:
     rev: v2.4.1
     hooks:
       - id: prettier
-
-  - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.19.0
-    hooks:
-      - id: setup-cfg-fmt
