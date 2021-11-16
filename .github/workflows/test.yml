@@ -48,7 +48,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: typing-${{ hashFiles('setup.py') }}
+          key: typing-${{ hashFiles('pyproject.toml') }}
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -80,7 +80,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: test-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
+          key: test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
 
       - name: Install package
         run: pip install -e .[test]
