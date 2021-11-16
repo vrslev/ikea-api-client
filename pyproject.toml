@@ -8,7 +8,7 @@ target-version = ["py37", "py38", "py39"]
 profile = "black"
 
 [tool.pyright]
-exclude = ["venv", ".tox"]
+exclude = ["venv"]
 typeCheckingMode = "strict"
 pythonVersion = "3.10"
 reportMissingTypeStubs = false
