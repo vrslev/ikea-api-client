@@ -10,7 +10,6 @@ from ikea_api._endpoints.order_capture import OrderCapture
 from ikea_api._endpoints.purchases import Purchases
 from ikea_api._endpoints.search import Search, SearchType
 
-__version__ = "0.9.0"
 __all__ = [
     "IkeaApi",
     "IngkaItems",
