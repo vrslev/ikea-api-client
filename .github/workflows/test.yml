@@ -48,9 +48,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/pip
+            ~/.local/pipx
             ~/.cache/pypoetry
-            .venv
           key: typing-${{ hashFiles('pyproject.toml') }}
 
       - name: Setup Node
@@ -58,7 +57,7 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pip install -U poetry
+          pipx install poetry
           poetry config virtualenvs.create false
 
       - name: Install package
@@ -88,14 +87,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cache/pip
+            ~/.local/pipx
             ~/.cache/pypoetry
-            .venv
           key: test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
 
       - name: Install Poetry
         run: |
-          pip install -U poetry
+          pipx install poetry
           poetry config virtualenvs.create false
 
       - name: Install package
