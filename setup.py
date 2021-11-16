@@ -6,7 +6,7 @@ if __name__ == "__main__":
         install_requires=[
             "aiohttp==3.7.4.post0",
             "requests==2.26.0",
-            "typing-extensions==3.10.0.2; python_version < '3.9'",
+            "typing-extensions==4.0.0; python_version < '3.9'",
         ],
         extras_require={
             "dev": [
