@@ -80,7 +80,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: test-${{ hashFiles('setup.py') }}
+          key: test-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
 
       - name: Install package
         run: pip install -e .[test]
