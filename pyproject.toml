@@ -52,6 +52,7 @@ branch = "main"
 version_toml = "pyproject.toml:tool.poetry.version"
 build_command = "pip install build && python -m build"
 commit_subject = "сhore: Update version to {version}"
+commit_author = "github-actions <github-actions@github.com>"
 
 [tool.coverage.report]
 skip_covered = true

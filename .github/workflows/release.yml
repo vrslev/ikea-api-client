@@ -28,7 +28,7 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Release
-        run: semantic-release publish -D commit_author="github-actions <github-actions@github.com>"
+        run: semantic-release publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
