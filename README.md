@@ -7,7 +7,6 @@ Client for several IKEA APIs.
 
 # Features
 
-- Log In (as guest or as user),
 - Manage Cart,
 - Check available Delivery Services,
 - Retrieve Purchases History and information about specific order,
