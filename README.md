@@ -1,9 +1,9 @@
 Client for several IKEA APIs.
 
 [![Test](https://github.com/vrslev/ikea-api-client/actions/workflows/test.yml/badge.svg)](https://github.com/vrslev/ikea-api-client/actions/workflows/test.yml)
-[![Version](https://img.shields.io/github/v/release/vrslev/ikea-api-client?label=Version)](https://pypi.org/project/ikea_api/)
-[![Python](https://img.shields.io/pypi/pyversions/ikea_api?label=Python)](https://pypi.org/project/ikea_api/)
-[![Downloads](https://img.shields.io/pypi/dm/ikea_api?label=Downloads)](https://pypi.org/project/ikea_api/)
+[![Version](https://img.shields.io/github/v/release/vrslev/ikea-api-client?label=Version)](https://github.com/vrslev/ikea-api-client/releases/latest)
+[![Python](https://img.shields.io/pypi/pyversions/ikea_api?label=Python)](https://pypi.org/project/ikea_api)
+[![Downloads](https://img.shields.io/pypi/dm/ikea_api?label=Downloads)](https://pypi.org/project/ikea_api)
 [![License](https://img.shields.io/pypi/l/ikea_api?label=License)](https://github.com/vrslev/ikea-api-client/blob/main/LICENSE)
 
 # Features
