@@ -49,6 +49,7 @@ jobs:
         with:
           path: |
             ~/.cache/pip
+            ~/.cache/pypoetry
             .venv
           key: typing-${{ hashFiles('pyproject.toml') }}
 
@@ -58,9 +59,7 @@ jobs:
       - name: Install Poetry
         run: |
           pip install -U poetry
-          poetry config virtualenvs.in-project true
-
-      - run: poetry config --list
+          poetry config virtualenvs.create false
 
       - name: Install package
         run: poetry install --no-dev -E test
@@ -90,13 +89,14 @@ jobs:
         with:
           path: |
             ~/.cache/pip
+            ~/.cache/pypoetry
             .venv
           key: test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
 
       - name: Install Poetry
         run: |
           pip install -U poetry
-          poetry config virtualenvs.in-project true
+          poetry config virtualenvs.create false
 
       - name: Install package
         run: poetry install --no-dev -E test
