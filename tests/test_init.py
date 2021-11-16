@@ -39,22 +39,6 @@ def core():
     return IkeaApi(token="test")  # nosec
 
 
-def test_core_login_not_guest(monkeypatch: pytest.MonkeyPatch, core: IkeaApi):
-    exp_username = "user"
-    exp_password = "pass"  # nosec
-    called = False
-
-    def mock_get_authorized_token(username: str, password: str):
-        assert username == exp_username
-        assert password == exp_password
-        nonlocal called
-        called = True
-
-    monkeypatch.setattr(ikea_api, "get_authorized_token", mock_get_authorized_token)
-    core.login(exp_username, exp_password)
-    assert called
-
-
 def test_core_login_as_guest(monkeypatch: pytest.MonkeyPatch, core: IkeaApi):
     called = False
 
