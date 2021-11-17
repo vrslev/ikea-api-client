@@ -52,3 +52,7 @@ class OrderCaptureError(IkeaApiError):
     def __init__(self, response: CustomResponse):
         self.error_code = response._json.get("errorCode")
         super().__init__(response)
+
+
+class ParsingError(Exception):
+    pass
