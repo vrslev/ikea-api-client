@@ -87,11 +87,13 @@ class IowsItem(GenericItem):
 
 
 def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
-    dumped = json.dumps(d)
-    dumped = re.sub(
-        r'{"\$": ([^}]+)}', lambda x: x.group(1) if x.group(1) else "", dumped
+    return json.loads(
+        re.sub(
+            pattern=r'{"\$": ([^}]+)}',
+            repl=lambda x: x.group(1) if x.group(1) else "",
+            string=json.dumps(d),
+        )
     )
-    return json.loads(dumped)
 
 
 def get_name(item: ChildItem | IowsItem):
@@ -108,14 +110,17 @@ def get_name(item: ChildItem | IowsItem):
 
 
 def get_image_url(images: list[Image]):
-    # Sort images first in case no image with S5 size found
-    images = [i for i in images if i.ImageType != "LINE DRAWING"]
+    # Filter images first in case no image with S5 size found
+    images = [
+        i
+        for i in images
+        if i.ImageType != "LINE DRAWING"
+        and i.ImageUrl.endswith((".png", ".jpg", ".PNG", ".JPG"))
+    ]
     if not images:
         return
 
     for image in images:
-        if not image.ImageUrl.endswith((".png", ".jpg", ".PNG", ".JPG")):
-            continue
         if image.ImageSize == "S5":
             return Constants.BASE_URL + image.ImageUrl
     return Constants.BASE_URL + images[0].ImageUrl
@@ -123,7 +128,7 @@ def get_image_url(images: list[Image]):
 
 def parse_weight(v: str):
     if matches := re.findall(r"[0-9.,]+", v):
-        return float(matches[0].replace(",", "."))
+        return float(matches[0])
     return 0.0
 
 
@@ -191,35 +196,32 @@ def get_category_name_and_url(catalogs: list[Catalog]):
 
 def main(response: dict[str, Any]):
     response = get_rid_of_dollars(response)
-    # raise Exception(response.keys())
-    parsed_response = IowsItem(**response)
+    item = IowsItem(**response)
 
-    is_combination = get_is_combination_from_item_type(parsed_response.ItemType)
-    item_code = parsed_response.ItemNo
-
-    if measure_list_chunk := parsed_response.RetailItemCommPackageMeasureList:
-        weight = get_weight(measure_list_chunk.RetailItemCommPackageMeasure)
-    else:
-        weight = 0.0
-
-    raw_child_items = (
-        parsed_response.RetailItemCommChildList.RetailItemCommChild
-        if parsed_response.RetailItemCommChildList
+    is_combination = get_is_combination_from_item_type(item.ItemType)
+    weight = (
+        get_weight(item.RetailItemCommPackageMeasureList.RetailItemCommPackageMeasure)
+        if item.RetailItemCommPackageMeasureList
+        else 0.0
+    )
+    child_items = (
+        item.RetailItemCommChildList.RetailItemCommChild
+        if item.RetailItemCommChildList
         else []
     )
     category_name, category_url = get_category_name_and_url(
-        parsed_response.CatalogRefList.CatalogRef
+        item.CatalogRefList.CatalogRef
     )
 
     return ParsedItem(
         is_combination=is_combination,
-        item_code=item_code,
-        name=get_name(parsed_response),
-        image_url=get_image_url(parsed_response.RetailItemImageList.RetailItemImage),
+        item_code=item.ItemNo,
+        name=get_name(item),
+        image_url=get_image_url(item.RetailItemImageList.RetailItemImage),
         weight=weight,
-        child_items=get_child_items(raw_child_items),
-        price=get_price(parsed_response.RetailItemCommPriceList.RetailItemCommPrice),
-        url=get_url(item_code, is_combination),
+        child_items=get_child_items(child_items),
+        price=get_price(item.RetailItemCommPriceList.RetailItemCommPrice),
+        url=get_url(item.ItemNo, is_combination),
         category_name=category_name,
         category_url=category_url,
     )
