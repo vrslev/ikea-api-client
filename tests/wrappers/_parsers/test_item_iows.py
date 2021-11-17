@@ -162,18 +162,18 @@ def test_get_price_list():
     assert get_price([SimpleNamespace(Price=5), SimpleNamespace(Price=20)]) == 5  # type: ignore
 
 
-base_url = f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}"
-
-
 @pytest.mark.parametrize(
     ("item_code", "is_combination", "exp_res"),
     (
-        ("11111111", False, f"{base_url}/p/-11111111"),
-        ("11111111", True, f"{base_url}/p/-s11111111"),
+        ("11111111", False, f"/p/-11111111"),
+        ("11111111", True, f"/p/-s11111111"),
     ),
 )
 def test_get_url(item_code: str, is_combination: bool, exp_res: str):
-    assert get_url(item_code, is_combination) == exp_res
+    assert (
+        get_url(item_code, is_combination)
+        == f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}{exp_res}"
+    )
 
 
 def test_get_category_name_and_url_no_category():
@@ -209,7 +209,10 @@ def test_get_category_name_and_url_passes():
             )
         )
     ]
-    exp_res = ("name", f"{base_url}/cat/-id")
+    exp_res = (
+        "name",
+        f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/cat/-id",
+    )
     assert get_category_name_and_url(catalogs_first_el) == exp_res  # type: ignore
     catalogs_second_el = [SimpleNamespace()] + catalogs_first_el
     assert get_category_name_and_url(catalogs_second_el) == exp_res  # type: ignore
