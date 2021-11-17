@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+import datetime
 from typing import Any, TypedDict
 
 
@@ -46,16 +46,16 @@ class UnavailableItemDict(TypedDict):
     available_qty: int
 
 
-class DeliveryOptionDict(TypedDict):
-    delivery_date: date | None
-    delivery_type: str
+class DeliveryServiceDict(TypedDict):
+    date: datetime.date | None
+    type: str
     price: int
     service_provider: str | None
     unavailable_items: list[UnavailableItemDict]
 
 
 class GetDeliveryServicesResponse(TypedDict):
-    delivery_options: list[DeliveryOptionDict]
+    delivery_options: list[DeliveryServiceDict]
     cannot_add: list[str]
 
 

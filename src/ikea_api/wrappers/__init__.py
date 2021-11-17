@@ -15,7 +15,7 @@ from ikea_api.exceptions import GraphQLError, ItemFetchError, OrderCaptureError
 from ikea_api.wrappers._parsers.item_ingka import main as parse_ingka_item
 from ikea_api.wrappers._parsers.item_iows import main as parse_iows_item
 from ikea_api.wrappers._parsers.item_pip import main as parse_pip_item
-from ikea_api.wrappers._parsers.order_capture import parse_delivery_options
+from ikea_api.wrappers._parsers.order_capture import main as parse_delivery_options
 from ikea_api.wrappers._parsers.purchases import (
     CostsOrder,
     StatusBannerOrder,
