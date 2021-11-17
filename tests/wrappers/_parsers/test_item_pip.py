@@ -23,9 +23,8 @@ def test_get_category_name_and_url_passes():
 
 def test_get_category_name_and_url_raises():
     name, url = "Книжные шкафы", "not a url"
-    catalog_refs = generate_catalog_refs(name, url)
     with pytest.raises(ValidationError):
-        assert get_category_name_and_url(catalog_refs) == (name, url)
+        generate_catalog_refs(name, url)
 
 
 test_data = (
