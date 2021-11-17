@@ -19,4 +19,5 @@ ItemType = Literal["ART", "SPR"]
 
 
 def get_is_combination_from_item_type(item_type: ItemType):
+    assert item_type in ("ART", "SPR"), "Item type should be ART or SPR"
     return item_type == "SPR"
