@@ -14,7 +14,7 @@ def test_item_code_validator_value_error():
 
 def test_item_code_validator_type_error():
     with pytest.raises(TypeError, match="string required"):
-        ItemCode.validate(11111111)
+        ItemCode.validate({})
 
 
 def test_item_code_validator_passes():
