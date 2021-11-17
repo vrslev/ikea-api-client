@@ -8,10 +8,12 @@ class ItemCode(str):
 
     @classmethod
     def validate(cls, v: Any):
+        if isinstance(v, int):  # TODO: Test this block
+            return str(v)
         if isinstance(v, str):
             if not v.isnumeric():
                 raise ValueError("invalid item code format")
-            return
+            return v  # TODO: Wasn't returning before: test
         raise TypeError("string required")
 
 

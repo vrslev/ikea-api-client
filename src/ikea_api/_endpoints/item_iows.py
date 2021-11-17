@@ -86,4 +86,4 @@ class IowsItems(API):
 
         if "RetailItemCommList" in resp:
             return resp["RetailItemCommList"]["RetailItemComm"]
-        return [resp]
+        return [resp]  # TODO: Should return [resp['RetailItemComm']]

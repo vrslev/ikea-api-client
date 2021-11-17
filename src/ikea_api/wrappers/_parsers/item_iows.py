@@ -1,160 +1,225 @@
-from __future__ import annotations
-
 import json
 import re
-from typing import Any
+from typing import Any, Optional, Union
 
-from box import Box
+from pydantic import BaseModel
 
-from ikea_api._constants import Constants
-from ikea_api.wrappers._parsers import get_box
+from ikea_api import Constants
+from ikea_api.wrappers._parsers.item_base import (
+    ItemCode,
+    ItemType,
+    get_is_combination_from_item_type,
+)
 from ikea_api.wrappers.types import ChildItemDict, ParsedItem
 
-# pyright: reportUnknownMemberType=false
+
+class CatalogElement(BaseModel):
+    CatalogElementName: Union[str, dict[Any, Any]]
+    CatalogElementId: Union[int, str, dict[Any, Any]]
 
 
-def parse_iows_item(dictionary: dict[str, Any]):
-    return IowsItem(dictionary)()
+class CatalogElementList(BaseModel):
+    CatalogElement: Union[CatalogElement, list[CatalogElement]]
 
 
-class IowsItem:
-    def __init__(self, dictionary: dict[str, Any]):
-        dictionary = get_rid_of_dollars(dictionary)
-        self.d = get_box(dictionary)
+class Catalog(BaseModel):
+    CatalogElementList: CatalogElementList
 
-    def __call__(self):
-        self.is_combination = self.get_is_combination()
-        self.item_code = self.get_item_code()
-        self.category_name, self.category_url = self.get_category_name_and_url()
-        return ParsedItem(
-            is_combination=self.is_combination,
-            item_code=self.item_code,
-            name=self.get_name(),
-            image_url=self.get_image_url(),
-            weight=self.get_weight(),
-            child_items=self.get_child_items(),
-            price=self.get_price(),
-            url=self.get_url(),
-            category_name=self.category_name,
-            category_url=self.category_url,
+
+class CatalogRefList(BaseModel):
+    CatalogRef: list[Catalog]
+
+
+class Image(BaseModel):
+    ImageUrl: str
+    ImageType: str
+    ImageSize: str
+
+
+class RetailItemImageList(BaseModel):
+    RetailItemImage: list[Image]
+
+
+class Measurement(BaseModel):
+    PackageMeasureType: str
+    PackageMeasureTextMetric: str
+
+
+class RetailItemCommPackageMeasureList(BaseModel):
+    RetailItemCommPackageMeasure: list[Measurement]
+
+
+class GenericItem(BaseModel):
+    ItemNo: ItemCode
+    ProductName: str
+    ProductTypeName: str
+
+
+class ChildItem(GenericItem):
+    Quantity: int
+    # For `get_name`
+    ItemMeasureReferenceTextMetric: None = None
+    ValidDesignText: None = None
+    RetailItemCommPackageMeasureList: RetailItemCommPackageMeasureList
+
+
+class RetailItemCommChildList(BaseModel):
+    RetailItemCommChild: list[ChildItem]
+
+
+class Price(BaseModel):
+    Price: int
+
+
+class RetailItemCommPriceList(BaseModel):
+    RetailItemCommPrice: Union[Price, list[Price]]
+
+
+class IowsItem(GenericItem):
+    ItemType: ItemType
+    CatalogRefList: CatalogRefList
+    ItemMeasureReferenceTextMetric: str
+    ValidDesignText: str
+    RetailItemCommPackageMeasureList: Optional[RetailItemCommPackageMeasureList]
+    RetailItemImageList: RetailItemImageList
+    RetailItemCommChildList: Optional[RetailItemCommChildList]
+    RetailItemCommPriceList: RetailItemCommPriceList
+
+
+def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
+    dumped = json.dumps(d)
+    dumped = re.sub(
+        r'{"\$": ([^}]+)}', lambda x: x.group(1) if x.group(1) else "", dumped
+    )
+    return json.loads(dumped)
+
+
+def get_name(item: ChildItem | IowsItem):
+    return ", ".join(
+        part
+        for part in (
+            item.ProductName,
+            item.ProductTypeName.capitalize(),
+            item.ItemMeasureReferenceTextMetric,
+            item.ValidDesignText,
         )
+        if part
+    )
 
-    def get_is_combination(self):
-        item_type: str = self.d.ItemType
-        return item_type == "SPR"
 
-    def get_item_code(self):
-        item_code: int | str = self.d.ItemNo
-        return str(item_code)
+def get_image_url(images: list[Image]):
+    # Sort images first in case no image with S5 size found
+    images = [i for i in images if i.ImageType != "LINE DRAWING"]
+    if not images:
+        return
 
-    def get_name(self, item: Box | None = None):
-        if not item:
-            item = self.d
+    for image in images:
+        if not image.ImageUrl.endswith((".png", ".jpg", ".PNG", ".JPG")):
+            continue
+        if image.ImageSize == "S5":
+            return Constants.BASE_URL + image.ImageUrl
+    return Constants.BASE_URL + images[0].ImageUrl
 
-        first_part: str | None = item.ProductName
-        second_part: str | None = item.ProductTypeName.capitalize()
-        if second_part:
-            second_part = second_part.capitalize()
 
-        measurement_text: str | None = self.d.ItemMeasureReferenceTextMetric
-        design_text: str | None = self.d.ValidDesignText
+def parse_weight(v: str):
+    if matches := re.findall(r"[0-9.,]+", v):
+        return float(matches[0].replace(",", "."))
+    return 0.0
 
-        attrs = (first_part, second_part, measurement_text, design_text)
-        return ", ".join(attr for attr in attrs if attr)
 
-    def get_image_url(self):
-        images_raw: list[Any] = self.d.RetailItemImageList.RetailItemImage
-        re_validate_image_url = re.compile(r"\.(png|jpg)$", re.IGNORECASE)
-        all_images: dict[str, str] = {}
+def get_weight(measurements: list[Measurement]):
+    weight = 0.0
+    if not measurements:
+        return weight
 
-        for image in images_raw:
-            image_url: Any = image.ImageUrl
-            image_type: str = image.ImageType
-            if isinstance(image_url, str):
-                if re_validate_image_url.findall(image_url):
-                    if image.ImageSize == "S5" and image_type != "LINE DRAWING":
-                        return Constants.BASE_URL + image_url
-                    else:
-                        all_images[image_url] = image.ImageSize
+    for m in measurements:
+        if m.PackageMeasureType == "WEIGHT":
+            weight += parse_weight(m.PackageMeasureTextMetric)
+    return weight
 
-        for image, size in all_images.items():
-            for acceptable_size in ("S4", "S3", "S2", "S1", "S0"):
-                if size == acceptable_size:
-                    return Constants.BASE_URL + image
 
-    def get_weight(self, item: Box | None = None):
-        if not item:
-            item = self.d
+def get_child_items(child_items: list[ChildItem]) -> list[ChildItemDict]:
+    if not child_items:
+        return []
 
-        measurement_list: list[
-            Any
-        ] = item.RetailItemCommPackageMeasureList.RetailItemCommPackageMeasure
+    return [
+        ChildItemDict(
+            item_code=child.ItemNo,
+            item_name=get_name(child),
+            weight=get_weight(
+                child.RetailItemCommPackageMeasureList.RetailItemCommPackageMeasure
+            ),
+            qty=child.Quantity,
+        )
+        for child in child_items
+    ]
+
+
+def get_price(prices: Price | list[Price]):
+    if not prices:
+        return 0
+    if isinstance(prices, list):
+        return min(p.Price for p in prices)
+    return prices.Price
+
+
+def get_url(item_code: str, is_combination: bool):
+    suffix = "s" if is_combination else ""
+    return (
+        f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/"
+        + f"{Constants.LANGUAGE_CODE}/p/-{suffix}{item_code}"
+    )
+
+
+def get_category_name_and_url(catalogs: list[Catalog]):
+    idx = 0 if len(catalogs) == 1 else 1  # TODO: Why?
+    category = catalogs[idx].CatalogElementList.CatalogElement
+    if not category:
+        return None, None
+    if isinstance(category, list):
+        category = category[0]
+    if isinstance(category.CatalogElementName, dict) or isinstance(
+        category.CatalogElementId, dict
+    ):
+        return None, None
+    return (
+        category.CatalogElementName,
+        f"{Constants.BASE_URL}/{Constants.COUNTRY_CODE}/"
+        + f"{Constants.LANGUAGE_CODE}/cat/-{category.CatalogElementId}",
+    )
+
+
+def main(response: dict[str, Any]):
+    response = get_rid_of_dollars(response)
+    # raise Exception(response.keys())
+    parsed_response = IowsItem(**response)
+
+    is_combination = get_is_combination_from_item_type(parsed_response.ItemType)
+    item_code = parsed_response.ItemNo
+
+    if measure_list_chunk := parsed_response.RetailItemCommPackageMeasureList:
+        weight = get_weight(measure_list_chunk.RetailItemCommPackageMeasure)
+    else:
         weight = 0.0
 
-        if measurement_list:
-            for measurement in measurement_list:
-                if measurement.PackageMeasureType == "WEIGHT":
-                    weight += parse_weight(measurement.PackageMeasureTextMetric)
-
-        return round(weight, 2)
-
-    def get_child_items(self):
-        children: list[Box] | Box = (
-            self.d.RetailItemCommChildList.RetailItemCommChild or []
-        )
-        if isinstance(children, Box):
-            # When only one item in combination (which is quite rare)
-            # then .RetailItemCommChildList.RetailItemCommChild is not list.
-            # Case: 39275300
-            children = [children]
-
-        return [
-            ChildItemDict(
-                item_code=str(child.ItemNo),  # type: ignore
-                item_name=self.get_name(child),
-                weight=self.get_weight(child),
-                qty=int(child.Quantity),  # type: ignore
-            )
-            for child in children
-        ]
-
-    def get_price(self):
-        price_list: list[Box] | Box = self.d.RetailItemCommPriceList.RetailItemCommPrice
-        if not price_list:
-            return 0
-        if isinstance(price_list, list):
-            return int(min(p.Price for p in price_list))  # type: ignore
-        return int(price_list.Price)  # type: ignore
-
-    def get_url(self):
-        suffix = "s" + self.item_code if self.is_combination else self.item_code
-        return f"{Constants.BASE_URL}/ru/ru/p/-{suffix}"
-
-    def get_category_name_and_url(self):
-        catalog_list: list[Box | list[Box]] = self.d.CatalogRefList.CatalogRef
-        idx = 0 if len(catalog_list) == 1 else 1
-        category: list[Box] | Box = catalog_list[idx].CatalogRef.CatalogElement  # type: ignore
-        if isinstance(category, list):
-            category = category[0]
-
-        name: str | None = category.CatalogElementName or None
-        url: str | None = (
-            f"{Constants.BASE_URL}/ru/ru/cat/-{category.CatalogElementId}"
-            if category.CatalogElementId
-            else None
-        )
-        return name, url
-
-
-def get_rid_of_dollars(d: dict[str, Any]):
-    d_json = json.dumps(d)
-    d_json = re.sub(
-        r'{"\$": ([^}]+)}', lambda x: x.group(1) if x.group(1) else "", d_json
+    raw_child_items = (
+        parsed_response.RetailItemCommChildList.RetailItemCommChild
+        if parsed_response.RetailItemCommChildList
+        else []
     )
-    return json.loads(d_json)
+    category_name, category_url = get_category_name_and_url(
+        parsed_response.CatalogRefList.CatalogRef
+    )
 
-
-def parse_weight(weight: str):
-    if res := re.findall(r"[0-9.,]+", weight):
-        return float(res[0].replace(",", "."))
-    return 0.0
+    return ParsedItem(
+        is_combination=is_combination,
+        item_code=item_code,
+        name=get_name(parsed_response),
+        image_url=get_image_url(parsed_response.RetailItemImageList.RetailItemImage),
+        weight=weight,
+        child_items=get_child_items(raw_child_items),
+        price=get_price(parsed_response.RetailItemCommPriceList.RetailItemCommPrice),
+        url=get_url(item_code, is_combination),
+        category_name=category_name,
+        category_url=category_url,
+    )
