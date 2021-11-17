@@ -1,12 +1,27 @@
 from __future__ import annotations
 
 import re
+import sys
 from typing import Any
 
 from ikea_api._api import AuthorizedAPI, CustomResponse
 from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.cart import Cart
 from ikea_api.exceptions import OrderCaptureError
+
+if sys.version_info < (3, 8):
+    from typing_extensions import TypedDict
+else:
+    from typing import TypedDict
+
+
+class OrderCaptureErrorDict(TypedDict):
+    timestamp: int
+    message: str
+    detailsMap: dict[str, Any]
+    errorCode: int
+    details: str | None
+    gaErrorList: list[dict[str, Any]] | None
 
 
 class OrderCapture(AuthorizedAPI):
@@ -72,7 +87,7 @@ class OrderCapture(AuthorizedAPI):
 
     def _get_delivery_services(
         self, checkout: str, delivery_area: str
-    ) -> list[dict[str, Any]] | dict[str, Any]:
+    ) -> list[dict[str, Any]] | OrderCaptureErrorDict:
         """Get available delivery services"""
         return self._get(
             f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"
