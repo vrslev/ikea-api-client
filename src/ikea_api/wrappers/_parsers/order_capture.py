@@ -4,9 +4,9 @@ from typing import Any, Optional
 from pydantic import BaseModel
 
 from ikea_api._constants import Constants
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
 from ikea_api.wrappers._parsers.item_base import ItemCode
-from ikea_api.wrappers.types import DeliveryServiceDict, UnavailableItemDict
 
 DELIVERY_TYPES = {
     "ru": {
@@ -95,11 +95,11 @@ def get_service_provider(service: DeliveryService):
 
 def get_unavailable_items(
     unavailable_items: list[UnavailableItem] | None,
-) -> list[UnavailableItemDict]:
+) -> list[types.UnavailableItemDict]:
     if not unavailable_items:
         return []
     return [
-        UnavailableItemDict(item_code=i.itemNo, available_qty=i.availableQuantity)
+        types.UnavailableItemDict(item_code=i.itemNo, available_qty=i.availableQuantity)
         for i in unavailable_items
     ]
 
@@ -107,7 +107,7 @@ def get_unavailable_items(
 def main(response: list[dict[str, Any]]):
     for s in response:
         service = DeliveryService(**s)
-        yield DeliveryServiceDict(
+        yield types.DeliveryServiceDict(
             date=get_date(service.deliveries),
             type=get_type(service),
             price=get_price(service),

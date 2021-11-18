@@ -3,12 +3,8 @@ from typing import Any, Optional
 
 from pydantic import BaseModel
 
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
-from ikea_api.wrappers.types import (
-    CostsOrderDict,
-    PurchaseHistoryItemDict,
-    StatusBannerOrderDict,
-)
 
 STORE_NAMES = {"ru": {"IKEA": "Интернет-магазин", "Санкт-Петербург: Парнас": "Парнас"}}
 
@@ -87,7 +83,7 @@ class History(BaseModel):
 
 def parse_status_banner_order(response: dict[str, Any]):
     order = StatusBannerResponse(**response)
-    return StatusBannerOrderDict(
+    return types.StatusBannerOrderDict(
         purchase_date=order.data.order.dateAndTime.date,
         delivery_date=order.data.order.deliveryMethods[
             0
@@ -98,7 +94,7 @@ def parse_status_banner_order(response: dict[str, Any]):
 def parse_costs_order(response: dict[str, Any]):
     order = CostsResponse(**response)
     costs = order.data.order.costs
-    return CostsOrderDict(
+    return types.CostsOrderDict(
         delivery_cost=costs.delivery.value, total_cost=costs.total.value
     )
 
@@ -110,7 +106,7 @@ def get_history_datetime(item: HistoryItem):
 def parse_history(response: dict[str, Any]):
     history = History(**response)
     return [
-        PurchaseHistoryItemDict(
+        types.PurchaseHistoryItemDict(
             id=i.id,
             status=i.status,
             price=i.totalCost.value or 0,

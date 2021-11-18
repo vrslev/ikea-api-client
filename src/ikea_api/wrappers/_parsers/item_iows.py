@@ -5,12 +5,12 @@ from typing import Any, Optional, Union
 from pydantic import BaseModel
 
 from ikea_api import Constants
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_base import (
     ItemCode,
     ItemType,
     get_is_combination_from_item_type,
 )
-from ikea_api.wrappers.types import ChildItemDict, ParsedItem
 
 
 class CatalogElement(BaseModel):
@@ -143,14 +143,14 @@ def get_weight(measurements: list[Measurement]):
     return weight
 
 
-def get_child_items(child_items: list[ChildItem]) -> list[ChildItemDict]:
+def get_child_items(child_items: list[ChildItem]) -> list[types.ChildItem]:
     if not child_items:
         return []
 
     return [
-        ChildItemDict(
+        types.ChildItem(
+            name=get_name(child),
             item_code=child.ItemNo,
-            item_name=get_name(child),
             weight=get_weight(
                 child.RetailItemCommPackageMeasureList.RetailItemCommPackageMeasure
             ),
@@ -213,7 +213,7 @@ def main(response: dict[str, Any]):
         item.CatalogRefList.CatalogRef
     )
 
-    return ParsedItem(
+    return types.ParsedItem(
         is_combination=is_combination,
         item_code=item.ItemNo,
         name=get_name(item),

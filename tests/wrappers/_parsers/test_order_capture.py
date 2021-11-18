@@ -4,6 +4,7 @@ from typing import Any
 
 import pytest
 
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
 from ikea_api.wrappers._parsers.order_capture import (
     DELIVERY_TYPES,
@@ -15,7 +16,6 @@ from ikea_api.wrappers._parsers.order_capture import (
     get_unavailable_items,
     main,
 )
-from ikea_api.wrappers.types import UnavailableItemDict
 
 
 def test_get_date_no_value():
@@ -113,8 +113,8 @@ def test_get_unavailable_items_with_value():
         SimpleNamespace(itemNo="22222222", availableQuantity=3),
     ]
     exp_res = [
-        UnavailableItemDict(item_code="11111111", available_qty=5),
-        UnavailableItemDict(item_code="22222222", available_qty=3),
+        types.UnavailableItemDict(item_code="11111111", available_qty=5),
+        types.UnavailableItemDict(item_code="22222222", available_qty=3),
     ]
     assert get_unavailable_items(items) == exp_res  # type: ignore
 

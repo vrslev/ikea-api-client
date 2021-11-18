@@ -194,9 +194,9 @@ def test_get_child_items_success():
     ]
 
     for child in get_child_items(child_items):  # type: ignore
-        assert child["qty"] == exp_result[child["item_code"]]
-        assert child["weight"] == 0.0
-        assert child["item_name"] is None
+        assert child.qty == exp_result[child.item_code]
+        assert child.weight == 0.0
+        assert child.name is None
 
 
 test_data = (

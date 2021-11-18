@@ -1,16 +1,38 @@
 from __future__ import annotations
 
 import datetime
-from typing import Any, TypedDict
+from typing import Any, Callable, Optional, TypedDict, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel as PydanticBaseModel
+from pydantic import Field
+from pydantic.main import ModelMetaclass as PydanticModelMetaclass
 
 # TODO: Make all of this Pydantic models
+_T = TypeVar("_T")
 
 
-class ChildItemDict(TypedDict):
+def __dataclass_transform__(
+    *,
+    eq_default: bool = True,
+    order_default: bool = False,
+    kw_only_default: bool = False,
+    field_descriptors: tuple[type | Callable[..., Any], ...] = (()),
+) -> Callable[[_T], _T]:
+    return lambda a: a
+
+
+@__dataclass_transform__(kw_only_default=True, field_descriptors=(Field,))
+class ModelMetaclass(PydanticModelMetaclass):
+    pass
+
+
+class BaseModel(PydanticBaseModel, metaclass=ModelMetaclass):
+    pass
+
+
+class ChildItem(BaseModel):
+    name: str | None
     item_code: str
-    item_name: str | None  # TODO: Rename to name
     weight: float
     qty: int
 
@@ -21,7 +43,7 @@ class ParsedItem(TypedDict):
     name: str
     image_url: str | None
     weight: float
-    child_items: list[ChildItemDict]
+    child_items: list[ChildItem]
     price: int
     url: str
     category_name: str | None
@@ -34,7 +56,7 @@ class IngkaItemDict(TypedDict):
     name: str
     image_url: str | None
     weight: float
-    child_items: list[ChildItemDict]
+    child_items: list[ChildItem]
 
 
 class PipItemDict(TypedDict):

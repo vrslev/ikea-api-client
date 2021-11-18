@@ -4,6 +4,7 @@ from typing import Any, Callable
 import pytest
 
 from ikea_api._constants import Constants
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_iows import (
     get_category_name_and_url,
     get_child_items,
@@ -15,7 +16,6 @@ from ikea_api.wrappers._parsers.item_iows import (
     main,
     parse_weight,
 )
-from ikea_api.wrappers.types import ChildItemDict
 
 
 def test_get_rid_of_dollars():
@@ -139,12 +139,12 @@ def test_get_child_items_with_input():
         ),
     ]
     exp_result = [
-        ChildItemDict(
-            item_code="70299474", item_name="БЕСТО, Каркас", weight=17.95, qty=10
+        types.ChildItem(
+            item_code="70299474", name="БЕСТО, Каркас", weight=17.95, qty=10
         ),
-        ChildItemDict(
+        types.ChildItem(
             item_code="70299443",
-            item_name="БЕСТО, Нажимные плавно закрывающиеся петли",
+            name="БЕСТО, Нажимные плавно закрывающиеся петли",
             weight=13.19,
             qty=4,
         ),

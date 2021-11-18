@@ -5,76 +5,76 @@ from pydantic import BaseModel
 
 from ikea_api._constants import Constants
 from ikea_api.exceptions import ParsingError
+from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_base import (
     ItemCode,
     ItemType,
     get_is_combination_from_item_type,
 )
-from ikea_api.wrappers.types import ChildItemDict, IngkaItemDict
 
 
-class _ItemKey(BaseModel):
+class ItemKey(BaseModel):
     itemType: ItemType
     itemNo: ItemCode
 
 
-class _PackageMeasurement(BaseModel):
+class PackageMeasurement(BaseModel):
     type: str
     valueMetric: float
 
 
-class _MediaVariant(BaseModel):
+class MediaVariant(BaseModel):
     quality: str
     href: str
 
 
-class _Media(BaseModel):
+class Media(BaseModel):
     typeName: str
-    variants: list[_MediaVariant]
+    variants: list[MediaVariant]
 
 
-class _ProductType(BaseModel):
+class ProductType(BaseModel):
     name: str
 
 
-class _ValidDesign(BaseModel):
+class ValidDesign(BaseModel):
     text: str
 
 
-class _ReferenceMeasurements(BaseModel):
+class ReferenceMeasurements(BaseModel):
     metric: str
 
 
-class _Measurements(BaseModel):
-    referenceMeasurements: Optional[list[_ReferenceMeasurements]]
+class Measurements(BaseModel):
+    referenceMeasurements: Optional[list[ReferenceMeasurements]]
 
 
-class _LocalisedCommunication(BaseModel):
+class LocalisedCommunication(BaseModel):
     languageCode: str
-    packageMeasurements: Optional[list[_PackageMeasurement]]
-    media: list[_Media]
+    packageMeasurements: Optional[list[PackageMeasurement]]
+    media: list[Media]
     productName: str
-    productType: _ProductType
-    validDesign: Optional[_ValidDesign]
-    measurements: Optional[_Measurements]
+    productType: ProductType
+    validDesign: Optional[ValidDesign]
+    measurements: Optional[Measurements]
 
 
-class _ChildItem(BaseModel):
+class ChildItem(BaseModel):
     quantity: int
-    itemKey: _ItemKey
+    itemKey: ItemKey
 
 
-class _IngkaItem(BaseModel):
-    itemKey: _ItemKey
-    localisedCommunications: list[_LocalisedCommunication]
-    childItems: Optional[list[_ChildItem]]
+class IngkaItem(BaseModel):
+    itemKey: ItemKey
+    localisedCommunications: list[LocalisedCommunication]
+    childItems: Optional[list[ChildItem]]
 
 
 class IngkaItemsResponse(BaseModel):
-    data: list[_IngkaItem]
+    data: list[IngkaItem]
 
 
-def get_localised_communication(comms: list[_LocalisedCommunication]):
+def get_localised_communication(comms: list[LocalisedCommunication]):
     for comm in comms:
         if comm.languageCode == Constants.LANGUAGE_CODE:
             return comm
@@ -99,7 +99,7 @@ def _parse_russian_product_name(product_name: str):
     return product_name
 
 
-def get_name(comm: _LocalisedCommunication):
+def get_name(comm: LocalisedCommunication):
     product_name = _parse_russian_product_name(comm.productName)
     product_type = comm.productType.name.capitalize()
     design = comm.validDesign.text if comm.validDesign else None
@@ -119,7 +119,7 @@ def get_name(comm: _LocalisedCommunication):
     )
 
 
-def get_image_url(comm: _LocalisedCommunication):
+def get_image_url(comm: LocalisedCommunication):
     for media in comm.media:
         if media.typeName != "MAIN_PRODUCT_IMAGE":
             continue
@@ -129,7 +129,7 @@ def get_image_url(comm: _LocalisedCommunication):
     return comm.media[0].variants[0].href
 
 
-def get_weight(comm: _LocalisedCommunication):
+def get_weight(comm: LocalisedCommunication):
     if not comm.packageMeasurements:
         return 0.0
     for m in comm.packageMeasurements:
@@ -138,14 +138,14 @@ def get_weight(comm: _LocalisedCommunication):
     return 0.0
 
 
-def get_child_items(child_items: list[_ChildItem] | None) -> list[ChildItemDict]:
+def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem]:
     if not child_items:
         return []
 
     return [
-        ChildItemDict(
+        types.ChildItem(
             item_code=child.itemKey.itemNo,
-            item_name=None,
+            name=None,
             weight=0.0,
             qty=child.quantity,
         )
@@ -153,9 +153,9 @@ def get_child_items(child_items: list[_ChildItem] | None) -> list[ChildItemDict]
     ]
 
 
-def parse_item(item: _IngkaItem):
+def parse_item(item: IngkaItem):
     comm = get_localised_communication(item.localisedCommunications)
-    return IngkaItemDict(
+    return types.IngkaItemDict(
         is_combination=get_is_combination_from_item_type(item.itemKey.itemType),
         item_code=item.itemKey.itemNo,
         name=get_name(comm),
