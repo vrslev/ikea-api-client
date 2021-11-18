@@ -4,6 +4,7 @@ from typing import Any, Optional
 from pydantic import BaseModel
 
 from ikea_api._constants import Constants
+from ikea_api.wrappers._parsers import translate
 from ikea_api.wrappers._parsers.item_base import ItemCode
 from ikea_api.wrappers.types import DeliveryServiceDict, UnavailableItemDict
 
@@ -58,12 +59,6 @@ class DeliveryService(BaseModel):
     servicetype: str
     deliveries: list[Delivery]
     unavailableItems: Optional[list[UnavailableItem]]
-
-
-def translate(dictionary: dict[str, dict[str, Any]], v: str):
-    if lang_dict := dictionary.get(Constants.LANGUAGE_CODE):
-        return lang_dict.get(v, v)
-    return v
 
 
 def get_date(deliveries: list[Delivery]):
