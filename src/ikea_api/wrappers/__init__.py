@@ -18,22 +18,15 @@ from ikea_api.wrappers.types import (
     AddItemsToCartResponse,
     GetDeliveryServicesResponse,
     IngkaItemDict,
-    NoDeliveryOptionsAvailableError,
     ParsedItem,
     PipItemDict,
     PurchaseHistoryItemDict,
     PurchaseInfoDict,
 )
 
-__all__ = [
-    "get_purchase_history",
-    "get_purchase_info",
-    "get_delivery_services",
-    "add_items_to_cart",
-    "get_items",
-    "parse_item_codes",
-    "format_item_code",
-]
+
+class NoDeliveryOptionsAvailableError(OrderCaptureError):
+    pass
 
 
 def get_purchase_history(api: IkeaApi) -> list[PurchaseHistoryItemDict]:
