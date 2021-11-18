@@ -85,7 +85,9 @@ def get_service_provider(service: DeliveryService):
         return
 
     identifier = service.deliveries[0].pickUpPoints[0].identifier
-    for provider, pretty_name in SERVICE_PROVIDERS[Constants.LANGUAGE_CODE].items():
+    for provider, pretty_name in SERVICE_PROVIDERS.get(
+        Constants.LANGUAGE_CODE, {}
+    ).items():
         if provider in identifier:
             return pretty_name
     return identifier
