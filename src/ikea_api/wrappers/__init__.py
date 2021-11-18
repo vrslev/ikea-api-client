@@ -16,11 +16,8 @@ from ikea_api.wrappers._parsers.item_ingka import main as parse_ingka_item
 from ikea_api.wrappers._parsers.item_iows import main as parse_iows_item
 from ikea_api.wrappers._parsers.item_pip import main as parse_pip_item
 from ikea_api.wrappers._parsers.order_capture import main as parse_delivery_options
-from ikea_api.wrappers._parsers.purchases import (
-    CostsOrder,
-    StatusBannerOrder,
-    parse_purchase_history,
-)
+from ikea_api.wrappers._parsers.purchases import CostsOrder, StatusBannerOrder
+from ikea_api.wrappers._parsers.purchases import parse_history as parse_purchase_history
 from ikea_api.wrappers.types import (
     AddItemsToCartResponse,
     GetDeliveryServicesResponse,

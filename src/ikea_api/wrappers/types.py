@@ -3,6 +3,10 @@ from __future__ import annotations
 import datetime
 from typing import Any, TypedDict
 
+from pydantic import BaseModel
+
+# TODO: Make all of this Pydantic models
+
 
 class ChildItemDict(TypedDict):
     item_code: str
@@ -68,21 +72,22 @@ class CostsOrderDict(TypedDict):
     total_cost: float
 
 
-class StatusBannerOrderDict(TypedDict):
-    purchase_date: str | None
-    delivery_date: str | None
+class StatusBannerOrderDict(BaseModel):
+    purchase_date: datetime.date
+    delivery_date: datetime.date
 
 
-class PurchaseHistoryItemDict(TypedDict):
-    datetime: str | None
-    datetime_formatted: str
-    price: float
-    purchase_id: int
+class PurchaseHistoryItemDict(BaseModel):
+    id: str
     status: str
-    store: str | None
+    price: int
+    datetime: str
+    datetime_formatted: str
+    store: str
 
 
-class PurchaseInfoDict(StatusBannerOrderDict, CostsOrderDict):
+# class PurchaseInfoDict(StatusBannerOrderDict, CostsOrderDict):
+class PurchaseInfoDict:
     pass
 
 
