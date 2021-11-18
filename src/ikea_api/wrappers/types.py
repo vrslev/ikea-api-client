@@ -1,16 +1,15 @@
-from __future__ import annotations
-
 import datetime
-from typing import Any, Callable, Optional, TypedDict, TypeVar
+from typing import Any, Callable, Optional, TypeVar
 
 from pydantic import BaseModel as PydanticBaseModel
-from pydantic import Field
+from pydantic.fields import Field, FieldInfo
 from pydantic.main import ModelMetaclass as PydanticModelMetaclass
 
 # TODO: Make all of this Pydantic models
 _T = TypeVar("_T")
 
 
+# https://github.com/microsoft/pyright/blob/main/specs/dataclass_transforms.md#applying-to-pydantic
 def __dataclass_transform__(
     *,
     eq_default: bool = True,
@@ -21,7 +20,7 @@ def __dataclass_transform__(
     return lambda a: a
 
 
-@__dataclass_transform__(kw_only_default=True, field_descriptors=(Field,))
+@__dataclass_transform__(kw_only_default=True, field_descriptors=(Field, FieldInfo))
 class ModelMetaclass(PydanticModelMetaclass):
     pass
 
@@ -31,65 +30,61 @@ class BaseModel(PydanticBaseModel, metaclass=ModelMetaclass):
 
 
 class ChildItem(BaseModel):
-    name: str | None
+    name: Optional[str]
     item_code: str
     weight: float
     qty: int
 
 
-class ParsedItem(TypedDict):
+class ParsedItem(BaseModel):
     is_combination: bool
     item_code: str
     name: str
-    image_url: str | None
+    image_url: Optional[str]
     weight: float
     child_items: list[ChildItem]
     price: int
     url: str
-    category_name: str | None
-    category_url: str | None
+    category_name: Optional[str]
+    category_url: Optional[str]
 
 
-class IngkaItemDict(TypedDict):
+class IngkaItemDict(BaseModel):
     is_combination: bool
     item_code: str
     name: str
-    image_url: str | None
+    image_url: Optional[str]
     weight: float
     child_items: list[ChildItem]
 
 
-class PipItemDict(TypedDict):
+class PipItemDict(BaseModel):
     item_code: str
     price: int
     url: str
-    category_name: str | None
-    category_url: str | None
+    category_name: Optional[str]
+    category_url: Optional[str]
 
 
-class UnavailableItemDict(TypedDict):
+class UnavailableItemDict(BaseModel):
     item_code: str
     available_qty: int
 
 
-class DeliveryServiceDict(TypedDict):
-    date: datetime.date | None
+class DeliveryServiceDict(BaseModel):
+    date: Optional[datetime.date]
     type: str
     price: int
-    service_provider: str | None
+    service_provider: Optional[str]
     unavailable_items: list[UnavailableItemDict]
 
 
-class GetDeliveryServicesResponse(TypedDict):
+class GetDeliveryServicesResponse(BaseModel):
     delivery_options: list[DeliveryServiceDict]
     cannot_add: list[str]
 
 
-class NoDeliveryOptionsAvailableError(Exception):
-    pass
-
-
-class CostsOrderDict(TypedDict):
+class CostsOrderDict(BaseModel):
     delivery_cost: float
     total_cost: float
 
@@ -113,6 +108,6 @@ class PurchaseInfoDict:
     pass
 
 
-class AddItemsToCartResponse(TypedDict):
-    message: dict[str, Any] | None
+class AddItemsToCartResponse(BaseModel):
+    message: Optional[dict[str, Any]]
     cannot_add: list[str]
