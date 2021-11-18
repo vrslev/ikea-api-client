@@ -33,7 +33,7 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
 def main(response: dict[str, Any]):
     parsed_item = PipItem(**response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
-    return types.PipItemDict(
+    return types.PipItem(
         item_code=parsed_item.id,
         price=parsed_item.priceNumeral,
         url=parsed_item.pipUrl,

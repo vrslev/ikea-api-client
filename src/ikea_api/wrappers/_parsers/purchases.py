@@ -3,6 +3,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel
 
+from ikea_api._api import GraphQLResponse
 from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
 
@@ -83,7 +84,7 @@ class History(BaseModel):
 
 def parse_status_banner_order(response: dict[str, Any]):
     order = StatusBannerResponse(**response)
-    return types.StatusBannerOrderDict(
+    return types.StatusBannerOrder(
         purchase_date=order.data.order.dateAndTime.date,
         delivery_date=order.data.order.deliveryMethods[
             0
@@ -94,7 +95,7 @@ def parse_status_banner_order(response: dict[str, Any]):
 def parse_costs_order(response: dict[str, Any]):
     order = CostsResponse(**response)
     costs = order.data.order.costs
-    return types.CostsOrderDict(
+    return types.CostsOrder(
         delivery_cost=costs.delivery.value, total_cost=costs.total.value
     )
 
@@ -103,10 +104,10 @@ def get_history_datetime(item: HistoryItem):
     return f"{item.dateAndTime.date}T{item.dateAndTime.time}"
 
 
-def parse_history(response: dict[str, Any]):
+def parse_history(response: GraphQLResponse):
     history = History(**response)
     return [
-        types.PurchaseHistoryItemDict(
+        types.PurchaseHistoryItem(
             id=i.id,
             status=i.status,
             price=i.totalCost.value or 0,

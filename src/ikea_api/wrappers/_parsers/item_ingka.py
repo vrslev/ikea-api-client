@@ -157,7 +157,7 @@ def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem
 
 def parse_item(item: IngkaItem):
     comm = get_localised_communication(item.localisedCommunications)
-    return types.IngkaItemDict(
+    return types.IngkaItem(
         is_combination=get_is_combination_from_item_type(item.itemKey.itemType),
         item_code=item.itemKey.itemNo,
         name=get_name(comm),

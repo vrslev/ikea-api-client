@@ -49,7 +49,7 @@ class ParsedItem(BaseModel):
     category_url: Optional[str]
 
 
-class IngkaItemDict(BaseModel):
+class IngkaItem(BaseModel):
     is_combination: bool
     item_code: str
     name: str
@@ -58,7 +58,7 @@ class IngkaItemDict(BaseModel):
     child_items: list[ChildItem]
 
 
-class PipItemDict(BaseModel):
+class PipItem(BaseModel):
     item_code: str
     price: int
     url: str
@@ -66,35 +66,35 @@ class PipItemDict(BaseModel):
     category_url: Optional[str]
 
 
-class UnavailableItemDict(BaseModel):
+class UnavailableItem(BaseModel):
     item_code: str
     available_qty: int
 
 
-class DeliveryServiceDict(BaseModel):
+class DeliveryService(BaseModel):
     date: Optional[datetime.date]
     type: str
     price: int
     service_provider: Optional[str]
-    unavailable_items: list[UnavailableItemDict]
+    unavailable_items: list[UnavailableItem]
 
 
 class GetDeliveryServicesResponse(BaseModel):
-    delivery_options: list[DeliveryServiceDict]
+    delivery_options: list[DeliveryService]
     cannot_add: list[str]
 
 
-class CostsOrderDict(BaseModel):
+class CostsOrder(BaseModel):
     delivery_cost: float
     total_cost: float
 
 
-class StatusBannerOrderDict(BaseModel):
+class StatusBannerOrder(BaseModel):
     purchase_date: datetime.date
     delivery_date: datetime.date
 
 
-class PurchaseHistoryItemDict(BaseModel):
+class PurchaseHistoryItem(BaseModel):
     id: str
     status: str
     price: int

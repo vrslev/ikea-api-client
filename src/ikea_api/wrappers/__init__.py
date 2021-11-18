@@ -17,10 +17,10 @@ from ikea_api.wrappers._parsers.purchases import parse_history as parse_purchase
 from ikea_api.wrappers.types import (
     AddItemsToCartResponse,
     GetDeliveryServicesResponse,
-    IngkaItemDict,
+    IngkaItem,
     ParsedItem,
-    PipItemDict,
-    PurchaseHistoryItemDict,
+    PipItem,
+    PurchaseHistoryItem,
     PurchaseInfoDict,
 )
 
@@ -29,7 +29,7 @@ class NoDeliveryOptionsAvailableError(OrderCaptureError):
     pass
 
 
-def get_purchase_history(api: IkeaApi) -> list[PurchaseHistoryItemDict]:
+def get_purchase_history(api: IkeaApi) -> list[PurchaseHistoryItem]:
     response = api.purchases.history()
     return parse_purchase_history(response)  # type: ignore
 
@@ -108,13 +108,13 @@ def _get_iows_items(item_codes: list[str]):
     return [parse_iows_item(item) for item in fetched]
 
 
-def _bind_ingka_and_pip_objects(ingka: IngkaItemDict, pip: PipItemDict) -> ParsedItem:
+def _bind_ingka_and_pip_objects(ingka: IngkaItem, pip: PipItem) -> ParsedItem:
     return ingka | pip  # type: ignore
 
 
 def _get_ingka_pip_items(item_codes: list[str]):
     res: list[ParsedItem] = []
-    items_ingka: list[IngkaItemDict] = []
+    items_ingka: list[IngkaItem] = []
     items_to_fetch_pip: dict[str, bool] = {}
 
     for chunk in IngkaItems()(item_codes):
@@ -123,7 +123,7 @@ def _get_ingka_pip_items(item_codes: list[str]):
             items_ingka.append(parsed_item)
             items_to_fetch_pip[parsed_item["item_code"]] = parsed_item["is_combination"]
 
-    fetched_items_map_pip: dict[str, PipItemDict] = {}
+    fetched_items_map_pip: dict[str, PipItem] = {}
     pip_item_fetcher = PipItem()
     for item_code in items_to_fetch_pip:
         fetched_item = pip_item_fetcher(item_code)
@@ -131,9 +131,7 @@ def _get_ingka_pip_items(item_codes: list[str]):
         fetched_items_map_pip[parsed_item["item_code"]] = parsed_item
 
     for item_ingka in items_ingka:
-        item_pip: PipItemDict | None = fetched_items_map_pip.get(
-            item_ingka["item_code"]
-        )
+        item_pip: PipItem | None = fetched_items_map_pip.get(item_ingka["item_code"])
         if item_pip is None:
             continue
 

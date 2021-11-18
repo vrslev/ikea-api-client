@@ -115,8 +115,8 @@ def test_get_unavailable_items_with_value():
         SimpleNamespace(itemNo="22222222", availableQuantity=3),
     ]
     exp_res = [
-        types.UnavailableItemDict(item_code="11111111", available_qty=5),
-        types.UnavailableItemDict(item_code="22222222", available_qty=3),
+        types.UnavailableItem(item_code="11111111", available_qty=5),
+        types.UnavailableItem(item_code="22222222", available_qty=3),
     ]
     assert get_unavailable_items(items) == exp_res  # type: ignore
 

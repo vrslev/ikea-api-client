@@ -97,11 +97,11 @@ def get_service_provider(service: DeliveryService):
 
 def get_unavailable_items(
     unavailable_items: list[UnavailableItem] | None,
-) -> list[types.UnavailableItemDict]:
+) -> list[types.UnavailableItem]:
     if not unavailable_items:
         return []
     return [
-        types.UnavailableItemDict(item_code=i.itemNo, available_qty=i.availableQuantity)
+        types.UnavailableItem(item_code=i.itemNo, available_qty=i.availableQuantity)
         for i in unavailable_items
     ]
 
@@ -109,7 +109,7 @@ def get_unavailable_items(
 def main(response: list[dict[str, Any]]):
     for s in response:
         service = DeliveryService(**s)
-        yield types.DeliveryServiceDict(
+        yield types.DeliveryService(
             date=get_date(service.deliveries),
             type=get_type(service),
             price=get_price(service),

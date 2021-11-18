@@ -2,6 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from ikea_api._api import GraphQLResponse
 from ikea_api.wrappers._parsers.purchases import (
     get_history_datetime,
     parse_costs_order,
@@ -81,7 +82,7 @@ costs = {
         }
     }
 }
-history = {
+history: GraphQLResponse = {  # type: ignore
     "data": {
         "history": [
             {
