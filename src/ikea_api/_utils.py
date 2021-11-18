@@ -21,7 +21,9 @@ def parse_item_codes(
     if unshorten_ingka_pagelinks:
         if isinstance(item_codes, str):
             item_codes = [item_codes]
-        item_codes.extend(_get_unshortened_links_from_ingka_pagelinks(item_codes[0]))
+        unshortened_links = _get_unshortened_links_from_ingka_pagelinks(item_codes[0])
+        if unshortened_links:
+            item_codes.extend(unshortened_links)
     raw_res: list[str] = re.findall(
         r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_codes)
     )
