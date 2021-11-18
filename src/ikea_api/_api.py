@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 from json.decoder import JSONDecodeError
 from typing import Any
