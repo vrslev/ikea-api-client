@@ -20,6 +20,7 @@ def test_core_init_country_lang_codes_with_args(
         IkeaApi(country_code=country_code, language_code=language_code)
     assert Constants.COUNTRY_CODE == country_code or "ru"
     assert Constants.LANGUAGE_CODE == language_code or "ru"
+    Constants.COUNTRY_CODE = Constants.LANGUAGE_CODE = "ru"
 
 
 def test_core_init_country_lang_codes_without_args():
