@@ -19,12 +19,10 @@ include = ["src/ikea_api/py.typed"]
 python = "^3.7"
 requests = "2.26.0"
 typing-extensions = {version = "4.0.0", python = "<3.9"}
-python-box = {version = "5.4.1", optional = true}
 pytest = {version = "6.2.5", optional = true}
 pytest-cov = {version = "3.0.0", optional = true}
 pytest-randomly = {version = "3.10.2", optional = true}
 responses = {version = "0.15.0", optional = true}
-aiohttp = {version = "3.8.1", optional = true}
 pydantic = {version = "1.8.2", optional = true}
 
 [tool.poetry.dev-dependencies]
@@ -32,7 +30,7 @@ black = {version = "21.10b0", allow-prereleases = true}
 pre-commit = "2.15.0"
 
 [tool.poetry.extras]
-wrappers = ["python-box", "aiohttp", "pydantic"] # TODO: Remove python-box
+wrappers = ["pydantic"]
 test = ["pytest", "pytest-cov", "pytest-randomly", "responses"]
 
 [build-system]
