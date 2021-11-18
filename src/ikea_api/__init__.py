@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from ikea_api._constants import Constants
 from ikea_api._endpoints.auth import get_guest_token
 from ikea_api._endpoints.cart import Cart

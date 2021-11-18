@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import requests
 
 from ikea_api._constants import DEFAULT_HEADERS, Constants, Secrets

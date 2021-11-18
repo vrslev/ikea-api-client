@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import sys
 
 from ikea_api._api import API, CustomResponse
