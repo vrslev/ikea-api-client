@@ -61,7 +61,13 @@ def test_get_image_url_first():
 
 @pytest.mark.parametrize(
     ("input", "output"),
-    (("10.3 кг", 10.3), ("10.45 кг", 10.45), ("10 кг", 10.0), ("9.415 кг", 9.415)),
+    (
+        ("10.3 кг", 10.3),
+        ("10.45 кг", 10.45),
+        ("10 кг", 10.0),
+        ("9.415 кг", 9.415),
+        ("some string", 0.0),
+    ),
 )
 def test_parse_weight(input: str, output: float):
     assert parse_weight(input) == output
