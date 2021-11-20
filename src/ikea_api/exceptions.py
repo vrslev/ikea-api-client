@@ -39,10 +39,10 @@ class GraphQLError(IkeaApiError):
         resp: GraphQLResponse | list[GraphQLResponse] = response._json
 
         if isinstance(resp, dict):
-            self.errors = resp["errors"]
+            self.errors: list[dict[str, Any]] | dict[str, Any] = resp["errors"]  # type: ignore
         else:
             # from purchases.order_info
-            self.errors = [d["errors"] for d in resp if "errors" in d]
+            self.errors = [d["errors"] for d in resp if "errors" in d]  # type: ignore
 
         super().__init__(response, self.errors)
 
@@ -55,6 +55,10 @@ class OrderCaptureError(IkeaApiError):
     def __init__(self, response: CustomResponse):
         self.error_code = response._json.get("errorCode")
         super().__init__(response)
+
+
+class NoDeliveryOptionsAvailableError(OrderCaptureError):
+    pass
 
 
 class ParsingError(Exception):
