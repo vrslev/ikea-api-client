@@ -19,7 +19,7 @@ class CatalogRefs(BaseModel):
     products: CatalogRef
 
 
-class PipItem(BaseModel):
+class PipItemResponse(BaseModel):
     id: ItemCode
     priceNumeral: int
     pipUrl: HttpUrl
@@ -31,7 +31,7 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
 
 
 def main(response: dict[str, Any]):
-    parsed_item = PipItem(**response)
+    parsed_item = PipItemResponse(**response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
     return types.PipItem(
         item_code=parsed_item.id,

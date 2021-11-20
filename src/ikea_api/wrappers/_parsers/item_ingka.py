@@ -66,14 +66,14 @@ class ChildItem(BaseModel):
     itemKey: ItemKey
 
 
-class IngkaItem(BaseModel):
+class IngkaItemResponse(BaseModel):
     itemKey: ItemKey
     localisedCommunications: list[LocalisedCommunication]
     childItems: Optional[list[ChildItem]]
 
 
 class IngkaItemsResponse(BaseModel):
-    data: list[IngkaItem]
+    data: list[IngkaItemResponse]
 
 
 def get_localised_communication(comms: list[LocalisedCommunication]):
@@ -155,7 +155,7 @@ def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem
     ]
 
 
-def parse_item(item: IngkaItem):
+def parse_item(item: IngkaItemResponse):
     comm = get_localised_communication(item.localisedCommunications)
     return types.IngkaItem(
         is_combination=get_is_combination_from_item_type(item.itemKey.itemType),
