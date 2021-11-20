@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Any, Optional
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -82,7 +82,7 @@ class History(BaseModel):
     data: HistoryData
 
 
-def parse_status_banner_order(response: dict[str, Any]):
+def parse_status_banner_order(response: GraphQLResponse):
     order = StatusBannerResponse(**response)
     return types.StatusBannerOrder(
         purchase_date=order.data.order.dateAndTime.date,
@@ -92,7 +92,7 @@ def parse_status_banner_order(response: dict[str, Any]):
     )
 
 
-def parse_costs_order(response: dict[str, Any]):
+def parse_costs_order(response: GraphQLResponse):
     order = CostsResponse(**response)
     costs = order.data.order.costs
     return types.CostsOrder(
