@@ -130,6 +130,6 @@ def test_graphql_api_basic_error_handler_graphqlerror():
     api = GraphQLAPI("https://example.com", "some token")
     response = CustomResponse()
     response.status_code = 200
-    response._json = {"errors": None}
-    with pytest.raises(GraphQLError, match=str(response._json)):
+    response._json = {"errors": "some value"}
+    with pytest.raises(GraphQLError, match="some value"):
         api._basic_error_handler(response)
