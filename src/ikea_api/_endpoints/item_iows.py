@@ -76,12 +76,12 @@ class IowsItems(API):
         return self._get_response(relapse + 1)
 
     def __call__(self, item_codes: list[str]):
-        if len(item_codes) > 50:
-            raise RuntimeError("Can't get more than 50 items at once")
+        if len(item_codes) > 90:
+            raise RuntimeError("Can't get more than 90 items at once")
 
         self._set_initial_items(item_codes)
         resp = self._get_response().json()
 
         if "RetailItemCommList" in resp:
             return resp["RetailItemCommList"]["RetailItemComm"]
-        return [resp]  # TODO: Should return [resp['RetailItemComm']]
+        return [resp["RetailItemComm"]]
