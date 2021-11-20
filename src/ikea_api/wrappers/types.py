@@ -2,6 +2,7 @@ import datetime
 from typing import Any, Callable, Optional, TypeVar
 
 from pydantic import BaseModel as PydanticBaseModel
+from pydantic import HttpUrl
 from pydantic.fields import Field, FieldInfo
 from pydantic.main import ModelMetaclass as PydanticModelMetaclass
 
@@ -46,7 +47,7 @@ class ParsedItem(BaseModel):
     price: int
     url: str
     category_name: Optional[str]
-    category_url: Optional[str]
+    category_url: Optional[HttpUrl]
 
 
 class IngkaItem(BaseModel):
@@ -63,7 +64,7 @@ class PipItem(BaseModel):
     price: int
     url: str
     category_name: Optional[str]
-    category_url: Optional[str]
+    category_url: Optional[HttpUrl]
 
 
 class UnavailableItem(BaseModel):
@@ -94,6 +95,10 @@ class StatusBannerOrder(BaseModel):
     delivery_date: datetime.date
 
 
+class PurchaseInfo(StatusBannerOrder, CostsOrder):
+    pass
+
+
 class PurchaseHistoryItem(BaseModel):
     id: str
     status: str
@@ -103,11 +108,4 @@ class PurchaseHistoryItem(BaseModel):
     store: str
 
 
-# class PurchaseInfoDict(StatusBannerOrderDict, CostsOrderDict):
-class PurchaseInfoDict:
-    pass
-
-
-class AddItemsToCartResponse(BaseModel):
-    message: Optional[dict[str, Any]]
-    cannot_add: list[str]
+CannotAddItems = list[str]
