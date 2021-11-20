@@ -21,7 +21,14 @@ DELIVERY_TYPES = {
     }
 }
 
-SERVICE_TYPES = {"ru": {"CURBSIDE": "без подъёма", "STANDARD": None}}
+SERVICE_TYPES = {
+    "ru": {
+        "CURBSIDE": "без подъёма",
+        "STANDARD": None,
+        "EXPRESS": "экспресс",
+        "EXPRESS_CURBSIDE": "без подъёма экспресс",
+    }
+}
 
 SERVICE_PROVIDERS = {
     "ru": {
