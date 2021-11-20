@@ -12,6 +12,8 @@ from ikea_api.wrappers._parsers.item_base import (
     get_is_combination_from_item_type,
 )
 
+__all__ = ["main"]
+
 
 class CatalogElement(BaseModel):
     CatalogElementName: Union[str, dict[Any, Any]]
@@ -75,7 +77,7 @@ class RetailItemCommPriceList(BaseModel):
     RetailItemCommPrice: Union[Price, list[Price]]
 
 
-class IowsItemResponse(GenericItem):
+class ResponseIowsItem(GenericItem):
     ItemType: ItemType
     CatalogRefList: CatalogRefList
     ItemMeasureReferenceTextMetric: str
@@ -96,7 +98,7 @@ def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def get_name(item: ChildItem | IowsItemResponse):
+def get_name(item: ChildItem | ResponseIowsItem):
     return ", ".join(
         part
         for part in (
@@ -196,7 +198,7 @@ def get_category_name_and_url(catalogs: list[Catalog]):
 
 def main(response: dict[str, Any]):
     response = get_rid_of_dollars(response)
-    item = IowsItemResponse(**response)
+    item = ResponseIowsItem(**response)
 
     is_combination = get_is_combination_from_item_type(item.ItemType)
     weight = (

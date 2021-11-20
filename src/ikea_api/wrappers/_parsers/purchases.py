@@ -7,6 +7,8 @@ from ikea_api._api import GraphQLResponse
 from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
 
+__all__ = ["parse_status_banner_order", "parse_costs_order", "parse_history"]
+
 STORE_NAMES = {"ru": {"IKEA": "Интернет-магазин", "Санкт-Петербург: Парнас": "Парнас"}}
 
 
@@ -31,7 +33,7 @@ class StatusBannerData(BaseModel):
     order: StatusBannerOrder
 
 
-class StatusBannerResponse(BaseModel):
+class ResponseStatusBanner(BaseModel):
     data: StatusBannerData
 
 
@@ -52,7 +54,7 @@ class CostsData(BaseModel):
     order: CostsOrder
 
 
-class CostsResponse(BaseModel):
+class ResponseCosts(BaseModel):
     data: CostsData
 
 
@@ -78,12 +80,12 @@ class HistoryData(BaseModel):
     history: list[HistoryItem]
 
 
-class History(BaseModel):
+class ResponseHistory(BaseModel):
     data: HistoryData
 
 
 def parse_status_banner_order(response: GraphQLResponse):
-    order = StatusBannerResponse(**response)
+    order = ResponseStatusBanner(**response)
     return types.StatusBannerOrder(
         purchase_date=order.data.order.dateAndTime.date,
         delivery_date=order.data.order.deliveryMethods[
@@ -93,7 +95,7 @@ def parse_status_banner_order(response: GraphQLResponse):
 
 
 def parse_costs_order(response: GraphQLResponse):
-    order = CostsResponse(**response)
+    order = ResponseCosts(**response)
     costs = order.data.order.costs
     return types.CostsOrder(
         delivery_cost=costs.delivery.value, total_cost=costs.total.value
@@ -105,7 +107,7 @@ def get_history_datetime(item: HistoryItem):
 
 
 def parse_history(response: GraphQLResponse):
-    history = History(**response)
+    history = ResponseHistory(**response)
     return [
         types.PurchaseHistoryItem(
             id=i.id,

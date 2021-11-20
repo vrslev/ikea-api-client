@@ -10,6 +10,8 @@ from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers import translate
 from ikea_api.wrappers._parsers.item_base import ItemCode
 
+__all__ = ["main"]
+
 DELIVERY_TYPES = {
     "ru": {
         "HOME_DELIVERY": "Доставка",
@@ -62,7 +64,7 @@ class UnavailableItem(BaseModel):
     availableQuantity: int
 
 
-class DeliveryService(BaseModel):
+class ResponseDeliveryService(BaseModel):
     fulfillmentMethodType: str
     servicePrice: Optional[ServicePrice]
     servicetype: str
@@ -76,20 +78,20 @@ def get_date(deliveries: list[Delivery]):
             return delivery.selectedTimeWindow.fromDateTime.date()
 
 
-def get_type(service: DeliveryService):
+def get_type(service: ResponseDeliveryService):
     delivery_type = translate(DELIVERY_TYPES, service.fulfillmentMethodType)
     if service_type := translate(SERVICE_TYPES, service.servicetype):
         return f"{delivery_type} {service_type}"
     return delivery_type
 
 
-def get_price(service: DeliveryService):
+def get_price(service: ResponseDeliveryService):
     if service.servicePrice:
         return service.servicePrice.amount
     return 0
 
 
-def get_service_provider(service: DeliveryService):
+def get_service_provider(service: ResponseDeliveryService):
     if not (service.deliveries and service.deliveries[0].pickUpPoints):
         return
 
@@ -115,7 +117,7 @@ def get_unavailable_items(
 
 def main(response: list[dict[str, Any]]):
     for s in response:
-        service = DeliveryService(**s)
+        service = ResponseDeliveryService(**s)
         yield types.DeliveryService(
             date=get_date(service.deliveries),
             type=get_type(service),

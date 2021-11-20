@@ -14,6 +14,8 @@ from ikea_api.wrappers._parsers.item_base import (
     get_is_combination_from_item_type,
 )
 
+__all__ = ["main"]
+
 
 class ItemKey(BaseModel):
     itemType: ItemType
@@ -66,14 +68,14 @@ class ChildItem(BaseModel):
     itemKey: ItemKey
 
 
-class IngkaItemResponse(BaseModel):
+class ResponseIngkaItem(BaseModel):
     itemKey: ItemKey
     localisedCommunications: list[LocalisedCommunication]
     childItems: Optional[list[ChildItem]]
 
 
-class IngkaItemsResponse(BaseModel):
-    data: list[IngkaItemResponse]
+class ResponseIngkaItems(BaseModel):
+    data: list[ResponseIngkaItem]
 
 
 def get_localised_communication(comms: list[LocalisedCommunication]):
@@ -155,7 +157,7 @@ def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem
     ]
 
 
-def parse_item(item: IngkaItemResponse):
+def parse_item(item: ResponseIngkaItem):
     comm = get_localised_communication(item.localisedCommunications)
     return types.IngkaItem(
         is_combination=get_is_combination_from_item_type(item.itemKey.itemType),
@@ -168,6 +170,6 @@ def parse_item(item: IngkaItemResponse):
 
 
 def main(response: dict[str, Any]):
-    parsed_resp = IngkaItemsResponse(**response)
+    parsed_resp = ResponseIngkaItems(**response)
     for item in parsed_resp.data:
         yield parse_item(item)

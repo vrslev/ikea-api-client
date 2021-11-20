@@ -5,6 +5,8 @@ from pydantic import BaseModel, HttpUrl
 from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_base import ItemCode
 
+__all__ = ["main"]
+
 
 class Catalog(BaseModel):
     name: str
@@ -19,7 +21,7 @@ class CatalogRefs(BaseModel):
     products: CatalogRef
 
 
-class PipItemResponse(BaseModel):
+class ResponsePipItem(BaseModel):
     id: ItemCode
     priceNumeral: int
     pipUrl: HttpUrl
@@ -31,7 +33,7 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
 
 
 def main(response: dict[str, Any]):
-    parsed_item = PipItemResponse(**response)
+    parsed_item = ResponsePipItem(**response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
     return types.PipItem(
         item_code=parsed_item.id,
