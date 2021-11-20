@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ikea_api._api import API
 from ikea_api._constants import Constants
 from ikea_api.exceptions import IkeaApiError
