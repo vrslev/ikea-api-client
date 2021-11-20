@@ -149,21 +149,23 @@ def _get_ingka_pip_items(item_codes: list[str]) -> list[types.ParsedItem]:
 
     res: list[types.ParsedItem] = []
     for ingka_item in ingka_items:
-        if pip_item := pip_items_map.get(ingka_item.item_code):
-            res.append(
-                types.ParsedItem(
-                    is_combination=ingka_item.is_combination,
-                    item_code=ingka_item.item_code,
-                    name=ingka_item.name,
-                    image_url=ingka_item.image_url,
-                    weight=ingka_item.weight,
-                    child_items=ingka_item.child_items,
-                    price=pip_item.price,
-                    url=pip_item.url,
-                    category_name=pip_item.category_name,
-                    category_url=pip_item.category_url,
-                )
+        pip_item = pip_items_map.get(ingka_item.item_code)
+        if pip_item is None:
+            continue
+        res.append(
+            types.ParsedItem(
+                is_combination=ingka_item.is_combination,
+                item_code=ingka_item.item_code,
+                name=ingka_item.name,
+                image_url=ingka_item.image_url,
+                weight=ingka_item.weight,
+                child_items=ingka_item.child_items,
+                price=pip_item.price,
+                url=pip_item.url,
+                category_name=pip_item.category_name,
+                category_url=pip_item.category_url,
             )
+        )
     return res
 
 

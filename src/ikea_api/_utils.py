@@ -11,7 +11,8 @@ def _get_unshortened_links_from_ingka_pagelinks(message: str):
 
     for postfix in re.findall("ingka.page.link/([0-9A-z]+)", message):
         resp = session.get(base_url + postfix, allow_redirects=False)
-        if location_header := resp.headers.get("Location"):
+        location_header = resp.headers.get("Location")
+        if location_header is not None:
             yield location_header
 
 
@@ -33,6 +34,8 @@ def parse_item_codes(
 
 
 def format_item_code(item_code: str) -> str | None:
-    if matches := parse_item_codes(item_code):
-        item_code = matches[0]
-        return item_code[0:3] + "." + item_code[3:6] + "." + item_code[6:8]
+    matches = parse_item_codes(item_code)
+    if not matches:
+        return
+    item_code = matches[0]
+    return item_code[0:3] + "." + item_code[3:6] + "." + item_code[6:8]

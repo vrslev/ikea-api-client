@@ -1,4 +1,6 @@
-from datetime import date
+from __future__ import annotations
+
+import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -13,7 +15,7 @@ STORE_NAMES = {"ru": {"IKEA": "Интернет-магазин", "Санкт-П�
 
 
 class DateAndTime(BaseModel):
-    date: date
+    date: datetime.date
 
 
 class DeliveryDate(BaseModel):
