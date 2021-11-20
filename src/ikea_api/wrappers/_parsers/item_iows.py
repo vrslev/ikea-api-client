@@ -75,7 +75,7 @@ class RetailItemCommPriceList(BaseModel):
     RetailItemCommPrice: Union[Price, list[Price]]
 
 
-class IowsItem(GenericItem):
+class IowsItemResponse(GenericItem):
     ItemType: ItemType
     CatalogRefList: CatalogRefList
     ItemMeasureReferenceTextMetric: str
@@ -96,14 +96,14 @@ def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def get_name(item: ChildItem | IowsItem):
+def get_name(item: ChildItem | IowsItemResponse):
     return ", ".join(
         part
         for part in (
             item.ProductName,
             item.ProductTypeName.capitalize(),
-            item.ItemMeasureReferenceTextMetric,
             item.ValidDesignText,
+            item.ItemMeasureReferenceTextMetric,
         )
         if part
     )
@@ -196,7 +196,7 @@ def get_category_name_and_url(catalogs: list[Catalog]):
 
 def main(response: dict[str, Any]):
     response = get_rid_of_dollars(response)
-    item = IowsItem(**response)
+    item = IowsItemResponse(**response)
 
     is_combination = get_is_combination_from_item_type(item.ItemType)
     weight = (
@@ -223,5 +223,5 @@ def main(response: dict[str, Any]):
         price=get_price(item.RetailItemCommPriceList.RetailItemCommPrice),
         url=get_url(item.ItemNo, is_combination),
         category_name=category_name,
-        category_url=category_url,
+        category_url=category_url,  # type: ignore
     )
