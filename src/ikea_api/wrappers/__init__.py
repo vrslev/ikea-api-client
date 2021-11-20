@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, List
 
 try:
     from pydantic import BaseModel
@@ -53,7 +53,7 @@ def get_purchase_info(
 
 
 class _CartErrorExtensionsData(BaseModel):
-    itemNos: list[str]
+    itemNos: List[str]
 
 
 class _CartErrorExtensions(BaseModel):

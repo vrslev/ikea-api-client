@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -28,7 +28,7 @@ class DeliveryMethod(BaseModel):
 
 class StatusBannerOrder(BaseModel):
     dateAndTime: DateAndTime
-    deliveryMethods: list[DeliveryMethod]
+    deliveryMethods: List[DeliveryMethod]
 
 
 class StatusBannerData(BaseModel):
@@ -79,7 +79,7 @@ class HistoryItem(BaseModel):
 
 
 class HistoryData(BaseModel):
-    history: list[HistoryItem]
+    history: List[HistoryItem]
 
 
 class ResponseHistory(BaseModel):

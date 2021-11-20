@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
@@ -56,7 +56,7 @@ class PickUpPoint(BaseModel):
 class Delivery(BaseModel):
     type: str
     selectedTimeWindow: Optional[SelectedTimeWindow]
-    pickUpPoints: Optional[list[PickUpPoint]]
+    pickUpPoints: Optional[List[PickUpPoint]]
 
 
 class UnavailableItem(BaseModel):
@@ -68,11 +68,11 @@ class ResponseDeliveryService(BaseModel):
     fulfillmentMethodType: str
     servicePrice: Optional[ServicePrice]
     servicetype: str
-    deliveries: list[Delivery]
-    unavailableItems: Optional[list[UnavailableItem]]
+    deliveries: List[Delivery]
+    unavailableItems: Optional[List[UnavailableItem]]
 
 
-def get_date(deliveries: list[Delivery]):
+def get_date(deliveries: List[Delivery]):
     for delivery in deliveries:
         if delivery.selectedTimeWindow:
             return delivery.selectedTimeWindow.fromDateTime.date()
@@ -80,7 +80,8 @@ def get_date(deliveries: list[Delivery]):
 
 def get_type(service: ResponseDeliveryService):
     delivery_type = translate(DELIVERY_TYPES, service.fulfillmentMethodType)
-    if service_type := translate(SERVICE_TYPES, service.servicetype):
+    service_type = translate(SERVICE_TYPES, service.servicetype)
+    if service_type:
         return f"{delivery_type} {service_type}"
     return delivery_type
 

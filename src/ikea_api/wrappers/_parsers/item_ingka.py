@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
@@ -34,7 +34,7 @@ class MediaVariant(BaseModel):
 
 class Media(BaseModel):
     typeName: str
-    variants: list[MediaVariant]
+    variants: List[MediaVariant]
 
 
 class ProductType(BaseModel):
@@ -50,13 +50,13 @@ class ReferenceMeasurements(BaseModel):
 
 
 class Measurements(BaseModel):
-    referenceMeasurements: Optional[list[ReferenceMeasurements]]
+    referenceMeasurements: Optional[List[ReferenceMeasurements]]
 
 
 class LocalisedCommunication(BaseModel):
     languageCode: str
-    packageMeasurements: Optional[list[PackageMeasurement]]
-    media: list[Media]
+    packageMeasurements: Optional[List[PackageMeasurement]]
+    media: List[Media]
     productName: str
     productType: ProductType
     validDesign: Optional[ValidDesign]
@@ -70,12 +70,12 @@ class ChildItem(BaseModel):
 
 class ResponseIngkaItem(BaseModel):
     itemKey: ItemKey
-    localisedCommunications: list[LocalisedCommunication]
-    childItems: Optional[list[ChildItem]]
+    localisedCommunications: List[LocalisedCommunication]
+    childItems: Optional[List[ChildItem]]
 
 
 class ResponseIngkaItems(BaseModel):
-    data: list[ResponseIngkaItem]
+    data: List[ResponseIngkaItem]
 
 
 def get_localised_communication(comms: list[LocalisedCommunication]):
@@ -92,7 +92,8 @@ def _parse_russian_product_name(product_name: str):
 
     if re.findall(r"\d+", product_name):
         # Has numbers in itself: 'IKEA 365+ ИКЕА/365+', 'VINTER 2021 ВИНТЕР 2021'
-        if matches := re.findall(r"^[^А-яЁё]+?([А-яЁё].*)", product_name):
+        matches = re.findall(r"^[^А-яЁё]+?([А-яЁё].*)", product_name)
+        if matches:
             product_name = matches[0]
     else:
         # Covers cases like: 'BESTÅ БЕСТО / EKET ЭКЕТ'

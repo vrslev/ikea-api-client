@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, List
 
 from pydantic import BaseModel, HttpUrl
 
@@ -16,7 +16,7 @@ class Catalog(BaseModel):
 
 
 class CatalogRef(BaseModel):
-    elements: list[Catalog]
+    elements: List[Catalog]
 
 
 class CatalogRefs(BaseModel):

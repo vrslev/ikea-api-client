@@ -1,8 +1,6 @@
-from __future__ import annotations
-
 import json
 import re
-from typing import Any, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel
 
@@ -18,12 +16,12 @@ __all__ = ["main"]
 
 
 class CatalogElement(BaseModel):
-    CatalogElementName: Union[str, dict[Any, Any]]
-    CatalogElementId: Union[int, str, dict[Any, Any]]
+    CatalogElementName: Union[str, Dict[Any, Any]]
+    CatalogElementId: Union[int, str, Dict[Any, Any]]
 
 
 class CatalogElementList(BaseModel):
-    CatalogElement: Union[CatalogElement, list[CatalogElement]]
+    CatalogElement: Union[CatalogElement, List[CatalogElement]]
 
 
 class Catalog(BaseModel):
@@ -31,7 +29,7 @@ class Catalog(BaseModel):
 
 
 class CatalogRefList(BaseModel):
-    CatalogRef: list[Catalog]
+    CatalogRef: List[Catalog]
 
 
 class Image(BaseModel):
@@ -41,7 +39,7 @@ class Image(BaseModel):
 
 
 class RetailItemImageList(BaseModel):
-    RetailItemImage: list[Image]
+    RetailItemImage: List[Image]
 
 
 class Measurement(BaseModel):
@@ -50,7 +48,7 @@ class Measurement(BaseModel):
 
 
 class RetailItemCommPackageMeasureList(BaseModel):
-    RetailItemCommPackageMeasure: list[Measurement]
+    RetailItemCommPackageMeasure: List[Measurement]
 
 
 class GenericItem(BaseModel):
@@ -68,7 +66,7 @@ class ChildItem(GenericItem):
 
 
 class RetailItemCommChildList(BaseModel):
-    RetailItemCommChild: list[ChildItem]
+    RetailItemCommChild: List[ChildItem]
 
 
 class Price(BaseModel):
@@ -76,7 +74,7 @@ class Price(BaseModel):
 
 
 class RetailItemCommPriceList(BaseModel):
-    RetailItemCommPrice: Union[Price, list[Price]]
+    RetailItemCommPrice: Union[Price, List[Price]]
 
 
 class ResponseIowsItem(GenericItem):
@@ -90,7 +88,7 @@ class ResponseIowsItem(GenericItem):
     RetailItemCommPriceList: RetailItemCommPriceList
 
 
-def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
+def get_rid_of_dollars(d: Dict[str, Any]) -> Dict[str, Any]:
     return json.loads(
         re.sub(
             pattern=r'{"\$": ([^}]+)}',
@@ -100,7 +98,7 @@ def get_rid_of_dollars(d: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def get_name(item: ChildItem | ResponseIowsItem):
+def get_name(item: Union[ChildItem, ResponseIowsItem]):
     return ", ".join(
         part
         for part in (
@@ -113,7 +111,7 @@ def get_name(item: ChildItem | ResponseIowsItem):
     )
 
 
-def get_image_url(images: list[Image]):
+def get_image_url(images: List[Image]):
     # Filter images first in case no image with S5 size found
     images = [
         i
@@ -131,12 +129,13 @@ def get_image_url(images: list[Image]):
 
 
 def parse_weight(v: str):
-    if matches := re.findall(r"[0-9.,]+", v):
+    matches = re.findall(r"[0-9.,]+", v)
+    if matches:
         return float(matches[0])
     return 0.0
 
 
-def get_weight(measurements: list[Measurement]):
+def get_weight(measurements: List[Measurement]):
     weight = 0.0
     if not measurements:
         return weight
@@ -147,7 +146,7 @@ def get_weight(measurements: list[Measurement]):
     return weight
 
 
-def get_child_items(child_items: list[ChildItem]) -> list[types.ChildItem]:
+def get_child_items(child_items: List[ChildItem]) -> List[types.ChildItem]:
     if not child_items:
         return []
 
@@ -164,7 +163,7 @@ def get_child_items(child_items: list[ChildItem]) -> list[types.ChildItem]:
     ]
 
 
-def get_price(prices: Price | list[Price]):
+def get_price(prices: Union[Price, List[Price]]):
     if not prices:
         return 0
     if isinstance(prices, list):
@@ -180,7 +179,7 @@ def get_url(item_code: str, is_combination: bool):
     )
 
 
-def get_category_name_and_url(catalogs: list[Catalog]):
+def get_category_name_and_url(catalogs: List[Catalog]):
     idx = 0 if len(catalogs) == 1 else 1  # TODO: Why?
     category = catalogs[idx].CatalogElementList.CatalogElement
     if not category:
@@ -198,7 +197,7 @@ def get_category_name_and_url(catalogs: list[Catalog]):
     )
 
 
-def main(response: dict[str, Any]):
+def main(response: Dict[str, Any]):
     response = get_rid_of_dollars(response)
     item = ResponseIowsItem(**response)
 
