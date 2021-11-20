@@ -7,7 +7,7 @@ try:
 except ImportError:
     raise RuntimeError(
         "To use wrappers you need Pydantic to be installed. "
-        + 'Run "pip install "ikea_api[wrappers]" to do so.'
+        + "Run 'pip install \"ikea_api[wrappers]\"' to do so."
     )
 
 from ikea_api import IkeaApi
