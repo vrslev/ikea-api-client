@@ -10,7 +10,7 @@ from ikea_api.wrappers._parsers.purchases import (
     parse_status_banner_order,
 )
 
-status_banner = {
+status_banner: GraphQLResponse = {  # type: ignore
     "data": {
         "order": {
             "id": "111111111",
@@ -60,7 +60,7 @@ status_banner = {
     }
 }
 
-costs = {
+costs: GraphQLResponse = {  # type: ignore
     "data": {
         "order": {
             "id": "111111111",
