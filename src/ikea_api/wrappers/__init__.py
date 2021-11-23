@@ -83,7 +83,7 @@ def add_items_to_cart(api: IkeaApi, items: dict[str, int]) -> types.CannotAddIte
                 cannot_add_items += error.extensions.data.itemNos
 
             for item_code in cannot_add_items:
-                pending_items.pop(item_code)
+                pending_items.pop(item_code, None)
 
     return cannot_add_items
 
