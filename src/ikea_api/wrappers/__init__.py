@@ -67,12 +67,12 @@ class _CartError(BaseModel):
 
 def add_items_to_cart(api: IkeaApi, items: dict[str, int]) -> types.CannotAddItems:
     api.cart.clear()
-    items_to_add = items.copy()
-    cannot_add: list[str] = []
+    pending_items = items.copy()
+    cannot_add_items: list[str] = []
 
-    while items_to_add:
+    while pending_items:
         try:
-            api.cart.add_items(items_to_add)
+            api.cart.add_items(pending_items)
             break
         except GraphQLError as exc:
             errors: list[dict[str, Any]] = exc.errors  # type: ignore
@@ -80,12 +80,12 @@ def add_items_to_cart(api: IkeaApi, items: dict[str, int]) -> types.CannotAddIte
                 error = _CartError(**error_dict)
                 if error.extensions.code != "INVALID_ITEM_NUMBER":
                     continue
-                cannot_add += error.extensions.data.itemNos
+                cannot_add_items += error.extensions.data.itemNos
 
-            for item_code in cannot_add:
-                items_to_add.pop(item_code)
+            for item_code in cannot_add_items:
+                pending_items.pop(item_code)
 
-    return cannot_add
+    return cannot_add_items
 
 
 def get_delivery_services(
