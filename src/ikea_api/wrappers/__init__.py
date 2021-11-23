@@ -97,8 +97,9 @@ def get_delivery_services(
         return types.GetDeliveryServicesResponse(
             delivery_options=[], cannot_add=cannot_add
         )
+
     resp = api.order_capture(zip_code=zip_code)
-    parsed_resp = list(order_capture.main(resp))
+    parsed_resp = order_capture.main(resp)
     return types.GetDeliveryServicesResponse(
         delivery_options=parsed_resp, cannot_add=cannot_add
     )

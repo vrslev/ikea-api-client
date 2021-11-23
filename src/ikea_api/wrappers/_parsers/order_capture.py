@@ -117,12 +117,16 @@ def get_unavailable_items(
 
 
 def main(response: list[dict[str, Any]]):
+    res: list[types.DeliveryService] = []
     for s in response:
         service = ResponseDeliveryService(**s)
-        yield types.DeliveryService(
-            date=get_date(service.deliveries),
-            type=get_type(service),
-            price=get_price(service),
-            service_provider=get_service_provider(service),
-            unavailable_items=get_unavailable_items(service.unavailableItems),
+        res.append(
+            types.DeliveryService(
+                date=get_date(service.deliveries),
+                type=get_type(service),
+                price=get_price(service),
+                service_provider=get_service_provider(service),
+                unavailable_items=get_unavailable_items(service.unavailableItems),
+            )
         )
+    return res
