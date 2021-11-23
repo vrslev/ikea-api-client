@@ -5,15 +5,17 @@ from typing import Any
 
 import pytest
 
+import ikea_api.wrappers
+from ikea_api import IkeaApi
 from ikea_api._api import GraphQLResponse
 from ikea_api.exceptions import GraphQLError
 from ikea_api.wrappers import (
     add_items_to_cart,
     get_purchase_history,
     get_purchase_info,
-    purchases,
     types,
 )
+from tests.wrappers._parsers.test_order_capture import test_data as mock_order_capture
 from tests.wrappers._parsers.test_purchases import costs as mock_costs
 from tests.wrappers._parsers.test_purchases import history as mock_history
 from tests.wrappers._parsers.test_purchases import status_banner as mock_status_banner
@@ -58,7 +60,9 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch):
         nonlocal called_parse
         called_parse = True
 
-    monkeypatch.setattr(purchases, "parse_history", mock_parse_history)
+    monkeypatch.setattr(
+        ikea_api.wrappers.purchases, "parse_history", mock_parse_history
+    )
     get_purchase_history(CustomIkeaApi())  # type: ignore
     assert called_history
     assert called_parse
@@ -84,7 +88,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
             return CustomPurchases()
 
     called_parse_status_banner = False
-    old_parse_status_banner = purchases.parse_status_banner_order
+    old_parse_status_banner = ikea_api.wrappers.purchases.parse_status_banner_order
 
     def mock_parse_status_banner_order(response: GraphQLResponse):
         nonlocal called_parse_status_banner
@@ -93,7 +97,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
         return old_parse_status_banner(response)
 
     called_parse_costs = False
-    old_parse_costs = purchases.parse_costs_order
+    old_parse_costs = ikea_api.wrappers.purchases.parse_costs_order
 
     def mock_parse_costs_order(response: GraphQLResponse):
         nonlocal called_parse_costs
@@ -102,9 +106,13 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
         return old_parse_costs(response)
 
     monkeypatch.setattr(
-        purchases, "parse_status_banner_order", mock_parse_status_banner_order
+        ikea_api.wrappers.purchases,
+        "parse_status_banner_order",
+        mock_parse_status_banner_order,
     )
-    monkeypatch.setattr(purchases, "parse_costs_order", mock_parse_costs_order)
+    monkeypatch.setattr(
+        ikea_api.wrappers.purchases, "parse_costs_order", mock_parse_costs_order
+    )
 
     res = get_purchase_info(CustomIkeaApi(), exp_id, exp_email)  # type: ignore
     assert called_order_info
@@ -211,3 +219,58 @@ def test_add_items_to_cart_fails():
     assert called_clear
     assert called_add_items
     assert res == ["22222222", "33333333"]
+
+
+def test_get_delivery_services_cannot_add_all_items(monkeypatch: pytest.MonkeyPatch):
+    api_ = IkeaApi()
+    exp_items = {"11111111": 2}
+    exp_cannot_add = ["11111111"]
+    called_add_items_to_cart = False
+
+    def mock_add_items_to_cart(api: IkeaApi, items: dict[str, int]):
+        nonlocal called_add_items_to_cart
+        called_add_items_to_cart = True
+        assert api == api_
+        assert items == exp_items
+        return exp_cannot_add
+
+    monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
+
+    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), "101000")
+    assert called_add_items_to_cart
+    assert res == types.GetDeliveryServicesResponse(
+        delivery_options=[], cannot_add=exp_cannot_add
+    )
+
+
+def test_get_delivery_services_passes(monkeypatch: pytest.MonkeyPatch):
+    exp_zip_code = "101000"
+    exp_items = {"11111111": 2, "22222222": 1}
+    exp_cannot_add = ["11111111"]
+
+    called_order_capture = False
+    called_add_items_to_cart = False
+
+    class CustomApi:
+        def order_capture(self, zip_code: str, state_code: str | None = None):
+            nonlocal called_order_capture
+            called_order_capture = True
+            assert zip_code == exp_zip_code
+            assert state_code is None
+            return mock_order_capture
+
+    api_ = CustomApi()
+
+    def mock_add_items_to_cart(api: CustomApi, items: dict[str, int]):
+        nonlocal called_add_items_to_cart
+        called_add_items_to_cart = True
+        assert api == api_
+        assert items == exp_items
+        return exp_cannot_add
+
+    monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
+
+    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), exp_zip_code)  # type: ignore
+    assert called_order_capture
+    assert called_add_items_to_cart
+    assert res.cannot_add == exp_cannot_add
