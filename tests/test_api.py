@@ -7,7 +7,7 @@ import responses
 
 from ikea_api._api import API, AuthorizedAPI, CustomResponse, GraphQLAPI
 from ikea_api._constants import DEFAULT_HEADERS
-from ikea_api.exceptions import GraphQLError, IkeaApiError, UnauthorizedError
+from ikea_api.exceptions import GraphQLError, IKEAAPIError, UnauthorizedError
 
 if sys.version_info < (3, 8):
     from typing_extensions import Literal
@@ -66,7 +66,7 @@ def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
 def test_api_request_method_not_json(api: API):
     response = "test"
     responses.add(responses.POST, api.endpoint, body=response)
-    with pytest.raises(IkeaApiError) as exc:
+    with pytest.raises(IKEAAPIError) as exc:
         api._post()
     assert exc.value.args == ((200, response),)
 
@@ -103,7 +103,7 @@ def test_api_request_method_not_ok(api: API):
     response = {"test": "test"}
     status = 404
     responses.add(responses.POST, api.endpoint, json=response, status=status)
-    with pytest.raises(IkeaApiError) as exc:
+    with pytest.raises(IKEAAPIError) as exc:
         api._post()
     assert exc.value.args == ((status, json.dumps(response)),)
 

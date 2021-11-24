@@ -9,7 +9,7 @@ import responses
 
 from ikea_api._constants import Constants
 from ikea_api._endpoints.item_ingka import IngkaItems
-from ikea_api.exceptions import IkeaApiError
+from ikea_api.exceptions import IKEAAPIError
 
 
 def add_response(json: dict[str, Any]):
@@ -39,7 +39,7 @@ def add_response(json: dict[str, Any]):
 )
 def test_ingka_items_error_handler_raises_without_item_codes(response: dict[str, Any]):
     add_response(response)
-    with pytest.raises(IkeaApiError) as exc:
+    with pytest.raises(IKEAAPIError) as exc:
         IngkaItems()(["111"])
     assert exc.value.args == ((200, json.dumps(response)),)
 
@@ -59,7 +59,7 @@ def test_ingka_items_error_handler_raises_with_item_codes():
         }
     }
     add_response(response)
-    with pytest.raises(IkeaApiError) as exc:
+    with pytest.raises(IKEAAPIError) as exc:
         IngkaItems()(["111"])
     assert exc.value.args == (["11111111"],)
 

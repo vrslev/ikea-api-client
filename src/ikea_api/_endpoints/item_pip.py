@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from ikea_api._api import API
 from ikea_api._constants import Constants
-from ikea_api.exceptions import IkeaApiError
+from ikea_api.exceptions import IKEAAPIError
 
 
 class PipItem(API):
@@ -19,7 +19,7 @@ class PipItem(API):
     def __call__(self, item_code: str):
         try:
             return self._request_item(item_code, True)
-        except IkeaApiError as exc:
+        except IKEAAPIError as exc:
             if not exc.response.status_code == 404:
                 raise
             return self._request_item(item_code, False)

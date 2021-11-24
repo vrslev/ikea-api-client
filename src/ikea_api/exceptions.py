@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from ikea_api._api import CustomResponse, GraphQLResponse
 
 
-class IkeaApiError(Exception):
+class IKEAAPIError(Exception):
     """Generic API related exception."""
 
     def __init__(self, response: Response, msg: Any = None):
@@ -18,7 +18,7 @@ class IkeaApiError(Exception):
         super().__init__(msg)
 
 
-class UnauthorizedError(IkeaApiError):
+class UnauthorizedError(IKEAAPIError):
     """Exception that is being called when cannot log in"""
 
     def __init__(self, response: CustomResponse):
@@ -32,7 +32,7 @@ class UnauthorizedError(IkeaApiError):
         super().__init__(response, msg)
 
 
-class GraphQLError(IkeaApiError):
+class GraphQLError(IKEAAPIError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: CustomResponse):
@@ -47,11 +47,11 @@ class GraphQLError(IkeaApiError):
         super().__init__(response, self.errors)
 
 
-class ItemFetchError(IkeaApiError):
+class ItemFetchError(IKEAAPIError):
     pass
 
 
-class OrderCaptureError(IkeaApiError):
+class OrderCaptureError(IKEAAPIError):
     def __init__(self, response: CustomResponse):
         self.error_code = response._json.get("errorCode")
         super().__init__(response)
