@@ -124,7 +124,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
         ikea_api.wrappers.purchases, "parse_costs_order", mock_parse_costs_order
     )
 
-    res = get_purchase_info(CustomIKEA(), exp_id, exp_email)  # type: ignore
+    res = get_purchase_info(CustomIKEA(), id=exp_id, email=exp_email)  # type: ignore
     assert called_order_info
     assert called_parse_status_banner
     assert called_parse_costs
@@ -151,7 +151,7 @@ def test_add_items_to_cart_passes():
         def cart(self):
             return CustomCart()
 
-    res = add_items_to_cart(CustomIKEA(), exp_items.copy())  # type: ignore
+    res = add_items_to_cart(CustomIKEA(), items=exp_items.copy())  # type: ignore
     assert called_clear
     assert called_add_items
     assert res == []
@@ -225,7 +225,7 @@ def test_add_items_to_cart_fails():
                 self._cart = CustomCart()
             return self._cart
 
-    res = add_items_to_cart(CustomIKEA(), exp_items_first.copy())  # type: ignore
+    res = add_items_to_cart(CustomIKEA(), items=exp_items_first.copy())  # type: ignore
     assert called_clear
     assert called_add_items
     assert res == ["22222222", "33333333"]
