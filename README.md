@@ -230,7 +230,7 @@ PipItem()(item_code)
 > ```python
 > from ikea_api.wrappers import get_items
 >
-> get_items(['30457903'])
+> get_items(["30457903"])
 > ```
 
 ### 🔎 [Search](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/search.py)
@@ -248,4 +248,30 @@ ikea.search(
     "Billy",
     types=...,  # Combine any of: ["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWER"]
 )
+```
+
+### Utilities
+
+#### Parse item codes
+
+Parse item codes from string or list.
+
+```python
+from ikea_api import parse_item_codes
+
+assert parse_item_codes("111.111.11") == ["11111111"]
+assert parse_item_codes("11111111, 222.222.22") == ["11111111", "22222222"]
+assert parse_item_codes("111") == []
+```
+
+#### Format item code
+
+Parse item code and format it.
+
+```python
+from ikea_api import format_item_code
+
+assert format_item_code("11111111") == "111.111.11"
+assert format_item_code("111-111-11") == "111.111.11"
+assert format_item_code("111.111.11") == "111.111.11"
 ```

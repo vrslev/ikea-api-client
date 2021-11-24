@@ -9,12 +9,15 @@ from ikea_api._endpoints.item_pip import PipItem
 from ikea_api._endpoints.order_capture import OrderCapture
 from ikea_api._endpoints.purchases import Purchases
 from ikea_api._endpoints.search import Search, SearchType
+from ikea_api._utils import format_item_code, parse_item_codes
 
 __all__ = [
     "IKEA",
     "IngkaItems",
     "IowsItems",
     "PipItem",
+    "format_item_code",
+    "parse_item_codes",
 ]
 
 
