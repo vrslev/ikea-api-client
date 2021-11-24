@@ -10,7 +10,7 @@ except ImportError:
         + "Run 'pip install \"ikea_api[wrappers]\"' to do so."
     )
 
-from ikea_api import IkeaApi
+from ikea_api import IKEA
 from ikea_api._endpoints.item_ingka import IngkaItems
 from ikea_api._endpoints.item_iows import IowsItems
 from ikea_api._endpoints.item_pip import PipItem
@@ -35,13 +35,13 @@ __all__ = [
 ]
 
 
-def get_purchase_history(api: IkeaApi) -> list[types.PurchaseHistoryItem]:
+def get_purchase_history(api: IKEA) -> list[types.PurchaseHistoryItem]:
     response = api.purchases.history()
     return purchases.parse_history(response)
 
 
 def get_purchase_info(
-    api: IkeaApi, *, id: str, email: str | None = None
+    api: IKEA, *, id: str, email: str | None = None
 ) -> types.PurchaseInfo:
     status_banner_resp, costs_resp = api.purchases.order_info(
         order_number=id, email=email, queries=["StatusBannerOrder", "CostsOrder"]
@@ -65,7 +65,7 @@ class _CartError(BaseModel):
     extensions: _CartErrorExtensions
 
 
-def add_items_to_cart(api: IkeaApi, *, items: dict[str, int]) -> types.CannotAddItems:
+def add_items_to_cart(api: IKEA, *, items: dict[str, int]) -> types.CannotAddItems:
     api.cart.clear()
     pending_items = items.copy()
     cannot_add_items: list[str] = []
@@ -89,7 +89,7 @@ def add_items_to_cart(api: IkeaApi, *, items: dict[str, int]) -> types.CannotAdd
 
 
 def get_delivery_services(
-    api: IkeaApi, *, items: dict[str, int], zip_code: str
+    api: IKEA, *, items: dict[str, int], zip_code: str
 ) -> types.GetDeliveryServicesResponse:
     cannot_add = add_items_to_cart(api, items=items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)

@@ -37,12 +37,12 @@ pip install "ikea_api[wrappers]"
 
 # Usage
 
-`IkeaApi` object unites all available the APIs that are in this package. This is done to share token, country and language.
+`IKEA` object unites all available the APIs that are in this package. This is done to share token, country and language.
 
 ```python
-from ikea_api import IkeaApi
+from ikea_api import IKEA
 
-ikea = IkeaApi(token=None, country_code="ru", language_code="ru")
+ikea = IKEA(token=None, country_code="ru", language_code="ru")
 ```
 
 ## Endpoints reference

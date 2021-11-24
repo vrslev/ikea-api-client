@@ -11,14 +11,14 @@ from ikea_api._endpoints.purchases import Purchases
 from ikea_api._endpoints.search import Search, SearchType
 
 __all__ = [
-    "IkeaApi",
+    "IKEA",
     "IngkaItems",
     "IowsItems",
     "PipItem",
 ]
 
 
-class IkeaApi:
+class IKEA:
     token: str
 
     def __init__(
