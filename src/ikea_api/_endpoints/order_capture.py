@@ -3,11 +3,10 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from ikea_api._api import AuthorizedAPI
+from ikea_api._api import AuthorizedAPI, CustomResponse
 from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.cart import Cart
-from ikea_api.exceptions import OrderCaptureError
-from ikea_api.types import CustomResponse, OrderCaptureErrorDict
+from ikea_api.exceptions import NoDeliveryOptionsAvailableError, OrderCaptureError
 
 
 class OrderCapture(AuthorizedAPI):
@@ -25,7 +24,9 @@ class OrderCapture(AuthorizedAPI):
         self._session.headers["X-Client-Id"] = Secrets.order_capture_x_client_id
 
     def _error_handler(self, response: CustomResponse):
-        if "errorCode" in response._json:
+        if isinstance(response._json, dict) and "errorCode" in response._json:
+            if response._json["errorCode"] in [60005, 60006]:
+                raise NoDeliveryOptionsAvailableError(response)
             raise OrderCaptureError(response)
 
     def _get_items_for_checkout(self) -> list[dict[str, str | int]]:
@@ -73,7 +74,7 @@ class OrderCapture(AuthorizedAPI):
 
     def _get_delivery_services(
         self, checkout: str, delivery_area: str
-    ) -> list[dict[str, Any]] | OrderCaptureErrorDict:
+    ) -> list[dict[str, Any]]:
         """Get available delivery services"""
         return self._get(
             f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"

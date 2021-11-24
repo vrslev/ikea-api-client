@@ -7,7 +7,7 @@ from ikea_api import IkeaApi
 from ikea_api._constants import Constants
 from ikea_api._endpoints.cart import Cart
 from ikea_api._endpoints.purchases import Purchases
-from ikea_api.types import SearchType
+from ikea_api._endpoints.search import SearchType
 
 
 @pytest.mark.parametrize(
@@ -20,6 +20,7 @@ def test_core_init_country_lang_codes_with_args(
         IkeaApi(country_code=country_code, language_code=language_code)
     assert Constants.COUNTRY_CODE == country_code or "ru"
     assert Constants.LANGUAGE_CODE == language_code or "ru"
+    Constants.COUNTRY_CODE = Constants.LANGUAGE_CODE = "ru"
 
 
 def test_core_init_country_lang_codes_without_args():

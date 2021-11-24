@@ -5,10 +5,9 @@ import pytest
 import requests
 import responses
 
-from ikea_api._api import API, AuthorizedAPI, GraphQLAPI
+from ikea_api._api import API, AuthorizedAPI, CustomResponse, GraphQLAPI
 from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.exceptions import GraphQLError, IkeaApiError, UnauthorizedError
-from ikea_api.types import CustomResponse
 
 if sys.version_info < (3, 8):
     from typing_extensions import Literal
@@ -131,6 +130,6 @@ def test_graphql_api_basic_error_handler_graphqlerror():
     api = GraphQLAPI("https://example.com", "some token")
     response = CustomResponse()
     response.status_code = 200
-    response._json = {"errors": None}
-    with pytest.raises(GraphQLError, match=str(response._json)):
+    response._json = {"errors": "some value"}
+    with pytest.raises(GraphQLError, match="some value"):
         api._basic_error_handler(response)

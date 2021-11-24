@@ -1,13 +1,22 @@
 from __future__ import annotations
 
+import sys
 from json.decoder import JSONDecodeError
 from typing import Any
 
-from requests import Session
+import requests
 
 from ikea_api._constants import DEFAULT_HEADERS
 from ikea_api.exceptions import GraphQLError, IkeaApiError, UnauthorizedError
-from ikea_api.types import CustomResponse, GraphQLResponse
+
+if sys.version_info < (3, 8):
+    from typing_extensions import TypedDict
+else:
+    from typing import TypedDict
+
+
+class CustomResponse(requests.Response):
+    _json: Any
 
 
 class API:
@@ -15,7 +24,7 @@ class API:
 
     def __init__(self, endpoint: str):
         self.endpoint = endpoint
-        self._session = Session()
+        self._session = requests.Session()
         self._session.headers.update(DEFAULT_HEADERS)
 
     def _basic_error_handler(self, response: CustomResponse):
@@ -76,6 +85,11 @@ class AuthorizedAPI(API):
         if not self._token:
             raise RuntimeError("No token provided")
         return self._token
+
+
+class GraphQLResponse(TypedDict):
+    data: dict[str, Any]
+    errors: list[dict[str, Any]] | None
 
 
 class GraphQLAPI(AuthorizedAPI):

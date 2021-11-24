@@ -1,43 +1,41 @@
 from __future__ import annotations
 
 import re
-from typing import Any, overload
+
+import requests
 
 
-@overload
-def parse_item_code(item_code: str | int) -> str:
-    ...
+def _get_unshortened_links_from_ingka_pagelinks(message: str):
+    session = requests.Session()
+    base_url = "https://ingka.page.link/"
+
+    for postfix in re.findall("ingka.page.link/([0-9A-z]+)", message):
+        resp = session.get(base_url + postfix, allow_redirects=False)
+        location_header = resp.headers.get("Location")
+        if location_header is not None:
+            yield location_header
 
 
-@overload
-def parse_item_code(item_code: list[str | int] | list[str]) -> list[str]:
-    ...
+def parse_item_codes(
+    item_codes: str | list[str], unshorten_ingka_pagelinks: bool = False
+) -> list[str]:
+    if unshorten_ingka_pagelinks:
+        if isinstance(item_codes, str):
+            item_codes = [item_codes]
+        unshortened_links = _get_unshortened_links_from_ingka_pagelinks(item_codes[0])
+        if unshortened_links:
+            item_codes.extend(unshortened_links)
+    raw_res: list[str] = re.findall(
+        r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_codes)
+    )
+    regex = re.compile(r"[^0-9]")
+    # http://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-in-python-whilst-preserving-order
+    return list(dict.fromkeys(regex.sub("", i) for i in raw_res))
 
 
-def parse_item_code(item_code: str | int | list[str | int] | list[str]):
-    def _parse(item_code: Any):
-        found = re.search(r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_code))
-        res = ""
-        if found:
-            try:
-                res = re.sub(r"[^0-9]+", "", found[0])
-            except TypeError:
-                pass
-        return res
-
-    err_msg = f"No items parsed: {str(item_code)}"
-    if isinstance(item_code, list):
-        item_code = list(set(item_code))
-        res: list[str] = []
-        for i in item_code:
-            parsed = _parse(i)
-            if parsed:
-                res.append(parsed)
-        if not res:
-            raise ValueError(err_msg)
-        return res
-    else:
-        parsed = _parse(item_code)
-        if not parsed:
-            raise ValueError(err_msg)
-        return parsed
+def format_item_code(item_code: str) -> str | None:
+    matches = parse_item_codes(item_code)
+    if not matches:
+        return
+    item_code = matches[0]
+    return item_code[0:3] + "." + item_code[3:6] + "." + item_code[6:8]

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from requests import Response
 
-from ikea_api.types import CustomResponse
+if TYPE_CHECKING:
+    from ikea_api._api import CustomResponse, GraphQLResponse
 
 
 class IkeaApiError(Exception):
@@ -35,12 +36,15 @@ class GraphQLError(IkeaApiError):
     """Generic GraphQL exception"""
 
     def __init__(self, response: CustomResponse):
-        self.errors: list[dict[str, Any]] | None = response._json.get("errors")
-        if self.errors:
-            msg = "\n".join(str(e) for e in self.errors)
+        resp: GraphQLResponse | list[GraphQLResponse] = response._json
+
+        if isinstance(resp, dict):
+            self.errors: list[dict[str, Any]] | dict[str, Any] = resp["errors"]  # type: ignore
         else:
-            msg = response._json
-        super().__init__(response, msg)
+            # from purchases.order_info
+            self.errors = [d["errors"] for d in resp if "errors" in d]  # type: ignore
+
+        super().__init__(response, self.errors)
 
 
 class ItemFetchError(IkeaApiError):
@@ -51,3 +55,11 @@ class OrderCaptureError(IkeaApiError):
     def __init__(self, response: CustomResponse):
         self.error_code = response._json.get("errorCode")
         super().__init__(response)
+
+
+class NoDeliveryOptionsAvailableError(OrderCaptureError):
+    pass
+
+
+class ParsingError(Exception):
+    pass

@@ -3,8 +3,9 @@ from __future__ import annotations
 import sys
 from typing import Any
 
-from ikea_api._api import GraphQLAPI, GraphQLResponse
+from ikea_api._api import CustomResponse, GraphQLAPI, GraphQLResponse
 from ikea_api._constants import Constants
+from ikea_api.exceptions import GraphQLError
 
 if sys.version_info < (3, 8):
     from typing_extensions import Literal
@@ -35,6 +36,13 @@ class Purchases(GraphQLAPI):
         """
         payload = self._build_payload("History", Queries.history, take=take, skip=skip)
         return self._post(json=payload)
+
+    def _error_handler(self, response: CustomResponse):
+        if isinstance(response._json, list):  # from order_info
+            dict_: GraphQLResponse
+            for dict_ in response._json:  # type: ignore
+                if "errors" in dict_:
+                    raise GraphQLError(response)
 
     def order_info(
         self,
