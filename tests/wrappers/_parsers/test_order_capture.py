@@ -7,7 +7,7 @@ from typing import Any
 import pytest
 
 from ikea_api.wrappers import types
-from ikea_api.wrappers._parsers import translate
+from ikea_api.wrappers._parsers import translate_from_dict
 from ikea_api.wrappers._parsers.order_capture import (
     DELIVERY_TYPES,
     SERVICE_TYPES,
@@ -51,7 +51,7 @@ def test_get_date_with_value_not_first():
 def test_get_type_no_service_type():
     exp_delivery_type = "HOME_DELIVERY"
     service = SimpleNamespace(fulfillmentMethodType=exp_delivery_type, servicetype=None)
-    assert get_type(service) == translate(DELIVERY_TYPES, exp_delivery_type)  # type: ignore
+    assert get_type(service) == translate_from_dict(DELIVERY_TYPES, exp_delivery_type)  # type: ignore
 
 
 def test_get_type_with_service_type():
@@ -61,8 +61,8 @@ def test_get_type_with_service_type():
         fulfillmentMethodType=exp_delivery_type, servicetype=exp_service_type
     )
     assert get_type(service) == (  # type: ignore
-        translate(DELIVERY_TYPES, exp_delivery_type)
-        + f" {translate(SERVICE_TYPES, exp_service_type)}"
+        translate_from_dict(DELIVERY_TYPES, exp_delivery_type)
+        + f" {translate_from_dict(SERVICE_TYPES, exp_service_type)}"
     )
 
 

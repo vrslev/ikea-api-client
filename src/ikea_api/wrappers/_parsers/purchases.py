@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from ikea_api._api import GraphQLResponse
 from ikea_api.wrappers import types
-from ikea_api.wrappers._parsers import translate
+from ikea_api.wrappers._parsers import translate_from_dict
 
 __all__ = ["parse_status_banner_order", "parse_costs_order", "parse_history"]
 
@@ -117,7 +117,7 @@ def parse_history(response: GraphQLResponse):
             price=i.totalCost.value or 0,
             datetime=get_history_datetime(i),
             datetime_formatted=i.dateAndTime.formattedLongDateTime,
-            store=translate(STORE_NAMES, i.storeName),
+            store=translate_from_dict(STORE_NAMES, i.storeName),
         )
         for i in history.data.history
     ]

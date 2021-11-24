@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from ikea_api._constants import Constants
 from ikea_api.wrappers import types
-from ikea_api.wrappers._parsers import translate
+from ikea_api.wrappers._parsers import translate_from_dict
 from ikea_api.wrappers._parsers.item_base import ItemCode
 
 __all__ = ["main"]
@@ -79,8 +79,8 @@ def get_date(deliveries: List[Delivery]):
 
 
 def get_type(service: ResponseDeliveryService):
-    delivery_type = translate(DELIVERY_TYPES, service.fulfillmentMethodType)
-    service_type = translate(SERVICE_TYPES, service.servicetype)
+    delivery_type = translate_from_dict(DELIVERY_TYPES, service.fulfillmentMethodType)
+    service_type = translate_from_dict(SERVICE_TYPES, service.servicetype)
     if service_type:
         return f"{delivery_type} {service_type}"
     return delivery_type
