@@ -1,20 +1,25 @@
 import re
 import sys
+from copy import copy
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
 
+import ikea_api._endpoints.item_iows
 import ikea_api.wrappers
 from ikea_api import IkeaApi
 from ikea_api._api import GraphQLResponse
-from ikea_api.exceptions import GraphQLError
+from ikea_api.exceptions import GraphQLError, ItemFetchError
 from ikea_api.wrappers import (
+    _split_to_chunks,
     add_items_to_cart,
     get_purchase_history,
     get_purchase_info,
     types,
 )
+from ikea_api.wrappers._parsers import item_iows
+from tests.wrappers._parsers.test_item_iows import test_data as test_iows_items
 from tests.wrappers._parsers.test_order_capture import test_data as mock_order_capture
 from tests.wrappers._parsers.test_purchases import costs as mock_costs
 from tests.wrappers._parsers.test_purchases import history as mock_history
@@ -274,3 +279,79 @@ def test_get_delivery_services_passes(monkeypatch: pytest.MonkeyPatch):
     assert called_order_capture
     assert called_add_items_to_cart
     assert res.cannot_add == exp_cannot_add
+
+
+@pytest.mark.parametrize(
+    ("list_", "chunk_size", "expected"),
+    (
+        (["11111111"] * 50, 26, [["11111111"] * 26, ["11111111"] * 24]),
+        (["11111111"] * 75, 80, [["11111111"] * 75]),
+        (["11111111"] * 10, 5, [["11111111"] * 5, ["11111111"] * 5]),
+        (
+            ["11111111", "11111111", "22222222", "33333333"],
+            2,
+            [["11111111", "11111111"], ["22222222", "33333333"]],
+        ),
+    ),
+)
+def test_split_to_chunks(list_: list[str], chunk_size: int, expected: list[list[str]]):
+    result = list(_split_to_chunks(list_, chunk_size))
+    for res, exp in zip(result, expected):
+        assert len(res) == len(exp)
+
+
+@pytest.mark.parametrize("raise_handleable_exc", (True, False))
+def test_get_iows_items_passes(
+    monkeypatch: pytest.MonkeyPatch, raise_handleable_exc: bool
+):
+    called_split_to_chunks = False
+    called_fetcher = False
+    called_parser = False
+    old_split_to_chunks = ikea_api.wrappers._split_to_chunks
+
+    def mock_split_to_chunks(list_: list[Any], chunk_size: int):
+        nonlocal called_split_to_chunks
+        called_split_to_chunks = True
+        return old_split_to_chunks(list_, chunk_size)
+
+    class CustomIowsItems:
+        def __call__(self, item_codes: list[str]):
+            nonlocal called_fetcher
+            called_fetcher = True
+            if raise_handleable_exc and "22222222" in item_codes:
+                raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
+            return [i["response"] for i in test_iows_items]
+
+    class CustomParser:
+        @staticmethod
+        def main(response: dict[str, Any]):
+            nonlocal called_parser
+            called_parser = True
+            return item_iows.main(response)
+
+    monkeypatch.setattr(ikea_api.wrappers, "_split_to_chunks", mock_split_to_chunks)
+    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomIowsItems)
+    monkeypatch.setattr(ikea_api.wrappers, "item_iows", CustomParser)
+
+    ikea_api.wrappers._get_iows_items(["11111111" * 90, "22222222" * 90])
+    assert called_split_to_chunks
+    assert called_fetcher
+    assert called_parser
+
+
+def test_get_iows_items_raises(monkeypatch: pytest.MonkeyPatch):
+    called_fetcher = False
+    exp_msg = "Some other error"
+
+    class CustomIowsItems:
+        def __call__(self, item_codes: list[str]):
+            nonlocal called_fetcher
+            called_fetcher = True
+            raise ItemFetchError(SimpleNamespace(), copy(exp_msg))  # type: ignore
+
+    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomIowsItems)
+
+    with pytest.raises(ItemFetchError, match=exp_msg):
+        res = ikea_api.wrappers._get_iows_items(["11111111"])
+        assert res == []
+    assert called_fetcher
