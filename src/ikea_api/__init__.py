@@ -23,8 +23,8 @@ class IKEA:
 
     def __init__(
         self,
-        *,
         token: str | None = None,
+        *,
         country_code: str = "ru",
         language_code: str = "ru",
     ):
