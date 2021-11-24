@@ -36,15 +36,17 @@ class IowsItems(API):
         endpoint = f"{self.endpoint}{self._build_payload(self.items)}"
         response = self._session.get(endpoint)
 
-        if response.status_code == 404:
-            if (
-                len(self.items) == 1 and relapse == 0
-            ):  # Single item code with wrong item type
-                item_code = list(self.items.keys())[0]
-                self.items[item_code] = not self.items[item_code]
-                return self._get_response(relapse + 1)
-            else:
-                raise ItemFetchError(response, "Wrong Item Code")
+        if (
+            response.status_code == 404
+        ):  # 404 only happens when something is really wrong or when it is wrong item code
+            if len(self.items) == 1:
+                if relapse == 0:
+                    # Single item code with wrong item type
+                    item_code = list(self.items.keys())[0]
+                    self.items[item_code] = not self.items[item_code]
+                    return self._get_response(relapse + 1)
+                else:
+                    raise ItemFetchError(response, "Wrong Item Code")
         return self._handle_response(response, relapse)
 
     def _handle_response(self, response: Response, relapse: int) -> Response:  # type: ignore
@@ -58,10 +60,7 @@ class IowsItems(API):
             errors = [errors]
 
         for err in errors:
-            if not (
-                err.get("ErrorCode", {}).get("$") == 1101
-                and "ErrorAttribute" in err.get("ErrorAttributeList", []),
-            ):
+            if err.get("ErrorCode", {}).get("$") != 1101:
                 # Not error with item type
                 raise ItemFetchError(response, err)
 
@@ -77,7 +76,7 @@ class IowsItems(API):
 
         return self._get_response(relapse + 1)
 
-    def __call__(self, item_codes: list[str]):
+    def __call__(self, item_codes: list[str]) -> list[Any]:
         if len(item_codes) > 90:
             raise RuntimeError("Can't get more than 90 items at once")
 
