@@ -1,6 +1,6 @@
 import re
 import sys
-from copy import copy
+from copy import copy, deepcopy
 from types import SimpleNamespace
 from typing import Any
 
@@ -18,8 +18,9 @@ from ikea_api.wrappers import (
     get_purchase_info,
     types,
 )
-from ikea_api.wrappers._parsers import item_iows
-from tests.wrappers._parsers.test_item_iows import test_data as test_iows_items
+from ikea_api.wrappers._parsers import item_ingka, item_iows
+from tests.wrappers._parsers.test_item_ingka import test_data as mock_ingka_items
+from tests.wrappers._parsers.test_item_iows import test_data as mock_iows_items
 from tests.wrappers._parsers.test_order_capture import test_data as mock_order_capture
 from tests.wrappers._parsers.test_purchases import costs as mock_costs
 from tests.wrappers._parsers.test_purchases import history as mock_history
@@ -307,20 +308,20 @@ def test_get_iows_items_passes(
     called_split_to_chunks = False
     called_fetcher = False
     called_parser = False
-    old_split_to_chunks = ikea_api.wrappers._split_to_chunks
 
     def mock_split_to_chunks(list_: list[Any], chunk_size: int):
         nonlocal called_split_to_chunks
         called_split_to_chunks = True
-        return old_split_to_chunks(list_, chunk_size)
+        return _split_to_chunks(list_, chunk_size)
 
-    class CustomIowsItems:
+    class CustomFetcher:
         def __call__(self, item_codes: list[str]):
+            assert all(i in ("11111111", "22222222") for i in item_codes)
             nonlocal called_fetcher
             called_fetcher = True
             if raise_handleable_exc and "22222222" in item_codes:
                 raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
-            return [i["response"] for i in test_iows_items]
+            return [i["response"] for i in mock_iows_items]
 
     class CustomParser:
         @staticmethod
@@ -330,10 +331,10 @@ def test_get_iows_items_passes(
             return item_iows.main(response)
 
     monkeypatch.setattr(ikea_api.wrappers, "_split_to_chunks", mock_split_to_chunks)
-    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomIowsItems)
+    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomFetcher)
     monkeypatch.setattr(ikea_api.wrappers, "item_iows", CustomParser)
 
-    ikea_api.wrappers._get_iows_items(["11111111" * 90, "22222222" * 90])
+    ikea_api.wrappers._get_iows_items(["11111111"] * 90 + ["22222222"] * 90)
     assert called_split_to_chunks
     assert called_fetcher
     assert called_parser
@@ -343,15 +344,50 @@ def test_get_iows_items_raises(monkeypatch: pytest.MonkeyPatch):
     called_fetcher = False
     exp_msg = "Some other error"
 
-    class CustomIowsItems:
+    class CustomFetcher:
         def __call__(self, item_codes: list[str]):
             nonlocal called_fetcher
             called_fetcher = True
             raise ItemFetchError(SimpleNamespace(), copy(exp_msg))  # type: ignore
 
-    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomIowsItems)
+    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomFetcher)
 
     with pytest.raises(ItemFetchError, match=exp_msg):
         res = ikea_api.wrappers._get_iows_items(["11111111"])
         assert res == []
     assert called_fetcher
+
+
+def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch):
+    called_split_to_chunks = False
+    called_fetcher = False
+    called_parser = False
+    exp_item_codes = ["11111111"]
+
+    def mock_split_to_chunks(list_: list[Any], chunk_size: int):
+        nonlocal called_split_to_chunks
+        called_split_to_chunks = True
+        return _split_to_chunks(list_, chunk_size)
+
+    class CustomFetcher:
+        def __call__(self, item_codes: list[str]):
+            assert item_codes == exp_item_codes
+            nonlocal called_fetcher
+            called_fetcher = True
+            return deepcopy(mock_ingka_items[0]["response"])
+
+    class CustomParser:
+        @staticmethod
+        def main(response: dict[str, Any]):
+            nonlocal called_parser
+            called_parser = True
+            return item_ingka.main(response)
+
+    monkeypatch.setattr(ikea_api.wrappers, "_split_to_chunks", mock_split_to_chunks)
+    monkeypatch.setattr(ikea_api.wrappers, "IngkaItems", CustomFetcher)
+    monkeypatch.setattr(ikea_api.wrappers, "item_ingka", CustomParser)
+
+    ikea_api.wrappers._get_ingka_items(deepcopy(exp_item_codes))
+    assert called_split_to_chunks
+    assert called_fetcher
+    assert called_parser
