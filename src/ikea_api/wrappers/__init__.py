@@ -25,7 +25,6 @@ from ikea_api.wrappers._parsers import (
     purchases,
 )
 
-# TODO: py.typed for wrappers
 __all__ = [
     "get_purchase_history",
     "get_purchase_info",

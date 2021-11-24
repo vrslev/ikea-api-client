@@ -13,7 +13,6 @@ class IowsItems(API):
     """IOWS Item API. Works only for Russian market"""
 
     def __init__(self):
-        # TODO: Use values from constants in endpoint
         super().__init__("https://iows.ikea.com/retail/iows/ru/ru/catalog/items/")
         self._session.headers.update(
             {

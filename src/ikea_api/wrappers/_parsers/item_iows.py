@@ -180,7 +180,7 @@ def get_url(item_code: str, is_combination: bool):
 
 
 def get_category_name_and_url(catalogs: List[Catalog]):
-    idx = 0 if len(catalogs) == 1 else 1  # TODO: Why?
+    idx = 0 if len(catalogs) == 1 else 1
     category = catalogs[idx].CatalogElementList.CatalogElement
     if not category:
         return None, None
