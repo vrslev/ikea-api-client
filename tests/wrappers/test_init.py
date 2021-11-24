@@ -18,9 +18,10 @@ from ikea_api.wrappers import (
     get_purchase_info,
     types,
 )
-from ikea_api.wrappers._parsers import item_ingka, item_iows
+from ikea_api.wrappers._parsers import item_ingka, item_iows, item_pip
 from tests.wrappers._parsers.test_item_ingka import test_data as mock_ingka_items
 from tests.wrappers._parsers.test_item_iows import test_data as mock_iows_items
+from tests.wrappers._parsers.test_item_pip import test_data as mock_pip_items
 from tests.wrappers._parsers.test_order_capture import test_data as mock_order_capture
 from tests.wrappers._parsers.test_purchases import costs as mock_costs
 from tests.wrappers._parsers.test_purchases import history as mock_history
@@ -387,7 +388,36 @@ def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(ikea_api.wrappers, "IngkaItems", CustomFetcher)
     monkeypatch.setattr(ikea_api.wrappers, "item_ingka", CustomParser)
 
-    ikea_api.wrappers._get_ingka_items(deepcopy(exp_item_codes))
+    res = ikea_api.wrappers._get_ingka_items(deepcopy(exp_item_codes))
+    assert len(res) == 1
     assert called_split_to_chunks
+    assert called_fetcher
+    assert called_parser
+
+
+def test_get_pip_items(monkeypatch: pytest.MonkeyPatch):
+    called_fetcher = False
+    called_parser = False
+    exp_item_codes = ["11111111", "22222222"]
+
+    class CustomFetcher:
+        def __call__(self, item_code: str):
+            assert item_code in exp_item_codes
+            nonlocal called_fetcher
+            called_fetcher = True
+            return deepcopy(mock_pip_items[0]["response"])
+
+    class CustomParser:
+        @staticmethod
+        def main(response: dict[str, Any]):
+            nonlocal called_parser
+            called_parser = True
+            return item_pip.main(response)
+
+    monkeypatch.setattr(ikea_api.wrappers, "PipItem", CustomFetcher)
+    monkeypatch.setattr(ikea_api.wrappers, "item_pip", CustomParser)
+
+    res = ikea_api.wrappers._get_pip_items(deepcopy(exp_item_codes))
+    assert len(res) == 2
     assert called_fetcher
     assert called_parser
