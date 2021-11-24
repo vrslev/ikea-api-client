@@ -111,9 +111,10 @@ def _split_to_chunks(list_: list[Any], chunk_size: int):
 
 def _get_iows_items(item_codes: list[str]):
     responses: list[Any] = []
+    fetcher = IowsItems()
     for item_codes_chunk in _split_to_chunks(item_codes, 90):
         try:
-            responses += IowsItems()(item_codes_chunk)
+            responses += fetcher(item_codes_chunk)
         except ItemFetchError as exc:
             if "Wrong Item Code" not in exc.args[0]:
                 raise
@@ -122,8 +123,9 @@ def _get_iows_items(item_codes: list[str]):
 
 def _get_ingka_items(item_codes: list[str]):
     responses: list[Any] = []
+    fetcher = IngkaItems()
     for item_codes_chunk in _split_to_chunks(item_codes, 50):
-        responses.append(IngkaItems()(item_codes_chunk))
+        responses.append(fetcher(item_codes_chunk))
     res: list[types.IngkaItem] = []
     for resp in responses:
         res += item_ingka.main(resp)
@@ -132,7 +134,7 @@ def _get_ingka_items(item_codes: list[str]):
 
 def _get_pip_items(item_codes: list[str]):
     fetcher = PipItem()
-    responses = [fetcher(i) for i in item_codes]
+    responses = (fetcher(i) for i in item_codes)
     return [item_pip.main(r) for r in responses]
 
 
