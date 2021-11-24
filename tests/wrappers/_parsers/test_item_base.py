@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from ikea_api.wrappers._parsers.item_base import (
