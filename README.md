@@ -113,11 +113,12 @@ If you use authorized token (copy-paste from cookies), than you edit your user's
 > from ikea_api.wrappers import add_items_to_cart
 >
 > add_items_to_cart(  # Function returns items that can't be added. In this case: ['11111111']
->    ikea,
->    items={
->  "30457903": 1,
->  "11111111": 2, # invalid item that will be skipped
-> })
+>     ikea,
+>     items={
+>         "30457903": 1,
+>         "11111111": 2,  # invalid item that will be skipped
+>     },
+> )
 > ```
 
 ### [🚛 Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/order_capture.py)
@@ -135,13 +136,14 @@ ikea.order_capture(
 >
 > ```python
 > from ikea_api.wrappers import get_delivery_services
+>
 > res = get_delivery_services(
->     ikea,
+>    ikea,
 >    items={
->  "30457903": 1,
->  "11111111": 2, # invalid item that will be skipped
->     },
->     zip_code="101000",
+>        "30457903": 1,
+>        "11111111": 2,  # invalid item that will be skipped
+>    },
+>    zip_code="101000",
 > )
 > res.delivery_options  # List of parsed delivery services
 > res.cannot_add  # ['11111111']
@@ -168,7 +170,7 @@ ikea.purchases.history(take=10, skip=1)
 > ```python
 > from ikea_api.wrappers import get_purchase_history
 >
-> get_purchase_history(ikea) # Returns list of parsed purchases
+> get_purchase_history(ikea)  # Returns list of parsed purchases
 > ```
 
 #### Order info
@@ -227,6 +229,7 @@ PipItem()(item_code)
 >
 > ```python
 > from ikea_api.wrappers import get_items
+>
 > get_items(['30457903'])
 > ```
 
