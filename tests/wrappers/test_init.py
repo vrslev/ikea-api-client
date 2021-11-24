@@ -12,6 +12,7 @@ from ikea_api import IkeaApi
 from ikea_api._api import GraphQLResponse
 from ikea_api.exceptions import GraphQLError, ItemFetchError
 from ikea_api.wrappers import (
+    _get_pip_items_map,
     _split_to_chunks,
     add_items_to_cart,
     get_purchase_history,
@@ -421,3 +422,14 @@ def test_get_pip_items(monkeypatch: pytest.MonkeyPatch):
     assert len(res) == 2
     assert called_fetcher
     assert called_parser
+
+
+def test_get_pip_items_map():
+    items = [
+        SimpleNamespace(item_code="11111111"),
+        SimpleNamespace(item_code="11111111", name="test"),
+        SimpleNamespace(item_code="22222222"),
+    ]
+    res = _get_pip_items_map(items)  # type: ignore
+    assert res["11111111"] == SimpleNamespace(item_code="11111111", name="test")
+    assert res["22222222"] == SimpleNamespace(item_code="22222222")
