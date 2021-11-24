@@ -55,7 +55,6 @@ def test_api_request_endpoint_not_set(api: API):
 @pytest.mark.parametrize("method", ("GET", "POST"))
 @responses.activate
 def test_api_request_methods_pass(api: API, method: Literal["GET", "POST"]):
-    # TODO: Check if headers and data passed
     response = {"test": "test"}
     responses.add(method, api.endpoint, json=response)
     func = api._get if method == "GET" else api._post
