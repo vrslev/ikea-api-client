@@ -14,12 +14,12 @@ class ItemCode(str):
 
     @classmethod
     def validate(cls, v: Any):
-        if isinstance(v, int):  # TODO: Test this block
+        if isinstance(v, int):
             return str(v)
         if isinstance(v, str):
             if not v.isnumeric():
                 raise ValueError("invalid item code format")
-            return v  # TODO: Wasn't returning before: test
+            return v
         raise TypeError("string required")
 
 
