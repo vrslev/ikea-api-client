@@ -23,6 +23,7 @@ class IkeaApi:
 
     def __init__(
         self,
+        *,
         token: str | None = None,
         country_code: str = "ru",
         language_code: str = "ru",
@@ -42,9 +43,9 @@ class IkeaApi:
             self._cart = Cart(self.token)
         return self._cart
 
-    def order_capture(self, zip_code: str, state_code: str | None = None):
+    def order_capture(self, *, zip_code: str, state_code: str | None = None):
         """Get available delivery services."""
-        return OrderCapture(self.token, zip_code, state_code)()
+        return OrderCapture(self.token, zip_code=zip_code, state_code=state_code)()
 
     @property
     def purchases(self):
@@ -54,7 +55,7 @@ class IkeaApi:
         return self._purchases
 
     def search(
-        self, query: str, limit: int = 24, types: list[SearchType] = ["PRODUCT"]
+        self, query: str, *, limit: int = 24, types: list[SearchType] = ["PRODUCT"]
     ):
         """Search the IKEA product catalog by product name"""
         return Search()(query=query, limit=limit, types=types)

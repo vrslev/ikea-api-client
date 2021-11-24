@@ -10,7 +10,7 @@ from ikea_api.exceptions import NoDeliveryOptionsAvailableError, OrderCaptureErr
 
 
 class OrderCapture(AuthorizedAPI):
-    def __init__(self, token: str, zip_code: str, state_code: str | None = None):
+    def __init__(self, token: str, *, zip_code: str, state_code: str | None = None):
         _validate_zip_code(zip_code)
         _validate_state_code(state_code)
         self._zip_code = zip_code

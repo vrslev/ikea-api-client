@@ -41,7 +41,7 @@ def get_purchase_history(api: IkeaApi) -> list[types.PurchaseHistoryItem]:
 
 
 def get_purchase_info(
-    api: IkeaApi, id: str, email: str | None = None
+    api: IkeaApi, *, id: str, email: str | None = None
 ) -> types.PurchaseInfo:
     status_banner_resp, costs_resp = api.purchases.order_info(
         order_number=id, email=email, queries=["StatusBannerOrder", "CostsOrder"]
@@ -65,7 +65,7 @@ class _CartError(BaseModel):
     extensions: _CartErrorExtensions
 
 
-def add_items_to_cart(api: IkeaApi, items: dict[str, int]) -> types.CannotAddItems:
+def add_items_to_cart(api: IkeaApi, *, items: dict[str, int]) -> types.CannotAddItems:
     api.cart.clear()
     pending_items = items.copy()
     cannot_add_items: list[str] = []
@@ -89,9 +89,9 @@ def add_items_to_cart(api: IkeaApi, items: dict[str, int]) -> types.CannotAddIte
 
 
 def get_delivery_services(
-    api: IkeaApi, items: dict[str, int], zip_code: str
+    api: IkeaApi, *, items: dict[str, int], zip_code: str
 ) -> types.GetDeliveryServicesResponse:
-    cannot_add = add_items_to_cart(api, items)
+    cannot_add = add_items_to_cart(api, items=items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
     if cannot_add_all_items:
         return types.GetDeliveryServicesResponse(

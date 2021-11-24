@@ -76,7 +76,7 @@ def test_core_order_capture(monkeypatch: pytest.MonkeyPatch, core: IkeaApi):
             called = True
 
     monkeypatch.setattr(ikea_api, "OrderCapture", MockOrderCapture)
-    core.order_capture(exp_zip_code, exp_state_code)
+    core.order_capture(zip_code=exp_zip_code, state_code=exp_state_code)
     assert called
 
 
@@ -104,5 +104,5 @@ def test_core_search(monkeypatch: pytest.MonkeyPatch, core: IkeaApi):
             called = True
 
     monkeypatch.setattr(ikea_api, "Search", MockSearch)
-    core.search(exp_query, exp_limit, exp_types)
+    core.search(exp_query, limit=exp_limit, types=exp_types)
     assert called

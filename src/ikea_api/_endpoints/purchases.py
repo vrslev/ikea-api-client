@@ -30,7 +30,7 @@ class Purchases(GraphQLAPI):
     def _build_payload(self, operation_name: str, query: str, **variables: Any):
         return {"operationName": operation_name, "variables": variables, "query": query}
 
-    def history(self, take: int = 5, skip: int = 0):
+    def history(self, *, take: int = 5, skip: int = 0):
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
@@ -47,6 +47,7 @@ class Purchases(GraphQLAPI):
     def order_info(
         self,
         order_number: str,
+        *,
         email: str | None = None,
         queries: list[
             Literal["StatusBannerOrder", "CostsOrder", "ProductListOrder"]

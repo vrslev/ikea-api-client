@@ -48,7 +48,7 @@ class Cart(GraphQLAPI):
             Mutations.update_items, items=self._make_templated_items(items)
         )
 
-    def copy_items(self, source_user_id: str):
+    def copy_items(self, *, source_user_id: str):
         """Copy cart from another account"""
         return self._call_api(Mutations.copy_items, sourceUserId=source_user_id)
 

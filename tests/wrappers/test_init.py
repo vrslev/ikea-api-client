@@ -246,7 +246,9 @@ def test_get_delivery_services_cannot_add_all_items(monkeypatch: pytest.MonkeyPa
 
     monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
 
-    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), "101000")
+    res = ikea_api.wrappers.get_delivery_services(
+        api_, items=exp_items.copy(), zip_code="101000"
+    )
     assert called_add_items_to_cart
     assert res == types.GetDeliveryServicesResponse(
         delivery_options=[], cannot_add=exp_cannot_add
@@ -280,7 +282,9 @@ def test_get_delivery_services_passes(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
 
-    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), exp_zip_code)  # type: ignore
+    res = ikea_api.wrappers.get_delivery_services(
+        api_, items=exp_items.copy(), zip_code=exp_zip_code  # type: ignore
+    )
     assert called_order_capture
     assert called_add_items_to_cart
     assert res.cannot_add == exp_cannot_add
