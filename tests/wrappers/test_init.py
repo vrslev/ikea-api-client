@@ -433,3 +433,100 @@ def test_get_pip_items_map():
     res = _get_pip_items_map(items)  # type: ignore
     assert res["11111111"] == SimpleNamespace(item_code="11111111", name="test")
     assert res["22222222"] == SimpleNamespace(item_code="22222222")
+
+
+def test_get_ingka_pip_items(monkeypatch: pytest.MonkeyPatch):
+    exp_item_codes = ["11111111", "22222222", "33333333", "44444444"]
+
+    def mock_get_ingka_items(item_codes: list[str]):
+        assert item_codes == exp_item_codes
+        return [
+            types.IngkaItem(
+                is_combination=False,
+                item_code="11111111",
+                name="first item",
+                image_url="https://ikea.com/image1.jpg",
+                weight=10.0,
+                child_items=[],
+            ),
+            types.IngkaItem(
+                is_combination=True,
+                item_code="22222222",
+                name="second item",
+                image_url="https://ikea.com/image2.jpg",
+                weight=21.0,
+                child_items=[
+                    types.ChildItem(
+                        name="child item", item_code="12121212", weight=10.5, qty=2
+                    )
+                ],
+            ),
+            types.IngkaItem(
+                is_combination=False,
+                item_code="44444444",
+                name="fourth item",
+                image_url="https://ikea.com/image4.jpg",
+                weight=0.55,
+                child_items=[],
+            ),
+        ]
+
+    def mock_get_pip_items(item_codes: list[str]):
+        assert item_codes == exp_item_codes
+        return [
+            types.PipItem(
+                item_code="11111111",
+                price=1000,
+                url="https://ikea.com/11111111",
+                category_name="test category name",
+                category_url="https://ikea.com/category/1",  # type: ignore
+            ),
+            types.PipItem(
+                item_code="22222222",
+                price=20000,
+                url="https://ikea.com/22222222",
+                category_name=None,
+                category_url=None,
+            ),
+            types.PipItem(
+                item_code="33333333",
+                price=20000,
+                url="https://ikea.com/33333333",
+                category_name=None,
+                category_url=None,
+            ),
+        ]
+
+    monkeypatch.setattr(ikea_api.wrappers, "_get_ingka_items", mock_get_ingka_items)
+    monkeypatch.setattr(ikea_api.wrappers, "_get_pip_items", mock_get_pip_items)
+    res = ikea_api.wrappers._get_ingka_pip_items(deepcopy(exp_item_codes))
+    assert res == [
+        types.ParsedItem(
+            is_combination=False,
+            item_code="11111111",
+            name="first item",
+            image_url="https://ikea.com/image1.jpg",
+            weight=10.0,
+            child_items=[],
+            price=1000,
+            url="https://ikea.com/11111111",
+            category_name="test category name",
+            category_url="https://ikea.com/category/1",  # type: ignore
+        ),
+        types.ParsedItem(
+            is_combination=True,
+            item_code="22222222",
+            name="second item",
+            image_url="https://ikea.com/image2.jpg",
+            weight=21.0,
+            child_items=[
+                types.ChildItem(
+                    name="child item", item_code="12121212", weight=10.5, qty=2
+                )
+            ],
+            price=20000,
+            url="https://ikea.com/22222222",
+            category_name=None,
+            category_url=None,
+        ),
+    ]
