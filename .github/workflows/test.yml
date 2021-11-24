@@ -103,4 +103,4 @@ jobs:
         run: pytest --color=yes --cov --cov-report=xml
 
       - name: Upload coverage
-        run: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v2
