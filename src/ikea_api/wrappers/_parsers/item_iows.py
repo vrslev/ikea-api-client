@@ -179,7 +179,7 @@ def get_url(item_code: str, is_combination: bool):
     )
 
 
-def get_category_name_and_url(catalogs: List[Catalog] | Catalog | None):
+def get_category_name_and_url(catalogs: Optional[Union[List[Catalog], Catalog]]):
     if not catalogs:
         return None, None
     if isinstance(catalogs, Catalog):
