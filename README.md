@@ -19,8 +19,7 @@ With this library you can access the following IKEA's APIs:
 
 Also:
 
-- Fully typed,
-- Almost entirely tested,
+- Fully typed and tested,
 - Has wrappers around most of APIs based on Pydantic.
 
 # Installation
