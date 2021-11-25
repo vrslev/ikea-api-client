@@ -1,7 +1,7 @@
 import pytest
-import requests
 import responses
 
+from ikea_api._api import CustomResponse
 from ikea_api._endpoints.item_pip import PipItem
 from ikea_api.exceptions import IKEAAPIError
 
@@ -48,7 +48,7 @@ def test_item_pip_call_ok_second_time():
             else:
                 assert is_combination
                 called_request_item = True
-                response = requests.Response()
+                response = CustomResponse()
                 response.status_code = 404
                 response._content = b"some msg"
                 raise IKEAAPIError(response)
@@ -72,7 +72,7 @@ def test_item_pip_call_not_ok(exp_status: int):
             else:
                 assert is_combination
                 called_request_item = True
-            response = requests.Response()
+            response = CustomResponse()
             response.status_code = exp_status
             response._content = exp_msg.encode()
             raise IKEAAPIError(response)

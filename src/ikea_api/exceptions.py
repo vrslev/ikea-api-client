@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class IKEAAPIError(Exception):
     """Generic API related exception."""
 
-    def __init__(self, response: Response, msg: Any = None):
+    def __init__(self, response: CustomResponse, msg: Any = None):
         self.response = response
         if msg is None:
             msg = (response.status_code, response.text)
@@ -48,7 +48,8 @@ class GraphQLError(IKEAAPIError):
 
 
 class ItemFetchError(IKEAAPIError):
-    pass
+    def __init__(self, response: Response, msg: Any = None):
+        super().__init__(response, msg=msg)  # type: ignore
 
 
 class OrderCaptureError(IKEAAPIError):

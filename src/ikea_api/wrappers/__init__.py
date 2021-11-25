@@ -137,10 +137,11 @@ def _get_pip_items(item_codes: list[str]):
     return [item_pip.main(r) for r in responses]
 
 
-def _get_pip_items_map(items: list[types.PipItem]):
+def _get_pip_items_map(items: list[types.PipItem | None]):
     res: dict[str, types.PipItem] = {}
     for item in items:
-        res[item.item_code] = item
+        if item:
+            res[item.item_code] = item
     return res
 
 
@@ -171,7 +172,7 @@ def _get_ingka_pip_items(item_codes: list[str]) -> list[types.ParsedItem]:
     return res
 
 
-def get_items(item_codes: list[str]):
+def get_items(item_codes: list[str]) -> list[types.ParsedItem]:
     pending_item_codes = parse_item_codes(item_codes, unshorten_ingka_pagelinks=True)
     fetched_items_iows = _get_iows_items(pending_item_codes)
 

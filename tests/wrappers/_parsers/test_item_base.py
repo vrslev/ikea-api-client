@@ -11,7 +11,7 @@ from ikea_api.wrappers._parsers.item_base import (
 
 def test_item_code_validator_value_error():
     with pytest.raises(ValueError, match="invalid item code format"):
-        ItemCode.validate("111.111.11")
+        ItemCode.validate("11111.11")
 
 
 def test_item_code_validator_type_error():
@@ -19,7 +19,7 @@ def test_item_code_validator_type_error():
         ItemCode.validate({})
 
 
-@pytest.mark.parametrize("v", ("11111111", 11111111))
+@pytest.mark.parametrize("v", ("11111111", "111.111.11", "111-111-11", 11111111))
 def test_item_code_validator_passes(v: str | int):
     assert ItemCode.validate(v) == str(v)
 

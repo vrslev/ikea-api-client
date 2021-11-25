@@ -51,7 +51,7 @@ class API:
         endpoint: str | None = None,
         headers: dict[str, str] | None = None,
         params: dict[str, Any] | None = None,
-    ):
+    ) -> Any:
         if not endpoint:
             endpoint = self.endpoint
         response: CustomResponse = self._session.get(  # type: ignore
@@ -64,7 +64,7 @@ class API:
         endpoint: str | None = None,
         headers: dict[str, str] | None = None,
         json: Any = None,
-    ):
+    ) -> Any:
         if not endpoint:
             endpoint = self.endpoint
         response: CustomResponse = self._session.post(  # type: ignore

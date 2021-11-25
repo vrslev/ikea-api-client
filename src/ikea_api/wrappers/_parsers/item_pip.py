@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, List
+from typing import Any, List, Optional
 
 from pydantic import BaseModel, HttpUrl
 
@@ -20,7 +20,7 @@ class CatalogRef(BaseModel):
 
 
 class CatalogRefs(BaseModel):
-    products: CatalogRef
+    products: Optional[CatalogRef]
 
 
 class ResponsePipItem(BaseModel):
@@ -31,10 +31,14 @@ class ResponsePipItem(BaseModel):
 
 
 def get_category_name_and_url(catalog_refs: CatalogRefs):
+    if not catalog_refs.products:
+        return None, None
     return catalog_refs.products.elements[0].name, catalog_refs.products.elements[0].url
 
 
 def main(response: dict[str, Any]):
+    if not response:
+        return
     parsed_item = ResponsePipItem(**response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
     return types.PipItem(

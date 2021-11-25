@@ -1,6 +1,8 @@
 import sys
 from typing import Any
 
+from ikea_api import parse_item_codes
+
 if sys.version_info < (3, 8):
     from typing_extensions import Literal
 else:
@@ -15,9 +17,9 @@ class ItemCode(str):
     @classmethod
     def validate(cls, v: Any):
         if isinstance(v, int):
-            return str(v)
+            v = str(v)
         if isinstance(v, str):
-            if not v.isnumeric():
+            if len(parse_item_codes(v)) != 1:
                 raise ValueError("invalid item code format")
             return v
         raise TypeError("string required")

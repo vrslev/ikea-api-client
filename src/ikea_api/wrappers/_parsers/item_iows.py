@@ -29,7 +29,7 @@ class Catalog(BaseModel):
 
 
 class CatalogRefList(BaseModel):
-    CatalogRef: List[Catalog]
+    CatalogRef: Optional[Union[List[Catalog], Catalog]]
 
 
 class Image(BaseModel):
@@ -80,8 +80,8 @@ class RetailItemCommPriceList(BaseModel):
 class ResponseIowsItem(GenericItem):
     ItemType: ItemType
     CatalogRefList: CatalogRefList
-    ItemMeasureReferenceTextMetric: str
-    ValidDesignText: str
+    ItemMeasureReferenceTextMetric: Optional[str]
+    ValidDesignText: Optional[str]
     RetailItemCommPackageMeasureList: Optional[RetailItemCommPackageMeasureList]
     RetailItemImageList: RetailItemImageList
     RetailItemCommChildList: Optional[RetailItemCommChildList]
@@ -179,7 +179,12 @@ def get_url(item_code: str, is_combination: bool):
     )
 
 
-def get_category_name_and_url(catalogs: List[Catalog]):
+def get_category_name_and_url(catalogs: Optional[Union[List[Catalog], Catalog]]):
+    if not catalogs:
+        return None, None
+    if isinstance(catalogs, Catalog):
+        catalogs = [catalogs]
+
     idx = 0 if len(catalogs) == 1 else 1
     category = catalogs[idx].CatalogElementList.CatalogElement
     if not category:

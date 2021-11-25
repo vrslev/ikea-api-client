@@ -8,6 +8,9 @@ import pytest
 from ikea_api._constants import Constants
 from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_iows import (
+    Catalog,
+    CatalogElement,
+    CatalogElementList,
     get_category_name_and_url,
     get_child_items,
     get_image_url,
@@ -188,6 +191,22 @@ def test_get_category_name_and_url_no_category():
     assert get_category_name_and_url(
         [SimpleNamespace(CatalogElementList=SimpleNamespace(CatalogElement=[]))]  # type: ignore
     ) == (None, None)
+
+
+def test_get_category_name_and_url_no_categories():
+    assert get_category_name_and_url([]) == (None, None)
+
+
+def test_get_category_name_and_url_not_list():
+    assert get_category_name_and_url(
+        Catalog(
+            CatalogElementList=CatalogElementList(
+                CatalogElement=CatalogElement(
+                    CatalogElementName="name", CatalogElementId="id"
+                )
+            )
+        )
+    ) == ("name", "https://www.ikea.com/ru/ru/cat/-id")
 
 
 @pytest.mark.parametrize(("name", "id"), (("value", {}), ({}, "value"), ({}, {})))
@@ -1685,6 +1704,1122 @@ test_data: tuple[dict[str, Any], ...] = (
             },
             "RetailItemFullLengthTextList": {"RetailItemFullLengthText": {}},
             "@xmlns": {"$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/"},
+        },
+    },
+    {
+        "name": "no valid design text",
+        "response": {
+            "ItemNo": {"$": 10359343},
+            "ItemNoGlobal": {"$": "00340047"},
+            "ItemType": {"$": "ART"},
+            "ProductName": {"$": "ЭКЕТ"},
+            "ProductTypeName": {"$": "Накладная шина"},
+            "OnlineSellable": {"$": True},
+            "BreathTakingItem": {"$": False},
+            "ItemUnitCode": {"$": "PIECES"},
+            "ItemNumberOfPackages": {"$": 1},
+            "AssemblyCode": {"$": "Y"},
+            "DesignerNameComm": {"$": "IKEA of Sweden"},
+            "PriceUnitTextMetric": {},
+            "GlobalisationContext": {
+                "LanguageCodeIso": {"$": "ru"},
+                "CountryCodeIso": {"$": "ru"},
+            },
+            "ClassUnitKey": {
+                "ClassType": {"$": "GR"},
+                "ClassUnitType": {"$": "RU"},
+                "ClassUnitCode": {"$": "RU"},
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": {"$": "RegularSalesUnitPrice"},
+                    "Price": {"$": 200},
+                    "PriceExclTax": {"$": 166.67},
+                    "CurrencyCode": {"$": "RUB"},
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S1"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S1.JPG"
+                        },
+                        "ImageWidth": {"$": 40},
+                        "ImageHeight": {"$": 40},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S2"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S2.JPG"
+                        },
+                        "ImageWidth": {"$": 110},
+                        "ImageHeight": {"$": 110},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S3"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S3.JPG"
+                        },
+                        "ImageWidth": {"$": 250},
+                        "ImageHeight": {"$": 250},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S4"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S4.JPG"
+                        },
+                        "ImageWidth": {"$": 500},
+                        "ImageHeight": {"$": 500},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S5.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "PRICE TAG"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473518_PE614592.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "LINE DRAWING"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S3"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S3.JPG"
+                        },
+                        "ImageWidth": {"$": 250},
+                        "ImageHeight": {"$": 250},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S4"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S4.JPG"
+                        },
+                        "ImageWidth": {"$": 500},
+                        "ImageHeight": {"$": 500},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S5.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                ]
+            },
+            "GPRCommSelectionCriteriaSelectionList": {
+                "GPRCommSelectionCriteriaSelection": {
+                    "SelectionCriteriaCode": {"$": "COLOUR"},
+                    "SelectionCriteriaName": {"$": "цвет"},
+                    "SelectionCriteriaValue": {"$": "-"},
+                }
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": {"$": "SEO"},
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": {"$": "DESCRIPTION"},
+                            "Value": {
+                                "$": "IKEA - ЭКЕТ, Накладная шина , Накладная шина обеспечивает прочную, простую и безопасную фиксацию шкафов ЭКЕТ к стене."
+                            },
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": {"$": 1},
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": {
+                                    "$": "Протирать влажной тканью."
+                                },
+                                "SortNo": {"$": 1},
+                            },
+                            {
+                                "CareInstructionText": {
+                                    "$": "Вытирать чистой сухой тканью."
+                                },
+                                "SortNo": {"$": 2},
+                            },
+                            {
+                                "CareInstructionText": {
+                                    "$": "Регулярно проверяйте все крепления и подтягивайте их при необходимости."
+                                },
+                                "SortNo": {"$": 3},
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCustomerBenefitList": {
+                "RetailItemCustomerBenefit": {
+                    "CustomerBenefitText": {
+                        "$": "Накладная шина обеспечивает прочную, простую и безопасную фиксацию шкафов ЭКЕТ к стене."
+                    },
+                    "SortNo": {"$": 1},
+                }
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": {
+                    "GoodToKnowTypeNameEn": {"$": "Purchase-/Other information"},
+                    "GoodToKnowText": {
+                        "$": "Накладная шина потребуется для фиксации шкафов ЭКЕТ к стене."
+                    },
+                    "SortNo": {"$": 1},
+                    "GoodToKnowHeader": {"$": "Дополнительная информация"},
+                }
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": {"$": 1},
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": {
+                            "MaterialText": {"$": "Оцинкованная сталь"},
+                            "SortNo": {"$": 1},
+                        }
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": {"$": "WIDTH"},
+                        "PackageMeasureTextMetric": {"$": "9 см"},
+                        "PackageMeasureTextImperial": {"$": "3 ¾ дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "HEIGHT"},
+                        "PackageMeasureTextMetric": {"$": "3 см"},
+                        "PackageMeasureTextImperial": {"$": "1 ¼ дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "LENGTH"},
+                        "PackageMeasureTextMetric": {"$": "33 см"},
+                        "PackageMeasureTextImperial": {"$": "13 дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "WEIGHT"},
+                        "PackageMeasureTextMetric": {"$": "0.33 кг"},
+                        "PackageMeasureTextImperial": {"$": "12 унц"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": {"$": "Width"},
+                        "ItemMeasureTypeName": {"$": "Ширина"},
+                        "ItemMeasureTextMetric": {"$": "29.5 см"},
+                        "ItemMeasureTextImperial": {"$": "11 ½ дюйм"},
+                        "SortNo": {"$": 1},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Depth"},
+                        "ItemMeasureTypeName": {"$": "Глубина"},
+                        "ItemMeasureTextMetric": {"$": "1.5 см"},
+                        "ItemMeasureTextImperial": {"$": "5/8 дюйм"},
+                        "SortNo": {"$": 2},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Height"},
+                        "ItemMeasureTypeName": {"$": "Высота"},
+                        "ItemMeasureTextMetric": {"$": "4 см"},
+                        "ItemMeasureTextImperial": {"$": "1 5/8 дюйм"},
+                        "SortNo": {"$": 3},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Frame width"},
+                        "ItemMeasureTypeName": {"$": "Ширина рамы"},
+                        "ItemMeasureTextMetric": {"$": "35 см"},
+                        "ItemMeasureTextImperial": {"$": "13 3/4 дюйм"},
+                        "SortNo": {"$": 4},
+                    },
+                ]
+            },
+            "CatalogRefList": {
+                "CatalogRef": [
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "genericproducts"},
+                            "CatalogName": {"$": "Товары"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/genericproducts"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 37745},
+                                "CatalogElementType": {"$": "GENERIC PRODUCT"},
+                                "CatalogElementName": {"$": "Экет"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/genericproducts/37745"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "series"},
+                            "CatalogName": {"$": "Серии"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/series"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 37556},
+                                "CatalogElementType": {"$": "TOP CATEGORY"},
+                                "CatalogElementName": {"$": "ЭКЕТ серия"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/series/37556"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "departments"},
+                            "CatalogName": {"$": "Отделы"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/departments"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/departments/living_room/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "functional"},
+                            "CatalogName": {"$": "Функциональный"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/functional"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/functional/10364/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "seasonal"},
+                            "CatalogName": {"$": "Сезонный"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/seasonal"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/seasonal/back_to_college/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "planner"},
+                            "CatalogName": {"$": "Планировщик"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/planner"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": "EKET_planner"},
+                                "CatalogElementType": {"$": "TOP CATEGORY"},
+                                "CatalogElementName": {"$": "EKET_planner"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/planner/EKET_planner"
+                                },
+                            }
+                        },
+                    },
+                ]
+            },
+            "PriceUnitTextMetricEn": {},
+            "PriceUnitTextImperialEn": {},
+            "RetailItemCommAttachmentList": {
+                "RetailItemCommAttachment": [
+                    {
+                        "AttachmentType": {"$": "ASSEMBLY_INSTRUCTION"},
+                        "AttachmentUrl": {
+                            "$": "/ru/ru/assembly_instructions/eket-nakladnaa-sina__AA-1912543-6_pub.pdf"
+                        },
+                        "SortNo": {"$": 1},
+                    },
+                    {
+                        "AttachmentType": {"$": "MANUAL"},
+                        "AttachmentUrl": {
+                            "$": "/ru/ru/manuals/eket-nakladnaa-sina__AA-2205802-3_pub.pdf"
+                        },
+                        "SortNo": {"$": 2},
+                    },
+                ]
+            },
+            "ItemMeasureReferenceTextMetric": {"$": "35 см"},
+            "ItemMeasureReferenceTextImperial": {"$": "13 3/4 дюйм"},
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": [
+                    {
+                        "CatalogElementRelationType": {"$": "X-SELL"},
+                        "CatalogElementRelationSemantic": {
+                            "$": "MAY_BE_COMPLETED_WITH"
+                        },
+                        "CatalogElementId": {"$": 10379751},
+                        "CatalogElementType": {"$": "ART"},
+                        "CatalogElementName": {"$": "ФИКСА"},
+                        "CatalogElementUrl": {
+                            "$": "/retail/iows/ru/ru/catalog/items/art,10379751"
+                        },
+                        "SortRelevanceList": {
+                            "SortRelevance": {
+                                "SortNo": {"$": 1},
+                                "SortType": {"$": "RELEVANCE"},
+                            }
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": {"$": "X-SELL"},
+                        "CatalogElementRelationSemantic": {
+                            "$": "MAY_BE_COMPLETED_WITH"
+                        },
+                        "CatalogElementId": {"$": 60378725},
+                        "CatalogElementType": {"$": "ART"},
+                        "CatalogElementName": {"$": "ФИКСА"},
+                        "CatalogElementUrl": {
+                            "$": "/retail/iows/ru/ru/catalog/items/art,60378725"
+                        },
+                        "SortRelevanceList": {
+                            "SortRelevance": {
+                                "SortNo": {"$": 2},
+                                "SortType": {"$": "RELEVANCE"},
+                            }
+                        },
+                    },
+                ]
+            },
+            "RetailItemFullLengthTextList": {
+                "RetailItemFullLengthText": {
+                    "FullLengthTextSubjectID": {"$": "000000000000008"},
+                    "RetailItemFullLengthTextDetailsList": {
+                        "RetailItemFullLengthTextDetail": [
+                            {
+                                "FullLengthTextIdentifier": {"$": "SUBJECT"},
+                                "FullLengthTextValue": {"$": "000000000000008"},
+                                "SortNo": {"$": 1},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "MAIN_HEADLINE"},
+                                "FullLengthTextValue": {
+                                    "$": "От дедушкиных ящиков к современным решениям для хранения"
+                                },
+                                "SortNo": {"$": 3},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "INTRODUCTION"},
+                                "FullLengthTextValue": {
+                                    "$": "В студенческие годы Петра Каммари Энарссон, разработчик ассортимента ИКЕА, часто переезжала, а для хранения вещей использовала старые рыболовные ящики, которые ей дал дедушка, живший на восточном побережье Швеции. Много лет спустя, разрабатывая новую серию ЭКЕТ, она вспомнила эти ящики, чтобы создать мобильное решение для хранения."
+                                },
+                                "SortNo": {"$": 5},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "TEXT"},
+                                "FullLengthTextValue": {
+                                    "$": "Новые технологии, новые увлечения и даже новый член семьи… большие и маленькие перемены влияют на нашу жизнь, наши потребности и наш дом, который должен вместить так много самых необходимых вещей. Как разработчик товаров ИКЕА Петра часто посещала дома наших покупателей, чтобы изучить их повседневную жизнь и понять, как решения для хранения могут изменить ее к лучшему. Оно запомнила одну семью из Копенгагена, к которой раз в две недели приезжала погостить дочь одного их супругов от предыдущего брака. «В доме не было отдельной комнаты для девочки, но родители поставили для нее кровать-чердак в гостиной, а для вещей можно было использовать стоящий под этой кроватью комод». Это отличный пример того, как можно разумно и комфортно организовать жизнь даже в небольшом доме. Ведь большая часть дневных событий и занятий проходит в гостиной, потому так важно, чтобы интерьер этой комнаты был и стильным, и практичным одновременно."
+                                },
+                                "SortNo": {"$": 6},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "SUB_HEADING"},
+                                "FullLengthTextValue": {
+                                    "$": "Мебель подстраивается под вас"
+                                },
+                                "SortNo": {"$": 7},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "BODY_TEXT"},
+                                "FullLengthTextValue": {
+                                    "$": "Частые переезды — новый тренд современного мира, люди с легкостью меняют место жительства, совсем как Петра в студенческие годы. «Проблема в том, что большая часть мебели не соответствует мобильному образу жизни, а значит, вам будет трудно поддерживать порядок в хранении вещей». Этот вывод вдохновил Петру и ее коллег на разработку более гибких и индивидуальных решений для хранения, которые можно легко адаптировать в соответствии с изменившимися потребностями, и вам не придется покупать новую мебель. Петра подумала о ящиках, которые в юности заменяли ей шкаф и комод. Их было легко передвигать и можно было ставить одни на другой. Что если сделать предмет мебели, состоящий из разные модулей, которые можно добавлять и убирать."
+                                },
+                                "SortNo": {"$": 8},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {
+                                    "$": "ADDITIONAL_SUB-HEADING_1"
+                                },
+                                "FullLengthTextValue": {"$": "Мебельный конструктор"},
+                                "SortNo": {"$": 9},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {
+                                    "$": "ADDITIONAL_BODY_TEXT_1"
+                                },
+                                "FullLengthTextValue": {
+                                    "$": "Для начала сотрудники команды Петры заказали картонные коробки разных размеров. Они помещали коробки в разные помещения и комбинировали их по-разному, как строительные блоки. Также они изучали различную статистику по хранению, например, сколько журналов мы храним дома или модуль какой высоты будет идеален для того, чтобы положить мобильный телефон. «Многие люди, возвращаясь домой, кладут ключи, телефон или сумку на определенное место. Мы часто делаем это автоматически, не задумываясь», — говорит Петра. Высота, которая подходит для большинства людей — 80 см, поэтому полка на этой высоте обязательно должна быть среди шкафов, полок и ящиков, которые вошли в серию ЭКЕТ. «Я рада, что нашим приоритетом стала мобильность и свобода выбора, мы создали модули ЭКЕТ разных цветов и размеров, — говорит Петра, с нетерпением ожидая возможность увидеть разработанные ей товары в домах наших покупателей. — Думаю, нас ждут самые неожиданные решения, о которых мы даже не предполагали»."
+                                },
+                                "SortNo": {"$": 10},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "ACTIVE"},
+                                "FullLengthTextValue": {"$": 1},
+                                "SortNo": {"$": 49},
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": [
+                    {
+                        "FilterAttributeType": {"$": "Colour"},
+                        "FilterAttributeTypeName": {"$": "Цвет"},
+                        "FilterAttributeValueList": {
+                            "FilterAttributeValue": {
+                                "FilterAttributeValueId": {"$": 10028},
+                                "FilterAttributeValueName": {"$": "серый"},
+                            }
+                        },
+                    },
+                    {
+                        "FilterAttributeType": {"$": "Number of seats"},
+                        "FilterAttributeTypeName": {"$": "Тип"},
+                        "FilterAttributeValueList": {
+                            "FilterAttributeValue": {
+                                "FilterAttributeValueId": {"$": 51519},
+                                "FilterAttributeValueName": {"$": "Накладная шина"},
+                            }
+                        },
+                    },
+                ]
+            },
+            "@xmlns": {"$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/"},
+        },
+    },
+    {
+        "name": "no CatalogRef",
+        "response": {
+            "ItemNo": 30365871,
+            "ItemNoGlobal": 80279946,
+            "ItemType": "ART",
+            "ProductName": "АНТИЛОП",
+            "ProductTypeName": "Ножка высокого стула",
+            "OnlineSellable": True,
+            "BreathTakingItem": True,
+            "ItemUnitCode": "PIECES",
+            "ItemNumberOfPackages": 1,
+            "AssemblyCode": "N",
+            "DesignerNameComm": "IKEA of Sweden",
+            "PriceUnitTextMetric": "шт",
+            "ItemPriceUnitFactorMetric": 4,
+            "ItemPriceUnitFactorImperial": 4,
+            "GlobalisationContext": {"LanguageCodeIso": "ru", "CountryCodeIso": "ru"},
+            "ClassUnitKey": {
+                "ClassType": "GR",
+                "ClassUnitType": "RU",
+                "ClassUnitCode": "RU",
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": "RegularSalesUnitPrice",
+                    "Price": 400,
+                    "PriceExclTax": 333.33,
+                    "ComparableUnitPrice": {
+                        "UnitPriceMetric": 100.0,
+                        "UnitPriceMetricExclTax": 83.33,
+                        "UnitPriceImperial": 100.0,
+                        "UnitPriceImperialExclTax": 83.33,
+                    },
+                    "CurrencyCode": "RUB",
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S1",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S1.jpg",
+                        "ImageWidth": 40,
+                        "ImageHeight": 40,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S2",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S2.jpg",
+                        "ImageWidth": 110,
+                        "ImageHeight": 110,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S3",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S3.jpg",
+                        "ImageWidth": 250,
+                        "ImageHeight": 250,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S4",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S4.jpg",
+                        "ImageWidth": 500,
+                        "ImageHeight": 500,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S5.jpg",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "PRICE TAG",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0745202_PE743624.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "LINE DRAWING",
+                    },
+                ]
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": "SEO",
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": "DESCRIPTION",
+                            "Value": "IKEA - АНТИЛОП, Ножка высокого стула",
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": 1,
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": "Протирать мягким мыльным раствором.",
+                                "SortNo": 1,
+                            },
+                            {
+                                "CareInstructionText": "Вытирать чистой сухой тканью.",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": {
+                    "GoodToKnowTypeNameEn": "Sold separately",
+                    "GoodToKnowText": "Необходимо дополнить сиденьем для высокого стульчика АНТИЛОП, продается отдельно.",
+                    "SortNo": 1,
+                    "GoodToKnowHeader": "Продается отдельно",
+                }
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": 1,
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": [
+                            {
+                                "PartText": "Ножка:",
+                                "MaterialText": "Сталь, Эпоксидное/полиэстерное порошковое покрытие",
+                                "SortNo": 1,
+                            },
+                            {
+                                "PartText": "Ножка:",
+                                "MaterialText": "Полипропилен, Полиэтилен",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": "WIDTH",
+                        "PackageMeasureTextMetric": "13 см",
+                        "PackageMeasureTextImperial": "5 дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "HEIGHT",
+                        "PackageMeasureTextMetric": "3 см",
+                        "PackageMeasureTextImperial": "1 ¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "LENGTH",
+                        "PackageMeasureTextMetric": "78 см",
+                        "PackageMeasureTextImperial": "30 ½ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "WEIGHT",
+                        "PackageMeasureTextMetric": "1.65 кг",
+                        "PackageMeasureTextImperial": "3 фнт 10 унц",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": "Height",
+                        "ItemMeasureTypeName": "Высота",
+                        "ItemMeasureTextMetric": "73 см",
+                        "ItemMeasureTextImperial": "28 3/4 дюйм",
+                        "SortNo": 1,
+                    },
+                    {
+                        "ItemMeasureType": "Diameter",
+                        "ItemMeasureTypeName": "Диаметр",
+                        "ItemMeasureTextMetric": "2.5 см",
+                        "ItemMeasureTextImperial": "1 дюйм",
+                        "SortNo": 2,
+                    },
+                    {
+                        "ItemMeasureType": "Package quantity",
+                        "ItemMeasureTypeName": "Количество в упаковке",
+                        "ItemMeasureTextMetric": "4 шт",
+                        "ItemMeasureTextImperial": "4 шт",
+                        "SortNo": 3,
+                    },
+                ]
+            },
+            "CatalogRefList": {},
+            "PriceUnitTextMetricEn": "pack",
+            "PriceUnitTextImperialEn": "pack",
+            "UnitPriceGroupCode": "MULTIPACK",
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": {
+                    "CatalogElementRelationType": "X-SELL",
+                    "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                    "CatalogElementId": 90365873,
+                    "CatalogElementType": "ART",
+                    "CatalogElementName": "АНТИЛОП",
+                    "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,90365873",
+                    "SortRelevanceList": {
+                        "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                    },
+                }
+            },
+            "RetailItemFullLengthTextList": {"RetailItemFullLengthText": {}},
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": {
+                    "FilterAttributeType": "Colour",
+                    "FilterAttributeTypeName": "Цвет",
+                    "FilterAttributeValueList": {
+                        "FilterAttributeValue": {
+                            "FilterAttributeValueId": 10028,
+                            "FilterAttributeValueName": "серый",
+                        }
+                    },
+                }
+            },
+            "@xmlns": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/",
+        },
+    },
+    {
+        "name": "CatalogRef is not list",
+        "response": {
+            "ItemNo": 20453514,
+            "ItemNoGlobal": 60448733,
+            "ItemType": "ART",
+            "ProductName": "БОАКСЕЛЬ",
+            "ProductTypeName": "Консоль",
+            "ValidDesignText": "белый",
+            "OnlineSellable": True,
+            "BreathTakingItem": False,
+            "ItemUnitCode": "PIECES",
+            "ItemNumberOfPackages": 1,
+            "AssemblyCode": "N",
+            "DesignerNameComm": "IKEA of Sweden",
+            "PriceUnitTextMetric": {},
+            "GlobalisationContext": {"LanguageCodeIso": "ru", "CountryCodeIso": "ru"},
+            "ClassUnitKey": {
+                "ClassType": "GR",
+                "ClassUnitType": "RU",
+                "ClassUnitCode": "RU",
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": "RegularSalesUnitPrice",
+                    "Price": 120,
+                    "PriceExclTax": 100,
+                    "CurrencyCode": "RUB",
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S1",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S1.JPG",
+                        "ImageWidth": 40,
+                        "ImageHeight": 40,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S2",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S2.JPG",
+                        "ImageWidth": 110,
+                        "ImageHeight": 110,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S3",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S3.JPG",
+                        "ImageWidth": 250,
+                        "ImageHeight": 250,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S4",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-belyj__0798107_PE767176_S4.JPG",
+                        "ImageWidth": 500,
+                        "ImageHeight": 500,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-belyj__0798107_PE767176_S5.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "PRICE TAG",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798106_PE767175.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "LINE DRAWING",
+                    },
+                ]
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": "SEO",
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": "DESCRIPTION",
+                            "Value": "IKEA - БОАКСЕЛЬ, Консоль, Консоли БОАКСЕЛЬ устанавливаются на настенную шину просто до щелчка, инструменты не требуются.Внутренние элементы БОАКСЕЛЬ легко устанавливаются на консоль до щелчка без всяких инструментов.Внутренние элементы БОАКСЕЛЬ легко",
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": 1,
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": "Протирать тканью, смоченной мягким моющим средством.",
+                                "SortNo": 1,
+                            },
+                            {
+                                "CareInstructionText": "Вытирать чистой сухой тканью.",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCustomerBenefitList": {
+                "RetailItemCustomerBenefit": [
+                    {
+                        "CustomerBenefitText": "Консоли БОАКСЕЛЬ устанавливаются на настенную шину просто до щелчка, инструменты не требуются.",
+                        "SortNo": 1,
+                    },
+                    {
+                        "CustomerBenefitText": "Внутренние элементы БОАКСЕЛЬ легко устанавливаются на консоль до щелчка без всяких инструментов.",
+                        "SortNo": 2,
+                    },
+                    {
+                        "CustomerBenefitText": "Внутренние элементы БОАКСЕЛЬ легко установить или снять, поэтому вы без труда реорганизуете пространство, измените или переместите решение при необходимости или по желанию.",
+                        "SortNo": 3,
+                    },
+                    {
+                        "CustomerBenefitText": "Аксессуары можно крепить с обеих сторон, что позволяет экономить место и создает стильное решение для хранения ваших вещей, кроме того, вам потребуется меньше консолей.",
+                        "SortNo": 4,
+                    },
+                    {
+                        "CustomerBenefitText": "Товары серии БОАКСЕЛЬ можно использовать в помещениях с повешенным уровнем влажности, например в прачечной.",
+                        "SortNo": 5,
+                    },
+                ]
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": [
+                    {
+                        "GoodToKnowTypeNameEn": "Compl. assembly information",
+                        "GoodToKnowText": "Для решения с 1 секцией необходимы 2 консоли. Для решения с 2 секциями, необходимо 3 консоли: две по краям и одна в центре.",
+                        "SortNo": 1,
+                        "GoodToKnowHeader": "Сборка и установка",
+                    },
+                    {
+                        "GoodToKnowTypeNameEn": "Compl. assembly information",
+                        "GoodToKnowText": "Крепежную планку при необходимости можно обрезать до нужной длины. Это применимо только при использовании более одной крепежной планки или для регулируемой платяной штанги и полки.",
+                        "SortNo": 2,
+                        "GoodToKnowHeader": "Сборка и установка",
+                    },
+                    {
+                        "GoodToKnowTypeNameEn": "Warning",
+                        "GoodToKnowText": "Внимание! Не допускайте, чтобы товары БОАКСЕЛЬ непосредственно контактировали с водой.",
+                        "SortNo": 3,
+                        "GoodToKnowHeader": "Безопасность и соответствие:",
+                    },
+                ]
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": 1,
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": {
+                            "MaterialText": "Сталь, Эпоксидное/полиэстерное порошковое покрытие",
+                            "SortNo": 1,
+                        }
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": "WIDTH",
+                        "PackageMeasureTextMetric": "8 см",
+                        "PackageMeasureTextImperial": "3 ¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "HEIGHT",
+                        "PackageMeasureTextMetric": "1 см",
+                        "PackageMeasureTextImperial": "¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "LENGTH",
+                        "PackageMeasureTextMetric": "40 см",
+                        "PackageMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "WEIGHT",
+                        "PackageMeasureTextMetric": "0.24 кг",
+                        "PackageMeasureTextImperial": "9 унц",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": "Width",
+                        "ItemMeasureTypeName": "Ширина",
+                        "ItemMeasureTextMetric": "40 см",
+                        "ItemMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 1,
+                    },
+                    {
+                        "ItemMeasureType": "Depth",
+                        "ItemMeasureTypeName": "Глубина",
+                        "ItemMeasureTextMetric": "40 см",
+                        "ItemMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 2,
+                    },
+                ]
+            },
+            "CatalogRefList": {
+                "CatalogRef": {
+                    "Catalog": {
+                        "CatalogId": "functional",
+                        "CatalogName": "Функциональный",
+                        "CatalogUrl": "/retail/iows/ru/ru/catalog/functional",
+                    },
+                    "CatalogElementList": {
+                        "CatalogElement": {
+                            "CatalogElementId": 47395,
+                            "CatalogElementType": "CATEGORY SYSTEM CHAPTER",
+                            "CatalogElementName": "Части БОАКСЕЛЬ",
+                            "CatalogElementUrl": "/retail/iows/ru/ru/catalog/functional/10364/47395",
+                        }
+                    },
+                }
+            },
+            "PriceUnitTextMetricEn": {},
+            "PriceUnitTextImperialEn": {},
+            "ItemMeasureReferenceTextMetric": "40 см",
+            "ItemMeasureReferenceTextImperial": "15 ¾ дюйм",
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": [
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 70453516,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,70453516",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 30453518,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,30453518",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 2, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 50453522,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,50453522",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 3, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 10453524,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,10453524",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 4, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                        "CatalogElementId": 80453568,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,80453568",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                        "CatalogElementId": 40453570,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,40453570",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 2, "SortType": "RELEVANCE"}
+                        },
+                    },
+                ]
+            },
+            "RetailItemCustomerBenefitSummaryText": "Эти компактные консоли способны решать большие задачи в организации хранения в вашем доме. Аксессуары можно крепить с обеих сторон, что позволяет экономить место и создает стильное решение для хранения ваших вещей.",
+            "RetailItemFullLengthTextList": {"RetailItemFullLengthText": {}},
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": {
+                    "FilterAttributeType": "Colour",
+                    "FilterAttributeTypeName": "Цвет",
+                    "FilterAttributeValueList": {
+                        "FilterAttributeValue": {
+                            "FilterAttributeValueId": 10156,
+                            "FilterAttributeValueName": "белый",
+                        }
+                    },
+                }
+            },
         },
     },
 )
