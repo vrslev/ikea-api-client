@@ -171,7 +171,7 @@ def _get_ingka_pip_items(item_codes: list[str]) -> list[types.ParsedItem]:
     return res
 
 
-def get_items(item_codes: list[str]):
+def get_items(item_codes: list[str]) -> list[types.ParsedItem]:
     pending_item_codes = parse_item_codes(item_codes, unshorten_ingka_pagelinks=True)
     fetched_items_iows = _get_iows_items(pending_item_codes)
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from ikea_api._constants import Constants
 from ikea_api._endpoints.auth import get_guest_token
 from ikea_api._endpoints.cart import Cart
@@ -30,28 +32,30 @@ class IKEA:
         *,
         country_code: str = "ru",
         language_code: str = "ru",
-    ):
+    ) -> None:
         self.token = token  # type: ignore
         Constants.COUNTRY_CODE = country_code
         Constants.LANGUAGE_CODE = language_code
 
-    def login_as_guest(self):
+    def login_as_guest(self) -> None:
         """Log in as guest. Token expires in 30 days."""
         self.token = get_guest_token()
 
     @property
-    def cart(self):
+    def cart(self) -> Cart:
         """Manage cart."""
         if not hasattr(self, "_cart"):
             self._cart = Cart(self.token)
         return self._cart
 
-    def order_capture(self, *, zip_code: str, state_code: str | None = None):
+    def order_capture(
+        self, *, zip_code: str, state_code: str | None = None
+    ) -> list[dict[str, Any]]:
         """Get available delivery services."""
         return OrderCapture(self.token, zip_code=zip_code, state_code=state_code)()
 
     @property
-    def purchases(self):
+    def purchases(self) -> Purchases:
         """Get information about your purchases."""
         if not hasattr(self, "_purchases"):
             self._purchases = Purchases(self.token)
@@ -59,6 +63,6 @@ class IKEA:
 
     def search(
         self, query: str, *, limit: int = 24, types: list[SearchType] = ["PRODUCT"]
-    ):
+    ) -> dict[str, dict[str, Any] | list[Any]]:
         """Search the IKEA product catalog by product name"""
         return Search()(query=query, limit=limit, types=types)
