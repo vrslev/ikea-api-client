@@ -1687,6 +1687,552 @@ test_data: tuple[dict[str, Any], ...] = (
             "@xmlns": {"$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/"},
         },
     },
+    {
+        "name": "no valid design text",
+        "response": {
+            "ItemNo": {"$": 10359343},
+            "ItemNoGlobal": {"$": "00340047"},
+            "ItemType": {"$": "ART"},
+            "ProductName": {"$": "ЭКЕТ"},
+            "ProductTypeName": {"$": "Накладная шина"},
+            "OnlineSellable": {"$": True},
+            "BreathTakingItem": {"$": False},
+            "ItemUnitCode": {"$": "PIECES"},
+            "ItemNumberOfPackages": {"$": 1},
+            "AssemblyCode": {"$": "Y"},
+            "DesignerNameComm": {"$": "IKEA of Sweden"},
+            "PriceUnitTextMetric": {},
+            "GlobalisationContext": {
+                "LanguageCodeIso": {"$": "ru"},
+                "CountryCodeIso": {"$": "ru"},
+            },
+            "ClassUnitKey": {
+                "ClassType": {"$": "GR"},
+                "ClassUnitType": {"$": "RU"},
+                "ClassUnitCode": {"$": "RU"},
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": {"$": "RegularSalesUnitPrice"},
+                    "Price": {"$": 200},
+                    "PriceExclTax": {"$": 166.67},
+                    "CurrencyCode": {"$": "RUB"},
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S1"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S1.JPG"
+                        },
+                        "ImageWidth": {"$": 40},
+                        "ImageHeight": {"$": 40},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S2"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S2.JPG"
+                        },
+                        "ImageWidth": {"$": 110},
+                        "ImageHeight": {"$": 110},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S3"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S3.JPG"
+                        },
+                        "ImageWidth": {"$": 250},
+                        "ImageHeight": {"$": 250},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S4"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S4.JPG"
+                        },
+                        "ImageWidth": {"$": 500},
+                        "ImageHeight": {"$": 500},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473519_PE614593_S5.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "PRICE TAG"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0473518_PE614592.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 1},
+                        "ImageType": {"$": "LINE DRAWING"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S3"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S3.JPG"
+                        },
+                        "ImageWidth": {"$": 250},
+                        "ImageHeight": {"$": 250},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S4"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S4.JPG"
+                        },
+                        "ImageWidth": {"$": 500},
+                        "ImageHeight": {"$": 500},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                    {
+                        "ImageUsage": {"$": "INTERNET"},
+                        "ImageSize": {"$": "S5"},
+                        "ImageUrl": {
+                            "$": "/ru/ru/images/products/eket-nakladnaa-sina__0843151_PE616267_S5.JPG"
+                        },
+                        "ImageWidth": {"$": 2000},
+                        "ImageHeight": {"$": 2000},
+                        "SortNo": {"$": 2},
+                        "ImageType": {"$": "PICTURE SINGLE"},
+                    },
+                ]
+            },
+            "GPRCommSelectionCriteriaSelectionList": {
+                "GPRCommSelectionCriteriaSelection": {
+                    "SelectionCriteriaCode": {"$": "COLOUR"},
+                    "SelectionCriteriaName": {"$": "цвет"},
+                    "SelectionCriteriaValue": {"$": "-"},
+                }
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": {"$": "SEO"},
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": {"$": "DESCRIPTION"},
+                            "Value": {
+                                "$": "IKEA - ЭКЕТ, Накладная шина , Накладная шина обеспечивает прочную, простую и безопасную фиксацию шкафов ЭКЕТ к стене."
+                            },
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": {"$": 1},
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": {
+                                    "$": "Протирать влажной тканью."
+                                },
+                                "SortNo": {"$": 1},
+                            },
+                            {
+                                "CareInstructionText": {
+                                    "$": "Вытирать чистой сухой тканью."
+                                },
+                                "SortNo": {"$": 2},
+                            },
+                            {
+                                "CareInstructionText": {
+                                    "$": "Регулярно проверяйте все крепления и подтягивайте их при необходимости."
+                                },
+                                "SortNo": {"$": 3},
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCustomerBenefitList": {
+                "RetailItemCustomerBenefit": {
+                    "CustomerBenefitText": {
+                        "$": "Накладная шина обеспечивает прочную, простую и безопасную фиксацию шкафов ЭКЕТ к стене."
+                    },
+                    "SortNo": {"$": 1},
+                }
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": {
+                    "GoodToKnowTypeNameEn": {"$": "Purchase-/Other information"},
+                    "GoodToKnowText": {
+                        "$": "Накладная шина потребуется для фиксации шкафов ЭКЕТ к стене."
+                    },
+                    "SortNo": {"$": 1},
+                    "GoodToKnowHeader": {"$": "Дополнительная информация"},
+                }
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": {"$": 1},
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": {
+                            "MaterialText": {"$": "Оцинкованная сталь"},
+                            "SortNo": {"$": 1},
+                        }
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": {"$": "WIDTH"},
+                        "PackageMeasureTextMetric": {"$": "9 см"},
+                        "PackageMeasureTextImperial": {"$": "3 ¾ дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "HEIGHT"},
+                        "PackageMeasureTextMetric": {"$": "3 см"},
+                        "PackageMeasureTextImperial": {"$": "1 ¼ дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "LENGTH"},
+                        "PackageMeasureTextMetric": {"$": "33 см"},
+                        "PackageMeasureTextImperial": {"$": "13 дюйм"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                    {
+                        "PackageMeasureType": {"$": "WEIGHT"},
+                        "PackageMeasureTextMetric": {"$": "0.33 кг"},
+                        "PackageMeasureTextImperial": {"$": "12 унц"},
+                        "SortNo": {"$": 1},
+                        "ConsumerPackNumber": {"$": 1},
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": {"$": "Width"},
+                        "ItemMeasureTypeName": {"$": "Ширина"},
+                        "ItemMeasureTextMetric": {"$": "29.5 см"},
+                        "ItemMeasureTextImperial": {"$": "11 ½ дюйм"},
+                        "SortNo": {"$": 1},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Depth"},
+                        "ItemMeasureTypeName": {"$": "Глубина"},
+                        "ItemMeasureTextMetric": {"$": "1.5 см"},
+                        "ItemMeasureTextImperial": {"$": "5/8 дюйм"},
+                        "SortNo": {"$": 2},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Height"},
+                        "ItemMeasureTypeName": {"$": "Высота"},
+                        "ItemMeasureTextMetric": {"$": "4 см"},
+                        "ItemMeasureTextImperial": {"$": "1 5/8 дюйм"},
+                        "SortNo": {"$": 3},
+                    },
+                    {
+                        "ItemMeasureType": {"$": "Frame width"},
+                        "ItemMeasureTypeName": {"$": "Ширина рамы"},
+                        "ItemMeasureTextMetric": {"$": "35 см"},
+                        "ItemMeasureTextImperial": {"$": "13 3/4 дюйм"},
+                        "SortNo": {"$": 4},
+                    },
+                ]
+            },
+            "CatalogRefList": {
+                "CatalogRef": [
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "genericproducts"},
+                            "CatalogName": {"$": "Товары"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/genericproducts"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 37745},
+                                "CatalogElementType": {"$": "GENERIC PRODUCT"},
+                                "CatalogElementName": {"$": "Экет"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/genericproducts/37745"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "series"},
+                            "CatalogName": {"$": "Серии"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/series"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 37556},
+                                "CatalogElementType": {"$": "TOP CATEGORY"},
+                                "CatalogElementName": {"$": "ЭКЕТ серия"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/series/37556"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "departments"},
+                            "CatalogName": {"$": "Отделы"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/departments"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/departments/living_room/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "functional"},
+                            "CatalogName": {"$": "Функциональный"},
+                            "CatalogUrl": {
+                                "$": "/retail/iows/ru/ru/catalog/functional"
+                            },
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/functional/10364/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "seasonal"},
+                            "CatalogName": {"$": "Сезонный"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/seasonal"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": 11465},
+                                "CatalogElementType": {"$": "SUB CATEGORY"},
+                                "CatalogElementName": {"$": "Стеллажи"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/seasonal/back_to_college/11465"
+                                },
+                            }
+                        },
+                    },
+                    {
+                        "Catalog": {
+                            "CatalogId": {"$": "planner"},
+                            "CatalogName": {"$": "Планировщик"},
+                            "CatalogUrl": {"$": "/retail/iows/ru/ru/catalog/planner"},
+                        },
+                        "CatalogElementList": {
+                            "CatalogElement": {
+                                "CatalogElementId": {"$": "EKET_planner"},
+                                "CatalogElementType": {"$": "TOP CATEGORY"},
+                                "CatalogElementName": {"$": "EKET_planner"},
+                                "CatalogElementUrl": {
+                                    "$": "/retail/iows/ru/ru/catalog/planner/EKET_planner"
+                                },
+                            }
+                        },
+                    },
+                ]
+            },
+            "PriceUnitTextMetricEn": {},
+            "PriceUnitTextImperialEn": {},
+            "RetailItemCommAttachmentList": {
+                "RetailItemCommAttachment": [
+                    {
+                        "AttachmentType": {"$": "ASSEMBLY_INSTRUCTION"},
+                        "AttachmentUrl": {
+                            "$": "/ru/ru/assembly_instructions/eket-nakladnaa-sina__AA-1912543-6_pub.pdf"
+                        },
+                        "SortNo": {"$": 1},
+                    },
+                    {
+                        "AttachmentType": {"$": "MANUAL"},
+                        "AttachmentUrl": {
+                            "$": "/ru/ru/manuals/eket-nakladnaa-sina__AA-2205802-3_pub.pdf"
+                        },
+                        "SortNo": {"$": 2},
+                    },
+                ]
+            },
+            "ItemMeasureReferenceTextMetric": {"$": "35 см"},
+            "ItemMeasureReferenceTextImperial": {"$": "13 3/4 дюйм"},
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": [
+                    {
+                        "CatalogElementRelationType": {"$": "X-SELL"},
+                        "CatalogElementRelationSemantic": {
+                            "$": "MAY_BE_COMPLETED_WITH"
+                        },
+                        "CatalogElementId": {"$": 10379751},
+                        "CatalogElementType": {"$": "ART"},
+                        "CatalogElementName": {"$": "ФИКСА"},
+                        "CatalogElementUrl": {
+                            "$": "/retail/iows/ru/ru/catalog/items/art,10379751"
+                        },
+                        "SortRelevanceList": {
+                            "SortRelevance": {
+                                "SortNo": {"$": 1},
+                                "SortType": {"$": "RELEVANCE"},
+                            }
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": {"$": "X-SELL"},
+                        "CatalogElementRelationSemantic": {
+                            "$": "MAY_BE_COMPLETED_WITH"
+                        },
+                        "CatalogElementId": {"$": 60378725},
+                        "CatalogElementType": {"$": "ART"},
+                        "CatalogElementName": {"$": "ФИКСА"},
+                        "CatalogElementUrl": {
+                            "$": "/retail/iows/ru/ru/catalog/items/art,60378725"
+                        },
+                        "SortRelevanceList": {
+                            "SortRelevance": {
+                                "SortNo": {"$": 2},
+                                "SortType": {"$": "RELEVANCE"},
+                            }
+                        },
+                    },
+                ]
+            },
+            "RetailItemFullLengthTextList": {
+                "RetailItemFullLengthText": {
+                    "FullLengthTextSubjectID": {"$": "000000000000008"},
+                    "RetailItemFullLengthTextDetailsList": {
+                        "RetailItemFullLengthTextDetail": [
+                            {
+                                "FullLengthTextIdentifier": {"$": "SUBJECT"},
+                                "FullLengthTextValue": {"$": "000000000000008"},
+                                "SortNo": {"$": 1},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "MAIN_HEADLINE"},
+                                "FullLengthTextValue": {
+                                    "$": "От дедушкиных ящиков к современным решениям для хранения"
+                                },
+                                "SortNo": {"$": 3},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "INTRODUCTION"},
+                                "FullLengthTextValue": {
+                                    "$": "В студенческие годы Петра Каммари Энарссон, разработчик ассортимента ИКЕА, часто переезжала, а для хранения вещей использовала старые рыболовные ящики, которые ей дал дедушка, живший на восточном побережье Швеции. Много лет спустя, разрабатывая новую серию ЭКЕТ, она вспомнила эти ящики, чтобы создать мобильное решение для хранения."
+                                },
+                                "SortNo": {"$": 5},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "TEXT"},
+                                "FullLengthTextValue": {
+                                    "$": "Новые технологии, новые увлечения и даже новый член семьи… большие и маленькие перемены влияют на нашу жизнь, наши потребности и наш дом, который должен вместить так много самых необходимых вещей. Как разработчик товаров ИКЕА Петра часто посещала дома наших покупателей, чтобы изучить их повседневную жизнь и понять, как решения для хранения могут изменить ее к лучшему. Оно запомнила одну семью из Копенгагена, к которой раз в две недели приезжала погостить дочь одного их супругов от предыдущего брака. «В доме не было отдельной комнаты для девочки, но родители поставили для нее кровать-чердак в гостиной, а для вещей можно было использовать стоящий под этой кроватью комод». Это отличный пример того, как можно разумно и комфортно организовать жизнь даже в небольшом доме. Ведь большая часть дневных событий и занятий проходит в гостиной, потому так важно, чтобы интерьер этой комнаты был и стильным, и практичным одновременно."
+                                },
+                                "SortNo": {"$": 6},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "SUB_HEADING"},
+                                "FullLengthTextValue": {
+                                    "$": "Мебель подстраивается под вас"
+                                },
+                                "SortNo": {"$": 7},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "BODY_TEXT"},
+                                "FullLengthTextValue": {
+                                    "$": "Частые переезды — новый тренд современного мира, люди с легкостью меняют место жительства, совсем как Петра в студенческие годы. «Проблема в том, что большая часть мебели не соответствует мобильному образу жизни, а значит, вам будет трудно поддерживать порядок в хранении вещей». Этот вывод вдохновил Петру и ее коллег на разработку более гибких и индивидуальных решений для хранения, которые можно легко адаптировать в соответствии с изменившимися потребностями, и вам не придется покупать новую мебель. Петра подумала о ящиках, которые в юности заменяли ей шкаф и комод. Их было легко передвигать и можно было ставить одни на другой. Что если сделать предмет мебели, состоящий из разные модулей, которые можно добавлять и убирать."
+                                },
+                                "SortNo": {"$": 8},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {
+                                    "$": "ADDITIONAL_SUB-HEADING_1"
+                                },
+                                "FullLengthTextValue": {"$": "Мебельный конструктор"},
+                                "SortNo": {"$": 9},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {
+                                    "$": "ADDITIONAL_BODY_TEXT_1"
+                                },
+                                "FullLengthTextValue": {
+                                    "$": "Для начала сотрудники команды Петры заказали картонные коробки разных размеров. Они помещали коробки в разные помещения и комбинировали их по-разному, как строительные блоки. Также они изучали различную статистику по хранению, например, сколько журналов мы храним дома или модуль какой высоты будет идеален для того, чтобы положить мобильный телефон. «Многие люди, возвращаясь домой, кладут ключи, телефон или сумку на определенное место. Мы часто делаем это автоматически, не задумываясь», — говорит Петра. Высота, которая подходит для большинства людей — 80 см, поэтому полка на этой высоте обязательно должна быть среди шкафов, полок и ящиков, которые вошли в серию ЭКЕТ. «Я рада, что нашим приоритетом стала мобильность и свобода выбора, мы создали модули ЭКЕТ разных цветов и размеров, — говорит Петра, с нетерпением ожидая возможность увидеть разработанные ей товары в домах наших покупателей. — Думаю, нас ждут самые неожиданные решения, о которых мы даже не предполагали»."
+                                },
+                                "SortNo": {"$": 10},
+                            },
+                            {
+                                "FullLengthTextIdentifier": {"$": "ACTIVE"},
+                                "FullLengthTextValue": {"$": 1},
+                                "SortNo": {"$": 49},
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": [
+                    {
+                        "FilterAttributeType": {"$": "Colour"},
+                        "FilterAttributeTypeName": {"$": "Цвет"},
+                        "FilterAttributeValueList": {
+                            "FilterAttributeValue": {
+                                "FilterAttributeValueId": {"$": 10028},
+                                "FilterAttributeValueName": {"$": "серый"},
+                            }
+                        },
+                    },
+                    {
+                        "FilterAttributeType": {"$": "Number of seats"},
+                        "FilterAttributeTypeName": {"$": "Тип"},
+                        "FilterAttributeValueList": {
+                            "FilterAttributeValue": {
+                                "FilterAttributeValueId": {"$": 51519},
+                                "FilterAttributeValueName": {"$": "Накладная шина"},
+                            }
+                        },
+                    },
+                ]
+            },
+            "@xmlns": {"$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/"},
+        },
+    },
 )
 
 

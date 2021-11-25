@@ -81,7 +81,7 @@ class ResponseIowsItem(GenericItem):
     ItemType: ItemType
     CatalogRefList: CatalogRefList
     ItemMeasureReferenceTextMetric: str
-    ValidDesignText: str
+    ValidDesignText: Optional[str]
     RetailItemCommPackageMeasureList: Optional[RetailItemCommPackageMeasureList]
     RetailItemImageList: RetailItemImageList
     RetailItemCommChildList: Optional[RetailItemCommChildList]
@@ -198,7 +198,9 @@ def get_category_name_and_url(catalogs: List[Catalog]):
 
 
 def main(response: Dict[str, Any]):
+    print(response)
     response = get_rid_of_dollars(response)
+    print(response["ItemNo"])
     item = ResponseIowsItem(**response)
 
     is_combination = get_is_combination_from_item_type(item.ItemType)
