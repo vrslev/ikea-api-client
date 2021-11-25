@@ -8,7 +8,6 @@ from pydantic import HttpUrl
 from pydantic.fields import Field, FieldInfo
 from pydantic.main import ModelMetaclass as PydanticModelMetaclass
 
-# TODO: Make all of this Pydantic models
 _T = TypeVar("_T")
 
 

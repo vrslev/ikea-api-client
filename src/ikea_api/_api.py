@@ -7,7 +7,7 @@ from typing import Any
 import requests
 
 from ikea_api._constants import DEFAULT_HEADERS
-from ikea_api.exceptions import GraphQLError, IkeaApiError, UnauthorizedError
+from ikea_api.exceptions import GraphQLError, IKEAAPIError, UnauthorizedError
 
 if sys.version_info < (3, 8):
     from typing_extensions import TypedDict
@@ -38,12 +38,12 @@ class API:
         try:
             resp_json = response.json()
         except JSONDecodeError:
-            raise IkeaApiError(response)
+            raise IKEAAPIError(response)
         response._json = resp_json
         self._basic_error_handler(response)
         self._error_handler(response)
         if not response.ok:
-            raise IkeaApiError(response)
+            raise IKEAAPIError(response)
         return response._json
 
     def _get(

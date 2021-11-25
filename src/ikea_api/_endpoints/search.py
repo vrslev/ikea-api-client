@@ -23,6 +23,7 @@ class Search(API):
     def __call__(
         self,
         query: str,
+        *,
         limit: int = 24,
         types: list[SearchType] = ["PRODUCT"],
     ) -> dict[str, dict[str, Any] | list[Any]]:

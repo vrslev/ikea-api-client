@@ -3,7 +3,7 @@ import requests
 import responses
 
 from ikea_api._endpoints.item_pip import PipItem
-from ikea_api.exceptions import IkeaApiError
+from ikea_api.exceptions import IKEAAPIError
 
 
 @pytest.mark.parametrize(
@@ -51,7 +51,7 @@ def test_item_pip_call_ok_second_time():
                 response = requests.Response()
                 response.status_code = 404
                 response._content = b"some msg"
-                raise IkeaApiError(response)
+                raise IKEAAPIError(response)
 
     assert MockPipItem()(exp_item_code) == exp_response
     assert called_request_item
@@ -75,9 +75,9 @@ def test_item_pip_call_not_ok(exp_status: int):
             response = requests.Response()
             response.status_code = exp_status
             response._content = exp_msg.encode()
-            raise IkeaApiError(response)
+            raise IKEAAPIError(response)
 
-    with pytest.raises(IkeaApiError) as exc:
+    with pytest.raises(IKEAAPIError) as exc:
         MockPipItem()(exp_item_code)
     assert exc.value.args == ((exp_status, exp_msg),)
     assert called_request_item

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from ikea_api.wrappers._parsers.item_base import (
@@ -17,8 +19,9 @@ def test_item_code_validator_type_error():
         ItemCode.validate({})
 
 
-def test_item_code_validator_passes():
-    ItemCode.validate("11111111")
+@pytest.mark.parametrize("v", ("11111111", 11111111))
+def test_item_code_validator_passes(v: str | int):
+    assert ItemCode.validate(v) == str(v)
 
 
 @pytest.mark.parametrize(

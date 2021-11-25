@@ -10,7 +10,7 @@ import pytest
 
 import ikea_api._endpoints.item_iows
 import ikea_api.wrappers
-from ikea_api import IkeaApi
+from ikea_api import IKEA
 from ikea_api._api import GraphQLResponse
 from ikea_api.exceptions import GraphQLError, ItemFetchError
 from ikea_api.wrappers import (
@@ -58,7 +58,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch):
             called_history = True
             return mock_history
 
-    class CustomIkeaApi:
+    class CustomIKEA:
         @property
         def purchases(self):
             return CustomPurchases()
@@ -73,7 +73,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(
         ikea_api.wrappers.purchases, "parse_history", mock_parse_history
     )
-    get_purchase_history(CustomIkeaApi())  # type: ignore
+    get_purchase_history(CustomIKEA())  # type: ignore
     assert called_history
     assert called_parse
 
@@ -92,7 +92,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
             assert queries == ["StatusBannerOrder", "CostsOrder"]
             return mock_status_banner, mock_costs
 
-    class CustomIkeaApi:
+    class CustomIKEA:
         @property
         def purchases(self):
             return CustomPurchases()
@@ -124,7 +124,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
         ikea_api.wrappers.purchases, "parse_costs_order", mock_parse_costs_order
     )
 
-    res = get_purchase_info(CustomIkeaApi(), exp_id, exp_email)  # type: ignore
+    res = get_purchase_info(CustomIKEA(), id=exp_id, email=exp_email)  # type: ignore
     assert called_order_info
     assert called_parse_status_banner
     assert called_parse_costs
@@ -146,12 +146,12 @@ def test_add_items_to_cart_passes():
             called_add_items = True
             assert items == exp_items
 
-    class CustomIkeaApi:
+    class CustomIKEA:
         @property
         def cart(self):
             return CustomCart()
 
-    res = add_items_to_cart(CustomIkeaApi(), exp_items.copy())  # type: ignore
+    res = add_items_to_cart(CustomIKEA(), items=exp_items.copy())  # type: ignore
     assert called_clear
     assert called_add_items
     assert res == []
@@ -218,26 +218,26 @@ def test_add_items_to_cart_fails():
             elif count == 3:
                 assert items == exp_items_third
 
-    class CustomIkeaApi:
+    class CustomIKEA:
         @property
         def cart(self):
             if not hasattr(self, "_cart"):
                 self._cart = CustomCart()
             return self._cart
 
-    res = add_items_to_cart(CustomIkeaApi(), exp_items_first.copy())  # type: ignore
+    res = add_items_to_cart(CustomIKEA(), items=exp_items_first.copy())  # type: ignore
     assert called_clear
     assert called_add_items
     assert res == ["22222222", "33333333"]
 
 
 def test_get_delivery_services_cannot_add_all_items(monkeypatch: pytest.MonkeyPatch):
-    api_ = IkeaApi()
+    api_ = IKEA()
     exp_items = {"11111111": 2}
     exp_cannot_add = ["11111111"]
     called_add_items_to_cart = False
 
-    def mock_add_items_to_cart(api: IkeaApi, items: dict[str, int]):
+    def mock_add_items_to_cart(api: IKEA, items: dict[str, int]):
         nonlocal called_add_items_to_cart
         called_add_items_to_cart = True
         assert api == api_
@@ -246,7 +246,9 @@ def test_get_delivery_services_cannot_add_all_items(monkeypatch: pytest.MonkeyPa
 
     monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
 
-    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), "101000")
+    res = ikea_api.wrappers.get_delivery_services(
+        api_, items=exp_items.copy(), zip_code="101000"
+    )
     assert called_add_items_to_cart
     assert res == types.GetDeliveryServicesResponse(
         delivery_options=[], cannot_add=exp_cannot_add
@@ -280,7 +282,9 @@ def test_get_delivery_services_passes(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr(ikea_api.wrappers, "add_items_to_cart", mock_add_items_to_cart)
 
-    res = ikea_api.wrappers.get_delivery_services(api_, exp_items.copy(), exp_zip_code)  # type: ignore
+    res = ikea_api.wrappers.get_delivery_services(
+        api_, items=exp_items.copy(), zip_code=exp_zip_code  # type: ignore
+    )
     assert called_order_capture
     assert called_add_items_to_cart
     assert res.cannot_add == exp_cannot_add

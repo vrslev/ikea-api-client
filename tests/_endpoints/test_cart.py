@@ -81,7 +81,7 @@ def test_update_items(cart: Cart):
 def test_copy_items(cart: Cart):
     source_user_id = "112"
     patch_call_api(cart, Mutations.copy_items, {"sourceUserId": source_user_id})
-    assert cart.copy_items(source_user_id) == "test"
+    assert cart.copy_items(source_user_id=source_user_id) == "test"
 
 
 def test_remove_items(cart: Cart):

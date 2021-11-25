@@ -10,7 +10,7 @@ from ikea_api.exceptions import NoDeliveryOptionsAvailableError, OrderCaptureErr
 
 
 class OrderCapture(AuthorizedAPI):
-    def __init__(self, token: str, zip_code: str, state_code: str | None = None):
+    def __init__(self, token: str, *, zip_code: str, state_code: str | None = None):
         _validate_zip_code(zip_code)
         _validate_state_code(state_code)
         self._zip_code = zip_code
@@ -25,7 +25,7 @@ class OrderCapture(AuthorizedAPI):
 
     def _error_handler(self, response: CustomResponse):
         if isinstance(response._json, dict) and "errorCode" in response._json:
-            if response._json["errorCode"] in [60005, 60006]:
+            if response._json["errorCode"] in (60005, 60006):
                 raise NoDeliveryOptionsAvailableError(response)
             raise OrderCaptureError(response)
 
@@ -60,7 +60,7 @@ class OrderCapture(AuthorizedAPI):
             raise RuntimeError("No resourceId for checkout")
         return resp["resourceId"]
 
-    def _get_delivery_area(self, checkout: str | None) -> str:
+    def _get_delivery_area(self, checkout: str) -> str:
         """Generate delivery area for checkout from Zip Code and State Code"""
         data = {"enableRangeOfDays": False, "zipCode": self._zip_code}
         if self._state_code is not None:
@@ -89,7 +89,7 @@ class OrderCapture(AuthorizedAPI):
 
 
 def _validate_zip_code(zip_code: str):
-    if len(re.findall(r"[^0-9]", str(zip_code))) > 0:
+    if len(re.findall(r"[^0-9]", zip_code)) > 0:
         raise ValueError(f"Invalid zip code: {zip_code}")
 
 
