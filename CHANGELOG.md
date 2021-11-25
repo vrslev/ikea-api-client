@@ -3,6 +3,16 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.1 (2021-11-25)
+### Fix
+* **wrappers:** Allow empty response in Item Pip parser ([`115f574`](https://github.com/vrslev/ikea-api-client/commit/115f574de67fa0c59e3da1e1ff7c76653cbf0b4e))
+* **wrappers:** Allow optional `catalogRefs` in Item Pip parser ([`e3fee53`](https://github.com/vrslev/ikea-api-client/commit/e3fee5318333d3ef6a8dcf0cc3c46e8cc970f08d))
+* **wrappers:** Parse item codes (allow raw ones) in item parsers ([`55c01d5`](https://github.com/vrslev/ikea-api-client/commit/55c01d5a0b4a79a153b232b178f04bb435ce6bba))
+* **wrappers:** Allow `CatalogRef` to be not list in Item Iows parser ([`a935f4a`](https://github.com/vrslev/ikea-api-client/commit/a935f4ab89595cd5fb0175ec199750849e474850))
+* **wrappers:** Allow optional `CatalogRef` in Item Iows parser ([`525f3e9`](https://github.com/vrslev/ikea-api-client/commit/525f3e9fa04e101a6f0ba53065393fa76da6701c))
+* **wrappers:** Allow optional `ValidDesignText` in Item Iows parser ([`c82885b`](https://github.com/vrslev/ikea-api-client/commit/c82885bf107ca392f65c40632ab56166173a9fea))
+* Add missing type hints ([`aa1e25b`](https://github.com/vrslev/ikea-api-client/commit/aa1e25bf4e9d99fe0f5e8d9d5709208f4d53e12a))
+
 ## v1.0.0 (2021-11-25)
 ### Feature
 * Prepare for major release ([#69](https://github.com/vrslev/ikea-api-client/issues/69)) ([`8e72a16`](https://github.com/vrslev/ikea-api-client/commit/8e72a165bbebc1e2aa96ea772d0fe94df85ad0c1))
