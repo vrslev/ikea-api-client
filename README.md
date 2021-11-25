@@ -120,7 +120,7 @@ If you use authorized token (copy-paste from cookies), than you edit your user's
 > )
 > ```
 
-### [🚛 Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/order_capture.py)
+### 🚛 [Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/order_capture.py)
 
 Check pickup or delivery availability. If you need to know whether items are available _in stores_, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
 
