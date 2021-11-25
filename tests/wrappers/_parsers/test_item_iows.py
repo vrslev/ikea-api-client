@@ -8,6 +8,9 @@ import pytest
 from ikea_api._constants import Constants
 from ikea_api.wrappers import types
 from ikea_api.wrappers._parsers.item_iows import (
+    Catalog,
+    CatalogElement,
+    CatalogElementList,
     get_category_name_and_url,
     get_child_items,
     get_image_url,
@@ -192,6 +195,18 @@ def test_get_category_name_and_url_no_category():
 
 def test_get_category_name_and_url_no_categories():
     assert get_category_name_and_url([]) == (None, None)
+
+
+def test_get_category_name_and_url_not_list():
+    assert get_category_name_and_url(
+        Catalog(
+            CatalogElementList=CatalogElementList(
+                CatalogElement=CatalogElement(
+                    CatalogElementName="name", CatalogElementId="id"
+                )
+            )
+        )
+    ) == ("name", "https://www.ikea.com/ru/ru/cat/-id")
 
 
 @pytest.mark.parametrize(("name", "id"), (("value", {}), ({}, "value"), ({}, {})))
@@ -2475,6 +2490,336 @@ test_data: tuple[dict[str, Any], ...] = (
                 }
             },
             "@xmlns": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/",
+        },
+    },
+    {
+        "name": "CatalogRef is not list",
+        "response": {
+            "ItemNo": 20453514,
+            "ItemNoGlobal": 60448733,
+            "ItemType": "ART",
+            "ProductName": "БОАКСЕЛЬ",
+            "ProductTypeName": "Консоль",
+            "ValidDesignText": "белый",
+            "OnlineSellable": True,
+            "BreathTakingItem": False,
+            "ItemUnitCode": "PIECES",
+            "ItemNumberOfPackages": 1,
+            "AssemblyCode": "N",
+            "DesignerNameComm": "IKEA of Sweden",
+            "PriceUnitTextMetric": {},
+            "GlobalisationContext": {"LanguageCodeIso": "ru", "CountryCodeIso": "ru"},
+            "ClassUnitKey": {
+                "ClassType": "GR",
+                "ClassUnitType": "RU",
+                "ClassUnitCode": "RU",
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": "RegularSalesUnitPrice",
+                    "Price": 120,
+                    "PriceExclTax": 100,
+                    "CurrencyCode": "RUB",
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S1",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S1.JPG",
+                        "ImageWidth": 40,
+                        "ImageHeight": 40,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S2",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S2.JPG",
+                        "ImageWidth": 110,
+                        "ImageHeight": 110,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S3",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798107_PE767176_S3.JPG",
+                        "ImageWidth": 250,
+                        "ImageHeight": 250,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S4",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-belyj__0798107_PE767176_S4.JPG",
+                        "ImageWidth": 500,
+                        "ImageHeight": 500,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-belyj__0798107_PE767176_S5.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "PRICE TAG",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/boaksel-konsol-__0798106_PE767175.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "LINE DRAWING",
+                    },
+                ]
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": "SEO",
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": "DESCRIPTION",
+                            "Value": "IKEA - БОАКСЕЛЬ, Консоль, Консоли БОАКСЕЛЬ устанавливаются на настенную шину просто до щелчка, инструменты не требуются.Внутренние элементы БОАКСЕЛЬ легко устанавливаются на консоль до щелчка без всяких инструментов.Внутренние элементы БОАКСЕЛЬ легко",
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": 1,
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": "Протирать тканью, смоченной мягким моющим средством.",
+                                "SortNo": 1,
+                            },
+                            {
+                                "CareInstructionText": "Вытирать чистой сухой тканью.",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCustomerBenefitList": {
+                "RetailItemCustomerBenefit": [
+                    {
+                        "CustomerBenefitText": "Консоли БОАКСЕЛЬ устанавливаются на настенную шину просто до щелчка, инструменты не требуются.",
+                        "SortNo": 1,
+                    },
+                    {
+                        "CustomerBenefitText": "Внутренние элементы БОАКСЕЛЬ легко устанавливаются на консоль до щелчка без всяких инструментов.",
+                        "SortNo": 2,
+                    },
+                    {
+                        "CustomerBenefitText": "Внутренние элементы БОАКСЕЛЬ легко установить или снять, поэтому вы без труда реорганизуете пространство, измените или переместите решение при необходимости или по желанию.",
+                        "SortNo": 3,
+                    },
+                    {
+                        "CustomerBenefitText": "Аксессуары можно крепить с обеих сторон, что позволяет экономить место и создает стильное решение для хранения ваших вещей, кроме того, вам потребуется меньше консолей.",
+                        "SortNo": 4,
+                    },
+                    {
+                        "CustomerBenefitText": "Товары серии БОАКСЕЛЬ можно использовать в помещениях с повешенным уровнем влажности, например в прачечной.",
+                        "SortNo": 5,
+                    },
+                ]
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": [
+                    {
+                        "GoodToKnowTypeNameEn": "Compl. assembly information",
+                        "GoodToKnowText": "Для решения с 1 секцией необходимы 2 консоли. Для решения с 2 секциями, необходимо 3 консоли: две по краям и одна в центре.",
+                        "SortNo": 1,
+                        "GoodToKnowHeader": "Сборка и установка",
+                    },
+                    {
+                        "GoodToKnowTypeNameEn": "Compl. assembly information",
+                        "GoodToKnowText": "Крепежную планку при необходимости можно обрезать до нужной длины. Это применимо только при использовании более одной крепежной планки или для регулируемой платяной штанги и полки.",
+                        "SortNo": 2,
+                        "GoodToKnowHeader": "Сборка и установка",
+                    },
+                    {
+                        "GoodToKnowTypeNameEn": "Warning",
+                        "GoodToKnowText": "Внимание! Не допускайте, чтобы товары БОАКСЕЛЬ непосредственно контактировали с водой.",
+                        "SortNo": 3,
+                        "GoodToKnowHeader": "Безопасность и соответствие:",
+                    },
+                ]
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": 1,
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": {
+                            "MaterialText": "Сталь, Эпоксидное/полиэстерное порошковое покрытие",
+                            "SortNo": 1,
+                        }
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": "WIDTH",
+                        "PackageMeasureTextMetric": "8 см",
+                        "PackageMeasureTextImperial": "3 ¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "HEIGHT",
+                        "PackageMeasureTextMetric": "1 см",
+                        "PackageMeasureTextImperial": "¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "LENGTH",
+                        "PackageMeasureTextMetric": "40 см",
+                        "PackageMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "WEIGHT",
+                        "PackageMeasureTextMetric": "0.24 кг",
+                        "PackageMeasureTextImperial": "9 унц",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": "Width",
+                        "ItemMeasureTypeName": "Ширина",
+                        "ItemMeasureTextMetric": "40 см",
+                        "ItemMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 1,
+                    },
+                    {
+                        "ItemMeasureType": "Depth",
+                        "ItemMeasureTypeName": "Глубина",
+                        "ItemMeasureTextMetric": "40 см",
+                        "ItemMeasureTextImperial": "15 ¾ дюйм",
+                        "SortNo": 2,
+                    },
+                ]
+            },
+            "CatalogRefList": {
+                "CatalogRef": {
+                    "Catalog": {
+                        "CatalogId": "functional",
+                        "CatalogName": "Функциональный",
+                        "CatalogUrl": "/retail/iows/ru/ru/catalog/functional",
+                    },
+                    "CatalogElementList": {
+                        "CatalogElement": {
+                            "CatalogElementId": 47395,
+                            "CatalogElementType": "CATEGORY SYSTEM CHAPTER",
+                            "CatalogElementName": "Части БОАКСЕЛЬ",
+                            "CatalogElementUrl": "/retail/iows/ru/ru/catalog/functional/10364/47395",
+                        }
+                    },
+                }
+            },
+            "PriceUnitTextMetricEn": {},
+            "PriceUnitTextImperialEn": {},
+            "ItemMeasureReferenceTextMetric": "40 см",
+            "ItemMeasureReferenceTextImperial": "15 ¾ дюйм",
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": [
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 70453516,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,70453516",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 30453518,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,30453518",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 2, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 50453522,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,50453522",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 3, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MAY_BE_COMPLETED_WITH",
+                        "CatalogElementId": 10453524,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,10453524",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 4, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                        "CatalogElementId": 80453568,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,80453568",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                        },
+                    },
+                    {
+                        "CatalogElementRelationType": "X-SELL",
+                        "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                        "CatalogElementId": 40453570,
+                        "CatalogElementType": "ART",
+                        "CatalogElementName": "БОАКСЕЛЬ",
+                        "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,40453570",
+                        "SortRelevanceList": {
+                            "SortRelevance": {"SortNo": 2, "SortType": "RELEVANCE"}
+                        },
+                    },
+                ]
+            },
+            "RetailItemCustomerBenefitSummaryText": "Эти компактные консоли способны решать большие задачи в организации хранения в вашем доме. Аксессуары можно крепить с обеих сторон, что позволяет экономить место и создает стильное решение для хранения ваших вещей.",
+            "RetailItemFullLengthTextList": {"RetailItemFullLengthText": {}},
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": {
+                    "FilterAttributeType": "Colour",
+                    "FilterAttributeTypeName": "Цвет",
+                    "FilterAttributeValueList": {
+                        "FilterAttributeValue": {
+                            "FilterAttributeValueId": 10156,
+                            "FilterAttributeValueName": "белый",
+                        }
+                    },
+                }
+            },
         },
     },
 )

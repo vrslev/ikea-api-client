@@ -29,7 +29,7 @@ class Catalog(BaseModel):
 
 
 class CatalogRefList(BaseModel):
-    CatalogRef: Optional[List[Catalog]]
+    CatalogRef: Optional[Union[List[Catalog], Catalog]]
 
 
 class Image(BaseModel):
@@ -179,9 +179,11 @@ def get_url(item_code: str, is_combination: bool):
     )
 
 
-def get_category_name_and_url(catalogs: List[Catalog] | None):
+def get_category_name_and_url(catalogs: List[Catalog] | Catalog | None):
     if not catalogs:
         return None, None
+    if isinstance(catalogs, Catalog):
+        catalogs = [catalogs]
 
     idx = 0 if len(catalogs) == 1 else 1
     category = catalogs[idx].CatalogElementList.CatalogElement
@@ -202,8 +204,6 @@ def get_category_name_and_url(catalogs: List[Catalog] | None):
 
 def main(response: Dict[str, Any]):
     response = get_rid_of_dollars(response)
-    print(response["ItemNo"])  # TODO: Remove
-    print(response["CatalogRefList"])  # TODO: Remove
     item = ResponseIowsItem(**response)
 
     is_combination = get_is_combination_from_item_type(item.ItemType)
