@@ -3,6 +3,16 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.0 (2021-11-25)
+### Feature
+* Prepare for major release ([#69](https://github.com/vrslev/ikea-api-client/issues/69)) ([`8e72a16`](https://github.com/vrslev/ikea-api-client/commit/8e72a165bbebc1e2aa96ea772d0fe94df85ad0c1))
+* Merge ikea-api-wrapped ([#64](https://github.com/vrslev/ikea-api-client/issues/64)) ([`4a199e3`](https://github.com/vrslev/ikea-api-client/commit/4a199e3d71dcda492241fc343b291226885e201b))
+
+### Chore
+* Add codecov integration ([#68](https://github.com/vrslev/ikea-api-client/issues/68)) ([`7cc0c83`](https://github.com/vrslev/ikea-api-client/commit/7cc0c8332f2c8697f575b27b0d8076930fce0db0))
+* **deps:** Update pre-commit hooks ([`ca89130`](https://github.com/vrslev/ikea-api-client/commit/ca891308b3e990411a7ce337df88300d4e5a60bd))
+* **pre-commit:** Remove setup-cfg-fmt hook ([`5cbe1e9`](https://github.com/vrslev/ikea-api-client/commit/5cbe1e949ef1a91a4e7c8d6bbd7c4c4864563e20))
+
 ## v0.10.0 (2021-11-16)
 ### Feature
 * Move to Poetry, improve CI ([#59](https://github.com/vrslev/ikea-api-client/issues/59)) ([`9f136a7`](https://github.com/vrslev/ikea-api-client/commit/9f136a79a9b78aa5bf438d32b04b7bbcff0ec7f5))
