@@ -434,6 +434,7 @@ def test_get_pip_items_map():
         SimpleNamespace(item_code="11111111"),
         SimpleNamespace(item_code="11111111", name="test"),
         SimpleNamespace(item_code="22222222"),
+        None,
     ]
     res = _get_pip_items_map(items)  # type: ignore
     assert res["11111111"] == SimpleNamespace(item_code="11111111", name="test")

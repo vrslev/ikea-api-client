@@ -137,10 +137,11 @@ def _get_pip_items(item_codes: list[str]):
     return [item_pip.main(r) for r in responses]
 
 
-def _get_pip_items_map(items: list[types.PipItem]):
+def _get_pip_items_map(items: list[types.PipItem | None]):
     res: dict[str, types.PipItem] = {}
     for item in items:
-        res[item.item_code] = item
+        if item:
+            res[item.item_code] = item
     return res
 
 

@@ -29,7 +29,7 @@ def test_get_category_name_and_url_raises():
         generate_catalog_refs(name, url)
 
 
-test_data = (
+test_data: tuple[dict[str, Any], ...] = (
     {
         "name": "default",
         "response": {
@@ -177,6 +177,7 @@ test_data = (
             },
         },
     },
+    {"name": "empty response", "response": {}},
 )
 
 
