@@ -29,7 +29,7 @@ class Catalog(BaseModel):
 
 
 class CatalogRefList(BaseModel):
-    CatalogRef: List[Catalog]
+    CatalogRef: Optional[List[Catalog]]
 
 
 class Image(BaseModel):
@@ -80,7 +80,7 @@ class RetailItemCommPriceList(BaseModel):
 class ResponseIowsItem(GenericItem):
     ItemType: ItemType
     CatalogRefList: CatalogRefList
-    ItemMeasureReferenceTextMetric: str
+    ItemMeasureReferenceTextMetric: Optional[str]
     ValidDesignText: Optional[str]
     RetailItemCommPackageMeasureList: Optional[RetailItemCommPackageMeasureList]
     RetailItemImageList: RetailItemImageList
@@ -179,7 +179,10 @@ def get_url(item_code: str, is_combination: bool):
     )
 
 
-def get_category_name_and_url(catalogs: List[Catalog]):
+def get_category_name_and_url(catalogs: List[Catalog] | None):
+    if not catalogs:
+        return None, None
+
     idx = 0 if len(catalogs) == 1 else 1
     category = catalogs[idx].CatalogElementList.CatalogElement
     if not category:
@@ -198,9 +201,9 @@ def get_category_name_and_url(catalogs: List[Catalog]):
 
 
 def main(response: Dict[str, Any]):
-    print(response)
     response = get_rid_of_dollars(response)
-    print(response["ItemNo"])
+    print(response["ItemNo"])  # TODO: Remove
+    print(response["CatalogRefList"])  # TODO: Remove
     item = ResponseIowsItem(**response)
 
     is_combination = get_is_combination_from_item_type(item.ItemType)

@@ -190,6 +190,10 @@ def test_get_category_name_and_url_no_category():
     ) == (None, None)
 
 
+def test_get_category_name_and_url_no_categories():
+    assert get_category_name_and_url([]) == (None, None)
+
+
 @pytest.mark.parametrize(("name", "id"), (("value", {}), ({}, "value"), ({}, {})))
 def test_get_category_name_and_url_name_or_id_is_dict(
     name: str | dict[Any, Any], id: str | dict[Any, Any]
@@ -2231,6 +2235,246 @@ test_data: tuple[dict[str, Any], ...] = (
                 ]
             },
             "@xmlns": {"$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/"},
+        },
+    },
+    {
+        "name": "no CatalogRef",
+        "response": {
+            "ItemNo": 30365871,
+            "ItemNoGlobal": 80279946,
+            "ItemType": "ART",
+            "ProductName": "АНТИЛОП",
+            "ProductTypeName": "Ножка высокого стула",
+            "OnlineSellable": True,
+            "BreathTakingItem": True,
+            "ItemUnitCode": "PIECES",
+            "ItemNumberOfPackages": 1,
+            "AssemblyCode": "N",
+            "DesignerNameComm": "IKEA of Sweden",
+            "PriceUnitTextMetric": "шт",
+            "ItemPriceUnitFactorMetric": 4,
+            "ItemPriceUnitFactorImperial": 4,
+            "GlobalisationContext": {"LanguageCodeIso": "ru", "CountryCodeIso": "ru"},
+            "ClassUnitKey": {
+                "ClassType": "GR",
+                "ClassUnitType": "RU",
+                "ClassUnitCode": "RU",
+            },
+            "RetailItemCommPriceList": {
+                "RetailItemCommPrice": {
+                    "RetailPriceType": "RegularSalesUnitPrice",
+                    "Price": 400,
+                    "PriceExclTax": 333.33,
+                    "ComparableUnitPrice": {
+                        "UnitPriceMetric": 100.0,
+                        "UnitPriceMetricExclTax": 83.33,
+                        "UnitPriceImperial": 100.0,
+                        "UnitPriceImperialExclTax": 83.33,
+                    },
+                    "CurrencyCode": "RUB",
+                }
+            },
+            "RetailItemImageList": {
+                "RetailItemImage": [
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S1",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S1.jpg",
+                        "ImageWidth": 40,
+                        "ImageHeight": 40,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S2",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S2.jpg",
+                        "ImageWidth": 110,
+                        "ImageHeight": 110,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S3",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S3.jpg",
+                        "ImageWidth": 250,
+                        "ImageHeight": 250,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S4",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S4.jpg",
+                        "ImageWidth": 500,
+                        "ImageHeight": 500,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "INTERNET",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0276964_PE415685_S5.jpg",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "PICTURE SINGLE",
+                    },
+                    {
+                        "ImageUsage": "PRICE TAG",
+                        "ImageSize": "S5",
+                        "ImageUrl": "/ru/ru/images/products/antilop-nozka-vysokogo-stula__0745202_PE743624.JPG",
+                        "ImageWidth": 2000,
+                        "ImageHeight": 2000,
+                        "SortNo": 1,
+                        "ImageType": "LINE DRAWING",
+                    },
+                ]
+            },
+            "AttributeGroupList": {
+                "AttributeGroup": {
+                    "GroupName": "SEO",
+                    "AttributeList": {
+                        "Attribute": {
+                            "Name": "DESCRIPTION",
+                            "Value": "IKEA - АНТИЛОП, Ножка высокого стула",
+                        }
+                    },
+                }
+            },
+            "RetailItemCareInstructionList": {
+                "RetailItemCareInstruction": {
+                    "SortNo": 1,
+                    "RetailItemCareInstructionTextList": {
+                        "RetailItemCareInstructionText": [
+                            {
+                                "CareInstructionText": "Протирать мягким мыльным раствором.",
+                                "SortNo": 1,
+                            },
+                            {
+                                "CareInstructionText": "Вытирать чистой сухой тканью.",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemGoodToKnowList": {
+                "RetailItemGoodToKnow": {
+                    "GoodToKnowTypeNameEn": "Sold separately",
+                    "GoodToKnowText": "Необходимо дополнить сиденьем для высокого стульчика АНТИЛОП, продается отдельно.",
+                    "SortNo": 1,
+                    "GoodToKnowHeader": "Продается отдельно",
+                }
+            },
+            "RetailItemCustomerMaterialList": {
+                "RetailItemCustomerMaterial": {
+                    "SortNo": 1,
+                    "RetailItemPartMaterialList": {
+                        "RetailItemPartMaterial": [
+                            {
+                                "PartText": "Ножка:",
+                                "MaterialText": "Сталь, Эпоксидное/полиэстерное порошковое покрытие",
+                                "SortNo": 1,
+                            },
+                            {
+                                "PartText": "Ножка:",
+                                "MaterialText": "Полипропилен, Полиэтилен",
+                                "SortNo": 2,
+                            },
+                        ]
+                    },
+                }
+            },
+            "RetailItemCommPackageMeasureList": {
+                "RetailItemCommPackageMeasure": [
+                    {
+                        "PackageMeasureType": "WIDTH",
+                        "PackageMeasureTextMetric": "13 см",
+                        "PackageMeasureTextImperial": "5 дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "HEIGHT",
+                        "PackageMeasureTextMetric": "3 см",
+                        "PackageMeasureTextImperial": "1 ¼ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "LENGTH",
+                        "PackageMeasureTextMetric": "78 см",
+                        "PackageMeasureTextImperial": "30 ½ дюйм",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                    {
+                        "PackageMeasureType": "WEIGHT",
+                        "PackageMeasureTextMetric": "1.65 кг",
+                        "PackageMeasureTextImperial": "3 фнт 10 унц",
+                        "SortNo": 1,
+                        "ConsumerPackNumber": 1,
+                    },
+                ]
+            },
+            "RetailItemCommMeasureList": {
+                "RetailItemCommMeasure": [
+                    {
+                        "ItemMeasureType": "Height",
+                        "ItemMeasureTypeName": "Высота",
+                        "ItemMeasureTextMetric": "73 см",
+                        "ItemMeasureTextImperial": "28 3/4 дюйм",
+                        "SortNo": 1,
+                    },
+                    {
+                        "ItemMeasureType": "Diameter",
+                        "ItemMeasureTypeName": "Диаметр",
+                        "ItemMeasureTextMetric": "2.5 см",
+                        "ItemMeasureTextImperial": "1 дюйм",
+                        "SortNo": 2,
+                    },
+                    {
+                        "ItemMeasureType": "Package quantity",
+                        "ItemMeasureTypeName": "Количество в упаковке",
+                        "ItemMeasureTextMetric": "4 шт",
+                        "ItemMeasureTextImperial": "4 шт",
+                        "SortNo": 3,
+                    },
+                ]
+            },
+            "CatalogRefList": {},
+            "PriceUnitTextMetricEn": "pack",
+            "PriceUnitTextImperialEn": "pack",
+            "UnitPriceGroupCode": "MULTIPACK",
+            "CatalogElementRelationList": {
+                "CatalogElementRelation": {
+                    "CatalogElementRelationType": "X-SELL",
+                    "CatalogElementRelationSemantic": "MUST_BE_COMPLETED_WITH",
+                    "CatalogElementId": 90365873,
+                    "CatalogElementType": "ART",
+                    "CatalogElementName": "АНТИЛОП",
+                    "CatalogElementUrl": "/retail/iows/ru/ru/catalog/items/art,90365873",
+                    "SortRelevanceList": {
+                        "SortRelevance": {"SortNo": 1, "SortType": "RELEVANCE"}
+                    },
+                }
+            },
+            "RetailItemFullLengthTextList": {"RetailItemFullLengthText": {}},
+            "RetailItemFilterAttributeList": {
+                "RetailItemFilterAttribute": {
+                    "FilterAttributeType": "Colour",
+                    "FilterAttributeTypeName": "Цвет",
+                    "FilterAttributeValueList": {
+                        "FilterAttributeValue": {
+                            "FilterAttributeValueId": 10028,
+                            "FilterAttributeValueName": "серый",
+                        }
+                    },
+                }
+            },
+            "@xmlns": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/",
         },
     },
 )
