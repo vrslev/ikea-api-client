@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.2 (2021-11-26)
+### Fix
+* **wrappers:** Allow dict (means error) in `ImageUrl` and not list in `RetailItemCommChild` in Item Iows parser ([#71](https://github.com/vrslev/ikea-api-client/issues/71)) ([`bcf7ad7`](https://github.com/vrslev/ikea-api-client/commit/bcf7ad740ec6073038ac6a80f379273991f3e538))
+
 ## v1.0.1 (2021-11-25)
 ### Fix
 * **wrappers:** Allow empty response in Item Pip parser ([`115f574`](https://github.com/vrslev/ikea-api-client/commit/115f574de67fa0c59e3da1e1ff7c76653cbf0b4e))
