@@ -33,7 +33,7 @@ class CatalogRefList(BaseModel):
 
 
 class Image(BaseModel):
-    ImageUrl: Union[str, dict[Any, Any]]
+    ImageUrl: Union[str, Dict[Any, Any]]
     ImageType: str
     ImageSize: str
 
