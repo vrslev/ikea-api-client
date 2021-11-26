@@ -111,7 +111,7 @@ def get_name(item: Union[ChildItem, ResponseIowsItem]):
     )
 
 
-def get_image_url(images: List[Image]) -> str | None:
+def get_image_url(images: List[Image]) -> Optional[str]:
     # Filter images first in case no image with S5 size found
     images = [
         i
