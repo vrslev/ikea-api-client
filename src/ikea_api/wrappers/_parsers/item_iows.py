@@ -33,7 +33,7 @@ class CatalogRefList(BaseModel):
 
 
 class Image(BaseModel):
-    ImageUrl: str
+    ImageUrl: Union[str, Dict[Any, Any]]
     ImageType: str
     ImageSize: str
 
@@ -66,7 +66,7 @@ class ChildItem(GenericItem):
 
 
 class RetailItemCommChildList(BaseModel):
-    RetailItemCommChild: List[ChildItem]
+    RetailItemCommChild: Union[List[ChildItem], ChildItem]
 
 
 class Price(BaseModel):
@@ -111,12 +111,13 @@ def get_name(item: Union[ChildItem, ResponseIowsItem]):
     )
 
 
-def get_image_url(images: List[Image]):
+def get_image_url(images: List[Image]) -> Optional[str]:
     # Filter images first in case no image with S5 size found
     images = [
         i
         for i in images
         if i.ImageType != "LINE DRAWING"
+        and isinstance(i.ImageUrl, str)
         and i.ImageUrl.endswith((".png", ".jpg", ".PNG", ".JPG"))
     ]
     if not images:
@@ -124,8 +125,8 @@ def get_image_url(images: List[Image]):
 
     for image in images:
         if image.ImageSize == "S5":
-            return Constants.BASE_URL + image.ImageUrl
-    return Constants.BASE_URL + images[0].ImageUrl
+            return Constants.BASE_URL + image.ImageUrl  # type: ignore
+    return Constants.BASE_URL + images[0].ImageUrl  # type: ignore
 
 
 def parse_weight(v: str):
@@ -146,9 +147,13 @@ def get_weight(measurements: List[Measurement]):
     return weight
 
 
-def get_child_items(child_items: List[ChildItem]) -> List[types.ChildItem]:
+def get_child_items(
+    child_items: Union[List[ChildItem], ChildItem]
+) -> List[types.ChildItem]:
     if not child_items:
         return []
+    if isinstance(child_items, ChildItem):
+        child_items = [child_items]
 
     return [
         types.ChildItem(
