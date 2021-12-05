@@ -3,6 +3,18 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.3 (2021-12-05)
+### Fix
+* **`add_items_to_cart`:** Allow missing key in error dict ([`e20033a`](https://github.com/vrslev/ikea-api-client/commit/e20033a6b18c72b61bbdf3bad5e40a343311e502))
+* **OrderCapture fetcher:** Don't throw on no pickup points available error ([`14017f6`](https://github.com/vrslev/ikea-api-client/commit/14017f60e989f1970aeb8ee67d00950b43bfe7f8))
+* **typing:** Add missing type hint ([`eba9a1c`](https://github.com/vrslev/ikea-api-client/commit/eba9a1c8ab3695c35539a45cf03529af3bd7a3cd))
+* **Item Iows fetcher:** Kindly return empty list if recevied no data at all ([`a0ca38a`](https://github.com/vrslev/ikea-api-client/commit/a0ca38a31a3c530055d91fd1a29fe75b9d86f765))
+
+### Chore
+* **deps:** Update pre-commit hooks ([`cdd9fe5`](https://github.com/vrslev/ikea-api-client/commit/cdd9fe58c7a50fa3adfa479a52573d44422ee6bb))
+* **deps:** Update responses requirement from 0.15.0 to 0.16.0 ([`751ce82`](https://github.com/vrslev/ikea-api-client/commit/751ce82685e7694cccfd9cc41a9730d77b8cceff))
+* **deps-dev:** Update black requirement from 21.10b0 to 21.11b1 ([`55a00a3`](https://github.com/vrslev/ikea-api-client/commit/55a00a34414942ec31613ac508473868bc2b75bd))
+
 ## v1.0.2 (2021-11-26)
 ### Fix
 * **wrappers:** Allow dict (means error) in `ImageUrl` and not list in `RetailItemCommChild` in Item Iows parser ([#71](https://github.com/vrslev/ikea-api-client/issues/71)) ([`bcf7ad7`](https://github.com/vrslev/ikea-api-client/commit/bcf7ad740ec6073038ac6a80f379273991f3e538))
