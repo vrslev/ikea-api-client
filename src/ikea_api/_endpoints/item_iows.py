@@ -47,6 +47,10 @@ class IowsItems(API):
                     return self._get_response(relapse + 1)
                 else:
                     raise ItemFetchError(response, "Wrong Item Code")
+
+        if not response.text:
+            return response
+
         return self._handle_response(response, relapse)
 
     def _handle_response(self, response: Response, relapse: int) -> Response:  # type: ignore
@@ -81,8 +85,13 @@ class IowsItems(API):
             raise RuntimeError("Can't get more than 90 items at once")
 
         self._set_initial_items(item_codes)
-        resp = self._get_response().json()
+        resp = self._get_response()
 
-        if "RetailItemCommList" in resp:
-            return resp["RetailItemCommList"]["RetailItemComm"]
-        return [resp["RetailItemComm"]]
+        if not resp.text:
+            return []
+
+        data: dict[str, Any] = resp.json()
+
+        if "RetailItemCommList" in data:
+            return data["RetailItemCommList"]["RetailItemComm"]
+        return [data["RetailItemComm"]]

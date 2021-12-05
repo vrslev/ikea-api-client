@@ -168,3 +168,10 @@ def test_iows_items_multiple_passes_third_time():
     )
 
     assert fetcher(["11111111", "22222222", "33333333"]) == ["foo", "bar"]
+
+
+@responses.activate
+def test_iows_items_no_response_text():
+    fetcher = IowsItems()
+    responses.add(responses.GET, url=f"{fetcher.endpoint}ART,11111111", body="")
+    assert fetcher(["11111111"]) == []
