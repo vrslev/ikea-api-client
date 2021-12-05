@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 class IKEAAPIError(Exception):
     """Generic API related exception."""
 
+    response: CustomResponse
+
     def __init__(self, response: CustomResponse, msg: Any = None):
         self.response = response
         if msg is None:
@@ -35,11 +37,13 @@ class UnauthorizedError(IKEAAPIError):
 class GraphQLError(IKEAAPIError):
     """Generic GraphQL exception"""
 
+    errors: list[dict[str, Any]] | dict[str, Any]
+
     def __init__(self, response: CustomResponse):
         resp: GraphQLResponse | list[GraphQLResponse] = response._json
 
         if isinstance(resp, dict):
-            self.errors: list[dict[str, Any]] | dict[str, Any] = resp["errors"]  # type: ignore
+            self.errors = resp["errors"]  # type: ignore
         else:
             # from purchases.order_info
             self.errors = [d["errors"] for d in resp if "errors" in d]  # type: ignore
@@ -48,11 +52,15 @@ class GraphQLError(IKEAAPIError):
 
 
 class ItemFetchError(IKEAAPIError):
+    response: Response  # type: ignore
+
     def __init__(self, response: Response, msg: Any = None):
         super().__init__(response, msg=msg)  # type: ignore
 
 
 class OrderCaptureError(IKEAAPIError):
+    error_code: int | None
+
     def __init__(self, response: CustomResponse):
         self.error_code = response._json.get("errorCode")
         super().__init__(response)
