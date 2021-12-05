@@ -25,7 +25,11 @@ class OrderCapture(AuthorizedAPI):
 
     def _error_handler(self, response: CustomResponse):
         if isinstance(response._json, dict) and "errorCode" in response._json:
-            if response._json["errorCode"] in (60005, 60006):
+            if response._json["errorCode"] in (
+                60005,  # ISOM_ERROR_NODELSVC
+                60006,  # ISOM_ERROR_NOPRODUCTCHOICE
+                60013,  # ISOM_ERROR_NOPICKUPPOINT
+            ):
                 raise NoDeliveryOptionsAvailableError(response)
             raise OrderCaptureError(response)
 

@@ -84,7 +84,7 @@ def test_get_delivery_area_data(order_capture: OrderCapture, with_state_code: bo
     order_capture._get_delivery_area("mycheckout")
 
 
-@pytest.mark.parametrize("code", (60005, 60006))
+@pytest.mark.parametrize("code", (60005, 60006, 60013))
 @responses.activate
 def test_get_delivery_services_fails_known_err(order_capture: OrderCapture, code: int):
     responses.add(
