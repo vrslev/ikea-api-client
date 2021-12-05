@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, List
+from typing import Any, List, Optional
 
 try:
     from pydantic import BaseModel
@@ -57,7 +57,7 @@ class _CartErrorExtensionsData(BaseModel):
 
 class _CartErrorExtensions(BaseModel):
     code: str
-    data: _CartErrorExtensionsData
+    data: Optional[_CartErrorExtensionsData]
 
 
 class _CartError(BaseModel):
@@ -78,6 +78,8 @@ def add_items_to_cart(api: IKEA, *, items: dict[str, int]) -> types.CannotAddIte
             for error_dict in errors:
                 error = _CartError(**error_dict)
                 if error.extensions.code != "INVALID_ITEM_NUMBER":
+                    continue
+                if not error.extensions.data:
                     continue
                 cannot_add_items += error.extensions.data.itemNos
 

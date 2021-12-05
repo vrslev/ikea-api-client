@@ -195,6 +195,7 @@ def test_add_items_to_cart_fails():
                                         "data": {"itemNos": ["11111111"]},
                                     }
                                 },
+                                {"extensions": {"code": "INVALID_ITEM_NUMBER"}},
                             ]
                         }
                     )
