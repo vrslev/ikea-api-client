@@ -8,7 +8,7 @@
 * **`add_items_to_cart`:** Allow missing key in error dict ([`e20033a`](https://github.com/vrslev/ikea-api-client/commit/e20033a6b18c72b61bbdf3bad5e40a343311e502))
 * **OrderCapture fetcher:** Don't throw on no pickup points available error ([`14017f6`](https://github.com/vrslev/ikea-api-client/commit/14017f60e989f1970aeb8ee67d00950b43bfe7f8))
 * **typing:** Add missing type hint ([`eba9a1c`](https://github.com/vrslev/ikea-api-client/commit/eba9a1c8ab3695c35539a45cf03529af3bd7a3cd))
-* **Item Iows fetcher:** Kindly return empty list if recevied no data at all ([`a0ca38a`](https://github.com/vrslev/ikea-api-client/commit/a0ca38a31a3c530055d91fd1a29fe75b9d86f765))
+* **Item Iows fetcher:** Kindly return empty list if received no data at all ([`a0ca38a`](https://github.com/vrslev/ikea-api-client/commit/a0ca38a31a3c530055d91fd1a29fe75b9d86f765))
 
 ### Chore
 * **deps:** Update pre-commit hooks ([`cdd9fe5`](https://github.com/vrslev/ikea-api-client/commit/cdd9fe58c7a50fa3adfa479a52573d44422ee6bb))
