@@ -78,7 +78,7 @@ class OrderCapture(AuthorizedAPI):
             raise RuntimeError("No id for service area")
         return resp["id"]
 
-    def get_home_delivery_services(
+    def get_home_delivery_services(  # TODO: Improve public API: don't require checkout and service area
         self, checkout: str, service_area: str
     ) -> dict[str, Any]:
         """Get available home delivery services"""
