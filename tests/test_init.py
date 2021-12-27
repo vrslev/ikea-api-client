@@ -67,16 +67,23 @@ def test_core_order_capture(monkeypatch: pytest.MonkeyPatch, core: IKEA):
 
     class MockOrderCapture:
         def __init__(self, token: str, zip_code: str, state_code: str | None):
+            nonlocal called
+            called = True
             assert token == core.token
             assert zip_code == exp_zip_code
             assert state_code == exp_state_code
 
-        def __call__(self):
-            nonlocal called
-            called = True
-
     monkeypatch.setattr(ikea_api, "OrderCapture", MockOrderCapture)
-    core.order_capture(zip_code=exp_zip_code, state_code=exp_state_code)
+    order_capture = core.order_capture(zip_code=exp_zip_code, state_code=exp_state_code)
+    assert isinstance(order_capture, MockOrderCapture)
+    assert called
+    called = False
+
+    # Ensure we don't have same `OrderCapture` instance
+    with pytest.raises(AssertionError):
+        order_capture = core.order_capture(zip_code="111000")
+        assert order_capture._zip_code == "111000"
+        assert order_capture._state_code is None
     assert called
 
 
