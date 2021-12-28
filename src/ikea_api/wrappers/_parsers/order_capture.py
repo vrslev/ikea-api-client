@@ -211,7 +211,7 @@ def parse_collect_delivery_services(response: dict[str, Any]):
         pickup_points = service.possibleDeliveries.deliveries[
             0
         ].possiblePickUpPoints.pickUpPoints
-        if not (pickup_points and pickup_points[0]):
+        if not pickup_points:
             continue
 
         pickup_point = pickup_points[0]
