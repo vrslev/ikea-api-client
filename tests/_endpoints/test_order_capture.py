@@ -105,7 +105,7 @@ def test_get_delivery_services_fails_known_err(
         json={"errorCode": code},
     )
     with pytest.raises(NoDeliveryOptionsAvailableError):
-        method(order_capture, "mycheckout", "myarea")
+        method(order_capture, ("mycheckout", "myarea"))
 
 
 @pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
@@ -119,7 +119,7 @@ def test_get_delivery_services_fails_unknown_err(
         json={"errorCode": 60000},
     )
     with pytest.raises(OrderCaptureError):
-        method(order_capture, "mycheckout", "myarea")
+        method(order_capture, ("mycheckout", "myarea"))
 
 
 @pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
