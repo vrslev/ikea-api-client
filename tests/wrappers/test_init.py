@@ -357,7 +357,7 @@ def test_get_iows_items_passes(
             called_fetcher = True
             if raise_handleable_exc and "22222222" in item_codes:
                 raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
-            return [i["response"] for i in mock_iows_items]
+            return mock_iows_items
 
     class CustomParser:
         @staticmethod
