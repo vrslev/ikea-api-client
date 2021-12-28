@@ -1,0 +1,22 @@
+{
+  "data": {
+    "order": {
+      "id": "111111111",
+      "costs": {
+        "total": { "code": "RUB", "value": 80000.0 },
+        "delivery": { "code": "RUB", "value": 3799.0 },
+        "service": null,
+        "discount": null,
+        "sub": { "code": "RUB", "value": 76201.0 },
+        "tax": { "code": "RUB", "value": 0.0 },
+        "taxRates": [
+          {
+            "percentage": "20",
+            "name": "VAT",
+            "amount": { "code": "RUB", "value": 15240.2 }
+          }
+        ]
+      }
+    }
+  }
+}
