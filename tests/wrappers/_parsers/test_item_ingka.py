@@ -16,7 +16,7 @@ from ikea_api.wrappers._parsers.item_ingka import (
     get_weight,
     main,
 )
-from tests.conftest import get_all_data_files_in_directory
+from tests.conftest import TestData
 
 
 def test_get_localised_communication_passes():
@@ -202,9 +202,6 @@ def test_get_child_items_success():
         assert child.name is None
 
 
-test_data = get_all_data_files_in_directory("item_ingka")
-
-
-@pytest.mark.parametrize("test_data_response", test_data)
+@pytest.mark.parametrize("test_data_response", TestData.item_ingka)
 def test_main(test_data_response: dict[str, Any]):
     list(main(test_data_response))

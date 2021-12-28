@@ -12,7 +12,7 @@ from ikea_api.wrappers._parsers.item_pip import (
     get_category_name_and_url,
     main,
 )
-from tests.conftest import get_all_data_files_in_directory
+from tests.conftest import TestData
 
 
 def generate_catalog_refs(name: str, url: str):
@@ -30,9 +30,6 @@ def test_get_category_name_and_url_raises():
         generate_catalog_refs(name, url)
 
 
-test_data = get_all_data_files_in_directory("item_pip")
-
-
-@pytest.mark.parametrize("test_data_response", test_data)
+@pytest.mark.parametrize("test_data_response", TestData.item_pip)
 def test_main(test_data_response: dict[str, Any]):
     main(test_data_response)

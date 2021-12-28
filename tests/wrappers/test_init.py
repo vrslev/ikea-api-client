@@ -23,16 +23,7 @@ from ikea_api.wrappers import (
     types,
 )
 from ikea_api.wrappers._parsers import item_ingka, item_iows, item_pip
-from tests.wrappers._parsers.test_item_ingka import test_data as mock_ingka_items
-from tests.wrappers._parsers.test_item_iows import test_data as mock_iows_items
-from tests.wrappers._parsers.test_item_pip import test_data as mock_pip_items
-from tests.wrappers._parsers.test_order_capture import (
-    test_collect_delivery_services_data,
-    test_home_delivery_services_data,
-)
-from tests.wrappers._parsers.test_purchases import costs as mock_costs
-from tests.wrappers._parsers.test_purchases import history as mock_history
-from tests.wrappers._parsers.test_purchases import status_banner as mock_status_banner
+from tests.conftest import TestData
 
 
 def test_pydantic_import_passes():
@@ -60,7 +51,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch):
         def history(self):
             nonlocal called_history
             called_history = True
-            return mock_history
+            return TestData.purchases_history
 
     class CustomIKEA:
         @property
@@ -70,7 +61,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch):
     called_parse = False
 
     def mock_parse_history(response: GraphQLResponse):
-        assert response == mock_history
+        assert response == TestData.purchases_history
         nonlocal called_parse
         called_parse = True
 
@@ -94,7 +85,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
             assert order_number == exp_id
             assert email == exp_email
             assert queries == ["StatusBannerOrder", "CostsOrder"]
-            return mock_status_banner, mock_costs
+            return TestData.purchases_status_banner, TestData.purchases_costs
 
     class CustomIKEA:
         @property
@@ -107,7 +98,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
     def mock_parse_status_banner_order(response: GraphQLResponse):
         nonlocal called_parse_status_banner
         called_parse_status_banner = True
-        assert response == mock_status_banner
+        assert response == TestData.purchases_status_banner
         return old_parse_status_banner(response)
 
     called_parse_costs = False
@@ -116,7 +107,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, exp_email: str | Non
     def mock_parse_costs_order(response: GraphQLResponse):
         nonlocal called_parse_costs
         called_parse_costs = True
-        assert response == mock_costs
+        assert response == TestData.purchases_costs
         return old_parse_costs(response)
 
     monkeypatch.setattr(
@@ -260,8 +251,8 @@ def test_get_delivery_services_cannot_add_all_items(monkeypatch: pytest.MonkeyPa
     )
 
 
-@pytest.mark.parametrize("home", test_home_delivery_services_data)
-@pytest.mark.parametrize("collect", test_collect_delivery_services_data)
+@pytest.mark.parametrize("home", TestData.order_capture_home)
+@pytest.mark.parametrize("collect", TestData.order_capture_collect)
 def test_get_delivery_services_passes(
     monkeypatch: pytest.MonkeyPatch,
     home: dict[str, Any],
@@ -357,7 +348,7 @@ def test_get_iows_items_passes(
             called_fetcher = True
             if raise_handleable_exc and "22222222" in item_codes:
                 raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
-            return mock_iows_items
+            return TestData.item_iows
 
     class CustomParser:
         @staticmethod
@@ -409,7 +400,7 @@ def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch):
             assert item_codes == exp_item_codes
             nonlocal called_fetcher
             called_fetcher = True
-            return deepcopy(mock_ingka_items[0])
+            return deepcopy(TestData.item_ingka[0])
 
     class CustomParser:
         @staticmethod
@@ -439,7 +430,7 @@ def test_get_pip_items(monkeypatch: pytest.MonkeyPatch):
             assert item_code in exp_item_codes
             nonlocal called_fetcher
             called_fetcher = True
-            return deepcopy(mock_pip_items[0])
+            return deepcopy(TestData.item_pip[0])
 
     class CustomParser:
         @staticmethod

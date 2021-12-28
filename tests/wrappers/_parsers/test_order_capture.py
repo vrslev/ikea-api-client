@@ -18,7 +18,7 @@ from ikea_api.wrappers._parsers.order_capture import (
     get_unavailable_items,
     main,
 )
-from tests.conftest import get_all_data_files_in_directory
+from tests.conftest import TestData
 
 
 def test_get_date_no_value():
@@ -127,14 +127,8 @@ def test_get_service_provider_with_value_no_match():
     assert get_service_provider(service) == exp_identifier  # type: ignore
 
 
-test_home_delivery_services_data = get_all_data_files_in_directory("order_capture/home")
-test_collect_delivery_services_data = get_all_data_files_in_directory(
-    "order_capture/collect"
-)
-
-
-@pytest.mark.parametrize("home", test_home_delivery_services_data)
-@pytest.mark.parametrize("collect", test_collect_delivery_services_data)
+@pytest.mark.parametrize("home", TestData.order_capture_home)
+@pytest.mark.parametrize("collect", TestData.order_capture_collect)
 def test_main(home: dict[str, Any], collect: dict[str, Any]):
     print(home.keys())
     main(

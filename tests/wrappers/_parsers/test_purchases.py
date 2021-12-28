@@ -2,26 +2,21 @@ from types import SimpleNamespace
 
 import pytest
 
-from ikea_api._api import GraphQLResponse
 from ikea_api.wrappers._parsers.purchases import (
     get_history_datetime,
     parse_costs_order,
     parse_history,
     parse_status_banner_order,
 )
-from tests.conftest import get_data_file
-
-status_banner: GraphQLResponse = get_data_file("purchases/status_banner.json")
-costs: GraphQLResponse = get_data_file("purchases/costs.json")
-history: GraphQLResponse = get_data_file("purchases/history.json")
+from tests.conftest import TestData
 
 
 def test_parse_status_banner_order():
-    parse_status_banner_order(status_banner)
+    parse_status_banner_order(TestData.purchases_status_banner)
 
 
 def test_parse_costs_order():
-    parse_costs_order(costs)
+    parse_costs_order(TestData.purchases_costs)
 
 
 @pytest.mark.parametrize(
@@ -37,4 +32,4 @@ def test_get_history_datetime(date: str, time: str):
 
 
 def test_parse_history():
-    parse_history(history)
+    parse_history(TestData.purchases_history)

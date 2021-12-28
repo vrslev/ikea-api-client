@@ -21,7 +21,7 @@ from ikea_api.wrappers._parsers.item_iows import (
     main,
     parse_weight,
 )
-from tests.conftest import get_all_data_files_in_directory
+from tests.conftest import TestData
 
 
 def test_get_rid_of_dollars():
@@ -246,9 +246,6 @@ def test_get_category_name_and_url_passes():
     assert get_category_name_and_url(catalogs_second_el) == exp_res  # type: ignore
 
 
-test_data = get_all_data_files_in_directory("item_iows")
-
-
-@pytest.mark.parametrize("test_data_response", test_data)
+@pytest.mark.parametrize("test_data_response", TestData.item_iows)
 def test_main(test_data_response: dict[str, Any]):
     main(test_data_response)
