@@ -439,7 +439,7 @@ def test_get_pip_items(monkeypatch: pytest.MonkeyPatch):
             assert item_code in exp_item_codes
             nonlocal called_fetcher
             called_fetcher = True
-            return deepcopy(mock_pip_items[0]["response"])
+            return deepcopy(mock_pip_items[0])
 
     class CustomParser:
         @staticmethod
