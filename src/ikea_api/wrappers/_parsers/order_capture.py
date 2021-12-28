@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
@@ -109,7 +109,7 @@ def get_unavailable_items(
 
 
 class HomePossibleDeliveries(BaseModel):
-    deliveries: list[HomeDelivery]
+    deliveries: List[HomeDelivery]
 
 
 class HomeDeliveryService(BaseModel):
@@ -117,11 +117,11 @@ class HomeDeliveryService(BaseModel):
     solution: Optional[str]  # TODO: Optional or not?
     solutionPrice: Optional[SolutionPrice]
     possibleDeliveries: HomePossibleDeliveries
-    unavailableItems: Optional[list[UnavailableItem]]
+    unavailableItems: Optional[List[UnavailableItem]]
 
 
 class HomePossibleDeliveryServices(BaseModel):
-    deliveryServices: list[HomeDeliveryService]
+    deliveryServices: List[HomeDeliveryService]
 
 
 class HomeDeliveryServicesResponse(BaseModel):
@@ -158,7 +158,7 @@ class PickUpPoint(BaseModel):
 
 
 class PossiblePickUpPoints(BaseModel):
-    pickUpPoints: list[PickUpPoint]
+    pickUpPoints: List[PickUpPoint]
 
 
 class CollectDelivery(BaseModel):
@@ -167,7 +167,7 @@ class CollectDelivery(BaseModel):
 
 
 class CollectPossibleDeliveries(BaseModel):
-    deliveries: list[CollectDelivery]
+    deliveries: List[CollectDelivery]
 
 
 class CollectDeliveryService(BaseModel):
@@ -175,11 +175,11 @@ class CollectDeliveryService(BaseModel):
     solution: Optional[str]
     solutionPrice: Optional[SolutionPrice]
     possibleDeliveries: Optional[CollectPossibleDeliveries]
-    unavailableItems: Optional[list[UnavailableItem]]
+    unavailableItems: Optional[List[UnavailableItem]]
 
 
 class CollectPossibleDeliveryServices(BaseModel):
-    deliveryServices: list[CollectDeliveryService]
+    deliveryServices: List[CollectDeliveryService]
 
 
 class CollectDeliveryServicesResponse(BaseModel):
