@@ -294,12 +294,12 @@ def test_get_delivery_services_passes(
         def get_home_delivery_services(
             self, checkout_and_service_area: tuple[str, str] | None = None
         ) -> dict[str, Any]:
-            return home["response"]
+            return home
 
         def get_collect_delivery_services(
             self, checkout_and_service_area: tuple[str, str] | None = None
         ) -> dict[str, Any]:
-            return collect["response"]
+            return collect
 
     def mock_add_items_to_cart(api: IKEA, items: dict[str, int]):
         nonlocal called_add_items_to_cart

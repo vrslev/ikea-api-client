@@ -1,0 +1,69 @@
+{
+  "context": {
+    "retailUnit": "ru",
+    "exclTaxCountry": false,
+    "checkoutId": "",
+    "currency": "RUB",
+    "scope": { "type": "HOME_DELIVERY" },
+    "config": {
+      "enableLeadTimeOrchestration": true,
+      "enablePrimeTimeCalculation": true,
+      "allowedPTSDeliveries": [
+        "HOME_DELIVERY_STANDARD",
+        "HOME_DELIVERY_CURBSIDE",
+        "HOME_DELIVERY_EXPRESS",
+        "HOME_DELIVERY_EXPRESS_CURBSIDE"
+      ]
+    },
+    "businessUnit": { "code": "111", "type": "STO" },
+    "customerContext": { "customerType": "PRIVATE" },
+    "capability": {
+      "wheelChair": false,
+      "rangeOfDays": true,
+      "authToLeave": true
+    }
+  },
+  "possibleDeliveryServices": {
+    "metadata": { "canAtLeastOneSolutionFulfillEntireCart": false },
+    "deliveryServices": [
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["DELIVERY_TIME_WINDOW_UNAVAILABLE"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": true,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "HOME_DELIVERY",
+        "fulfillmentPossibility": "FULL",
+        "solutionId": "HD~1~STANDARD",
+        "solution": "STANDARD",
+        "solutionPrice": { "inclTax": 999, "exclTax": 832.5 },
+        "expiryTime": "2021-12-27T15:49:41.118Z",
+        "possibleDeliveries": {
+          "metadata": { "multipleDeliveries": false },
+          "deliveries": []
+        },
+        "errors": [
+          {
+            "type": "INTEGRATION_APP_ERROR",
+            "service": "EARLIEST_POSSIBLE_DELIVERY_TIME_WINDOWS",
+            "solutionId": "HD~1~STANDARD",
+            "errorDetail": {
+              "errorCode": "EXTN_SOMOP_0018",
+              "errorDescription": "No Lastmile capacity available from Centiro",
+              "errorUniqueExceptionId": ""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
