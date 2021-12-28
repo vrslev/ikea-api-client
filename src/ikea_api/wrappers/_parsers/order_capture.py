@@ -37,6 +37,7 @@ SERVICE_PROVIDERS = {
         "DPD": "DPD",
         "BUSINESSLINES": "Деловые линии",
         "russianpost": "Почта России",
+        "OZON": "Ozon",
     }
 }
 
