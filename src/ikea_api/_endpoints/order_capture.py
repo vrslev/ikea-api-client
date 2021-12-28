@@ -78,18 +78,30 @@ class OrderCapture(AuthorizedAPI):
             raise RuntimeError("No id for service area")
         return resp["id"]
 
-    def get_home_delivery_services(  # TODO: Improve public API: don't require checkout and service area
-        self, checkout: str, service_area: str
+    def get_home_delivery_services(
+        self, checkout_and_service_area: tuple[str, str] | None = None
     ) -> dict[str, Any]:
         """Get available home delivery services"""
+        if checkout_and_service_area:
+            checkout, service_area = checkout_and_service_area
+        else:
+            checkout = self._get_checkout(self._get_items_for_checkout())
+            service_area = self._get_service_area(checkout)
+
         return self._get(
             f"{self.endpoint}/checkouts/{checkout}/service-area/{service_area}/home-delivery-services"
         )
 
     def get_collect_delivery_services(
-        self, checkout: str, service_area: str
+        self, checkout_and_service_area: tuple[str, str] | None = None
     ) -> dict[str, Any]:
         """Get available collect delivery services"""
+        if checkout_and_service_area:
+            checkout, service_area = checkout_and_service_area
+        else:
+            checkout = self._get_checkout(self._get_items_for_checkout())
+            service_area = self._get_service_area(checkout)
+
         return self._get(
             f"{self.endpoint}/checkouts/{checkout}/service-area/{service_area}/collect-delivery-services"
         )

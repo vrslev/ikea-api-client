@@ -124,7 +124,21 @@ def test_get_delivery_services_fails_unknown_err(
 
 @pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
 @responses.activate
-def test_order_capture_main(
+def test_order_capture_passes_with_checkout_and_service_area(
+    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str
+):
+    responses.add(
+        responses.GET,
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
+        json={"foo": "bar"},
+    )
+
+    assert method(order_capture, ("mycheckout", "myarea")) == {"foo": "bar"}
+
+
+@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
+@responses.activate
+def test_order_capture_passes_without_checkout_and_service_area(
     monkeypatch: pytest.MonkeyPatch,
     order_capture: OrderCapture,
     method: Callable[..., Any],
@@ -189,7 +203,7 @@ def test_order_capture_main(
         json={"foo": "bar"},
     )
 
-    assert method(order_capture, "mycheckout", "myarea") == {"foo": "bar"}
+    assert method(order_capture) == {"foo": "bar"}
 
 
 @pytest.mark.parametrize("v", ("100000", "2184011", "101000"))
