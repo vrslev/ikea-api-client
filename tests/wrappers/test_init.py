@@ -292,12 +292,12 @@ def test_get_delivery_services_passes(
             return "mycheckout"
 
         def get_home_delivery_services(
-            self, checkout: str, service_area: str
+            self, checkout_and_service_area: tuple[str, str] | None = None
         ) -> dict[str, Any]:
             return home
 
         def get_collect_delivery_services(
-            self, checkout: str, service_area: str
+            self, checkout_and_service_area: tuple[str, str] | None = None
         ) -> dict[str, Any]:
             return collect
 

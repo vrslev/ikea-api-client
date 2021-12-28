@@ -104,9 +104,11 @@ def get_delivery_services(
         order_capture_api._get_items_for_checkout()
     )
     service_area = order_capture_api._get_service_area(checkout)
-    home_response = order_capture_api.get_home_delivery_services(checkout, service_area)
+    home_response = order_capture_api.get_home_delivery_services(
+        (checkout, service_area)
+    )
     collect_response = order_capture_api.get_collect_delivery_services(
-        checkout, service_area
+        (checkout, service_area)
     )
     parsed_responses = order_capture.main(
         home_delivery_services_response=home_response,
