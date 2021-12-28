@@ -3,6 +3,18 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.0 (2021-12-28)
+### Feature
+* Update Order Capture API ([#80](https://github.com/vrslev/ikea-api-client/issues/80)) ([`c4391a4`](https://github.com/vrslev/ikea-api-client/commit/c4391a411ae598ec6f1b5dfa716a7fcfd3508579))
+
+### Chore
+* **deps:** Update pre-commit hooks ([`a6a8893`](https://github.com/vrslev/ikea-api-client/commit/a6a8893178460ab201165e1241a067bd16f90594))
+* Fix typo in CHANGELOG.md ([`4f5f573`](https://github.com/vrslev/ikea-api-client/commit/4f5f57350f4c7dba4e85144d6ba78285973d0be5))
+* **deps-dev:** Update pre-commit requirement from 2.15.0 to 2.16.0 ([`1dcb87b`](https://github.com/vrslev/ikea-api-client/commit/1dcb87b6deca7c826314b320c3f6fba20eaed1aa))
+* **deps:** Update pytest-randomly requirement from 3.10.2 to 3.10.3 ([`b2b8d1f`](https://github.com/vrslev/ikea-api-client/commit/b2b8d1ff7341e9972fd176c5dd90e1875c8aaf44))
+* **deps-dev:** Update black requirement from 21.11b1 to 21.12b0 ([`78214b5`](https://github.com/vrslev/ikea-api-client/commit/78214b50b53301a8fc07f1b4ac334933af676140))
+* **deps:** Update pre-commit hooks ([`422e84d`](https://github.com/vrslev/ikea-api-client/commit/422e84db63785d6ff71631c5015e703bbf0d0fc6))
+
 ## v1.0.3 (2021-12-05)
 ### Fix
 * **`add_items_to_cart`:** Allow missing key in error dict ([`e20033a`](https://github.com/vrslev/ikea-api-client/commit/e20033a6b18c72b61bbdf3bad5e40a343311e502))
