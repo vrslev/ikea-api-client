@@ -724,6 +724,78 @@ test_home_delivery_services_data: tuple[dict[str, Any], ...] = (
             },
         },
     },
+    {
+        "name": "no service.possibleDeliveries.deliveries",
+        "response": {
+            "context": {
+                "retailUnit": "ru",
+                "exclTaxCountry": False,
+                "checkoutId": "",
+                "currency": "RUB",
+                "scope": {"type": "HOME_DELIVERY"},
+                "config": {
+                    "enableLeadTimeOrchestration": True,
+                    "enablePrimeTimeCalculation": True,
+                    "allowedPTSDeliveries": [
+                        "HOME_DELIVERY_STANDARD",
+                        "HOME_DELIVERY_CURBSIDE",
+                        "HOME_DELIVERY_EXPRESS",
+                        "HOME_DELIVERY_EXPRESS_CURBSIDE",
+                    ],
+                },
+                "businessUnit": {"code": "111", "type": "STO"},
+                "customerContext": {"customerType": "PRIVATE"},
+                "capability": {
+                    "wheelChair": False,
+                    "rangeOfDays": True,
+                    "authToLeave": True,
+                },
+            },
+            "possibleDeliveryServices": {
+                "metadata": {"canAtLeastOneSolutionFulfillEntireCart": False},
+                "deliveryServices": [
+                    {
+                        "metadata": {
+                            "selectableInfo": {
+                                "selectable": "NO",
+                                "reason": ["DELIVERY_TIME_WINDOW_UNAVAILABLE"],
+                            },
+                            "serviceOfferCompatible": False,
+                            "wheelChairCapability": False,
+                            "slotBasedPricingEnabled": True,
+                            "maxSolutionPrice": None,
+                            "minSolutionPrice": None,
+                            "deliveryPriceBasedOnPUPZipCode": False,
+                        },
+                        "id": "",
+                        "deliveryArrangementsId": "",
+                        "fulfillmentMethodType": "HOME_DELIVERY",
+                        "fulfillmentPossibility": "FULL",
+                        "solutionId": "HD~1~STANDARD",
+                        "solution": "STANDARD",
+                        "solutionPrice": {"inclTax": 999, "exclTax": 832.5},
+                        "expiryTime": "2021-12-27T15:49:41.118Z",
+                        "possibleDeliveries": {
+                            "metadata": {"multipleDeliveries": False},
+                            "deliveries": [],
+                        },
+                        "errors": [
+                            {
+                                "type": "INTEGRATION_APP_ERROR",
+                                "service": "EARLIEST_POSSIBLE_DELIVERY_TIME_WINDOWS",
+                                "solutionId": "HD~1~STANDARD",
+                                "errorDetail": {
+                                    "errorCode": "EXTN_SOMOP_0018",
+                                    "errorDescription": "No Lastmile capacity available from Centiro",
+                                    "errorUniqueExceptionId": "",
+                                },
+                            }
+                        ],
+                    }
+                ],
+            },
+        },
+    },
 )
 test_collect_delivery_services_data: tuple[dict[str, Any], ...] = (
     {
@@ -1353,6 +1425,73 @@ test_collect_delivery_services_data: tuple[dict[str, Any], ...] = (
                             }
                         ],
                     },
+                ],
+            },
+        },
+    },
+    {
+        "name": "no service.possibleDeliveries.deliveries",
+        "response": {
+            "context": {
+                "retailUnit": "ru",
+                "exclTaxCountry": False,
+                "checkoutId": "",
+                "currency": "RUB",
+                "scope": {
+                    "type": "COLLECT",
+                    "subTypes": [
+                        {"id": "PUP", "maxCollectionPoints": "40"},
+                        {"id": "PUOP", "maxCollectionPoints": "20"},
+                        {"id": "CLICK_COLLECT_STORE", "maxCollectionPoints": "10"},
+                    ],
+                },
+                "config": {
+                    "enableLeadTimeOrchestration": True,
+                    "enablePrimeTimeCalculation": True,
+                    "allowedPTSDeliveries": [
+                        "HOME_DELIVERY_STANDARD",
+                        "HOME_DELIVERY_CURBSIDE",
+                        "HOME_DELIVERY_EXPRESS",
+                        "HOME_DELIVERY_EXPRESS_CURBSIDE",
+                    ],
+                },
+                "businessUnit": {"code": "149", "type": "SIO"},
+                "customerContext": {"customerType": "PRIVATE"},
+                "capability": {
+                    "wheelChair": False,
+                    "rangeOfDays": True,
+                    "authToLeave": True,
+                },
+            },
+            "possibleDeliveryServices": {
+                "metadata": {
+                    "canAtLeastOneSolutionFulfillEntireCart": True,
+                    "expiryTime": "2021-12-26T18:56:10.957Z",
+                },
+                "deliveryServices": [
+                    {
+                        "metadata": {
+                            "selectableInfo": {"selectable": "YES"},
+                            "serviceOfferCompatible": False,
+                            "wheelChairCapability": False,
+                            "slotBasedPricingEnabled": False,
+                            "maxSolutionPrice": None,
+                            "minSolutionPrice": None,
+                            "deliveryPriceBasedOnPUPZipCode": False,
+                        },
+                        "id": "",
+                        "deliveryArrangementsId": "",
+                        "fulfillmentMethodType": "PUP",
+                        "fulfillmentPossibility": "FULL",
+                        "solutionId": "PUP~1~STANDARD",
+                        "solution": "STANDARD",
+                        "solutionPrice": {"inclTax": 399, "exclTax": 332.5},
+                        "expiryTime": "2021-12-26T18:56:10.957Z",
+                        "possibleDeliveries": {
+                            "metadata": {"multipleDeliveries": False},
+                            "deliveries": [],
+                        },
+                    }
                 ],
             },
         },
