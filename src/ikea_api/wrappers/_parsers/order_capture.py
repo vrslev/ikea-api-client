@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from ikea_api._constants import Constants
 from ikea_api.wrappers import types
@@ -58,9 +58,16 @@ class TimeWindows(BaseModel):
     earliestPossibleSlot: Optional[EarliestPossibleSlot]
 
 
-class HomeDelivery(BaseModel):
-    type: str
-    timeWindows: Optional[TimeWindows]
+class SelectableInfo(BaseModel):
+    selectable: bool
+
+    @validator("selectable", pre=True)
+    def validate_selectable(cls, v: Any):
+        return v == "YES"
+
+
+class Metadata(BaseModel):
+    selectableInfo: SelectableInfo
 
 
 class UnavailableItem(BaseModel):
@@ -68,7 +75,7 @@ class UnavailableItem(BaseModel):
     availableQuantity: int
 
 
-def get_date(deliveries: list[HomeDelivery] | list[PickUpPoint] | None):
+def get_date(deliveries: list[HomeDelivery] | None):
     if not deliveries:
         return
 
@@ -108,11 +115,17 @@ def get_unavailable_items(
 #
 
 
+class HomeDelivery(BaseModel):
+    type: str
+    timeWindows: Optional[TimeWindows]
+
+
 class HomePossibleDeliveries(BaseModel):
     deliveries: List[HomeDelivery]
 
 
 class HomeDeliveryService(BaseModel):
+    metadata: Metadata
     fulfillmentMethodType: str
     solution: Optional[str]  # TODO: Optional or not?
     solutionPrice: Optional[SolutionPrice]
@@ -137,6 +150,7 @@ def parse_home_delivery_services(response: dict[str, Any]):
 
         res.append(
             types.DeliveryService(
+                is_available=service.metadata.selectableInfo.selectable,
                 date=get_date(service.possibleDeliveries.deliveries),
                 type=get_type(service),
                 price=get_price(service),
@@ -153,6 +167,7 @@ def parse_home_delivery_services(response: dict[str, Any]):
 
 
 class PickUpPoint(BaseModel):
+    metadata: Metadata
     timeWindows: Optional[TimeWindows]
     identifier: Optional[str]
 
@@ -205,30 +220,29 @@ def parse_collect_delivery_services(response: dict[str, Any]):
     for service in parsed_response.possibleDeliveryServices.deliveryServices:
         if not service.possibleDeliveries:
             continue
-        if not service.possibleDeliveries.deliveries:
-            continue
 
-        pickup_points = service.possibleDeliveries.deliveries[
-            0
-        ].possiblePickUpPoints.pickUpPoints
-        if not pickup_points:
-            continue
+        type_ = get_type(service)
+        price = get_price(service)
+        unavailable_items = get_unavailable_items(service)
 
-        pickup_point = pickup_points[0]
-        if not pickup_point.timeWindows:
-            continue
-        if not pickup_point.timeWindows.earliestPossibleSlot:
-            continue
+        for delivery in service.possibleDeliveries.deliveries:
+            for point in delivery.possiblePickUpPoints.pickUpPoints:
+                date = (
+                    point.timeWindows.earliestPossibleSlot.fromDateTime
+                    if point.timeWindows and point.timeWindows.earliestPossibleSlot
+                    else None
+                )
 
-        res.append(
-            types.DeliveryService(
-                date=pickup_point.timeWindows.earliestPossibleSlot.fromDateTime,
-                type=get_type(service),
-                price=get_price(service),
-                service_provider=get_service_provider(pickup_point),
-                unavailable_items=get_unavailable_items(service),
-            )
-        )
+                res.append(
+                    types.DeliveryService(
+                        is_available=point.metadata.selectableInfo.selectable,
+                        date=date,
+                        type=type_,
+                        price=price,
+                        service_provider=get_service_provider(point),
+                        unavailable_items=unavailable_items,
+                    )
+                )
 
     return res
 

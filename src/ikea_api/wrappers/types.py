@@ -74,6 +74,7 @@ class UnavailableItem(BaseModel):
 
 
 class DeliveryService(BaseModel):
+    is_available: bool
     date: Optional[datetime.date]
     type: str
     price: int
