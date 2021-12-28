@@ -409,7 +409,7 @@ def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch):
             assert item_codes == exp_item_codes
             nonlocal called_fetcher
             called_fetcher = True
-            return deepcopy(mock_ingka_items[0]["response"])
+            return deepcopy(mock_ingka_items[0])
 
     class CustomParser:
         @staticmethod

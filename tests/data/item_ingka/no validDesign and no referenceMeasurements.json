@@ -1,0 +1,327 @@
+{
+  "data": [
+    {
+      "itemKey": { "itemType": "ART", "itemNo": "10122421" },
+      "itemKeyGlobal": { "itemType": "ART", "itemNo": "10122421" },
+      "productNameGlobal": "MARABOU",
+      "isBreathTakingItem": false,
+      "isNew": false,
+      "isAssemblyRequired": false,
+      "numberOfPackages": 1,
+      "localisedCommunications": [
+        {
+          "languageCode": "en",
+          "countryCode": "RU",
+          "productName": "MARABOU",
+          "productType": {
+            "id": "27279",
+            "name": "milk chocolate bar with daim"
+          },
+          "measurements": {
+            "detailedMeasurements": [
+              {
+                "type": "00007",
+                "typeName": "Weight",
+                "textMetric": "250 g",
+                "textImperial": "8.8 oz"
+              }
+            ]
+          },
+          "displayUnit": {
+            "type": "WEIGHT",
+            "unitInformation": {
+              "unitMetric": "kg",
+              "unitImperial": "lb",
+              "unitMetricValue": "0.25",
+              "unitImperialValue": "0.551"
+            }
+          },
+          "media": [
+            {
+              "id": "0520599",
+              "peNo": "PE642300",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "MARABOU milk choc bar w daim 250g MPP",
+              "altText": "MARABOU Milk chocolate bar with daim",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/marabou-milk-chocolate-bar-with-daim__0520599_pe642300_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/marabou-milk-chocolate-bar-with-daim__0520599_pe642300_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/marabou-milk-chocolate-bar-with-daim__0520599_pe642300_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/marabou-milk-chocolate-bar-with-daim__0520599_pe642300_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/marabou-milk-chocolate-bar-with-daim__0520599_pe642300_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "benefits": ["Milk chocolate with crushed pieces of almond caramel."],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Height",
+              "textMetric": "1 cm",
+              "textImperial": "½ \"",
+              "valueMetric": "1",
+              "valueImperial": "½",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Length",
+              "textMetric": "22 cm",
+              "textImperial": "8 ¾ \"",
+              "valueMetric": "22",
+              "valueImperial": "8.75",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Net weight",
+              "textMetric": "0.25 kg",
+              "textImperial": "9 oz",
+              "valueMetric": "0.25",
+              "valueImperial": "9",
+              "unitMetric": "kg",
+              "unitImperial": "ounce",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Volume",
+              "textMetric": "0.3 l",
+              "textImperial": "0.01 cu.ft",
+              "valueMetric": "0.3",
+              "valueImperial": "0.01",
+              "unitMetric": "litre",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Weight",
+              "textMetric": "0.25 kg",
+              "textImperial": "9 oz",
+              "valueMetric": "0.25",
+              "valueImperial": "9",
+              "unitMetric": "kg",
+              "unitImperial": "ounce",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Width",
+              "textMetric": "10 cm",
+              "textImperial": "4 \"",
+              "valueMetric": "10",
+              "valueImperial": "4",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            }
+          ],
+          "itemNameLocal": "MARABOU milk choc bar w daim 250g"
+        },
+        {
+          "languageCode": "ru",
+          "countryCode": "RU",
+          "productName": "MARABOU",
+          "productType": { "id": "27279", "name": "шоколад Дайм" },
+          "measurements": {
+            "detailedMeasurements": [
+              {
+                "type": "00007",
+                "typeName": "Вес",
+                "textMetric": "250 г",
+                "textImperial": "8.8 унц"
+              }
+            ]
+          },
+          "displayUnit": {
+            "type": "WEIGHT",
+            "unitInformation": {
+              "unitMetric": "кг",
+              "unitImperial": "фнт",
+              "unitMetricValue": "0.25",
+              "unitImperialValue": "0.551"
+            }
+          },
+          "media": [
+            {
+              "id": "0520599",
+              "peNo": "PE642300",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "MARABOU milk choc bar w daim 250g MPP",
+              "altText": "MARABOU Шоколад Дайм",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/marabou-shokolad-daym__0520599_pe642300_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/marabou-shokolad-daym__0520599_pe642300_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/marabou-shokolad-daym__0520599_pe642300_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/marabou-shokolad-daym__0520599_pe642300_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0520599_PE642300_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/marabou-shokolad-daym__0520599_pe642300_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Высота",
+              "textMetric": "1 см",
+              "textImperial": "½ дюйм",
+              "valueMetric": "1",
+              "valueImperial": "½",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Длина",
+              "textMetric": "22 см",
+              "textImperial": "8 ¾ дюйм",
+              "valueMetric": "22",
+              "valueImperial": "8.75",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Вес нетто",
+              "textMetric": "0.25 кг",
+              "textImperial": "9 унц",
+              "valueMetric": "0.25",
+              "valueImperial": "9",
+              "unitMetric": "кг",
+              "unitImperial": "унц",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Объем",
+              "textMetric": "0.3 л",
+              "textImperial": "0.01 cu.ft",
+              "valueMetric": "0.3",
+              "valueImperial": "0.01",
+              "unitMetric": "л",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Вес",
+              "textMetric": "0.25 кг",
+              "textImperial": "9 унц",
+              "valueMetric": "0.25",
+              "valueImperial": "9",
+              "unitMetric": "кг",
+              "unitImperial": "унц",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Ширина",
+              "textMetric": "10 см",
+              "textImperial": "4 дюйм",
+              "valueMetric": "10",
+              "valueImperial": "4",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            }
+          ],
+          "itemNameLocal": "MARABOU шоколад Дайм"
+        }
+      ],
+      "unitCode": "PIECE",
+      "styleGroup": "Multi",
+      "classUnitKey": { "classUnitType": "RU", "classUnitCode": "RU" },
+      "businessStructure": {
+        "productAreaNo": "9616",
+        "productAreaName": "Sweets, chocolate & snacks",
+        "productRangeAreaNo": "961",
+        "productRangeAreaName": "Swedish Food Market",
+        "homeFurnishingBusinessNo": "96",
+        "homeFurnishingBusinessName": "IKEA Food"
+      },
+      "news": { "value": false },
+      "catalogueReferences": [
+        { "catalogueId": "products", "categoryId": "46192" }
+      ],
+      "lastChance": { "value": false }
+    }
+  ]
+}

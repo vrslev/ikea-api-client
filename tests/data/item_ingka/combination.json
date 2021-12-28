@@ -1,0 +1,1123 @@
+{
+  "data": [
+    {
+      "itemKey": { "itemType": "SPR", "itemNo": "49443609" },
+      "itemKeyGlobal": { "itemType": "SPR", "itemNo": "59429957" },
+      "productNameGlobal": "EKET",
+      "isBreathTakingItem": false,
+      "isNew": true,
+      "isAssemblyRequired": true,
+      "numberOfPackages": 8,
+      "childItems": [
+        {
+          "quantity": 2,
+          "itemKey": { "itemType": "ART", "itemNo": "40510858" },
+          "itemKeyGlobal": { "itemType": "ART", "itemNo": "00510855" }
+        },
+        {
+          "quantity": 2,
+          "itemKey": { "itemType": "ART", "itemNo": "40359389" },
+          "itemKeyGlobal": { "itemType": "ART", "itemNo": "30334605" }
+        },
+        {
+          "quantity": 2,
+          "itemKey": { "itemType": "ART", "itemNo": "30359342" },
+          "itemKeyGlobal": { "itemType": "ART", "itemNo": "80340048" }
+        },
+        {
+          "quantity": 2,
+          "itemKey": { "itemType": "ART", "itemNo": "10359343" },
+          "itemKeyGlobal": { "itemType": "ART", "itemNo": "00340047" }
+        }
+      ],
+      "localisedCommunications": [
+        {
+          "languageCode": "en",
+          "countryCode": "RU",
+          "productName": "EKET",
+          "productType": {
+            "id": "33248",
+            "name": "wall-mounted cabinet combination"
+          },
+          "validDesign": { "text": "white/light green" },
+          "measurements": {
+            "referenceMeasurements": [
+              {
+                "metric": "175x25x70 cm",
+                "imperial": "68 7/8x9 7/8x27 1/2 \""
+              }
+            ],
+            "detailedMeasurements": [
+              {
+                "type": "00001",
+                "typeName": "Length",
+                "textMetric": "70 cm",
+                "textImperial": "27 ½ \""
+              },
+              {
+                "type": "00047",
+                "typeName": "Width",
+                "textMetric": "175 cm",
+                "textImperial": "69 \""
+              },
+              {
+                "type": "00044",
+                "typeName": "Depth",
+                "textMetric": "25 cm",
+                "textImperial": "9 ¾ \""
+              },
+              {
+                "type": "00041",
+                "typeName": "Height",
+                "textMetric": "70 cm",
+                "textImperial": "27 ½ \""
+              }
+            ]
+          },
+          "media": [
+            {
+              "id": "1016294",
+              "peNo": "PE830298",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "EKET wll-mntd cab comb 175x25x70 white/light green MPP",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1016294_pe830298_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1016294_pe830298_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1016294_pe830298_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1016294_pe830298_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1016294_pe830298_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "1038941",
+              "peNo": "PE840083",
+              "typeNo": "00017",
+              "typeName": "INSPIRATIONAL_IMAGE",
+              "name": "EKET wll-mntd cab comb 175x25x70 white/light green IPP",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1038941_pe840083_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1038941_pe840083_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1038941_pe840083_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1038941_pe840083_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__1038941_pe840083_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0476236",
+              "peNo": "PE616178",
+              "typeNo": "00015",
+              "typeName": "QUALITY_PRODUCT_IMAGE",
+              "name": "EKET cab w dr/1 shlf 35x35x70 white QPP2",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0476236_pe616178_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0476236_pe616178_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0476236_pe616178_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0476236_pe616178_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0476236_pe616178_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0843151",
+              "peNo": "PE616267",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "EKET susp rl 35 FPP2",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843151_pe616267_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843151_pe616267_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843151_pe616267_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843151_pe616267_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843151_pe616267_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0843100",
+              "peNo": "PE619666",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "EKET cabinet w 2 drw 70x35x35 white FPP5",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843100_pe619666_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843100_pe619666_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843100_pe619666_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843100_pe619666_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0843100_pe619666_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0553787",
+              "peNo": "PE659557",
+              "typeNo": "00019",
+              "typeName": "MEASUREMENT_ILLUSTRATION",
+              "name": "EKET cab w 2 drs/2 shlvs 70x25x70 white MI",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0553787_pe659557_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0553787_pe659557_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0553787_pe659557_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0553787_pe659557_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0553787_pe659557_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0631833",
+              "peNo": "PE695225",
+              "typeNo": "00019",
+              "typeName": "MEASUREMENT_ILLUSTRATION",
+              "name": "EKET cabinet 35x25x35 white MI2",
+              "altText": "EKET Wall-mounted cabinet combination, white/light green, 175x25x70 cm",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0631833_pe695225_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0631833_pe695225_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0631833_pe695225_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0631833_pe695225_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/eket-wall-mounted-cabinet-combination-white-light-green__0631833_pe695225_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "careInstructions": [
+            {
+              "productTypeText": "Wall-mounted cabinet combination",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Wipe clean with a cloth dampened in a mild cleaner."
+                }
+              ]
+            },
+            {
+              "productTypeText": "Cabinet",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Wipe dry with a clean cloth."
+                }
+              ]
+            },
+            {
+              "productTypeText": "Cabinet w 2 doors and 2 shelves/suspension rail",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Wipe dry with a clean cloth."
+                },
+                {
+                  "careInstructionText": "Check regularly that all assembly fastenings are properly tightened and retighten when necessary."
+                }
+              ]
+            }
+          ],
+          "benefits": [
+            "With wall-mounted EKET, you make the most of the wall area, while freeing up space on the floor.",
+            "Hide or display your things by combining open and closed storage.",
+            "The door has an integrated push-opener, so you can open it with just a light push.",
+            "4 movable shelves make it easy to adapt the space to your storage needs, while one shelf fixed in place adds increased stability."
+          ],
+          "materials": [
+            {
+              "productTypeText": "Cabinet",
+              "partMaterials": [
+                {
+                  "partText": "Back panel:",
+                  "materialText": "Fibreboard, Paper foil, Paper foil"
+                },
+                {
+                  "partText": "Panel:",
+                  "materialText": "Particleboard, Honeycomb structure paper filling (100% recycled), Fibreboard, Paper foil, Plastic edging"
+                }
+              ]
+            },
+            {
+              "productTypeText": "Cabinet w 2 doors and 2 shelves",
+              "partMaterials": [
+                {
+                  "partText": "Panel:",
+                  "materialText": "Particleboard, Honeycomb structure paper filling (100% recycled), Fibreboard, Paper foil, Plastic edging"
+                },
+                {
+                  "partText": "Back panel:",
+                  "materialText": "Fibreboard, Paper foil, Plastic foil"
+                }
+              ]
+            },
+            {
+              "productTypeText": "Suspension rail",
+              "partMaterials": [{ "materialText": "Galvanized steel" }]
+            }
+          ],
+          "environmentTexts": [
+            {
+              "productTypeText": "Cabinet/cabinet w 2 doors and 2 shelves",
+              "text": "By using fibreboard with a particle board frame and honeycomb paper as filling material in this product, we use less wood per product. That way, we take better care of resources."
+            },
+            {
+              "productTypeText": "Cabinet/cabinet w 2 doors and 2 shelves",
+              "text": "We want to have a positive impact on the planet. That is why by 2030, we want all materials in our products to be recycled or renewable, and sourced in responsible ways."
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "Included",
+              "text": "EKET suspension rails for wall mounting are included."
+            },
+            {
+              "type": "Compl. assembly information",
+              "text": "Different wall materials require different types of fixing devices. Use fixing devices suitable for the walls in your home, sold separately."
+            },
+            {
+              "type": "Compl. assembly information",
+              "text": "The max load for a wall-hung cabinet depends on the wall material."
+            }
+          ],
+          "filterInformation": {
+            "measurementFilters": [
+              {
+                "type": "HEIGHT",
+                "typeName": "Height",
+                "textMetric": "70 cm",
+                "textImperial": "27 ½ \"",
+                "valueMetric": "70",
+                "valueImperial": "27.55905511811025",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "DEPTH",
+                "typeName": "Depth",
+                "textMetric": "25 cm",
+                "textImperial": "9 ¾ \"",
+                "valueMetric": "25",
+                "valueImperial": "9.842519685039376",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "WIDTH",
+                "typeName": "Width",
+                "textMetric": "175 cm",
+                "textImperial": "69 \"",
+                "valueMetric": "175",
+                "valueImperial": "68.89763779527563",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              }
+            ]
+          },
+          "benefitSummary": "Dress your wall with EKET! Create a classic storage solution with just a few cabinets or combine as many as you like in a fun and unexpected way to fit your needs and make your space more personal.",
+          "itemNameLocal": "EKET wll-mntd cab comb 175x25x70 white/lgreen RU"
+        },
+        {
+          "languageCode": "ru",
+          "countryCode": "RU",
+          "productName": "EKET ЭКЕТ",
+          "productType": {
+            "id": "33248",
+            "name": "комбинация настенных шкафов"
+          },
+          "validDesign": { "text": "белый/светло-зеленый" },
+          "measurements": {
+            "referenceMeasurements": [
+              {
+                "metric": "175x25x70 см",
+                "imperial": "68 7/8x9 7/8x27 1/2 дюйм"
+              }
+            ],
+            "detailedMeasurements": [
+              {
+                "type": "00001",
+                "typeName": "Длина",
+                "textMetric": "70 см",
+                "textImperial": "27 ½ дюйм"
+              },
+              {
+                "type": "00047",
+                "typeName": "Ширина",
+                "textMetric": "175 см",
+                "textImperial": "69 дюйм"
+              },
+              {
+                "type": "00044",
+                "typeName": "Глубина",
+                "textMetric": "25 см",
+                "textImperial": "9 ¾ дюйм"
+              },
+              {
+                "type": "00041",
+                "typeName": "Высота",
+                "textMetric": "70 см",
+                "textImperial": "27 ½ дюйм"
+              }
+            ]
+          },
+          "media": [
+            {
+              "id": "1016294",
+              "peNo": "PE830298",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "EKET wll-mntd cab comb 175x25x70 white/light green MPP",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1016294_pe830298_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1016294_pe830298_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1016294_pe830298_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1016294_pe830298_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1016294_PE830298_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1016294_pe830298_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "1038941",
+              "peNo": "PE840083",
+              "typeNo": "00017",
+              "typeName": "INSPIRATIONAL_IMAGE",
+              "name": "EKET wll-mntd cab comb 175x25x70 white/light green IPP",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1038941_pe840083_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1038941_pe840083_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1038941_pe840083_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1038941_pe840083_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "1038941_PE840083_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__1038941_pe840083_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0476236",
+              "peNo": "PE616178",
+              "typeNo": "00015",
+              "typeName": "QUALITY_PRODUCT_IMAGE",
+              "name": "EKET cab w dr/1 shlf 35x35x70 white QPP2",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0476236_pe616178_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0476236_pe616178_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0476236_pe616178_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0476236_pe616178_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0476236_PE616178_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0476236_pe616178_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0843151",
+              "peNo": "PE616267",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "EKET susp rl 35 FPP2",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843151_pe616267_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843151_pe616267_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843151_pe616267_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843151_pe616267_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843151_PE616267_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843151_pe616267_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0843100",
+              "peNo": "PE619666",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "EKET cabinet w 2 drw 70x35x35 white FPP5",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843100_pe619666_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843100_pe619666_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843100_pe619666_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843100_pe619666_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0843100_PE619666_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0843100_pe619666_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0553787",
+              "peNo": "PE659557",
+              "typeNo": "00019",
+              "typeName": "MEASUREMENT_ILLUSTRATION",
+              "name": "EKET cab w 2 drs/2 shlvs 70x25x70 white MI",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0553787_pe659557_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0553787_pe659557_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0553787_pe659557_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0553787_pe659557_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0553787_PE659557_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0553787_pe659557_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0631833",
+              "peNo": "PE695225",
+              "typeNo": "00019",
+              "typeName": "MEASUREMENT_ILLUSTRATION",
+              "name": "EKET cabinet 35x25x35 white MI2",
+              "altText": "EKET ЭКЕТ Комбинация настенных шкафов, белый/светло-зеленый, 175x25x70 см",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0631833_pe695225_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0631833_pe695225_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0631833_pe695225_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0631833_pe695225_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0631833_PE695225_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/eket-kombinaciya-nastennyh-shkafov-belyy-svetlo-zelenyy__0631833_pe695225_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "careInstructions": [
+            {
+              "productTypeText": "Комбинация настенных шкафов",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Протирать тканью, смоченной мягким моющим средством."
+                }
+              ]
+            },
+            {
+              "productTypeText": "Шкаф с 2 дверцами и 2 полками/накладная шина",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Вытирать чистой сухой тканью."
+                },
+                {
+                  "careInstructionText": "Регулярно проверяйте все крепления и подтягивайте их при необходимости."
+                }
+              ]
+            },
+            {
+              "productTypeText": "Шкаф",
+              "careInstructionTexts": [
+                {
+                  "careInstructionText": "Вытирать чистой сухой тканью."
+                }
+              ]
+            }
+          ],
+          "benefits": [
+            "Настенная полка ЭКЕТ позволяет сэкономить пространство на полу и максимально эффективно использовать стену.",
+            "Комбинируйте открытое и закрытое хранение в зависимости от потребностей.",
+            "Дверца со встроенным нажимным механизмом открывается легким нажатием.",
+            "4 съемные полки позволяют адаптировать пространство в соответствии с потребностями хранения, одна несъемная полка обеспечивает устойчивость."
+          ],
+          "materials": [
+            {
+              "productTypeText": "Шкаф",
+              "partMaterials": [
+                {
+                  "partText": "Задняя панель:",
+                  "materialText": "ДВП, Бумажная пленка, Бумажная пленка"
+                },
+                {
+                  "partText": "Панель:",
+                  "materialText": "ДСП, Сотовидный бумажный наполнитель (100 % переработанного материала), ДВП, Бумажная пленка, Пластиковая окантовка"
+                }
+              ]
+            },
+            {
+              "productTypeText": "Шкаф с 2 дверцами и 2 полками",
+              "partMaterials": [
+                {
+                  "partText": "Панель:",
+                  "materialText": "ДСП, Сотовидный бумажный наполнитель (100 % переработанного материала), ДВП, Бумажная пленка, Пластиковая окантовка"
+                },
+                {
+                  "partText": "Задняя панель:",
+                  "materialText": "ДВП, Бумажная пленка, Полимерная пленка"
+                }
+              ]
+            },
+            {
+              "productTypeText": "Накладная шина",
+              "partMaterials": [{ "materialText": "Оцинкованная сталь" }]
+            }
+          ],
+          "environmentTexts": [
+            {
+              "productTypeText": "Шкаф/шкаф с 2 дверцами и 2 полками",
+              "text": "Используя в этом товаре щит из ДВП и ДСП с сотовидным бумажным наполнителем, мы расходуем меньше древесины, а значит, бережнее относимся к ресурсам планеты."
+            },
+            {
+              "productTypeText": "Шкаф/шкаф с 2 дверцами и 2 полками",
+              "text": "Мы хотим оказывать позитивное воздействие на экологию планеты. Вот почему мы планируем к 2030 году использовать для изготовления наших товаров только переработанные, возобновляемые и полученные из ответственных источников материалы."
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "Included",
+              "text": "Накладные шины ЭКЕТ для фиксации к стене прилагаются."
+            },
+            {
+              "type": "Compl. assembly information",
+              "text": "Для разных стен требуются различные крепежные приспособления. Подберите подходящие для ваших стен шурупы, дюбели, саморезы и т. п. (не прилагаются)."
+            },
+            {
+              "type": "Compl. assembly information",
+              "text": "Максимальная нагрузка на подвесной шкаф зависит от материала стены."
+            }
+          ],
+          "filterInformation": {
+            "measurementFilters": [
+              {
+                "type": "HEIGHT",
+                "typeName": "Высота",
+                "textMetric": "70 см",
+                "textImperial": "27 ½ дюйм",
+                "valueMetric": "70",
+                "valueImperial": "27.55905511811025",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "DEPTH",
+                "typeName": "Глубина",
+                "textMetric": "25 см",
+                "textImperial": "9 ¾ дюйм",
+                "valueMetric": "25",
+                "valueImperial": "9.842519685039376",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "WIDTH",
+                "typeName": "Ширина",
+                "textMetric": "175 см",
+                "textImperial": "69 дюйм",
+                "valueMetric": "175",
+                "valueImperial": "68.89763779527563",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              }
+            ]
+          },
+          "benefitSummary": "ЭКЕТ может стать украшением вашей стены! Создайте классическую систему хранения с помощью нескольких шкафов или комбинируйте шкафы так, как вам нравится для неповторимого интерьера, соответствующего вашим потребностям.",
+          "itemNameLocal": "ЭКЕТ кмб нст шк 175x25x70 белый/светло-зеленый RU"
+        }
+      ],
+      "unitCode": "PIECE",
+      "filterClasses": ["open storage solutions"],
+      "serviceProductRelations": [
+        {
+          "serviceProductId": "ASSEMBLY",
+          "serviceKey": { "itemType": "SGR", "itemNo": "50000960" },
+          "serviceProductType": "ASSEMBLY",
+          "relationType": "SOLD_WITH",
+          "isCoWorkerAssistanceNeeded": false,
+          "isPromoted": false,
+          "recommendationRank": 0
+        }
+      ],
+      "classUnitKey": { "classUnitType": "RU", "classUnitCode": "RU" },
+      "businessStructure": {
+        "productAreaNo": "0212",
+        "productAreaName": "Solitaire cabinets",
+        "productRangeAreaNo": "021",
+        "productRangeAreaName": "Storage.",
+        "homeFurnishingBusinessNo": "02",
+        "homeFurnishingBusinessName": "Store and organise furniture"
+      },
+      "news": {
+        "value": true,
+        "validFrom": "2021-10-26",
+        "validTo": "2022-02-23"
+      },
+      "catalogueReferences": [
+        { "catalogueId": "products", "categoryId": "55015" }
+      ],
+      "lastChance": { "value": false },
+      "professionalAssemblyTime": { "value": 72, "unit": "MINUTES" },
+      "genericProduct": { "gprNo": "37968" },
+      "productTags": [
+        {
+          "name": "NEW",
+          "validFrom": "2021-10-26",
+          "validTo": "2022-02-23"
+        }
+      ]
+    }
+  ]
+}
