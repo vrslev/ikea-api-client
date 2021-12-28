@@ -82,8 +82,6 @@ def test_core_order_capture(monkeypatch: pytest.MonkeyPatch, core: IKEA):
     # Ensure we don't have same `OrderCapture` instance
     with pytest.raises(AssertionError):
         order_capture = core.order_capture(zip_code="111000")
-        assert order_capture._zip_code == "111000"
-        assert order_capture._state_code is None
     assert called
 
 
