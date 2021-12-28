@@ -1,0 +1,49 @@
+{
+  "data": {
+    "order": {
+      "id": "111111111",
+      "dateAndTime": {
+        "time": "07:51:56Z",
+        "date": "2021-11-18",
+        "formattedLocal": "18 ноября 2021, 13:30",
+        "formattedShortDate": "18.11.2021",
+        "formattedLongDate": "18 ноября 2021",
+        "formattedShortDateTime": "18.11.2021 13:30",
+        "formattedLongDateTime": "18 ноября 2021, 13:30"
+      },
+      "status": "CREATED",
+      "services": [],
+      "deliveryMethods": [
+        {
+          "id": "111111111",
+          "serviceId": "SGR90000897",
+          "status": "ORDER_RECEIVED",
+          "type": "TRUCK_CURBSIDE",
+          "deliveryDate": {
+            "actual": null,
+            "estimatedFrom": {
+              "time": "13:00:00Z",
+              "date": "2021-12-03",
+              "formattedLocal": "3 декабря 2021, 16:00",
+              "formattedShortDate": "03.12.2021",
+              "formattedLongDate": "3 декабря 2021",
+              "formattedShortDateTime": "03.12.2021 16:00",
+              "formattedLongDateTime": "3 декабря 2021, 16:00"
+            },
+            "estimatedTo": {
+              "time": "17:00:00Z",
+              "date": "2021-12-03",
+              "formattedLocal": "3 декабря 2021, 20:00",
+              "formattedShortDate": "03.12.2021",
+              "formattedLongDate": "3 декабря 2021",
+              "formattedShortDateTime": "03.12.2021 20:00",
+              "formattedLongDateTime": "3 декабря 2021, 20:00"
+            },
+            "dateTimeRange": "3 декабря 2021, 16:00—20:00",
+            "timeZone": "Europe/Moscow"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from copy import copy
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 import responses
@@ -57,59 +57,92 @@ def test_get_checkout_failes(order_capture: OrderCapture):
 
 
 @responses.activate
-def test_get_delivery_area_failes(order_capture: OrderCapture):
+def test_get_service_area_failes(order_capture: OrderCapture):
     responses.add(
         responses.POST,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas",
-        json={"not resourceId": "bar"},
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area",
+        json={"not id": "bar"},
     )
-    with pytest.raises(RuntimeError, match="No resourceId for delivery area"):
-        order_capture._get_delivery_area("mycheckout")
+    with pytest.raises(RuntimeError, match="No id for service area"):
+        order_capture._get_service_area("mycheckout")
 
 
 @pytest.mark.parametrize("with_state_code", (True, False))
 @responses.activate
-def test_get_delivery_area_data(order_capture: OrderCapture, with_state_code: bool):
+def test_get_service_area_data(order_capture: OrderCapture, with_state_code: bool):
     order_capture._zip_code = "1000"
-    exp_data = {"enableRangeOfDays": False, "zipCode": "1000"}
+    exp_data = {"zipCode": "1000"}
     if with_state_code:
         order_capture._state_code = "LA"
         exp_data["stateCode"] = "LA"
     responses.add(
         responses.POST,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas",
-        json={"resourceId": "bar"},
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area",
+        json={"id": "bar"},
         match=[responses.matchers.json_params_matcher(exp_data)],  # type: ignore
     )
-    order_capture._get_delivery_area("mycheckout")
+    assert order_capture._get_service_area("mycheckout") == "bar"
 
 
+home_and_collect_method_and_endpoints = (
+    ("method", "endpoint"),
+    (
+        (OrderCapture.get_home_delivery_services, "home-delivery-services"),
+        (OrderCapture.get_collect_delivery_services, "collect-delivery-services"),
+    ),
+)
+
+
+@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
 @pytest.mark.parametrize("code", (60005, 60006, 60013))
 @responses.activate
-def test_get_delivery_services_fails_known_err(order_capture: OrderCapture, code: int):
+def test_get_delivery_services_fails_known_err(
+    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str, code: int
+):
     responses.add(
         responses.GET,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas/myarea/delivery-services",
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
         json={"errorCode": code},
     )
     with pytest.raises(NoDeliveryOptionsAvailableError):
-        order_capture._get_delivery_services("mycheckout", "myarea")
+        method(order_capture, ("mycheckout", "myarea"))
 
 
+@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
 @responses.activate
-def test_get_delivery_services_fails_unknown_err(order_capture: OrderCapture):
+def test_get_delivery_services_fails_unknown_err(
+    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str
+):
     responses.add(
         responses.GET,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas/myarea/delivery-services",
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
         json={"errorCode": 60000},
     )
     with pytest.raises(OrderCaptureError):
-        order_capture._get_delivery_services("mycheckout", "myarea")
+        method(order_capture, ("mycheckout", "myarea"))
 
 
+@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
 @responses.activate
-def test_order_capture_main(
-    monkeypatch: pytest.MonkeyPatch, order_capture: OrderCapture
+def test_order_capture_passes_with_checkout_and_service_area(
+    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str
+):
+    responses.add(
+        responses.GET,
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
+        json={"foo": "bar"},
+    )
+
+    assert method(order_capture, ("mycheckout", "myarea")) == {"foo": "bar"}
+
+
+@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
+@responses.activate
+def test_order_capture_passes_without_checkout_and_service_area(
+    monkeypatch: pytest.MonkeyPatch,
+    order_capture: OrderCapture,
+    method: Callable[..., Any],
+    endpoint: str,
 ):
     exp_items = [
         {"quantity": 1, "itemNo": "11111111", "uom": "uom"},
@@ -146,6 +179,8 @@ def test_order_capture_main(
                     "deliveryArea": None,
                     "items": exp_items,
                     "languageCode": Constants.LANGUAGE_CODE,
+                    "serviceArea": None,
+                    "preliminaryAddressInfo": None,
                 }
             ),
         ],
@@ -153,22 +188,22 @@ def test_order_capture_main(
 
     responses.add(
         responses.POST,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas",
-        json={"resourceId": "myarea"},
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area",
+        json={"id": "myarea"},
         match=[
             responses.matchers.json_params_matcher(  # type: ignore
-                {"enableRangeOfDays": False, "zipCode": copy(order_capture._zip_code)}
+                {"zipCode": copy(order_capture._zip_code)}
             )
         ],
     )
 
     responses.add(
         responses.GET,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/delivery-areas/myarea/delivery-services",
+        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
         json={"foo": "bar"},
     )
 
-    assert order_capture() == {"foo": "bar"}
+    assert method(order_capture) == {"foo": "bar"}
 
 
 @pytest.mark.parametrize("v", ("100000", "2184011", "101000"))

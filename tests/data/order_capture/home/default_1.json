@@ -1,0 +1,484 @@
+{
+  "context": {
+    "retailUnit": "ru",
+    "exclTaxCountry": false,
+    "checkoutId": "",
+    "currency": "RUB",
+    "scope": { "type": "HOME_DELIVERY" },
+    "config": {
+      "enableLeadTimeOrchestration": true,
+      "enablePrimeTimeCalculation": true,
+      "allowedPTSDeliveries": [
+        "HOME_DELIVERY_STANDARD",
+        "HOME_DELIVERY_CURBSIDE",
+        "HOME_DELIVERY_EXPRESS",
+        "HOME_DELIVERY_EXPRESS_CURBSIDE"
+      ]
+    },
+    "businessUnit": { "code": "111", "type": "STO" },
+    "customerContext": { "customerType": "PRIVATE" },
+    "capability": {
+      "wheelChair": false,
+      "rangeOfDays": true,
+      "authToLeave": true
+    }
+  },
+  "possibleDeliveryServices": {
+    "metadata": { "canAtLeastOneSolutionFulfillEntireCart": false },
+    "deliveryServices": [
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["UNAVAILABLE_ITEMS"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": true,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "HOME_DELIVERY",
+        "fulfillmentPossibility": "PARTIAL",
+        "solutionId": "HD~1~STANDARD",
+        "solution": "STANDARD",
+        "solutionPrice": { "inclTax": 4399, "exclTax": 3665.83 },
+        "expiryTime": "2021-12-27T17:12:49.319Z",
+        "possibleDeliveries": {
+          "metadata": { "multipleDeliveries": false },
+          "deliveries": [
+            {
+              "id": "",
+              "metadata": { "rangeOfDays": false },
+              "fulfillmentDeliveryId": "HD~~~2",
+              "serviceItemId": "SGR40000606",
+              "type": "TRUCK",
+              "deliveryPrice": {
+                "inclTax": 4399,
+                "exclTax": 3665.83
+              },
+              "deliveryItems": [
+                {
+                  "itemNo": "90503662",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "30308282",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60384364",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "20379538",
+                  "itemType": "ART",
+                  "quantity": 4,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "20299339",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "90488317",
+                  "itemType": "ART",
+                  "quantity": 2,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "80383957",
+                  "itemType": "ART",
+                  "quantity": 2,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60363012",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "30497635",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "90384013",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "50383874",
+                  "itemType": "ART",
+                  "quantity": 3,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "70366642",
+                  "itemType": "ART",
+                  "quantity": 7,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                }
+              ],
+              "timeWindows": {
+                "metadata": { "available": true },
+                "earliestPossibleSlot": {
+                  "metadata": {
+                    "timeZone": "Europe/Moscow",
+                    "hasPriceDeviation": false
+                  },
+                  "id": "",
+                  "fromDateTime": "2022-01-19T16:00:00.000",
+                  "toDateTime": "2022-01-19T20:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "unavailableItems": [
+          {
+            "id": "18",
+            "lineId": "18",
+            "itemNo": "80357835",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "17",
+            "lineId": "17",
+            "itemNo": "70480567",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "10",
+            "lineId": "10",
+            "itemNo": "40363013",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "6",
+            "lineId": "6",
+            "itemNo": "20394949",
+            "type": "ART",
+            "requiredQuantity": 4,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "4"
+            }
+          },
+          {
+            "id": "3",
+            "lineId": "3",
+            "itemNo": "10359791",
+            "type": "ART",
+            "requiredQuantity": 4,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "4"
+            }
+          },
+          {
+            "id": "13",
+            "lineId": "13",
+            "itemNo": "60366572",
+            "type": "ART",
+            "requiredQuantity": 2,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "2"
+            }
+          },
+          {
+            "id": "2",
+            "lineId": "2",
+            "itemNo": "00463024",
+            "type": "ART",
+            "requiredQuantity": 2,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "2"
+            }
+          },
+          {
+            "id": "20",
+            "lineId": "20",
+            "itemNo": "90299473",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "16",
+            "lineId": "16",
+            "itemNo": "70366642",
+            "type": "ART",
+            "requiredQuantity": 7,
+            "availableQuantity": 2,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "5"
+            }
+          }
+        ]
+      },
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["UNAVAILABLE_ITEMS"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": true,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "HOME_DELIVERY",
+        "fulfillmentPossibility": "PARTIAL",
+        "solutionId": "HD~1~CURBSIDE",
+        "solution": "CURBSIDE",
+        "solutionPrice": { "inclTax": 3799, "exclTax": 3165.83 },
+        "expiryTime": "2021-12-27T17:12:49.319Z",
+        "possibleDeliveries": {
+          "metadata": { "multipleDeliveries": false },
+          "deliveries": [
+            {
+              "id": "",
+              "metadata": { "rangeOfDays": false },
+              "fulfillmentDeliveryId": "HD~~~4",
+              "serviceItemId": "SGR90000897",
+              "type": "TRUCK",
+              "deliveryPrice": {
+                "inclTax": 3799,
+                "exclTax": 3165.83
+              },
+              "deliveryItems": [
+                {
+                  "itemNo": "90503662",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60476349",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "30486397",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "00383881",
+                  "itemType": "ART",
+                  "quantity": 2,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "30308282",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60384364",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "20379538",
+                  "itemType": "ART",
+                  "quantity": 4,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "20299339",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "90488317",
+                  "itemType": "ART",
+                  "quantity": 2,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "80383957",
+                  "itemType": "ART",
+                  "quantity": 2,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60363012",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "30497635",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "90384013",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "50383874",
+                  "itemType": "ART",
+                  "quantity": 3,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "70366642",
+                  "itemType": "ART",
+                  "quantity": 7,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                }
+              ],
+              "timeWindows": {
+                "metadata": { "available": true },
+                "earliestPossibleSlot": {
+                  "metadata": {
+                    "timeZone": "Europe/Moscow",
+                    "hasPriceDeviation": false
+                  },
+                  "id": "",
+                  "fromDateTime": "2022-01-19T16:00:00.000",
+                  "toDateTime": "2022-01-19T20:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "unavailableItems": [
+          {
+            "id": "",
+            "lineId": "18",
+            "itemNo": "80357835",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "",
+            "lineId": "17",
+            "itemNo": "70480567",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "",
+            "lineId": "10",
+            "itemNo": "40363013",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "16",
+            "lineId": "16",
+            "itemNo": "70366642",
+            "type": "ART",
+            "requiredQuantity": 7,
+            "availableQuantity": 2,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "5"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

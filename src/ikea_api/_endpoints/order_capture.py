@@ -58,38 +58,53 @@ class OrderCapture(AuthorizedAPI):
                 "deliveryArea": None,
                 "items": items,
                 "languageCode": Constants.LANGUAGE_CODE,
+                "serviceArea": None,
+                "preliminaryAddressInfo": None,
             },
         )
         if "resourceId" not in resp:
             raise RuntimeError("No resourceId for checkout")
         return resp["resourceId"]
 
-    def _get_delivery_area(self, checkout: str) -> str:
+    def _get_service_area(self, checkout: str) -> str:
         """Generate delivery area for checkout from Zip Code and State Code"""
-        data = {"enableRangeOfDays": False, "zipCode": self._zip_code}
+        data = {"zipCode": self._zip_code}
         if self._state_code is not None:
-            data["stateCode"] = self._state_code
+            data["stateCode"] = self._state_code  # TODO: Test state code
         resp: dict[str, str] = self._post(
-            f"{self.endpoint}/checkouts/{checkout}/delivery-areas", json=data
+            f"{self.endpoint}/checkouts/{checkout}/service-area", json=data
         )
-        if "resourceId" not in resp:
-            raise RuntimeError("No resourceId for delivery area")
-        return resp["resourceId"]
+        if "id" not in resp:
+            raise RuntimeError("No id for service area")
+        return resp["id"]
 
-    def _get_delivery_services(
-        self, checkout: str, delivery_area: str
-    ) -> list[dict[str, Any]]:
-        """Get available delivery services"""
+    def get_home_delivery_services(
+        self, checkout_and_service_area: tuple[str, str] | None = None
+    ) -> dict[str, Any]:
+        """Get available home delivery services"""
+        if checkout_and_service_area:
+            checkout, service_area = checkout_and_service_area
+        else:
+            checkout = self._get_checkout(self._get_items_for_checkout())
+            service_area = self._get_service_area(checkout)
+
         return self._get(
-            f"{self.endpoint}/checkouts/{checkout}/delivery-areas/{delivery_area}/delivery-services"
+            f"{self.endpoint}/checkouts/{checkout}/service-area/{service_area}/home-delivery-services"
         )
 
-    def __call__(self):
-        items = self._get_items_for_checkout()
-        checkout = self._get_checkout(items)
-        delivery_area = self._get_delivery_area(checkout)
-        delivery_services = self._get_delivery_services(checkout, delivery_area)
-        return delivery_services
+    def get_collect_delivery_services(
+        self, checkout_and_service_area: tuple[str, str] | None = None
+    ) -> dict[str, Any]:
+        """Get available collect delivery services"""
+        if checkout_and_service_area:
+            checkout, service_area = checkout_and_service_area
+        else:
+            checkout = self._get_checkout(self._get_items_for_checkout())
+            service_area = self._get_service_area(checkout)
+
+        return self._get(
+            f"{self.endpoint}/checkouts/{checkout}/service-area/{service_area}/collect-delivery-services"
+        )
 
 
 def _validate_zip_code(zip_code: str):

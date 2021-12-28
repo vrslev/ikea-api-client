@@ -1,0 +1,578 @@
+{
+  "data": [
+    {
+      "itemKey": { "itemType": "ART", "itemNo": "30377949" },
+      "itemKeyGlobal": { "itemType": "ART", "itemNo": "80377937" },
+      "productNameGlobal": "FENOMEN",
+      "isBreathTakingItem": false,
+      "isNew": false,
+      "isAssemblyRequired": false,
+      "numberOfPackages": 1,
+      "localisedCommunications": [
+        {
+          "languageCode": "en",
+          "countryCode": "RU",
+          "productName": "FENOMEN",
+          "productType": {
+            "id": "30436",
+            "name": "unscented block candle, set of 5"
+          },
+          "validDesign": { "text": "natural" },
+          "media": [
+            {
+              "id": "0577466",
+              "peNo": "PE668898",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 natural MPP",
+              "altText": "FENOMEN Unscented block candle, set of 5, natural",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0577466_pe668898_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0577466_pe668898_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0577466_pe668898_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0577466_pe668898_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0577466_pe668898_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0904278",
+              "peNo": "PE670010",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 na FPP",
+              "altText": "FENOMEN Unscented block candle, set of 5, natural",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0904278_pe670010_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0904278_pe670010_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0904278_pe670010_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0904278_pe670010_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0904278_pe670010_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0669197",
+              "peNo": "PE714892",
+              "typeNo": "00017",
+              "typeName": "INSPIRATIONAL_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 natural IPP",
+              "altText": "FENOMEN Unscented block candle, set of 5, natural",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S1.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0669197_pe714892_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S2.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0669197_pe714892_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S3.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0669197_pe714892_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S4.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0669197_pe714892_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S5.JPG",
+                  "href": "https://www.ikea.com/ru/en/images/products/fenomen-unscented-block-candle-set-of-5-natural__0669197_pe714892_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "benefits": [
+            "Block candles provide an atmospheric light and are also beautiful home furnishing accessories when not lit.",
+            "Block candles have a long burning time and are beautiful together on a candle dish."
+          ],
+          "materials": [
+            {
+              "partMaterials": [
+                {
+                  "materialText": "paraffin wax, plant based wax"
+                }
+              ]
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "Complementary info measurements",
+              "text": "Size: (height x diameter) 9 cmx5.9 cm (burning time 20h), 12 cmx5.9 cm (burning time 34h), 15 cmx5.9 cm (burning time 40h), 8 cmx6.7 cm (burning time 20h), 13 cmx6.7 cm (burning time 40h)."
+            },
+            {
+              "type": "Warning",
+              "text": "Never leave a burning candle unattended."
+            },
+            {
+              "type": "Warning",
+              "text": "Do not burn candles near any flammable materials."
+            }
+          ],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Height",
+              "textMetric": "7 cm",
+              "textImperial": "2 ¾ \"",
+              "valueMetric": "7",
+              "valueImperial": "2.75",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Length",
+              "textMetric": "22 cm",
+              "textImperial": "8 ¾ \"",
+              "valueMetric": "22",
+              "valueImperial": "8.75",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Net weight",
+              "textMetric": "1.34 kg",
+              "textImperial": "2 lb 15 oz",
+              "valueMetric": "1.34",
+              "valueImperial": "2.938",
+              "unitMetric": "kg",
+              "unitImperial": "pound",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Volume",
+              "textMetric": "2.9 l",
+              "textImperial": "0.10 cu.ft",
+              "valueMetric": "2.9",
+              "valueImperial": "0.10",
+              "unitMetric": "litre",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Weight",
+              "textMetric": "1.39 kg",
+              "textImperial": "3 lb 1 oz",
+              "valueMetric": "1.39",
+              "valueImperial": "3.062",
+              "unitMetric": "kg",
+              "unitImperial": "pound",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Width",
+              "textMetric": "19 cm",
+              "textImperial": "7 ½ \"",
+              "valueMetric": "19",
+              "valueImperial": "7.5",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            }
+          ],
+          "filterInformation": {
+            "classFilters": [
+              {
+                "id": "38764",
+                "name": "Colour",
+                "values": [{ "id": "10003", "name": "beige" }]
+              }
+            ]
+          },
+          "benefitSummary": "The glow from candles can add atmosphere to any moment – they can light up dark mornings, make a one-on-one dinner more romantic or make a room feel warmer and more inviting.",
+          "itemNameLocal": "FENOMEN N unscented blck cndl s5 natural RU"
+        },
+        {
+          "languageCode": "ru",
+          "countryCode": "RU",
+          "productName": "FENOMEN ФЕНОМЕН",
+          "productType": {
+            "id": "30436",
+            "name": "неароматическая формовая свеча, 5шт"
+          },
+          "validDesign": { "text": "естественный" },
+          "media": [
+            {
+              "id": "0577466",
+              "peNo": "PE668898",
+              "typeNo": "00001",
+              "typeName": "MAIN_PRODUCT_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 natural MPP",
+              "altText": "FENOMEN ФЕНОМЕН Неароматическая формовая свеча, 5шт, естественный",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0577466_pe668898_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0577466_pe668898_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0577466_pe668898_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0577466_pe668898_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0577466_PE668898_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0577466_pe668898_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0904278",
+              "peNo": "PE670010",
+              "typeNo": "00016",
+              "typeName": "FUNCTIONAL_PRODUCT_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 na FPP",
+              "altText": "FENOMEN ФЕНОМЕН Неароматическая формовая свеча, 5шт, естественный",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0904278_pe670010_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0904278_pe670010_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0904278_pe670010_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0904278_pe670010_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0904278_PE670010_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0904278_pe670010_s5.jpg"
+                }
+              ]
+            },
+            {
+              "id": "0669197",
+              "peNo": "PE714892",
+              "typeNo": "00017",
+              "typeName": "INSPIRATIONAL_IMAGE",
+              "name": "FENOMEN N unscented blck cndl s5 natural IPP",
+              "altText": "FENOMEN ФЕНОМЕН Неароматическая формовая свеча, 5шт, естественный",
+              "variants": [
+                {
+                  "quality": "S1",
+                  "height": 40,
+                  "width": 40,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S1.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0669197_pe714892_s1.jpg"
+                },
+                {
+                  "quality": "S2",
+                  "height": 110,
+                  "width": 110,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S2.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0669197_pe714892_s2.jpg"
+                },
+                {
+                  "quality": "S3",
+                  "height": 250,
+                  "width": 250,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S3.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0669197_pe714892_s3.jpg"
+                },
+                {
+                  "quality": "S4",
+                  "height": 500,
+                  "width": 500,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S4.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0669197_pe714892_s4.jpg"
+                },
+                {
+                  "quality": "S5",
+                  "height": 2000,
+                  "width": 2000,
+                  "fileMimeType": "image/jpeg",
+                  "fileName": "0669197_PE714892_S5.JPG",
+                  "href": "https://www.ikea.com/ru/ru/images/products/fenomen-nearomaticheskaya-formovaya-svecha-5sht-estestvennyy__0669197_pe714892_s5.jpg"
+                }
+              ]
+            }
+          ],
+          "materials": [
+            {
+              "partMaterials": [
+                {
+                  "materialText": "парафиновый воск, растительный воск"
+                }
+              ]
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "Complementary info measurements",
+              "text": "Размеры (высота x диаметр): 9 см x 5,9 см (время горения 20 ч.), 12 см x 5,9 см (время горения 34 ч.), 15 см x 5,9 см (время горения 40ч.), 8 см x 6,7 см (время горения 20 ч.), 13 см x 6,7 см (время горения 40 ч.)."
+            },
+            {
+              "type": "Warning",
+              "text": "Никогда не оставляйте горящую свечу вне поля зрения."
+            },
+            {
+              "type": "Warning",
+              "text": "Не зажигайте свечи рядом с воспламеняемыми материалами."
+            }
+          ],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Высота",
+              "textMetric": "7 см",
+              "textImperial": "2 ¾ дюйм",
+              "valueMetric": "7",
+              "valueImperial": "2.75",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Длина",
+              "textMetric": "22 см",
+              "textImperial": "8 ¾ дюйм",
+              "valueMetric": "22",
+              "valueImperial": "8.75",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Вес нетто",
+              "textMetric": "1.34 кг",
+              "textImperial": "2 фнт 15 унц",
+              "valueMetric": "1.34",
+              "valueImperial": "2.938",
+              "unitMetric": "кг",
+              "unitImperial": "фнт",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Объем",
+              "textMetric": "2.9 л",
+              "textImperial": "0.10 cu.ft",
+              "valueMetric": "2.9",
+              "valueImperial": "0.10",
+              "unitMetric": "л",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Вес",
+              "textMetric": "1.39 кг",
+              "textImperial": "3 фнт 1 унц",
+              "valueMetric": "1.39",
+              "valueImperial": "3.062",
+              "unitMetric": "кг",
+              "unitImperial": "фнт",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Ширина",
+              "textMetric": "19 см",
+              "textImperial": "7 ½ дюйм",
+              "valueMetric": "19",
+              "valueImperial": "7.5",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            }
+          ],
+          "filterInformation": {
+            "classFilters": [
+              {
+                "id": "38764",
+                "name": "Цвет",
+                "values": [{ "id": "10003", "name": "бежевый" }]
+              }
+            ]
+          },
+          "benefitSummary": "Мерцание свечи создаст располагающую атмосферу в любой момент — осветит темное зимнее утро, превратит обычный ужин в романтический и сделает комнату более уютной.",
+          "itemNameLocal": "ФЕНОМЕН N неар фрм свеч, 5шт естественный RU"
+        }
+      ],
+      "complementaryItems": [
+        {
+          "itemKey": { "itemType": "ART", "itemNo": "40380588" },
+          "type": "GETS_SAFER_WITH"
+        },
+        {
+          "itemKey": { "itemType": "ART", "itemNo": "40350039" },
+          "type": "MAY_BE_COMPLETED_WITH"
+        },
+        {
+          "itemKey": { "itemType": "ART", "itemNo": "30388721" },
+          "type": "MAY_BE_COMPLETED_WITH"
+        }
+      ],
+      "unitCode": "PIECE",
+      "filterClasses": ["base"],
+      "styleGroup": "Multi",
+      "classUnitKey": { "classUnitType": "RU", "classUnitCode": "RU" },
+      "businessStructure": {
+        "productAreaNo": "1632",
+        "productAreaName": "Candles and atmosphere light",
+        "productRangeAreaNo": "163",
+        "productRangeAreaName": "Home decoration",
+        "homeFurnishingBusinessNo": "16",
+        "homeFurnishingBusinessName": "Decoration"
+      },
+      "news": { "value": false },
+      "catalogueReferences": [
+        { "catalogueId": "products", "categoryId": "10782" }
+      ],
+      "lastChance": { "value": false }
+    }
+  ]
+}

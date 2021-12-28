@@ -50,9 +50,9 @@ class IKEA:
 
     def order_capture(
         self, *, zip_code: str, state_code: str | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> OrderCapture:
         """Get available delivery services."""
-        return OrderCapture(self.token, zip_code=zip_code, state_code=state_code)()
+        return OrderCapture(self.token, zip_code=zip_code, state_code=state_code)
 
     @property
     def purchases(self) -> Purchases:

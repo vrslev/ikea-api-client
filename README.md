@@ -125,10 +125,12 @@ If you use authorized token (copy-paste from cookies), than you edit your user's
 Check pickup or delivery availability. If you need to know whether items are available _in stores_, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
 
 ```python
-ikea.order_capture(
+order = ikea.order_capture(
     zip_code="02215",
     state_code="MA",  # pass State Code only if your country has them
 )
+home_delivery_services = order.get_home_delivery_services()
+collect_delivery_services = order.get_collect_delivery_services()
 ```
 
 > 💡 You can use wrapper to add items to cart (clearing cart before and handling unknown item errors if they appear) and parse response in nice Pydantic models:

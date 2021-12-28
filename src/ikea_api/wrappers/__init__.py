@@ -99,10 +99,23 @@ def get_delivery_services(
             delivery_options=[], cannot_add=cannot_add
         )
 
-    resp = api.order_capture(zip_code=zip_code)
-    parsed_resp = order_capture.main(resp)
+    order_capture_api = api.order_capture(zip_code=zip_code)
+    checkout = order_capture_api._get_checkout(
+        order_capture_api._get_items_for_checkout()
+    )
+    service_area = order_capture_api._get_service_area(checkout)
+    home_response = order_capture_api.get_home_delivery_services(
+        (checkout, service_area)
+    )
+    collect_response = order_capture_api.get_collect_delivery_services(
+        (checkout, service_area)
+    )
+    parsed_responses = order_capture.main(
+        home_delivery_services_response=home_response,
+        collect_delivery_services_response=collect_response,
+    )
     return types.GetDeliveryServicesResponse(
-        delivery_options=parsed_resp, cannot_add=cannot_add
+        delivery_options=parsed_responses, cannot_add=cannot_add
     )
 
 

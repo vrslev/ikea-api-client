@@ -1,0 +1,329 @@
+{
+  "context": {
+    "retailUnit": "ru",
+    "exclTaxCountry": false,
+    "checkoutId": "",
+    "currency": "RUB",
+    "scope": {
+      "type": "COLLECT",
+      "subTypes": [
+        { "id": "PUP", "maxCollectionPoints": "40" },
+        { "id": "PUOP", "maxCollectionPoints": "20" },
+        { "id": "CLICK_COLLECT_STORE", "maxCollectionPoints": "10" }
+      ]
+    },
+    "config": {
+      "enableLeadTimeOrchestration": true,
+      "enablePrimeTimeCalculation": true,
+      "allowedPTSDeliveries": [
+        "HOME_DELIVERY_STANDARD",
+        "HOME_DELIVERY_CURBSIDE",
+        "HOME_DELIVERY_EXPRESS",
+        "HOME_DELIVERY_EXPRESS_CURBSIDE"
+      ]
+    },
+    "businessUnit": { "code": "111", "type": "STO" },
+    "customerContext": { "customerType": "PRIVATE" },
+    "capability": {
+      "wheelChair": false,
+      "rangeOfDays": true,
+      "authToLeave": true
+    }
+  },
+  "possibleDeliveryServices": {
+    "metadata": { "canAtLeastOneSolutionFulfillEntireCart": false },
+    "deliveryServices": [
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["UNAVAILABLE_ITEMS"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": false,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "PUP",
+        "fulfillmentPossibility": "PARTIAL",
+        "solutionId": "PUP~1~1~STANDARD",
+        "solution": "STANDARD",
+        "solutionPrice": { "inclTax": 1399, "exclTax": 1165.83 },
+        "expiryTime": "2021-12-27T17:20:04.751Z",
+        "possibleDeliveries": {
+          "metadata": { "multipleDeliveries": false },
+          "deliveries": [
+            {
+              "id": "",
+              "metadata": { "rangeOfDays": false },
+              "fulfillmentDeliveryId": "PUP~~~4",
+              "serviceItemId": "SGR60000851",
+              "type": "TRUCK",
+              "deliveryPrice": {
+                "inclTax": 1399,
+                "exclTax": 1165.83
+              },
+              "deliveryItems": [
+                {
+                  "itemNo": "90503662",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                },
+                {
+                  "itemNo": "60476349",
+                  "itemType": "ART",
+                  "quantity": 1,
+                  "shipNode": "CDC.049",
+                  "parentId": null
+                }
+              ],
+              "possiblePickUpPoints": {
+                "possiblePickUpPointMetadata": {
+                  "closestPickUpPointId": ""
+                },
+                "pickUpPoints": [
+                  {
+                    "ocPUPId": "",
+                    "metadata": {
+                      "deliveryServiceId": "",
+                      "deliveryServiceSolution": "STANDARD",
+                      "deliveryServiceFulfillmentMethodType": "PUP",
+                      "deliveryServiceFulfillmentPossibility": "PARTIAL",
+                      "deliveryId": "",
+                      "deliveryType": "TRUCK",
+                      "selectableInfo": {
+                        "selectable": "YES"
+                      }
+                    },
+                    "price": {
+                      "inclTax": 1399,
+                      "exclTax": 1165.83
+                    },
+                    "id": "",
+                    "name": "",
+                    "identifier": "",
+                    "lsc": null,
+                    "latitude": "",
+                    "longitude": "",
+                    "openingHoursMonTime": "09:00-19:00",
+                    "openingHoursTueTime": "09:00-19:00",
+                    "openingHoursWedTime": "09:00-19:00",
+                    "openingHoursThuTime": "09:00-19:00",
+                    "openingHoursFriTime": "09:00-19:00",
+                    "openingHoursSatTime": "09:00-18:00",
+                    "openingHoursSunTime": "10:00-16:00",
+                    "country": "RU",
+                    "zipCode": "",
+                    "city": "",
+                    "state": null,
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "addressLine3": "",
+                    "addressLine4": "",
+                    "distance": 34.65,
+                    "timeWindows": {
+                      "metadata": { "available": true },
+                      "earliestPossibleSlot": {
+                        "metadata": {
+                          "timeZone": "Europe/Moscow",
+                          "hasPriceDeviation": false
+                        },
+                        "id": "",
+                        "fromDateTime": "2022-01-21T09:00:00.000",
+                        "toDateTime": "2022-01-21T18:00:00.000"
+                      }
+                    }
+                  },
+                  {
+                    "ocPUPId": "",
+                    "metadata": {
+                      "deliveryServiceId": "",
+                      "deliveryServiceSolution": "STANDARD",
+                      "deliveryServiceFulfillmentMethodType": "PUP",
+                      "deliveryServiceFulfillmentPossibility": "PARTIAL",
+                      "deliveryId": "",
+                      "deliveryType": "TRUCK",
+                      "selectableInfo": {
+                        "selectable": "UNCERTAIN",
+                        "reason": ["DELIVERY_TIME_WINDOW_NOT_EVALUATED"]
+                      }
+                    },
+                    "price": {
+                      "inclTax": 1399,
+                      "exclTax": 1165.83
+                    },
+                    "id": "",
+                    "name": "",
+                    "identifier": "",
+                    "lsc": null,
+                    "latitude": "",
+                    "longitude": "",
+                    "openingHoursMonTime": "08:00-19:00",
+                    "openingHoursTueTime": "08:00-19:00",
+                    "openingHoursWedTime": "08:00-19:00",
+                    "openingHoursThuTime": "08:00-19:00",
+                    "openingHoursFriTime": "08:00-19:00",
+                    "openingHoursSatTime": "09:00-16:00",
+                    "openingHoursSunTime": "09:00-16:00",
+                    "country": "RU",
+                    "zipCode": "",
+                    "city": "",
+                    "state": null,
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "addressLine3": "",
+                    "addressLine4": "",
+                    "distance": 2.98,
+                    "timeWindows": null
+                  },
+                  {
+                    "ocPUPId": "",
+                    "metadata": {
+                      "deliveryServiceId": "",
+                      "deliveryServiceSolution": "STANDARD",
+                      "deliveryServiceFulfillmentMethodType": "PUP",
+                      "deliveryServiceFulfillmentPossibility": "PARTIAL",
+                      "deliveryId": "",
+                      "deliveryType": "TRUCK",
+                      "selectableInfo": {
+                        "selectable": "UNCERTAIN",
+                        "reason": ["DELIVERY_TIME_WINDOW_NOT_EVALUATED"]
+                      }
+                    },
+                    "price": {
+                      "inclTax": 1399,
+                      "exclTax": 1165.83
+                    },
+                    "id": "",
+                    "name": "",
+                    "identifier": "identifier",
+                    "lsc": null,
+                    "latitude": "",
+                    "longitude": "",
+                    "openingHoursMonTime": "09:00-18:00",
+                    "openingHoursTueTime": "09:00-18:00",
+                    "openingHoursWedTime": "09:00-18:00",
+                    "openingHoursThuTime": "09:00-18:00",
+                    "openingHoursFriTime": "09:00-18:00",
+                    "openingHoursSatTime": "09:00-16:00",
+                    "openingHoursSunTime": "",
+                    "country": "RU",
+                    "zipCode": "",
+                    "city": "",
+                    "state": null,
+                    "addressLine1": "",
+                    "addressLine2": "",
+                    "addressLine3": "",
+                    "addressLine4": "",
+                    "distance": 4.12,
+                    "timeWindows": null
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "unavailableItems": [
+          {
+            "id": "18",
+            "lineId": "18",
+            "itemNo": "80357835",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "10",
+            "lineId": "10",
+            "itemNo": "40363013",
+            "type": "ART",
+            "requiredQuantity": 1,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "1"
+            }
+          },
+          {
+            "id": "6",
+            "lineId": "6",
+            "itemNo": "20394949",
+            "type": "ART",
+            "requiredQuantity": 4,
+            "availableQuantity": 0,
+            "unavailableReason": "OP_NOT_ENOUGH_PROD_CHOICES",
+            "unavailableReasonCodeMap": {
+              "OP_NOT_ENOUGH_PROD_CHOICES": "4"
+            }
+          }
+        ]
+      },
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["DELIVERY_ARRANGEMENT_UNAVAILABLE"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": false,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "PUOP",
+        "errors": [
+          {
+            "type": "INTEGRATION_APP_ERROR",
+            "service": "DELIVERY_ARRANGEMENTS",
+            "errorDetail": {
+              "errorCode": "EXTN_SOMOP_0015",
+              "errorDescription": "No PickUp Point Returned For ZipCode",
+              "errorUniqueExceptionId": ""
+            }
+          }
+        ]
+      },
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["DELIVERY_ARRANGEMENT_UNAVAILABLE"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": false,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "CLICK_COLLECT_STORE",
+        "errors": [
+          {
+            "type": "INTEGRATION_APP_ERROR",
+            "service": "DELIVERY_ARRANGEMENTS",
+            "errorDetail": {
+              "errorCode": "EXTN_SOMOP_0015",
+              "errorDescription": "No PickUp Point Returned For ZipCode",
+              "errorUniqueExceptionId": ""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
