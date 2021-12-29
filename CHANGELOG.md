@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.1 (2021-12-29)
+### Fix
+* **Order Capture parser:** Failing case where service.possibleDeliveries is None ([`bacb98c`](https://github.com/vrslev/ikea-api-client/commit/bacb98c63be05972f40b8c7791d24a6f0c2dbde7))
+
 ## v1.1.0 (2021-12-28)
 ### Feature
 * Update Order Capture API ([#80](https://github.com/vrslev/ikea-api-client/issues/80)) ([`c4391a4`](https://github.com/vrslev/ikea-api-client/commit/c4391a411ae598ec6f1b5dfa716a7fcfd3508579))
