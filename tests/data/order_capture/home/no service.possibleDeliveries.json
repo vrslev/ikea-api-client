@@ -1,0 +1,59 @@
+{
+  "context": {
+    "retailUnit": "ru",
+    "exclTaxCountry": false,
+    "checkoutId": "",
+    "currency": "RUB",
+    "scope": { "type": "HOME_DELIVERY" },
+    "config": {
+      "enableLeadTimeOrchestration": true,
+      "enablePrimeTimeCalculation": true,
+      "allowedPTSDeliveries": [
+        "HOME_DELIVERY_STANDARD",
+        "HOME_DELIVERY_CURBSIDE",
+        "HOME_DELIVERY_EXPRESS",
+        "HOME_DELIVERY_EXPRESS_CURBSIDE"
+      ]
+    },
+    "businessUnit": { "code": "111", "type": "STO" },
+    "customerContext": { "customerType": "PRIVATE" },
+    "capability": {
+      "wheelChair": false,
+      "rangeOfDays": true,
+      "authToLeave": true
+    }
+  },
+  "possibleDeliveryServices": {
+    "metadata": { "canAtLeastOneSolutionFulfillEntireCart": false },
+    "deliveryServices": [
+      {
+        "metadata": {
+          "selectableInfo": {
+            "selectable": "NO",
+            "reason": ["DELIVERY_ARRANGEMENT_UNAVAILABLE"]
+          },
+          "serviceOfferCompatible": false,
+          "wheelChairCapability": false,
+          "slotBasedPricingEnabled": false,
+          "maxSolutionPrice": null,
+          "minSolutionPrice": null,
+          "deliveryPriceBasedOnPUPZipCode": false
+        },
+        "id": "",
+        "deliveryArrangementsId": "",
+        "fulfillmentMethodType": "HOME_DELIVERY",
+        "errors": [
+          {
+            "type": "INTEGRATION_APP_ERROR",
+            "service": "DELIVERY_ARRANGEMENTS",
+            "errorDetail": {
+              "errorCode": "EXTN_SOMOP_0007",
+              "errorDescription": "NOT_ENOUGH_PRODUCT_CHOICES",
+              "errorUniqueExceptionId": ""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

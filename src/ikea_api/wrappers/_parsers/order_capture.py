@@ -128,9 +128,9 @@ class HomePossibleDeliveries(BaseModel):
 class HomeDeliveryService(BaseModel):
     metadata: Metadata
     fulfillmentMethodType: str
-    solution: Optional[str]  # TODO: Optional or not?
+    solution: Optional[str]
     solutionPrice: Optional[SolutionPrice]
-    possibleDeliveries: HomePossibleDeliveries
+    possibleDeliveries: Optional[HomePossibleDeliveries]
     unavailableItems: Optional[List[UnavailableItem]]
 
 
@@ -146,7 +146,7 @@ def parse_home_delivery_services(response: dict[str, Any]):
     parsed_response = HomeDeliveryServicesResponse(**response)
     res: list[types.DeliveryService] = []
     for service in parsed_response.possibleDeliveryServices.deliveryServices:
-        if not service.possibleDeliveries.deliveries:
+        if not (service.possibleDeliveries and service.possibleDeliveries.deliveries):
             continue
 
         res.append(

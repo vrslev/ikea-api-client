@@ -16,7 +16,8 @@ from ikea_api.wrappers._parsers.order_capture import (
     get_service_provider,
     get_type,
     get_unavailable_items,
-    main,
+    parse_collect_delivery_services,
+    parse_home_delivery_services,
 )
 from tests.conftest import TestData
 
@@ -127,11 +128,11 @@ def test_get_service_provider_with_value_no_match():
     assert get_service_provider(service) == exp_identifier  # type: ignore
 
 
-@pytest.mark.parametrize("home", TestData.order_capture_home)
-@pytest.mark.parametrize("collect", TestData.order_capture_collect)
-def test_main(home: dict[str, Any], collect: dict[str, Any]):
-    print(home.keys())
-    main(
-        home_delivery_services_response=home,
-        collect_delivery_services_response=collect,
-    )
+@pytest.mark.parametrize("response", TestData.order_capture_home)
+def test_parse_home_delivery_services(response: dict[str, Any]):
+    parse_home_delivery_services(response)
+
+
+@pytest.mark.parametrize("response", TestData.order_capture_collect)
+def test_parse_collect_delivery_services(response: dict[str, Any]):
+    parse_collect_delivery_services(response)
