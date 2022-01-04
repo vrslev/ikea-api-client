@@ -3,6 +3,14 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.2 (2022-01-04)
+### Fix
+* **Item Iows parser:** Allow optional RetailItemCommPackageMeasureList ([`d09d057`](https://github.com/vrslev/ikea-api-client/commit/d09d0577b7d2d89efc25c63bbecdf2fbca702ad5))
+
+### Chore
+* Fix typing issues ([`a7ab225`](https://github.com/vrslev/ikea-api-client/commit/a7ab225d43ff4ab079fbc91fa36a115bddacd658))
+* **deps:** Update pre-commit hooks ([#81](https://github.com/vrslev/ikea-api-client/issues/81)) ([`1006ede`](https://github.com/vrslev/ikea-api-client/commit/1006edeea006951513c1272a1014f562351b74c9))
+
 ## v1.1.1 (2021-12-29)
 ### Fix
 * **Order Capture parser:** Failing case where service.possibleDeliveries is None ([`bacb98c`](https://github.com/vrslev/ikea-api-client/commit/bacb98c63be05972f40b8c7791d24a6f0c2dbde7))
