@@ -1,0 +1,826 @@
+{
+  "ItemNo": { "$": 19416023 },
+  "ItemNoGlobal": { "$": 99416019 },
+  "ItemType": { "$": "SPR" },
+  "ProductName": { "$": "ОРФЬЕЛЛЬ" },
+  "ProductTypeName": { "$": "Рабочий стул" },
+  "ValidDesignText": { "$": "черный, Висле синий" },
+  "OnlineSellable": { "$": true },
+  "BreathTakingItem": { "$": false },
+  "ItemUnitCode": { "$": "PIECES" },
+  "ItemNumberOfPackages": { "$": 1 },
+  "AssemblyCode": { "$": "Y" },
+  "DesignerNameComm": {},
+  "PriceUnitTextMetric": {},
+  "GlobalisationContext": {
+    "LanguageCodeIso": { "$": "ru" },
+    "CountryCodeIso": { "$": "ru" }
+  },
+  "ClassUnitKey": {
+    "ClassType": { "$": "GR" },
+    "ClassUnitType": { "$": "RU" },
+    "ClassUnitCode": { "$": "RU" }
+  },
+  "RetailItemCommPriceList": {
+    "RetailItemCommPrice": {
+      "RetailPriceType": { "$": "RegularSalesUnitPrice" },
+      "Price": { "$": 4299 },
+      "PriceExclTax": { "$": 3582.5 },
+      "CurrencyCode": { "$": "RUB" }
+    }
+  },
+  "RetailItemImageList": {
+    "RetailItemImage": [
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S1" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0977996_PE813975_S1.JPG"
+        },
+        "ImageWidth": { "$": 40 },
+        "ImageHeight": { "$": 40 },
+        "SortNo": { "$": 1 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S2" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0977996_PE813975_S2.JPG"
+        },
+        "ImageWidth": { "$": 110 },
+        "ImageHeight": { "$": 110 },
+        "SortNo": { "$": 1 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0977996_PE813975_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 1 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0977996_PE813975_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 1 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0977996_PE813975_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 1 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0977999_PE813976_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 3 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0977999_PE813976_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 3 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0977999_PE813976_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 3 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0978002_PE813977_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 4 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978002_PE813977_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 4 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978002_PE813977_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 4 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0978003_PE813978_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 5 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978003_PE813978_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 5 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978003_PE813978_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 5 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0978005_PE813979_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 6 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978005_PE813979_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 6 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978005_PE813979_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 6 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0978006_PE813980_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 7 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978006_PE813980_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 7 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0978006_PE813980_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 7 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S3" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul__0718740_PE731640_S3.JPG"
+        },
+        "ImageWidth": { "$": 250 },
+        "ImageHeight": { "$": 250 },
+        "SortNo": { "$": 8 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S4" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0718740_PE731640_S4.JPG"
+        },
+        "ImageWidth": { "$": 500 },
+        "ImageHeight": { "$": 500 },
+        "SortNo": { "$": 8 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      },
+      {
+        "ImageUsage": { "$": "INTERNET" },
+        "ImageSize": { "$": "S5" },
+        "ImageUrl": {
+          "$": "/ru/ru/images/products/orf-ell-rabocij-stul-sinij__0718740_PE731640_S5.JPG"
+        },
+        "ImageWidth": { "$": 2000 },
+        "ImageHeight": { "$": 2000 },
+        "SortNo": { "$": 8 },
+        "ImageType": { "$": "PICTURE SINGLE" }
+      }
+    ]
+  },
+  "GPRCommSelectionCriteriaSelectionList": {
+    "GPRCommSelectionCriteriaSelection": [
+      {
+        "SelectionCriteriaCode": { "$": "COLOUR" },
+        "SelectionCriteriaName": { "$": "цвет" },
+        "SelectionCriteriaValue": { "$": "черный/Висле синий" }
+      },
+      {
+        "SelectionCriteriaCode": { "$": "SIZE" },
+        "SelectionCriteriaName": { "$": "размеры" },
+        "SelectionCriteriaValue": { "$": "-" }
+      }
+    ]
+  },
+  "AttributeGroupList": {
+    "AttributeGroup": {
+      "GroupName": { "$": "SEO" },
+      "AttributeList": {
+        "Attribute": {
+          "Name": { "$": "DESCRIPTION" },
+          "Value": {
+            "$": "IKEA - ОРФЬЕЛЛЬ, Рабочий стул, черный/Висле синий , Наполнитель их плотного пенополиуретана высокого качества обеспечит комфорт на долгие годыВысота сиденья регулируется, обеспечивая максимальный комфорт.Колесики оснащены тормозом безопасности, реаги"
+          }
+        }
+      }
+    }
+  },
+  "RetailItemCareInstructionList": {
+    "RetailItemCareInstruction": {
+      "CareInstructionHeader": { "$": "Несъемный чехол" },
+      "ProductTypeText": { "$": "Рабочий стул" },
+      "SortNo": { "$": 1 },
+      "RetailItemCareInstructionTextList": {
+        "RetailItemCareInstructionText": [
+          {
+            "CareInstructionText": {
+              "$": "Простые пятна можно удалить с помощью очистителя для ткани или губкой, смоченной водой или слабым мыльным раствором."
+            },
+            "SortNo": { "$": 1 }
+          },
+          {
+            "CareInstructionText": {
+              "$": "Протирать мягким мыльным раствором."
+            },
+            "SortNo": { "$": 2 }
+          },
+          {
+            "CareInstructionText": { "$": "Вытирать чистой сухой тканью." },
+            "SortNo": { "$": 3 }
+          }
+        ]
+      }
+    }
+  },
+  "RetailItemCustomerBenefitList": {
+    "RetailItemCustomerBenefit": [
+      {
+        "CustomerBenefitText": {
+          "$": "Наполнитель их плотного пенополиуретана высокого качества обеспечит комфорт на долгие годы"
+        },
+        "SortNo": { "$": 1 }
+      },
+      {
+        "CustomerBenefitText": {
+          "$": "Высота сиденья регулируется, обеспечивая максимальный комфорт."
+        },
+        "SortNo": { "$": 2 }
+      },
+      {
+        "CustomerBenefitText": {
+          "$": "Колесики оснащены тормозом безопасности, реагирующим на изменение давления: они разблокируются только под воздействием веса сидящего человека."
+        },
+        "SortNo": { "$": 3 }
+      }
+    ]
+  },
+  "RetailItemCustomerEnvironmentList": {
+    "RetailItemCustomerEnvironment": {
+      "ProductTypeText": { "$": "Каркас стула, вращающийся" },
+      "SortNo": { "$": 1 },
+      "RetailItemEnvironmentTextList": {
+        "RetailItemEnvironmentText": {
+          "EnvironmentText": {
+            "$": "Можно разобрать на компоненты для переработки или энергетической утилизации, если это предусмотрено в вашем регионе."
+          },
+          "SortNo": { "$": 1 }
+        }
+      }
+    }
+  },
+  "RetailItemGoodToKnowList": {
+    "RetailItemGoodToKnow": [
+      {
+        "GoodToKnowTypeNameEn": { "$": "Test results and compliance" },
+        "GoodToKnowText": {
+          "$": "Этот товар протестирован и одобрен для бытового использования."
+        },
+        "SortNo": { "$": 1 },
+        "GoodToKnowHeader": { "$": "Безопасность и соответствие:" }
+      },
+      {
+        "GoodToKnowTypeNameEn": { "$": "May be completed" },
+        "GoodToKnowText": {
+          "$": "Можно дополнить защитным напольным покрытием КУЛУН."
+        },
+        "SortNo": { "$": 2 },
+        "GoodToKnowHeader": { "$": "Для готового решения" }
+      },
+      {
+        "GoodToKnowTypeNameEn": { "$": "Purchase-/Other information" },
+        "GoodToKnowText": { "$": "Колеса предназначены для мягкого пола." },
+        "SortNo": { "$": 3 },
+        "GoodToKnowHeader": { "$": "Дополнительная информация" }
+      },
+      {
+        "GoodToKnowTypeNameEn": { "$": "Purchase-/Other information" },
+        "GoodToKnowText": {
+          "$": "Можно разобрать на компоненты для переработки или энергетической утилизации, если это предусмотрено в вашем регионе."
+        },
+        "SortNo": { "$": 4 },
+        "GoodToKnowHeader": { "$": "Дополнительная информация" }
+      }
+    ]
+  },
+  "RetailItemCustomerMaterialList": {
+    "RetailItemCustomerMaterial": [
+      {
+        "ProductTypeText": { "$": "Каркас стула, вращающийся" },
+        "SortNo": { "$": 1 },
+        "RetailItemPartMaterialList": {
+          "RetailItemPartMaterial": [
+            {
+              "PartText": { "$": "Колеса/ Чехол на основание:" },
+              "MaterialText": { "$": "Полипропилен" },
+              "SortNo": { "$": 1 }
+            },
+            {
+              "PartText": { "$": "Основание/ Регулировочный рычаг:" },
+              "MaterialText": { "$": "Сталь, Эпоксидное порошковое покрытие" },
+              "SortNo": { "$": 2 }
+            },
+            {
+              "PartText": {
+                "$": "Отверстие крестообразной опоры/ Ножка крестообразной опоры:"
+              },
+              "MaterialText": {
+                "$": "Сталь, Эпоксидное/полиэстерное порошковое покрытие"
+              },
+              "SortNo": { "$": 3 }
+            },
+            {
+              "PartText": { "$": "Заглушки трубок:" },
+              "MaterialText": { "$": "Армированный полипропилен" },
+              "SortNo": { "$": 4 }
+            }
+          ]
+        }
+      },
+      {
+        "ProductTypeText": { "$": "Сиденье со спинкой" },
+        "SortNo": { "$": 2 },
+        "RetailItemPartMaterialList": {
+          "RetailItemPartMaterial": [
+            {
+              "PartText": { "$": "Ткань:" },
+              "MaterialText": { "$": "100 % полиэстер" },
+              "SortNo": { "$": 1 }
+            },
+            {
+              "PartText": { "$": "Наполнитель спинки/ Наполнитель сиденья:" },
+              "MaterialText": { "$": "Пенополиуретан 35кг/куб.м" },
+              "SortNo": { "$": 2 }
+            },
+            {
+              "PartText": { "$": "Каркас сиденья и спинки:" },
+              "MaterialText": { "$": "Сталь, Эпоксидное порошковое покрытие" },
+              "SortNo": { "$": 3 }
+            },
+            {
+              "PartText": { "$": "Сиденье и спинка:" },
+              "MaterialText": { "$": "Формованная фанера из эвкалипта" },
+              "SortNo": { "$": 4 }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "RetailItemLongBenefitList": {
+    "RetailItemLongBenefit": {
+      "LongBenefitSubject": { "$": "Designer thoughts" },
+      "LongBenefitHeader": {
+        "$": "Дизайнеры Себастьян Хольмбэк и Ульрик Нордентофт"
+      },
+      "LongBenefitName": { "$": "ОРФЬЕЛЛЬ рабочий стул" },
+      "LongBenefitText": {
+        "$": "«Создавая стул ОРФЬЕЛЛЬ, мы хотели объединить комфорт, функциональность и привлекательный внешний вид. Многие люди организуют рабочее место в гостиной или холле, и поэтому мы хотели сделать стул более «домашним», чтобы он сочетался с остальной мебелью в комнате. Мы выбрали легкую воздушную форму и добавили все качества, которыми должен обладать хороший стул. За ручку, которая является частью спинки, стул легко передвигать. И он везде будет к месту!»"
+      }
+    }
+  },
+  "RetailItemCommMeasureList": {
+    "RetailItemCommMeasure": [
+      {
+        "ItemMeasureType": { "$": "Tested for" },
+        "ItemMeasureTypeName": { "$": "Протестировано для" },
+        "ItemMeasureTextMetric": { "$": "110 кг" },
+        "ItemMeasureTextImperial": { "$": "243 фнт" },
+        "SortNo": { "$": 1 }
+      },
+      {
+        "ItemMeasureType": { "$": "Width" },
+        "ItemMeasureTypeName": { "$": "Ширина" },
+        "ItemMeasureTextMetric": { "$": "68 см" },
+        "ItemMeasureTextImperial": { "$": "26 3/4 дюйм" },
+        "SortNo": { "$": 2 }
+      },
+      {
+        "ItemMeasureType": { "$": "Depth" },
+        "ItemMeasureTypeName": { "$": "Глубина" },
+        "ItemMeasureTextMetric": { "$": "68 см" },
+        "ItemMeasureTextImperial": { "$": "26 3/4 дюйм" },
+        "SortNo": { "$": 3 }
+      },
+      {
+        "ItemMeasureType": { "$": "Max. height" },
+        "ItemMeasureTypeName": { "$": "Макс высота" },
+        "ItemMeasureTextMetric": { "$": "94 см" },
+        "ItemMeasureTextImperial": { "$": "37 дюйм" },
+        "SortNo": { "$": 4 }
+      },
+      {
+        "ItemMeasureType": { "$": "Seat width" },
+        "ItemMeasureTypeName": { "$": "Ширина сиденья" },
+        "ItemMeasureTextMetric": { "$": "49 см" },
+        "ItemMeasureTextImperial": { "$": "19 1/4 дюйм" },
+        "SortNo": { "$": 5 }
+      },
+      {
+        "ItemMeasureType": { "$": "Seat depth" },
+        "ItemMeasureTypeName": { "$": "Глубина сиденья" },
+        "ItemMeasureTextMetric": { "$": "43 см" },
+        "ItemMeasureTextImperial": { "$": "16 7/8 дюйм" },
+        "SortNo": { "$": 6 }
+      },
+      {
+        "ItemMeasureType": { "$": "Min. seat height" },
+        "ItemMeasureTypeName": { "$": "Мин высота сиденья" },
+        "ItemMeasureTextMetric": { "$": "46 см" },
+        "ItemMeasureTextImperial": { "$": "18 1/8 дюйм" },
+        "SortNo": { "$": 7 }
+      },
+      {
+        "ItemMeasureType": { "$": "Max. seat height" },
+        "ItemMeasureTypeName": { "$": "Макс высота сиденья" },
+        "ItemMeasureTextMetric": { "$": "58 см" },
+        "ItemMeasureTextImperial": { "$": "22 7/8 дюйм" },
+        "SortNo": { "$": 8 }
+      }
+    ]
+  },
+  "RetailItemCommChildList": {
+    "RetailItemCommChild": [
+      {
+        "Quantity": { "$": 1 },
+        "ItemNo": { "$": 50450910 },
+        "ItemNoGlobal": { "$": 70450909 },
+        "ItemType": { "$": "ART" },
+        "ItemUrl": { "$": "/retail/iows/ru/ru/catalog/items/art,70450909" },
+        "ProductName": { "$": "ОРФЬЕЛЛЬ" },
+        "ProductTypeName": { "$": "каркас стула, вращающийся" },
+        "ItemNumberOfPackages": { "$": 1 },
+        "RetailItemCommPackageMeasureList": {
+          "RetailItemCommPackageMeasure": [
+            {
+              "PackageMeasureType": { "$": "WIDTH" },
+              "PackageMeasureTextMetric": { "$": "32 см" },
+              "PackageMeasureTextImperial": { "$": "12 ½ дюйм" },
+              "SortNo": { "$": 1 },
+              "ConsumerPackNumber": { "$": 1 }
+            },
+            {
+              "PackageMeasureType": { "$": "HEIGHT" },
+              "PackageMeasureTextMetric": { "$": "8 см" },
+              "PackageMeasureTextImperial": { "$": "3 ¼ дюйм" },
+              "SortNo": { "$": 1 },
+              "ConsumerPackNumber": { "$": 1 }
+            },
+            {
+              "PackageMeasureType": { "$": "LENGTH" },
+              "PackageMeasureTextMetric": { "$": "37 см" },
+              "PackageMeasureTextImperial": { "$": "14 ½ дюйм" },
+              "SortNo": { "$": 1 },
+              "ConsumerPackNumber": { "$": 1 }
+            },
+            {
+              "PackageMeasureType": { "$": "WEIGHT" },
+              "PackageMeasureTextMetric": { "$": "5.23 кг" },
+              "PackageMeasureTextImperial": { "$": "11 фнт 8 унц" },
+              "SortNo": { "$": 1 },
+              "ConsumerPackNumber": { "$": 1 }
+            }
+          ]
+        },
+        "RetailItemCommAttachmentList": {
+          "RetailItemCommAttachment": [
+            {
+              "AttachmentType": { "$": "ASSEMBLY_INSTRUCTION" },
+              "AttachmentUrl": {
+                "$": "/ru/ru/assembly_instructions/orf-ell-karkas-stula-vrasausijsa__AA-2108720-5_pub.pdf"
+              },
+              "SortNo": { "$": 1 }
+            },
+            {
+              "AttachmentType": { "$": "MANUAL" },
+              "AttachmentUrl": {
+                "$": "/ru/ru/manuals/orf-ell-karkas-stula-vrasausijsa__AA-2085138-4_pub.pdf"
+              },
+              "SortNo": { "$": 2 }
+            },
+            {
+              "AttachmentType": { "$": "MANUAL" },
+              "AttachmentUrl": {
+                "$": "/ru/ru/manuals/orf-ell-karkas-stula-vrasausijsa__AA-2097252-5_pub.pdf"
+              },
+              "SortNo": { "$": 2 }
+            }
+          ]
+        }
+      },
+      {
+        "Quantity": { "$": 1 },
+        "ItemNo": { "$": 50500972 },
+        "ItemNoGlobal": { "$": 20500959 },
+        "ItemType": { "$": "ART" },
+        "ItemUrl": { "$": "/retail/iows/ru/ru/catalog/items/art,20500959" },
+        "ProductName": { "$": "ОРФЬЕЛЛЬ" },
+        "ProductTypeName": { "$": "сиденье со спинкой" }
+      }
+    ]
+  },
+  "CatalogRefList": {
+    "CatalogRef": [
+      {
+        "Catalog": {
+          "CatalogId": { "$": "genericproducts" },
+          "CatalogName": { "$": "Товары" },
+          "CatalogUrl": { "$": "/retail/iows/ru/ru/catalog/genericproducts" }
+        },
+        "CatalogElementList": {
+          "CatalogElement": {
+            "CatalogElementId": { "$": 52696 },
+            "CatalogElementType": { "$": "GENERIC PRODUCT" },
+            "CatalogElementName": { "$": "Орфьелль" },
+            "CatalogElementUrl": {
+              "$": "/retail/iows/ru/ru/catalog/genericproducts/52696"
+            }
+          }
+        }
+      },
+      {
+        "Catalog": {
+          "CatalogId": { "$": "departments" },
+          "CatalogName": { "$": "Отделы" },
+          "CatalogUrl": { "$": "/retail/iows/ru/ru/catalog/departments" }
+        },
+        "CatalogElementList": {
+          "CatalogElement": {
+            "CatalogElementId": { "$": 20653 },
+            "CatalogElementType": { "$": "CHAPTER" },
+            "CatalogElementName": { "$": "Стулья для письменного стола" },
+            "CatalogElementUrl": {
+              "$": "/retail/iows/ru/ru/catalog/departments/workspaces/20653"
+            }
+          }
+        }
+      },
+      {
+        "Catalog": {
+          "CatalogId": { "$": "functional" },
+          "CatalogName": { "$": "Функциональный" },
+          "CatalogUrl": { "$": "/retail/iows/ru/ru/catalog/functional" }
+        },
+        "CatalogElementList": {
+          "CatalogElement": {
+            "CatalogElementId": { "$": 20653 },
+            "CatalogElementType": { "$": "CHAPTER" },
+            "CatalogElementName": { "$": "Стулья для письменного стола" },
+            "CatalogElementUrl": {
+              "$": "/retail/iows/ru/ru/catalog/functional/10369/20653"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "PriceUnitTextMetricEn": {},
+  "PriceUnitTextImperialEn": {},
+  "CatalogElementRelationList": {
+    "CatalogElementRelation": [
+      {
+        "CatalogElementRelationType": { "$": "X-SELL" },
+        "CatalogElementRelationSemantic": { "$": "MAY_BE_COMPLETED_WITH" },
+        "CatalogElementId": { "$": 60373921 },
+        "CatalogElementType": { "$": "ART" },
+        "CatalogElementName": { "$": "МИККЕ" },
+        "CatalogElementUrl": {
+          "$": "/retail/iows/ru/ru/catalog/items/art,60373921"
+        },
+        "SortRelevanceList": {
+          "SortRelevance": {
+            "SortNo": { "$": 1 },
+            "SortType": { "$": "RELEVANCE" }
+          }
+        }
+      },
+      {
+        "CatalogElementRelationType": { "$": "X-SELL" },
+        "CatalogElementRelationSemantic": { "$": "MAY_BE_COMPLETED_WITH" },
+        "CatalogElementId": { "$": 10359927 },
+        "CatalogElementType": { "$": "ART" },
+        "CatalogElementName": { "$": "ХЕЛЬМЕР" },
+        "CatalogElementUrl": {
+          "$": "/retail/iows/ru/ru/catalog/items/art,10359927"
+        },
+        "SortRelevanceList": {
+          "SortRelevance": {
+            "SortNo": { "$": 2 },
+            "SortType": { "$": "RELEVANCE" }
+          }
+        }
+      },
+      {
+        "CatalogElementRelationType": { "$": "X-SELL" },
+        "CatalogElementRelationSemantic": { "$": "MAY_BE_COMPLETED_WITH" },
+        "CatalogElementId": { "$": 50384944 },
+        "CatalogElementType": { "$": "ART" },
+        "CatalogElementName": { "$": "ХЕЛЬМЕР" },
+        "CatalogElementUrl": {
+          "$": "/retail/iows/ru/ru/catalog/items/art,50384944"
+        },
+        "SortRelevanceList": {
+          "SortRelevance": {
+            "SortNo": { "$": 4 },
+            "SortType": { "$": "RELEVANCE" }
+          }
+        }
+      },
+      {
+        "CatalogElementRelationType": { "$": "X-SELL" },
+        "CatalogElementRelationSemantic": { "$": "MAY_BE_COMPLETED_WITH" },
+        "CatalogElementId": { "$": 30384493 },
+        "CatalogElementType": { "$": "ART" },
+        "CatalogElementName": { "$": "КУЛУН" },
+        "CatalogElementUrl": {
+          "$": "/retail/iows/ru/ru/catalog/items/art,30384493"
+        },
+        "SortRelevanceList": {
+          "SortRelevance": {
+            "SortNo": { "$": 5 },
+            "SortType": { "$": "RELEVANCE" }
+          }
+        }
+      }
+    ]
+  },
+  "RetailItemFullLengthTextList": { "RetailItemFullLengthText": {} },
+  "RetailItemFilterAttributeList": {
+    "RetailItemFilterAttribute": [
+      {
+        "FilterAttributeType": { "$": "Colour" },
+        "FilterAttributeTypeName": { "$": "Цвет" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": [
+            {
+              "FilterAttributeValueId": { "$": 10007 },
+              "FilterAttributeValueName": { "$": "синий" }
+            },
+            {
+              "FilterAttributeValueId": { "$": 10139 },
+              "FilterAttributeValueName": { "$": "черный" }
+            }
+          ]
+        }
+      },
+      {
+        "FilterAttributeType": { "$": "Material" },
+        "FilterAttributeTypeName": { "$": "Материал" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": {
+            "FilterAttributeValueId": { "$": 38828 },
+            "FilterAttributeValueName": { "$": "тканевые" }
+          }
+        }
+      },
+      {
+        "FilterAttributeType": { "$": "Material" },
+        "FilterAttributeTypeName": { "$": "Материал" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": {
+            "FilterAttributeValueId": { "$": 47350 },
+            "FilterAttributeValueName": { "$": "Металл" }
+          }
+        }
+      },
+      {
+        "FilterAttributeType": { "$": "Number of seats" },
+        "FilterAttributeTypeName": { "$": "Свойства" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": {
+            "FilterAttributeValueId": { "$": 47490 },
+            "FilterAttributeValueName": { "$": "С обивкой" }
+          }
+        }
+      },
+      {
+        "FilterAttributeType": { "$": "Number of seats" },
+        "FilterAttributeTypeName": { "$": "Свойства" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": {
+            "FilterAttributeValueId": { "$": 53032 },
+            "FilterAttributeValueName": { "$": "С колесиками" }
+          }
+        }
+      },
+      {
+        "FilterAttributeType": { "$": "Number of seats" },
+        "FilterAttributeTypeName": { "$": "Свойства" },
+        "FilterAttributeValueList": {
+          "FilterAttributeValue": {
+            "FilterAttributeValueId": { "$": 53961 },
+            "FilterAttributeValueName": { "$": "Функция вращения" }
+          }
+        }
+      }
+    ]
+  },
+  "@xmlns": { "$": "ikea.com/cem/iows/RetailItemCommunicationService/2.0/" }
+}

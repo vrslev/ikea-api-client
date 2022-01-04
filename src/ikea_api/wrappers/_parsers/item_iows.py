@@ -62,7 +62,7 @@ class ChildItem(GenericItem):
     # For `get_name`
     ItemMeasureReferenceTextMetric: None = None
     ValidDesignText: None = None
-    RetailItemCommPackageMeasureList: RetailItemCommPackageMeasureList
+    RetailItemCommPackageMeasureList: Optional[RetailItemCommPackageMeasureList]
 
 
 class RetailItemCommChildList(BaseModel):
@@ -161,6 +161,8 @@ def get_child_items(
             item_code=child.ItemNo,
             weight=get_weight(
                 child.RetailItemCommPackageMeasureList.RetailItemCommPackageMeasure
+                if child.RetailItemCommPackageMeasureList
+                else []
             ),
             qty=child.Quantity,
         )
