@@ -16,7 +16,7 @@ from tests.conftest import TestData
 
 
 def generate_catalog_refs(name: str, url: str):
-    return CatalogRefs(products=CatalogRef(elements=[Catalog(name=name, url=url)]))
+    return CatalogRefs(products=CatalogRef(elements=[Catalog(name=name, url=url)]))  # type: ignore
 
 
 def test_get_category_name_and_url_passes():

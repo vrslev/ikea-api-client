@@ -87,7 +87,7 @@ class ResponseHistory(BaseModel):
 
 
 def parse_status_banner_order(response: GraphQLResponse):
-    order = ResponseStatusBanner(**response)
+    order = ResponseStatusBanner(**response)  # type: ignore
     return types.StatusBannerOrder(
         purchase_date=order.data.order.dateAndTime.date,
         delivery_date=order.data.order.deliveryMethods[
@@ -97,7 +97,7 @@ def parse_status_banner_order(response: GraphQLResponse):
 
 
 def parse_costs_order(response: GraphQLResponse):
-    order = ResponseCosts(**response)
+    order = ResponseCosts(**response)  # type: ignore
     costs = order.data.order.costs
     return types.CostsOrder(
         delivery_cost=costs.delivery.value, total_cost=costs.total.value
@@ -109,7 +109,7 @@ def get_history_datetime(item: HistoryItem):
 
 
 def parse_history(response: GraphQLResponse):
-    history = ResponseHistory(**response)
+    history = ResponseHistory(**response)  # type: ignore
     return [
         types.PurchaseHistoryItem(
             id=i.id,
