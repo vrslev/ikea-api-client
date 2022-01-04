@@ -66,6 +66,7 @@ jobs:
       - name: Install Pyright
         run: npm install -g --no-package-lock --no-save pyright
 
+      - uses: mxschmitt/action-tmate@v3
       - name: Check types
         run: pyright
 
