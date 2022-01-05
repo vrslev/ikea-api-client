@@ -3,6 +3,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.3 (2022-01-05)
+### Fix
+* **utils:** Allow passing empty list to `parse_item_codes` ([`c91beb3`](https://github.com/vrslev/ikea-api-client/commit/c91beb33012c8d6db8e778b9d475a94583022237))
+
 ## v1.1.2 (2022-01-04)
 ### Fix
 * **Item Iows parser:** Allow optional RetailItemCommPackageMeasureList ([`d09d057`](https://github.com/vrslev/ikea-api-client/commit/d09d0577b7d2d89efc25c63bbecdf2fbca702ad5))
