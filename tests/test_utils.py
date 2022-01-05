@@ -120,6 +120,11 @@ def test_parse_item_codes_clean(v: str):
     assert parse_item_codes(v) == ["11111111"]
 
 
+@pytest.mark.parametrize("v", (True, False))
+def test_parse_item_codes_empty(v: bool):
+    assert parse_item_codes([], unshorten_ingka_pagelinks=v) == []
+
+
 @pytest.mark.parametrize(
     ("input", "output"),
     (

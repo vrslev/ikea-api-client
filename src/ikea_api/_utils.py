@@ -19,12 +19,16 @@ def _get_unshortened_links_from_ingka_pagelinks(message: str):
 def parse_item_codes(
     item_codes: str | list[str], unshorten_ingka_pagelinks: bool = False
 ) -> list[str]:
+    if item_codes == []:
+        return []
+
     if unshorten_ingka_pagelinks:
         if isinstance(item_codes, str):
             item_codes = [item_codes]
         unshortened_links = _get_unshortened_links_from_ingka_pagelinks(item_codes[0])
         if unshortened_links:
             item_codes.extend(unshortened_links)
+
     raw_res: list[str] = re.findall(
         r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_codes)
     )
