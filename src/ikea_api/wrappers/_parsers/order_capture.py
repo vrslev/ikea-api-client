@@ -149,14 +149,20 @@ def parse_home_delivery_services(response: dict[str, Any]):
         if not (service.possibleDeliveries and service.possibleDeliveries.deliveries):
             continue
 
+        is_available = service.metadata.selectableInfo.selectable
+        unavailable_items = get_unavailable_items(service)
+
+        if not is_available and not unavailable_items:
+            continue
+
         res.append(
             types.DeliveryService(
-                is_available=service.metadata.selectableInfo.selectable,
+                is_available=is_available,
                 date=get_date(service.possibleDeliveries.deliveries),
                 type=get_type(service),
                 price=get_price(service),
                 service_provider=None,
-                unavailable_items=get_unavailable_items(service),
+                unavailable_items=unavailable_items,
             )
         )
     return res
@@ -234,9 +240,14 @@ def parse_collect_delivery_services(response: dict[str, Any]):
                     else None
                 )
 
+                is_available = point.metadata.selectableInfo.selectable
+
+                if not is_available and not unavailable_items:
+                    continue
+
                 res.append(
                     types.DeliveryService(
-                        is_available=point.metadata.selectableInfo.selectable,
+                        is_available=is_available,
                         date=date,
                         type=type_,
                         price=price,
