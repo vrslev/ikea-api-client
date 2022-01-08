@@ -3,6 +3,11 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.4 (2022-01-08)
+### Fix
+* **Order Capture parser:** Don't return unavailable options that don't have unavailable items ([`f523aaa`](https://github.com/vrslev/ikea-api-client/commit/f523aaa48b40c09cec4bf79160b2f115a1eea36a))
+* **Order Capture:** Remove unused error handling ([`5c0d495`](https://github.com/vrslev/ikea-api-client/commit/5c0d4954a55b2172aa44b4b23591ccedad831969))
+
 ## v1.1.3 (2022-01-05)
 ### Fix
 * **utils:** Allow passing empty list to `parse_item_codes` ([`c91beb3`](https://github.com/vrslev/ikea-api-client/commit/c91beb33012c8d6db8e778b9d475a94583022237))
