@@ -58,17 +58,5 @@ class ItemFetchError(IKEAAPIError):
         super().__init__(response, msg=msg)  # type: ignore
 
 
-class OrderCaptureError(IKEAAPIError):
-    error_code: int | None
-
-    def __init__(self, response: CustomResponse):
-        self.error_code = response._json.get("errorCode")
-        super().__init__(response)
-
-
-class NoDeliveryOptionsAvailableError(OrderCaptureError):
-    pass
-
-
 class ParsingError(Exception):
     pass

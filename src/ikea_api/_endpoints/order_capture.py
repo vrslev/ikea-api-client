@@ -3,10 +3,9 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from ikea_api._api import AuthorizedAPI, CustomResponse
+from ikea_api._api import AuthorizedAPI
 from ikea_api._constants import Constants, Secrets
 from ikea_api._endpoints.cart import Cart
-from ikea_api.exceptions import NoDeliveryOptionsAvailableError, OrderCaptureError
 
 
 class OrderCapture(AuthorizedAPI):
@@ -22,16 +21,6 @@ class OrderCapture(AuthorizedAPI):
             token=token,
         )
         self._session.headers["X-Client-Id"] = Secrets.order_capture_x_client_id
-
-    def _error_handler(self, response: CustomResponse):
-        if isinstance(response._json, dict) and "errorCode" in response._json:
-            if response._json["errorCode"] in (
-                60005,  # ISOM_ERROR_NODELSVC
-                60006,  # ISOM_ERROR_NOPRODUCTCHOICE
-                60013,  # ISOM_ERROR_NOPICKUPPOINT
-            ):
-                raise NoDeliveryOptionsAvailableError(response)
-            raise OrderCaptureError(response)
 
     def _get_items_for_checkout(self) -> list[dict[str, str | int]]:
         cart = Cart(self.token).show()

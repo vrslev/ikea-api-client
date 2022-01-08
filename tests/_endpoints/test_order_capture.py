@@ -14,7 +14,6 @@ from ikea_api._endpoints.order_capture import (
     _validate_state_code,
     _validate_zip_code,
 )
-from ikea_api.exceptions import NoDeliveryOptionsAvailableError, OrderCaptureError
 
 
 @pytest.fixture
@@ -91,35 +90,6 @@ home_and_collect_method_and_endpoints = (
         (OrderCapture.get_collect_delivery_services, "collect-delivery-services"),
     ),
 )
-
-
-@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
-@pytest.mark.parametrize("code", (60005, 60006, 60013))
-@responses.activate
-def test_get_delivery_services_fails_known_err(
-    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str, code: int
-):
-    responses.add(
-        responses.GET,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
-        json={"errorCode": code},
-    )
-    with pytest.raises(NoDeliveryOptionsAvailableError):
-        method(order_capture, ("mycheckout", "myarea"))
-
-
-@pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
-@responses.activate
-def test_get_delivery_services_fails_unknown_err(
-    order_capture: OrderCapture, method: Callable[..., Any], endpoint: str
-):
-    responses.add(
-        responses.GET,
-        url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area/myarea/{endpoint}",
-        json={"errorCode": 60000},
-    )
-    with pytest.raises(OrderCaptureError):
-        method(order_capture, ("mycheckout", "myarea"))
 
 
 @pytest.mark.parametrize(*home_and_collect_method_and_endpoints)
