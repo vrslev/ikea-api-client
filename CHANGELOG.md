@@ -3,6 +3,17 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.5 (2022-01-23)
+### Fix
+* **Item wrapper:** Make ingka-pip endpoints default option since IOWS API is deprecated ([`c549022`](https://github.com/vrslev/ikea-api-client/commit/c5490224b2bffc7d183fb13a7095fc2735e21958))
+* **Item Ingka parser:** Allow optional media field ([`53df94e`](https://github.com/vrslev/ikea-api-client/commit/53df94e9a78ab2db710c34265187477e22df4a8f))
+* **Items parsers:** Return parsed item code from ItemCode type validation ([`5f7881e`](https://github.com/vrslev/ikea-api-client/commit/5f7881e00fb2880874a4d2ec217244f68c33ba79))
+
+### Chore
+* Add Python 3.10 to target versions for Black ([`189179b`](https://github.com/vrslev/ikea-api-client/commit/189179b0d78eadcda9868db22930abd4d5731d0a))
+* **deps:** Update responses requirement from 0.16.0 to 0.17.0 ([#84](https://github.com/vrslev/ikea-api-client/issues/84)) ([`62e0339`](https://github.com/vrslev/ikea-api-client/commit/62e0339aa5be729837c4dfb238bf61771142f767))
+* **deps:** Update pytest-randomly requirement from 3.10.3 to 3.11.0 ([#85](https://github.com/vrslev/ikea-api-client/issues/85)) ([`b8a7af6`](https://github.com/vrslev/ikea-api-client/commit/b8a7af6513ea4a204d5ed229b69f43e6121d7f64))
+
 ## v1.1.4 (2022-01-08)
 ### Fix
 * **Order Capture parser:** Don't return unavailable options that don't have unavailable items ([`f523aaa`](https://github.com/vrslev/ikea-api-client/commit/f523aaa48b40c09cec4bf79160b2f115a1eea36a))
