@@ -56,7 +56,7 @@ class Measurements(BaseModel):
 class LocalisedCommunication(BaseModel):
     languageCode: str
     packageMeasurements: Optional[List[PackageMeasurement]]
-    media: List[Media]
+    media: Optional[List[Media]]
     productName: str
     productType: ProductType
     validDesign: Optional[ValidDesign]
@@ -125,6 +125,9 @@ def get_name(comm: LocalisedCommunication):
 
 
 def get_image_url(comm: LocalisedCommunication):
+    if comm.media is None:
+        return
+
     for media in comm.media:
         if media.typeName != "MAIN_PRODUCT_IMAGE":
             continue

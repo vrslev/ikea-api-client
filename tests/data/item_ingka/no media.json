@@ -1,0 +1,449 @@
+{
+  "data": [
+    {
+      "itemKey": { "itemType": "ART", "itemNo": "30500973" },
+      "itemKeyGlobal": { "itemType": "ART", "itemNo": "80500961" },
+      "productNameGlobal": "ÖRFJÄLL",
+      "isBreathTakingItem": false,
+      "isNew": false,
+      "isAssemblyRequired": false,
+      "numberOfPackages": 1,
+      "localisedCommunications": [
+        {
+          "languageCode": "en",
+          "countryCode": "RU",
+          "productName": "ÖRFJÄLL",
+          "productType": { "id": "17683", "name": "seat shell" },
+          "validDesign": { "text": "white/Vissle light grey" },
+          "measurements": {
+            "detailedMeasurements": [
+              {
+                "type": "00287",
+                "typeName": "Tested for",
+                "textMetric": "110 kg",
+                "textImperial": "243 lb"
+              },
+              {
+                "type": "00047",
+                "typeName": "Width",
+                "textMetric": "49 cm",
+                "textImperial": "19 1/4 \""
+              },
+              {
+                "type": "00044",
+                "typeName": "Depth",
+                "textMetric": "55 cm",
+                "textImperial": "21 5/8 \""
+              },
+              {
+                "type": "00041",
+                "typeName": "Height",
+                "textMetric": "43 cm",
+                "textImperial": "16 7/8 \""
+              },
+              {
+                "type": "00037",
+                "typeName": "Seat width",
+                "textMetric": "49 cm",
+                "textImperial": "19 1/4 \""
+              },
+              {
+                "type": "00036",
+                "typeName": "Seat depth",
+                "textMetric": "43 cm",
+                "textImperial": "16 7/8 \""
+              }
+            ]
+          },
+          "designers": [{ "id": "12116", "name": "S Holmbäck/U Nordentoft" }],
+          "careInstructions": [
+            {
+              "careInstructionTexts": [
+                { "careInstructionText": "Vacuum clean." },
+                {
+                  "careInstructionText": "Wipe clean with a cloth dampened in water."
+                }
+              ]
+            }
+          ],
+          "benefits": [
+            "The safety castors have a pressure-sensitive brake mechanism that keeps the chair in place when you stand up, and releases automatically when you sit down.",
+            "You sit comfortably since the chair is adjustable in height.",
+            "High-quality density foam will keep the chair comfortable for many years to come."
+          ],
+          "longBenefits": [
+            {
+              "subject": "Designer thoughts",
+              "header": "Designers Sebastian Holmbäck and Ulrik Nordentoft",
+              "name": "ÖRFJÄLL swivel chair",
+              "text": "”With ÖRFJÄLL swivel chair, we wanted to combine function and comfort with good looks. Lots of people have their desks in their living room or hallway, so we wanted to make a chair with a homey feel that would blend in with the rest of furniture. We chose a simple, airy shape and added all the qualities a good chair needs. The handle at the back makes it easy to move around. It fits perfectly anywhere in the home!”"
+            }
+          ],
+          "materials": [
+            {
+              "partMaterials": [
+                {
+                  "partText": "Back foam/ Seat foam:",
+                  "materialText": "Polyurethane foam 35 kg/cu.m."
+                },
+                {
+                  "partText": "Seat and back frame:",
+                  "materialText": "Steel, Epoxy powder coating"
+                },
+                {
+                  "partText": "Seat and back:",
+                  "materialText": "Moulded eucalyptus plywood"
+                },
+                { "partText": "Fabric:", "materialText": "100 % polyester" }
+              ]
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "May be completed",
+              "text": "To be completed with ÖRFJÄLL chair frame."
+            },
+            {
+              "type": "Test results and compliance",
+              "text": "Developed for domestic use."
+            }
+          ],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Height",
+              "textMetric": "7 cm",
+              "textImperial": "2 ¾ \"",
+              "valueMetric": "7",
+              "valueImperial": "2.75",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Length",
+              "textMetric": "70 cm",
+              "textImperial": "27 ½ \"",
+              "valueMetric": "70",
+              "valueImperial": "27.5",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Net weight",
+              "textMetric": "4.46 kg",
+              "textImperial": "9 lb 13 oz",
+              "valueMetric": "4.46",
+              "valueImperial": "9.812",
+              "unitMetric": "kg",
+              "unitImperial": "pound",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Volume",
+              "textMetric": "25.0 l",
+              "textImperial": "0.88 cu.ft",
+              "valueMetric": "25.0",
+              "valueImperial": "0.88",
+              "unitMetric": "litre",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Weight",
+              "textMetric": "4.50 kg",
+              "textImperial": "9 lb 15 oz",
+              "valueMetric": "4.50",
+              "valueImperial": "9.938",
+              "unitMetric": "kg",
+              "unitImperial": "pound",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Width",
+              "textMetric": "51 cm",
+              "textImperial": "20 \"",
+              "valueMetric": "51",
+              "valueImperial": "20",
+              "unitMetric": "cm",
+              "unitImperial": "inch",
+              "packNo": 1
+            }
+          ],
+          "filterInformation": {
+            "measurementFilters": [
+              {
+                "type": "HEIGHT",
+                "typeName": "Height",
+                "textMetric": "43 cm",
+                "textImperial": "16 7/8 \"",
+                "valueMetric": "43",
+                "valueImperial": "16.929133858267726",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "DEPTH",
+                "typeName": "Depth",
+                "textMetric": "55 cm",
+                "textImperial": "21 5/8 \"",
+                "valueMetric": "55",
+                "valueImperial": "21.653543307086625",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "WIDTH",
+                "typeName": "Width",
+                "textMetric": "49 cm",
+                "textImperial": "19 1/4 \"",
+                "valueMetric": "49",
+                "valueImperial": "19.291338582677174",
+                "unitMetric": "cm",
+                "unitImperial": "inch"
+              }
+            ]
+          },
+          "itemNameLocal": "ÖRFJÄLL N seat shell white/Vissle light grey RU",
+          "seoSlug": "oerfjaell-seat-shell-white-vissle-light-grey"
+        },
+        {
+          "languageCode": "ru",
+          "countryCode": "RU",
+          "productName": "ÖRFJÄLL ОРФЬЕЛЛЬ",
+          "productType": { "id": "17683", "name": "сиденье со спинкой" },
+          "validDesign": { "text": "белый/Висле светло-серый" },
+          "measurements": {
+            "detailedMeasurements": [
+              {
+                "type": "00287",
+                "typeName": "Протестировано для",
+                "textMetric": "110 кг",
+                "textImperial": "243 фнт"
+              },
+              {
+                "type": "00047",
+                "typeName": "Ширина",
+                "textMetric": "49 см",
+                "textImperial": "19 1/4 дюйм"
+              },
+              {
+                "type": "00044",
+                "typeName": "Глубина",
+                "textMetric": "55 см",
+                "textImperial": "21 5/8 дюйм"
+              },
+              {
+                "type": "00041",
+                "typeName": "Высота",
+                "textMetric": "43 см",
+                "textImperial": "16 7/8 дюйм"
+              },
+              {
+                "type": "00037",
+                "typeName": "Ширина сиденья",
+                "textMetric": "49 см",
+                "textImperial": "19 1/4 дюйм"
+              },
+              {
+                "type": "00036",
+                "typeName": "Глубина сиденья",
+                "textMetric": "43 см",
+                "textImperial": "16 7/8 дюйм"
+              }
+            ]
+          },
+          "designers": [{ "id": "12116", "name": "S Holmbäck/U Nordentoft" }],
+          "careInstructions": [
+            {
+              "careInstructionTexts": [
+                { "careInstructionText": "Чистить пылесосом." },
+                {
+                  "careInstructionText": "Протирайте тканью, смоченной в воде."
+                }
+              ]
+            }
+          ],
+          "benefits": [
+            "Колесики оснащены тормозом безопасности, реагирующим на изменение давления: они разблокируются только под воздействием веса сидящего человека.",
+            "Высота сиденья регулируется, обеспечивая максимальный комфорт.",
+            "Плотный пенополиуретан высокого качества обеспечит комфорт на долгие годы."
+          ],
+          "longBenefits": [
+            {
+              "subject": "Designer thoughts",
+              "header": "Дизайнеры Себастьян Хольмбэк и Ульрик Нордентофт",
+              "name": "ОРФЬЕЛЛЬ рабочий стул",
+              "text": "«Создавая стул ОРФЬЕЛЛЬ, мы хотели объединить комфорт, функциональность и привлекательный внешний вид. Многие люди организуют рабочее место в гостиной или холле, и поэтому мы хотели сделать стул более «домашним», чтобы он сочетался с остальной мебелью в комнате. Мы выбрали легкую воздушную форму и добавили все качества, которыми должен обладать хороший стул. За ручку, которая является частью спинки, стул легко передвигать. И он везде будет к месту!»"
+            }
+          ],
+          "materials": [
+            {
+              "partMaterials": [
+                {
+                  "partText": "Наполнитель спинки/ Наполнитель сиденья:",
+                  "materialText": "Пенополиуретан 35кг/куб.м"
+                },
+                {
+                  "partText": "Каркас сиденья и спинки:",
+                  "materialText": "Сталь, Эпоксидное порошковое покрытие"
+                },
+                {
+                  "partText": "Сиденье и спинка:",
+                  "materialText": "Формованная фанера из эвкалипта"
+                },
+                { "partText": "Ткань:", "materialText": "100 % полиэстер" }
+              ]
+            }
+          ],
+          "goodToKnows": [
+            {
+              "type": "May be completed",
+              "text": "Необходимо дополнить каркасом стула ОРФЬЕЛЛЬ."
+            },
+            {
+              "type": "Test results and compliance",
+              "text": "Разработано для домашнего использования."
+            }
+          ],
+          "packageMeasurements": [
+            {
+              "type": "HEIGHT",
+              "typeName": "Высота",
+              "textMetric": "7 см",
+              "textImperial": "2 ¾ дюйм",
+              "valueMetric": "7",
+              "valueImperial": "2.75",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "LENGTH",
+              "typeName": "Длина",
+              "textMetric": "70 см",
+              "textImperial": "27 ½ дюйм",
+              "valueMetric": "70",
+              "valueImperial": "27.5",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            },
+            {
+              "type": "NETWEIGHT",
+              "typeName": "Вес нетто",
+              "textMetric": "4.46 кг",
+              "textImperial": "9 фнт 13 унц",
+              "valueMetric": "4.46",
+              "valueImperial": "9.812",
+              "unitMetric": "кг",
+              "unitImperial": "фнт",
+              "packNo": 1
+            },
+            {
+              "type": "VOLUME",
+              "typeName": "Объем",
+              "textMetric": "25.0 л",
+              "textImperial": "0.88 cu.ft",
+              "valueMetric": "25.0",
+              "valueImperial": "0.88",
+              "unitMetric": "л",
+              "unitImperial": "cu.ft",
+              "packNo": 1
+            },
+            {
+              "type": "WEIGHT",
+              "typeName": "Вес",
+              "textMetric": "4.50 кг",
+              "textImperial": "9 фнт 15 унц",
+              "valueMetric": "4.50",
+              "valueImperial": "9.938",
+              "unitMetric": "кг",
+              "unitImperial": "фнт",
+              "packNo": 1
+            },
+            {
+              "type": "WIDTH",
+              "typeName": "Ширина",
+              "textMetric": "51 см",
+              "textImperial": "20 дюйм",
+              "valueMetric": "51",
+              "valueImperial": "20",
+              "unitMetric": "см",
+              "unitImperial": "дюйм",
+              "packNo": 1
+            }
+          ],
+          "filterInformation": {
+            "measurementFilters": [
+              {
+                "type": "HEIGHT",
+                "typeName": "Высота",
+                "textMetric": "43 см",
+                "textImperial": "16 7/8 дюйм",
+                "valueMetric": "43",
+                "valueImperial": "16.929133858267726",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "DEPTH",
+                "typeName": "Глубина",
+                "textMetric": "55 см",
+                "textImperial": "21 5/8 дюйм",
+                "valueMetric": "55",
+                "valueImperial": "21.653543307086625",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              },
+              {
+                "type": "WIDTH",
+                "typeName": "Ширина",
+                "textMetric": "49 см",
+                "textImperial": "19 1/4 дюйм",
+                "valueMetric": "49",
+                "valueImperial": "19.291338582677174",
+                "unitMetric": "см",
+                "unitImperial": "inch"
+              }
+            ]
+          },
+          "itemNameLocal": "ОРФЬЕЛЛЬ N сдн с спнк белый/Висле светло-серый RU",
+          "seoSlug": "oerfjaell-orfell-sidene-so-spinkoy-belyy-visle-svetlo-seryy"
+        }
+      ],
+      "unitCode": "PIECE",
+      "filterClasses": ["chairs"],
+      "styleGroup": "Basic Modern",
+      "serviceProductRelations": [
+        {
+          "serviceProductId": "ASSEMBLY",
+          "serviceKey": { "itemType": "SGR", "itemNo": "50000960" },
+          "serviceProductType": "ASSEMBLY",
+          "relationType": "SOLD_WITH",
+          "isCoWorkerAssistanceNeeded": false,
+          "isPromoted": false,
+          "recommendationRank": 0
+        }
+      ],
+      "classUnitKey": { "classUnitType": "RU", "classUnitCode": "RU" },
+      "businessStructure": {
+        "productAreaNo": "0342",
+        "productAreaName": "Home swivel chairs",
+        "productRangeAreaNo": "034",
+        "productRangeAreaName": "Home workspace",
+        "homeFurnishingBusinessNo": "03",
+        "homeFurnishingBusinessName": "Workspaces"
+      },
+      "news": { "value": false },
+      "lastChance": { "value": false },
+      "professionalAssemblyTime": { "value": 3, "unit": "MINUTES" }
+    }
+  ]
+}
