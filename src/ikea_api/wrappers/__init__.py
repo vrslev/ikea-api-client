@@ -189,12 +189,12 @@ def _get_ingka_pip_items(item_codes: list[str]) -> list[types.ParsedItem]:
 
 def get_items(item_codes: list[str]) -> list[types.ParsedItem]:
     pending_item_codes = parse_item_codes(item_codes, unshorten_ingka_pagelinks=True)
-    fetched_items_iows = _get_iows_items(pending_item_codes)
+    fetched_items_ingka_pip = _get_ingka_pip_items(pending_item_codes)
 
-    fetched_item_codes = [i.item_code for i in fetched_items_iows]
+    fetched_item_codes = [i.item_code for i in fetched_items_ingka_pip]
     pending_item_codes = [i for i in pending_item_codes if i not in fetched_item_codes]
     if not pending_item_codes:
-        return fetched_items_iows
+        return fetched_items_ingka_pip
 
-    fetched_items_ingka_pip = _get_ingka_pip_items(pending_item_codes)
-    return fetched_items_iows + fetched_items_ingka_pip
+    fetched_items_iows = _get_iows_items(pending_item_codes)
+    return fetched_items_ingka_pip + fetched_items_iows

@@ -557,33 +557,37 @@ def test_get_ingka_pip_items(monkeypatch: pytest.MonkeyPatch):
     ]
 
 
-def test_get_items_iows_fails(monkeypatch: pytest.MonkeyPatch):
-    called_iows_fetcher = False
-    called_ingka_pip_items = False
+def test_get_items_ingka_pip_fails(monkeypatch: pytest.MonkeyPatch):
+    called_ingka_fetcher = False
+    called_iows_items = False
     exp_item_codes = ["11111111", "22222222"]
     exp_result = [SimpleNamespace(test="test")]
 
-    class CustomIowsItems:
-        def __call__(self, item_codes: list[str]):
+    class CustomIngkaItems:
+        def __call__(self, item_codes: list[str]) -> dict[str, list[Any]]:
             assert item_codes == exp_item_codes
-            nonlocal called_iows_fetcher
-            called_iows_fetcher = True
+            nonlocal called_ingka_fetcher
+            called_ingka_fetcher = True
+            return {"data": []}
             raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
 
-    def mock_get_ingka_pip_items(item_codes: list[str]):
+    class CustomPipItem:
+        def __call__(self, item_codes: list[str]):
+            return None
+
+    def mock_get_iows_items(item_codes: list[str]):
         assert item_codes == exp_item_codes
-        nonlocal called_ingka_pip_items
-        called_ingka_pip_items = True
+        nonlocal called_iows_items
+        called_iows_items = True
         return exp_result
 
-    monkeypatch.setattr(ikea_api.wrappers, "IowsItems", CustomIowsItems)
-    monkeypatch.setattr(
-        ikea_api.wrappers, "_get_ingka_pip_items", mock_get_ingka_pip_items
-    )
+    monkeypatch.setattr(ikea_api.wrappers, "IngkaItems", CustomIngkaItems)
+    monkeypatch.setattr(ikea_api.wrappers, "PipItem", CustomPipItem)
+    monkeypatch.setattr(ikea_api.wrappers, "_get_iows_items", mock_get_iows_items)
 
     res = ikea_api.wrappers.get_items(deepcopy(exp_item_codes))
-    assert called_iows_fetcher
-    assert called_ingka_pip_items
+    assert called_ingka_fetcher
+    assert called_iows_items
     assert res == exp_result
 
 
@@ -596,13 +600,13 @@ def test_get_items_iows_gets_all_items(monkeypatch: pytest.MonkeyPatch):
     ]
 
     def mock_get_iows_items(item_codes: list[str]):
+        assert False, "_get_ingka_pip_items shouldn't be called"  # pragma: no cover
+
+    def mock_get_ingka_pip_items(item_codes: list[str]):
         assert item_codes == exp_item_codes
         nonlocal called_iows_fetcher
         called_iows_fetcher = True
         return deepcopy(exp_result)
-
-    def mock_get_ingka_pip_items(item_codes: list[str]):
-        assert False, "_get_ingka_pip_items shouldn't be called"  # pragma: no cover
 
     monkeypatch.setattr(ikea_api.wrappers, "_get_iows_items", mock_get_iows_items)
     monkeypatch.setattr(
@@ -624,23 +628,23 @@ def test_get_items_main(monkeypatch: pytest.MonkeyPatch):
         assert unshorten_ingka_pagelinks is True
         return item_codes
 
-    def mock_get_iows_items(item_codes: list[str]):
-        assert item_codes == exp_item_codes
-        nonlocal called_iows_fetcher
-        called_iows_fetcher = True
-        return [SimpleNamespace(item_code="11111111")]
-
     def mock_get_ingka_pip_items(item_codes: list[str]):
-        assert item_codes == ["22222222"]
+        assert item_codes == exp_item_codes
         nonlocal called_ingka_pip_items
         called_ingka_pip_items = True
+        return [SimpleNamespace(item_code="11111111")]
+
+    def mock_get_iows_items(item_codes: list[str]):
+        assert item_codes == ["22222222"]
+        nonlocal called_iows_fetcher
+        called_iows_fetcher = True
         return [SimpleNamespace(item_code="22222222")]
 
     monkeypatch.setattr(ikea_api.wrappers, "parse_item_codes", mock_parse_item_codes)
-    monkeypatch.setattr(ikea_api.wrappers, "_get_iows_items", mock_get_iows_items)
     monkeypatch.setattr(
         ikea_api.wrappers, "_get_ingka_pip_items", mock_get_ingka_pip_items
     )
+    monkeypatch.setattr(ikea_api.wrappers, "_get_iows_items", mock_get_iows_items)
 
     res = ikea_api.wrappers.get_items(deepcopy(exp_item_codes))
     assert called_iows_fetcher
