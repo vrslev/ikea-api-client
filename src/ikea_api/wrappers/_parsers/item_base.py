@@ -19,9 +19,10 @@ class ItemCode(str):
         if isinstance(v, int):
             v = str(v)
         if isinstance(v, str):
-            if len(parse_item_codes(v)) != 1:
+            parsed_item_codes = parse_item_codes(v)
+            if len(parsed_item_codes) != 1:
                 raise ValueError("invalid item code format")
-            return v
+            return parsed_item_codes[0]
         raise TypeError("string required")
 
 
