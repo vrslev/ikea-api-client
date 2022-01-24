@@ -27,7 +27,7 @@ pydantic = {version = "^1.8.2", optional = true}
 
 [tool.poetry.dev-dependencies]
 black = {version = "21.12b0", allow-prereleases = true}
-pre-commit = "2.16.0"
+pre-commit = "2.17.0"
 
 [tool.poetry.extras]
 wrappers = ["pydantic"]
