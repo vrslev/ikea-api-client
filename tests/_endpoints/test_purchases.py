@@ -46,14 +46,14 @@ def test_history_passes(purchases: Purchases):
         purchases.endpoint,
         json={"foo": "bar"},
         match=[
-            responses.matchers.json_params_matcher(  # type: ignore
+            responses.matchers.json_params_matcher(
                 {
                     "operationName": "History",
                     "variables": {"take": 3, "skip": 2},
                     "query": Queries.history,
                 }
             ),
-            responses.matchers.header_matcher(get_headers()),  # type: ignore
+            responses.matchers.header_matcher(get_headers()),
         ],
     )
     assert purchases.history(take=3, skip=2) == {"foo": "bar"}
@@ -66,14 +66,14 @@ def test_history_raises(purchases: Purchases):
         purchases.endpoint,
         json={"errors": "foo"},
         match=[
-            responses.matchers.json_params_matcher(  # type: ignore
+            responses.matchers.json_params_matcher(
                 {
                     "operationName": "History",
                     "variables": {"take": 3, "skip": 2},
                     "query": Queries.history,
                 }
             ),
-            responses.matchers.header_matcher(get_headers()),  # type: ignore
+            responses.matchers.header_matcher(get_headers()),
         ],
     )
     with pytest.raises(GraphQLError, match="foo") as exc:
@@ -144,7 +144,7 @@ def test_order_info_passes(
         responses.POST,
         purchases.endpoint,
         json=[{"foo": "bar"}],
-        match=[responses.matchers.header_matcher(headers)],  # type: ignore
+        match=[responses.matchers.header_matcher(headers)],
     )
 
     res = purchases.order_info(

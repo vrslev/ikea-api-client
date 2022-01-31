@@ -569,7 +569,6 @@ def test_get_items_ingka_pip_fails(monkeypatch: pytest.MonkeyPatch):
             nonlocal called_ingka_fetcher
             called_ingka_fetcher = True
             return {"data": []}
-            raise ItemFetchError(SimpleNamespace(), "Wrong Item Code")  # type: ignore
 
     class CustomPipItem:
         def __call__(self, item_codes: list[str]):

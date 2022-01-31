@@ -26,7 +26,7 @@ def test_get_date_no_value():
     assert get_date([]) is None
     assert get_date([SimpleNamespace(timeWindows=None)]) is None  # type: ignore
     assert (
-        get_date(  # type: ignore
+        get_date(
             [  # type: ignore
                 SimpleNamespace(timeWindows=None),
                 SimpleNamespace(timeWindows=SimpleNamespace(earliestPossibleSlot=None)),

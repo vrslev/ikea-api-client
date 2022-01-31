@@ -49,6 +49,7 @@ pythonVersion = "3.10"
 reportMissingTypeStubs = false
 reportPrivateUsage = false
 reportImportCycles = false
+reportUnnecessaryTypeIgnoreComment = "warning"
 
 [tool.semantic_release]
 branch = "main"

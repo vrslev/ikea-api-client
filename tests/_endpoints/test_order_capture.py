@@ -78,7 +78,7 @@ def test_get_service_area_data(order_capture: OrderCapture, with_state_code: boo
         responses.POST,
         url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area",
         json={"id": "bar"},
-        match=[responses.matchers.json_params_matcher(exp_data)],  # type: ignore
+        match=[responses.matchers.json_params_matcher(exp_data)],
     )
     assert order_capture._get_service_area("mycheckout") == "bar"
 
@@ -138,10 +138,10 @@ def test_order_capture_passes_without_checkout_and_service_area(
         url=f"{order_capture.endpoint}/checkouts",
         json={"resourceId": "mycheckout"},
         match=[
-            responses.matchers.header_matcher(  # type: ignore
+            responses.matchers.header_matcher(
                 {"X-Client-Id": Secrets.order_capture_checkout_x_client_id}
             ),
-            responses.matchers.json_params_matcher(  # type: ignore
+            responses.matchers.json_params_matcher(
                 {
                     "channel": "WEBAPP",
                     "checkoutType": "STANDARD",
@@ -161,7 +161,7 @@ def test_order_capture_passes_without_checkout_and_service_area(
         url=f"{order_capture.endpoint}/checkouts/mycheckout/service-area",
         json={"id": "myarea"},
         match=[
-            responses.matchers.json_params_matcher(  # type: ignore
+            responses.matchers.json_params_matcher(
                 {"zipCode": copy(order_capture._zip_code)}
             )
         ],

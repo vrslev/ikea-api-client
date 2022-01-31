@@ -13,7 +13,7 @@ def test_search():
         url=f"https://sik.search.blue.cdtapps.com/{Constants.COUNTRY_CODE}/{Constants.LANGUAGE_CODE}/search-result-page",
         json={"foo": "bar"},
         match=[
-            responses.matchers.query_string_matcher(  # type: ignore
+            responses.matchers.query_string_matcher(
                 urlencode(
                     {
                         "autocorrect": "true",
