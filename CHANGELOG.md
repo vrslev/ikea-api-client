@@ -3,6 +3,16 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.6 (2022-02-02)
+### Fix
+* **Order Capture parser:** Allow optional possibleDeliveries ([`9dce4e7`](https://github.com/vrslev/ikea-api-client/commit/9dce4e7089a1fc22c74367874fbb206d65a01e74))
+
+### Chore
+* Enable `reportUnnecessaryTypeIgnoreComment` ([`b2243dc`](https://github.com/vrslev/ikea-api-client/commit/b2243dc4f6d2c3fb53a926e25999111ad70e932c))
+* **deps-dev:** Update black requirement from 21.12b0 to 22.1.0 ([#88](https://github.com/vrslev/ikea-api-client/issues/88)) ([`3168ec5`](https://github.com/vrslev/ikea-api-client/commit/3168ec5fcfbbd2ebdc00723e7a1dff0078e9d49e))
+* **deps:** Update pre-commit hooks ([#89](https://github.com/vrslev/ikea-api-client/issues/89)) ([`06756e5`](https://github.com/vrslev/ikea-api-client/commit/06756e514cb6655af252bcd88c141ddc60aa91ba))
+* **deps-dev:** Update pre-commit requirement from 2.16.0 to 2.17.0 ([#86](https://github.com/vrslev/ikea-api-client/issues/86)) ([`7324d39`](https://github.com/vrslev/ikea-api-client/commit/7324d39ae3b481eb2006281c31bc17c2ec524f17))
+
 ## v1.1.5 (2022-01-23)
 ### Fix
 * **Item wrapper:** Make ingka-pip endpoints default option since IOWS API is deprecated ([`c549022`](https://github.com/vrslev/ikea-api-client/commit/c5490224b2bffc7d183fb13a7095fc2735e21958))
