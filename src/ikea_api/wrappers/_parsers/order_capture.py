@@ -139,12 +139,15 @@ class HomePossibleDeliveryServices(BaseModel):
 
 
 class HomeDeliveryServicesResponse(BaseModel):
-    possibleDeliveryServices: HomePossibleDeliveryServices
+    possibleDeliveryServices: Optional[HomePossibleDeliveryServices]
 
 
 def parse_home_delivery_services(response: dict[str, Any]):
     parsed_response = HomeDeliveryServicesResponse(**response)
     res: list[types.DeliveryService] = []
+    if not parsed_response.possibleDeliveryServices:
+        return res
+
     for service in parsed_response.possibleDeliveryServices.deliveryServices:
         if not (service.possibleDeliveries and service.possibleDeliveries.deliveries):
             continue

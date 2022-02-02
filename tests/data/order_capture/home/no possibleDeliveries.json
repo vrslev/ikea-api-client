@@ -1,0 +1,26 @@
+{
+  "context": {
+    "retailUnit": "ru",
+    "exclTaxCountry": false,
+    "checkoutId": "",
+    "currency": "RUB",
+    "scope": { "type": "HOME_DELIVERY" },
+    "config": {
+      "enableLeadTimeOrchestration": true,
+      "enablePrimeTimeCalculation": true,
+      "allowedPTSDeliveries": [
+        "HOME_DELIVERY_STANDARD",
+        "HOME_DELIVERY_CURBSIDE",
+        "HOME_DELIVERY_EXPRESS",
+        "HOME_DELIVERY_EXPRESS_CURBSIDE"
+      ]
+    },
+    "businessUnit": { "code": "111", "type": "STO" },
+    "customerContext": { "customerType": "PRIVATE" },
+    "capability": {
+      "wheelChair": false,
+      "rangeOfDays": true,
+      "authToLeave": true
+    }
+  }
+}
