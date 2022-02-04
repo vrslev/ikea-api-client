@@ -3,6 +3,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.7 (2022-02-04)
+### Fix
+* Empty commit ([`23438c1`](https://github.com/vrslev/ikea-api-client/commit/23438c18831720fafa3a51bf56b440a7777ea485))
+
+### Test
+* Fix name of no possibleDeliveryServices Home delivery services Order Capture parser ([`3ff8505`](https://github.com/vrslev/ikea-api-client/commit/3ff85058a1108d567575685d2d1d18c013a207e5))
+
 ## v1.1.6 (2022-02-02)
 ### Fix
 * **Order Capture parser:** Allow optional possibleDeliveries ([`9dce4e7`](https://github.com/vrslev/ikea-api-client/commit/9dce4e7089a1fc22c74367874fbb206d65a01e74))
