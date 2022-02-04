@@ -144,6 +144,7 @@ class HomeDeliveryServicesResponse(BaseModel):
 
 def parse_home_delivery_services(response: dict[str, Any]):
     parsed_response = HomeDeliveryServicesResponse(**response)
+
     res: list[types.DeliveryService] = []
     if not parsed_response.possibleDeliveryServices:
         return res
@@ -208,7 +209,7 @@ class CollectPossibleDeliveryServices(BaseModel):
 
 
 class CollectDeliveryServicesResponse(BaseModel):
-    possibleDeliveryServices: CollectPossibleDeliveryServices
+    possibleDeliveryServices: Optional[CollectPossibleDeliveryServices]
 
 
 def get_service_provider(pickup_point: PickUpPoint):
@@ -225,7 +226,10 @@ def get_service_provider(pickup_point: PickUpPoint):
 
 def parse_collect_delivery_services(response: dict[str, Any]):
     parsed_response = CollectDeliveryServicesResponse(**response)
+
     res: list[types.DeliveryService] = []
+    if not parsed_response.possibleDeliveryServices:
+        return res
 
     for service in parsed_response.possibleDeliveryServices.deliveryServices:
         if not service.possibleDeliveries:
