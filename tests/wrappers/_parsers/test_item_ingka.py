@@ -174,14 +174,14 @@ def test_get_weight_no_weight():
 
 
 def test_get_weight_success():
-    exp_value = 10.0
     comm = SimpleNamespace(
         packageMeasurements=[
             SimpleNamespace(type="not weight", valueMetric="not exp_value"),
-            SimpleNamespace(type="WEIGHT", valueMetric=exp_value),
+            SimpleNamespace(type="WEIGHT", valueMetric=5.0),
+            SimpleNamespace(type="WEIGHT", valueMetric=6.0),
         ]
     )
-    assert get_weight(comm) == exp_value  # type: ignore
+    assert get_weight(comm) == 11.0  # type: ignore
 
 
 @pytest.mark.parametrize("input", ([], None))

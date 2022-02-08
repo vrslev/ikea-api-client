@@ -138,12 +138,14 @@ def get_image_url(comm: LocalisedCommunication):
 
 
 def get_weight(comm: LocalisedCommunication):
+    weight = 0.0
     if not comm.packageMeasurements:
-        return 0.0
+        return weight
+
     for m in comm.packageMeasurements:
         if m.type == "WEIGHT":
-            return m.valueMetric
-    return 0.0
+            weight += m.valueMetric
+    return weight
 
 
 def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem]:
