@@ -3,6 +3,14 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.8 (2022-02-08)
+### Fix
+* **Item Ingka parser:** Add weight instead of taking first value ([`606b8d7`](https://github.com/vrslev/ikea-api-client/commit/606b8d7cec0dd6f5d76454858c8e2bfd9741255a))
+
+### Chore
+* **deps:** Update pytest requirement from 6.2.5 to 7.0.0 ([#90](https://github.com/vrslev/ikea-api-client/issues/90)) ([`ee2942c`](https://github.com/vrslev/ikea-api-client/commit/ee2942cbcfb1b399e6907ccafce048bc33510abd))
+* **deps:** Update responses requirement from 0.17.0 to 0.18.0 ([#91](https://github.com/vrslev/ikea-api-client/issues/91)) ([`b058fc2`](https://github.com/vrslev/ikea-api-client/commit/b058fc2d5bfd54ed8a65207b5ab480f1e4bbbb6a))
+
 ## v1.1.7 (2022-02-04)
 ### Fix
 * **Order Capture parser**: Allow optional possibleDeliveryServices in collect services
