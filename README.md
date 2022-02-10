@@ -234,6 +234,18 @@ PipItem()(item_code)
 > get_items(["30457903"])
 > ```
 
+### 🟢 Item availability
+
+Get availability by item code (product number or whatever).
+
+```python
+from ikea_api import IngkaStock
+
+item_code = "30457903"
+
+IngkaStock()(item_code)
+```
+
 ### 🔎 [Search](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/search.py)
 
 Search for products in the product catalog by product name. Optionally also specify a maximum amount of returned search results (defaults to 24) and types of required search results.
