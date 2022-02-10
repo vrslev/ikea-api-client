@@ -19,6 +19,7 @@ class Secrets:
     auth_guest_token_x_client_secret = (  # nosec
         "cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB"
     )
+    stocks_ingka_x_client_id = "b6c117e5-ae61-4ef5-b4cc-e0b1e37f0631"
 
 
 DEFAULT_HEADERS = {
