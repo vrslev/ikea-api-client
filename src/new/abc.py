@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Any, Callable, Generator, Generic, TypeVar, cast
+from typing import Any, Callable, Generator, Generic, Literal, TypeVar, cast
 
 from requests.structures import CaseInsensitiveDict
 
@@ -14,7 +14,7 @@ EndpointResponse = TypeVar("EndpointResponse")
 
 @dataclass
 class RequestInfo:
-    method: str
+    method: Literal["GET", "POST"]
     url: str
     params: dict[str, Any] | None = None
     data: Any = None
@@ -92,6 +92,22 @@ def add_handler(handler: ErrorHandler):
     return decorator
 
 
+def get_request_info(gen: Endpoint[Any, Any]) -> RequestInfo:
+    return next(gen)
+
+
+def get_parsed_response(
+    gen: Endpoint[PreparedData, EndpointResponse],
+    response_info: ResponseInfo[PreparedData, Any],
+) -> EndpointResponse:
+    try:
+        gen.send(response_info)
+    except StopIteration as exc:
+        return exc.value
+    else:
+        raise Exception
+
+
 def run(
     executor: Executor[PreparedData],
     func: EndpointFunc[PreparedData, EndpointResponse],
@@ -101,7 +117,7 @@ def run(
 
     session_info = func.__self__.session_info  # type: ignore
 
-    req_info = next(generator)
+    req_info = get_request_info(generator)
     req_info.url = session_info.base_url + req_info.url
 
     response_info = executor(session_info, req_info)
@@ -109,12 +125,7 @@ def run(
     for handler in getattr(func, "error_handlers", ()):
         handler(response_info)
 
-    try:
-        generator.send(response_info)
-    except StopIteration as exc:
-        parsed_response = exc.value
-    else:
-        raise Exception
+    parsed_response = get_parsed_response(generator, response_info)
 
     if isinstance(parsed_response, Rerun):
         new_data = cast(Rerun[PreparedData], parsed_response).data
