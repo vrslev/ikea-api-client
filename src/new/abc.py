@@ -24,7 +24,7 @@ LibResponse = TypeVar("LibResponse")
 
 @dataclass
 class ResponseInfo(ABC, Generic[PreparedData, LibResponse]):
-    prep_data: PreparedData
+    # prep_data: PreparedData
     response: LibResponse
     headers: CaseInsensitiveDict[str] = field(init=False)
     status_code: int = field(init=False)
