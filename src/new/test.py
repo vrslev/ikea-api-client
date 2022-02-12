@@ -12,7 +12,7 @@ from new.abc import (
     get_request_info,
 )
 from new.constants import Constants
-from new.endpoints.item_ingka import IngkaItemsAPI, IngkaItemsData
+from new.endpoints import ingka_items
 
 
 @pytest.fixture
@@ -22,7 +22,7 @@ def constants():
 
 @pytest.fixture
 def ingka_items_api(constants: Constants):
-    return IngkaItemsAPI(constants)
+    return ingka_items.API(constants)
 
 
 class EndpointChecker:
@@ -44,9 +44,9 @@ class EndpointChecker:
         prop.assert_called_once_with()
 
 
-def test_get_items_prepare(ingka_items_api: IngkaItemsAPI):
+def test_get_items_prepare(ingka_items_api: ingka_items.API):
     item_codes = ["11111111", "22222222"]
-    data = IngkaItemsData(item_codes)
+    data = ingka_items.Data(item_codes)
     gen = ingka_items_api.get_items(data)
     checker = EndpointChecker(gen)
 

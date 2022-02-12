@@ -5,11 +5,11 @@ from new.error_handlers import handle_401, handle_json_decode_error
 
 
 @dataclass
-class IngkaItemsData:
+class Data:
     item_codes: list[str]
 
 
-class IngkaItemsAPI(abc.BaseAPI):
+class API(abc.BaseAPI):
     def get_session_info(self):
         headers = self.extend_default_headers(
             {
@@ -24,7 +24,7 @@ class IngkaItemsAPI(abc.BaseAPI):
     @abc.endpoint
     @abc.add_handler(handle_401)
     @abc.add_handler(handle_json_decode_error)
-    def get_items(self, data: IngkaItemsData) -> abc.Endpoint[IngkaItemsData, str]:
+    def get_items(self, data: Data) -> abc.Endpoint[Data, str]:
         request_info = abc.RequestInfo("GET", "", params={"itemNos": data.item_codes})
         response_info = yield request_info
         return response_info.json
