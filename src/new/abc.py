@@ -51,11 +51,11 @@ class SessionInfo:
 
 
 class BaseAPI(ABC):
-    constants: Constants
+    const: Constants
     session_info: SessionInfo = field(init=False)
 
     def __init__(self, constants: Constants):
-        self.constants = constants
+        self.const = constants
         self.session_info = self.get_session_info()
 
     @abstractmethod

@@ -15,12 +15,12 @@ class IngkaItemsAPI(BaseAPI):
         headers = extend_default_headers(
             {
                 "Accept": "*/*",
-                "Referer": f"{self.constants.base_url}/{self.constants.country}/{self.constants.language}/order/delivery/",
+                "Referer": f"{self.const.base_url}/{self.const.country}/{self.const.language}/order/delivery/",
                 "X-Client-Id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",
             },
-            constants=self.constants,
+            constants=self.const,
         )
-        url = f"https://api.ingka.ikea.com/salesitem/communications/{self.constants.country}/{self.constants.language}"
+        url = f"https://api.ingka.ikea.com/salesitem/communications/{self.const.country}/{self.const.language}"
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint
