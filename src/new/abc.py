@@ -52,7 +52,7 @@ class SessionInfo:
 
 class BaseAPI(ABC):
     const: Constants
-    session_info: SessionInfo = field(init=False)
+    session_info: SessionInfo
 
     def __init__(self, constants: Constants):
         self.const = constants
