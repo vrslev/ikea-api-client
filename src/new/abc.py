@@ -23,7 +23,7 @@ class RequestInfo:
 
 
 @dataclass
-class ResponseInfo(ABC, Generic[PreparedData, LibResponse]):
+class ResponseInfo(ABC, Generic[LibResponse]):
     response: LibResponse
     headers: CaseInsensitiveDict[str] = field(init=False)
     status_code: int = field(init=False)
@@ -64,14 +64,14 @@ class BaseAPI(ABC):
 
 
 Endpoint = Generator[
-    RequestInfo, ResponseInfo[PreparedData, Any], Rerun[PreparedData] | EndpointResponse
+    RequestInfo, ResponseInfo[Any], Rerun[PreparedData] | EndpointResponse
 ]
 EndpointInstMethod = Callable[
     [Any, PreparedData], Endpoint[PreparedData, EndpointResponse]
 ]
 EndpointFunc = Callable[[PreparedData], Endpoint[PreparedData, EndpointResponse]]
-ErrorHandler = Callable[[ResponseInfo[Any, Any]], None]
-Executor = Callable[[SessionInfo, RequestInfo], ResponseInfo[PreparedData, Any]]
+ErrorHandler = Callable[[ResponseInfo[Any]], None]
+Executor = Callable[[SessionInfo, RequestInfo], ResponseInfo[Any]]
 
 
 def endpoint(
@@ -97,8 +97,8 @@ def get_request_info(gen: Endpoint[Any, Any]) -> RequestInfo:
 
 
 def get_parsed_response(
-    gen: Endpoint[PreparedData, EndpointResponse],
-    response_info: ResponseInfo[PreparedData, Any],
+    gen: Endpoint[Any, EndpointResponse],
+    response_info: ResponseInfo[Any],
 ) -> EndpointResponse:
     try:
         gen.send(response_info)
@@ -123,7 +123,7 @@ def before_run(
 def after_run(
     func: EndpointFunc[PreparedData, EndpointResponse],
     gen: Endpoint[PreparedData, EndpointResponse],
-    response_info: ResponseInfo[PreparedData, Any],
+    response_info: ResponseInfo[Any],
 ) -> tuple[Rerun[PreparedData], None] | tuple[None, EndpointResponse]:
     for handler in getattr(func, "error_handlers", ()):
         handler(response_info)
@@ -134,49 +134,3 @@ def after_run(
         return cast(Rerun[PreparedData], parsed_response), None
 
     return None, parsed_response
-
-
-def run_new(
-    func: EndpointFunc[PreparedData, EndpointResponse], data: PreparedData
-) -> EndpointResponse:
-    gen = func(data)
-    session_info, req_info = before_run(func, gen)
-
-    response_info: ResponseInfo[Any, Any] = (  # type: ignore # TODO
-        None,
-        session_info,
-        req_info,
-    )
-
-    rerun, parsed_response = after_run(func, gen, response_info)
-
-    if not rerun:
-        assert parsed_response
-        return parsed_response
-    return run_new(func=func, data=rerun.data)
-
-
-def run(
-    executor: Executor[PreparedData],
-    func: EndpointFunc[PreparedData, EndpointResponse],
-    data: PreparedData,
-) -> EndpointResponse:
-    generator = func(data)
-
-    session_info = func.__self__.session_info  # type: ignore
-
-    req_info = get_request_info(generator)
-    req_info.url = session_info.base_url + req_info.url
-
-    response_info = executor(session_info, req_info)
-
-    for handler in getattr(func, "error_handlers", ()):
-        handler(response_info)
-
-    parsed_response = get_parsed_response(generator, response_info)
-
-    if isinstance(parsed_response, Rerun):
-        new_data = cast(Rerun[PreparedData], parsed_response).data
-        return run(executor=executor, func=func, data=new_data)
-
-    return parsed_response

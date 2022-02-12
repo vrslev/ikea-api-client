@@ -1,3 +1,3 @@
-from new.executors.requests import run_request as requests_executor
+from new.executors.requests import execute as requests_executor
 
 __all__ = ["requests_executor"]

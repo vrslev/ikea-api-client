@@ -17,7 +17,7 @@ from new.abc import (
 
 
 @dataclass
-class RequestsResponseInfo(ResponseInfo[Any, requests.Response]):
+class RequestsResponseInfo(ResponseInfo[requests.Response]):
     def __post_init__(self):
         self.headers = self.response.headers
         self.status_code = self.response.status_code

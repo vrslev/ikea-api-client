@@ -8,9 +8,9 @@ from new.abc import ResponseInfo
 class IKEAAPIError(Exception):
     """Generic API related exception."""
 
-    response: ResponseInfo[Any, Any]
+    response: ResponseInfo[Any]
 
-    def __init__(self, response: ResponseInfo[Any, Any], msg: Any = None):
+    def __init__(self, response: ResponseInfo[Any], msg: Any = None):
         self.response = response
         if msg is None:
             msg = (response.status_code, response.text)

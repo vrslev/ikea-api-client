@@ -32,7 +32,7 @@ class EndpointChecker:
     def request_info(self):
         return get_request_info(self.gen)
 
-    def parsed_response(self, response_info: ResponseInfo[Any, Any]):
+    def parsed_response(self, response_info: ResponseInfo[Any]):
         return get_parsed_response(self.gen, response_info)
 
     def assert_json_returned(self):
