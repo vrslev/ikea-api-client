@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Any, Callable, Generator, Generic, ParamSpec, TypeVar, cast
+from typing import Any, Callable, Generator, Generic, TypeVar, cast
 
 from requests.structures import CaseInsensitiveDict
 
@@ -66,16 +66,24 @@ class BaseAPI(ABC):
 Endpoint = Generator[
     RequestInfo, ResponseInfo[PreparedData, Any], Rerun[PreparedData] | EndpointResponse
 ]
+EndpointInstMethod = Callable[
+    [Any, PreparedData], Endpoint[PreparedData, EndpointResponse]
+]
+EndpointFunc = Callable[[PreparedData], Endpoint[PreparedData, EndpointResponse]]
 ErrorHandler = Callable[[ResponseInfo[Any, Any]], None]
 Executor = Callable[[SessionInfo, RequestInfo], ResponseInfo[PreparedData, Any]]
 
-P = ParamSpec("P")
+
+def endpoint(
+    func: EndpointInstMethod[PreparedData, EndpointResponse]
+) -> EndpointInstMethod[PreparedData, EndpointResponse]:
+    return func
 
 
 def add_handler(handler: ErrorHandler):
     def decorator(
-        func: Callable[P, Endpoint[PreparedData, EndpointResponse]]
-    ) -> Callable[P, Endpoint[PreparedData, EndpointResponse]]:
+        func: EndpointInstMethod[PreparedData, EndpointResponse]
+    ) -> EndpointInstMethod[PreparedData, EndpointResponse]:
         if not getattr(func, "error_handlers", None):
             func.error_handlers: list[ErrorHandler] = []  # type: ignore
         func.error_handlers.append(handler)  # type: ignore
@@ -86,7 +94,7 @@ def add_handler(handler: ErrorHandler):
 
 def run(
     executor: Executor[PreparedData],
-    func: Callable[[PreparedData], Endpoint[PreparedData, EndpointResponse]],
+    func: EndpointFunc[PreparedData, EndpointResponse],
     data: PreparedData,
 ) -> EndpointResponse:
     generator = func(data)

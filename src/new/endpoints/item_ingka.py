@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from new import abc
+from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler, endpoint
 from new.constants import extend_default_headers
 from new.error_handlers import handle_401, handle_json_decode_error
 
@@ -10,7 +10,7 @@ class IngkaItemsData:
     item_codes: list[str]
 
 
-class IngkaItemsAPI(abc.BaseAPI):
+class IngkaItemsAPI(BaseAPI):
     def get_session_info(self):
         headers = extend_default_headers(
             {
@@ -21,11 +21,12 @@ class IngkaItemsAPI(abc.BaseAPI):
             constants=self.constants,
         )
         url = f"https://api.ingka.ikea.com/salesitem/communications/{self.constants.country}/{self.constants.language}"
-        return abc.SessionInfo(base_url=url, headers=headers)
+        return SessionInfo(base_url=url, headers=headers)
 
-    @abc.add_handler(handle_401)
-    @abc.add_handler(handle_json_decode_error)
-    def get_items(self, data: IngkaItemsData) -> abc.Endpoint[IngkaItemsData, str]:
-        request_info = abc.RequestInfo("GET", "", params={"itemNos": data.item_codes})
+    @endpoint
+    @add_handler(handle_401)
+    @add_handler(handle_json_decode_error)
+    def get_items(self, data: IngkaItemsData) -> Endpoint[IngkaItemsData, str]:
+        request_info = RequestInfo("GET", "", params={"itemNos": data.item_codes})
         response_info = yield request_info
         return response_info.json
