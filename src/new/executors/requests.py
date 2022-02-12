@@ -4,12 +4,11 @@ from typing import Any
 
 import requests
 
-from new import abc
-from new.constants import Constants
+from new.abc import RequestInfo, ResponseInfo, SessionInfo
 
 
 @dataclass
-class RequestsResponseData(abc.ResponseInfo[Any, requests.Response]):
+class RequestsResponseData(ResponseInfo[Any, requests.Response]):
     def __post_init__(self):
         self.headers = self.response.headers
         self.status_code = self.response.status_code
@@ -30,32 +29,20 @@ def get_cached_session(headers: frozenset[tuple[str, str]]) -> requests.Session:
     return session
 
 
-def get_session_from_session_data(session_data: abc.SessionInfo) -> requests.Session:
-    session = get_cached_session(headers=frozenset(session_data.headers.items()))
-    return session
+def get_session_from_session_info(session_info: SessionInfo) -> requests.Session:
+    return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-def run(
-    run_data: abc.RunInfo[Any, abc.EndpointResponse], constants: Constants
-) -> abc.EndpointResponse:
-    session_data, req_data = abc.prepare_request(run_data, constants)
-
-    session = get_session_from_session_data(session_data)
+def executor(
+    session_info: SessionInfo, request_info: RequestInfo
+) -> RequestsResponseData:
+    session = get_session_from_session_info(session_info)
     response = session.request(
-        method=req_data.method,
-        url=req_data.url,
-        params=req_data.params,
-        data=req_data.data,
-        json=req_data.json,
-        headers=req_data.headers,
+        method=request_info.method,
+        url=request_info.url,
+        params=request_info.params,
+        data=request_info.data,
+        json=request_info.json,
+        headers=request_info.headers,
     )
-
-    parsed_response = abc.process_response(
-        response, response_info_cls=RequestsResponseData, run_info=run_data
-    )
-
-    if isinstance(parsed_response, abc.Rerun):
-        run_data.data = parsed_response.data
-        return run(run_data=run_data, constants=constants)
-
-    return parsed_response
+    return RequestsResponseData(response)

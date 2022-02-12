@@ -1,11 +1,15 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Any, Callable, Generator, Generic, Protocol, TypeVar
+from typing import Any, Callable, Generator, Generic, ParamSpec, TypeVar, cast
 
 from requests.structures import CaseInsensitiveDict
 
 from new.constants import Constants
+
+PreparedData = TypeVar("PreparedData")
+LibResponse = TypeVar("LibResponse")
+EndpointResponse = TypeVar("EndpointResponse")
 
 
 @dataclass
@@ -18,13 +22,8 @@ class RequestInfo:
     headers: dict[str, str] | None = None
 
 
-PreparedData = TypeVar("PreparedData")
-LibResponse = TypeVar("LibResponse")
-
-
 @dataclass
 class ResponseInfo(ABC, Generic[PreparedData, LibResponse]):
-    # prep_data: PreparedData
     response: LibResponse
     headers: CaseInsensitiveDict[str] = field(init=False)
     status_code: int = field(init=False)
@@ -45,67 +44,72 @@ class Rerun(Generic[PreparedData]):
     data: PreparedData
 
 
-EndpointResponse = TypeVar("EndpointResponse")
-
-
-class Endpoint(ABC, Generic[PreparedData, EndpointResponse]):
-    @staticmethod
-    @abstractmethod
-    def prepare_request(data: PreparedData) -> RequestInfo:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def get_error_handlers() -> Generator[
-        Callable[[ResponseInfo[PreparedData, Any]], None], None, None
-    ] | None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def parse_response(
-        response: ResponseInfo[PreparedData, Any],
-    ) -> EndpointResponse | Rerun[PreparedData]:
-        ...
-
-
 @dataclass
 class SessionInfo:
     base_url: str
     headers: dict[str, str]
 
 
-class _GetSessionInfo(Protocol):
-    def __call__(self, constants: Constants) -> SessionInfo:
-        ...
+class BaseAPI(ABC):
+    constants: Constants
+    session_info: SessionInfo = field(init=False)
+
+    def __init__(self, constants: Constants):
+        self.constants = constants
+        self.session_info = self.get_session_info()
+
+    @abstractmethod
+    def get_session_info(self) -> SessionInfo:
+        pass
 
 
-@dataclass
-class RunInfo(Generic[PreparedData, EndpointResponse]):
-    session_info_getter: _GetSessionInfo
-    endpoint: type[Endpoint[PreparedData, EndpointResponse]]
-    data: PreparedData
+Endpoint = Generator[
+    RequestInfo, ResponseInfo[PreparedData, Any], Rerun[PreparedData] | EndpointResponse
+]
+ErrorHandler = Callable[[ResponseInfo[Any, Any]], None]
+Executor = Callable[[SessionInfo, RequestInfo], ResponseInfo[PreparedData, Any]]
+
+P = ParamSpec("P")
 
 
-def prepare_request(
-    run_info: RunInfo[Any, Any], constants: Constants
-) -> tuple[SessionInfo, RequestInfo]:
-    session_info = run_info.session_info_getter(constants)
-    req_info = run_info.endpoint.prepare_request(run_info.data)
+def add_handler(handler: ErrorHandler):
+    def decorator(
+        func: Callable[P, Endpoint[PreparedData, EndpointResponse]]
+    ) -> Callable[P, Endpoint[PreparedData, EndpointResponse]]:
+        if not getattr(func, "error_handlers", None):
+            func.error_handlers: list[ErrorHandler] = []  # type: ignore
+        func.error_handlers.append(handler)  # type: ignore
+        return func
+
+    return decorator
+
+
+def run(
+    executor: Executor[PreparedData],
+    func: Callable[[PreparedData], Endpoint[PreparedData, EndpointResponse]],
+    data: PreparedData,
+) -> EndpointResponse:
+    generator = func(data)
+
+    session_info = func.__self__.session_info  # type: ignore
+
+    req_info = next(generator)
     req_info.url = session_info.base_url + req_info.url
-    return session_info, req_info
 
+    response_info = executor(session_info, req_info)
 
-def process_response(
-    response: LibResponse,
-    response_info_cls: type[ResponseInfo[PreparedData, LibResponse]],
-    run_info: RunInfo[PreparedData, Any],
-):
-    resp_info = response_info_cls(run_info.data, response)
+    for handler in getattr(func, "error_handlers", ()):
+        handler(response_info)
 
-    handlers_gen = run_info.endpoint.get_error_handlers()
-    if handlers_gen:
-        for handler in handlers_gen:
-            handler(resp_info)
+    try:
+        generator.send(response_info)
+    except StopIteration as exc:
+        parsed_response = exc.value
+    else:
+        raise Exception
 
-    return run_info.endpoint.parse_response(resp_info)
+    if isinstance(parsed_response, Rerun):
+        new_data = cast(Rerun[PreparedData], parsed_response).data
+        return run(executor=executor, func=func, data=new_data)
+
+    return parsed_response
