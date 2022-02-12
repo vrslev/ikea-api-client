@@ -5,7 +5,7 @@ from typing import Any, Callable, Generator, Generic, Literal, TypeVar, cast
 
 from requests.structures import CaseInsensitiveDict
 
-from new.constants import Constants
+from new.constants import Constants, extend_default_headers
 
 PreparedData = TypeVar("PreparedData")
 LibResponse = TypeVar("LibResponse")
@@ -57,6 +57,9 @@ class BaseAPI(ABC):
     def __init__(self, constants: Constants):
         self.const = constants
         self.session_info = self.get_session_info()
+
+    def extend_default_headers(self, headers: dict[str, str]):
+        return extend_default_headers(headers=headers, constants=self.const)
 
     @abstractmethod
     def get_session_info(self) -> SessionInfo:
