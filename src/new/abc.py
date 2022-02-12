@@ -108,6 +108,54 @@ def get_parsed_response(
         raise Exception
 
 
+def before_run(
+    func: EndpointFunc[PreparedData, EndpointResponse],
+    gen: Endpoint[PreparedData, EndpointResponse],
+) -> tuple[SessionInfo, RequestInfo]:
+    session_info = cast(SessionInfo, func.__self__.session_info)  # type: ignore
+
+    req_info = get_request_info(gen)
+    req_info.url = session_info.base_url + req_info.url
+
+    return session_info, req_info
+
+
+def after_run(
+    func: EndpointFunc[PreparedData, EndpointResponse],
+    gen: Endpoint[PreparedData, EndpointResponse],
+    response_info: ResponseInfo[PreparedData, Any],
+) -> tuple[Rerun[PreparedData], None] | tuple[None, EndpointResponse]:
+    for handler in getattr(func, "error_handlers", ()):
+        handler(response_info)
+
+    parsed_response = get_parsed_response(gen, response_info)
+
+    if isinstance(parsed_response, Rerun):
+        return cast(Rerun[PreparedData], parsed_response), None
+
+    return None, parsed_response
+
+
+def run_new(
+    func: EndpointFunc[PreparedData, EndpointResponse], data: PreparedData
+) -> EndpointResponse:
+    gen = func(data)
+    session_info, req_info = before_run(func, gen)
+
+    response_info: ResponseInfo[Any, Any] = (  # type: ignore # TODO
+        None,
+        session_info,
+        req_info,
+    )
+
+    rerun, parsed_response = after_run(func, gen, response_info)
+
+    if not rerun:
+        assert parsed_response
+        return parsed_response
+    return run_new(func=func, data=rerun.data)
+
+
 def run(
     executor: Executor[PreparedData],
     func: EndpointFunc[PreparedData, EndpointResponse],

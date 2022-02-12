@@ -4,11 +4,20 @@ from typing import Any
 
 import requests
 
-from new.abc import RequestInfo, ResponseInfo, SessionInfo
+from new.abc import (
+    EndpointFunc,
+    EndpointResponse,
+    PreparedData,
+    RequestInfo,
+    ResponseInfo,
+    SessionInfo,
+    after_run,
+    before_run,
+)
 
 
 @dataclass
-class RequestsResponseData(ResponseInfo[Any, requests.Response]):
+class RequestsResponseInfo(ResponseInfo[Any, requests.Response]):
     def __post_init__(self):
         self.headers = self.response.headers
         self.status_code = self.response.status_code
@@ -33,9 +42,9 @@ def get_session_from_session_info(session_info: SessionInfo) -> requests.Session
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-def executor(
+def run_request(
     session_info: SessionInfo, request_info: RequestInfo
-) -> RequestsResponseData:
+) -> RequestsResponseInfo:
     session = get_session_from_session_info(session_info)
     response = session.request(
         method=request_info.method,
@@ -45,4 +54,20 @@ def executor(
         json=request_info.json,
         headers=request_info.headers,
     )
-    return RequestsResponseData(response)
+    return RequestsResponseInfo(response)
+
+
+def execute(
+    func: EndpointFunc[PreparedData, EndpointResponse], data: PreparedData
+) -> EndpointResponse:
+    gen = func(data)
+    session_info, req_info = before_run(func, gen)
+
+    response_info = run_request(session_info, req_info)
+
+    rerun, parsed_response = after_run(func, gen, response_info)
+
+    if not rerun:
+        assert parsed_response
+        return parsed_response
+    return execute(func=func, data=rerun.data)
