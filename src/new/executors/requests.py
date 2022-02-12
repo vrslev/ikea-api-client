@@ -4,20 +4,11 @@ from typing import Any
 
 import requests
 
-from new.abc import (
-    EndpointFunc,
-    EndpointResponse,
-    PreparedData,
-    RequestInfo,
-    ResponseInfo,
-    SessionInfo,
-    after_run,
-    before_run,
-)
+from new import abc
 
 
 @dataclass
-class RequestsResponseInfo(ResponseInfo[requests.Response]):
+class RequestsResponseInfo(abc.ResponseInfo[requests.Response]):
     def __post_init__(self):
         self.headers = self.response.headers
         self.status_code = self.response.status_code
@@ -38,12 +29,12 @@ def get_cached_session(headers: frozenset[tuple[str, str]]) -> requests.Session:
     return session
 
 
-def get_session_from_session_info(session_info: SessionInfo) -> requests.Session:
+def get_session_from_session_info(session_info: abc.SessionInfo) -> requests.Session:
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
 def run_request(
-    session_info: SessionInfo, request_info: RequestInfo
+    session_info: abc.SessionInfo, request_info: abc.RequestInfo
 ) -> RequestsResponseInfo:
     session = get_session_from_session_info(session_info)
     response = session.request(
@@ -58,14 +49,15 @@ def run_request(
 
 
 def execute(
-    func: EndpointFunc[PreparedData, EndpointResponse], data: PreparedData
-) -> EndpointResponse:
+    func: abc.EndpointFunc[abc.PreparedData, abc.EndpointResponse],
+    data: abc.PreparedData,
+) -> abc.EndpointResponse:
     gen = func(data)
-    session_info, req_info = before_run(func, gen)
+    session_info, req_info = abc.before_run(func, gen)
 
     response_info = run_request(session_info, req_info)
 
-    rerun, parsed_response = after_run(func, gen, response_info)
+    rerun, parsed_response = abc.after_run(func, gen, response_info)
 
     if not rerun:
         assert parsed_response
