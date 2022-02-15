@@ -3,6 +3,7 @@ from typing import Any, TypedDict
 from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_json_decode_error
+from new.exceptions import ProcessingError
 
 
 class CheckoutItem(TypedDict):
@@ -49,7 +50,7 @@ class API(BaseAPI):
             },
         )
         if "resourceId" not in response.json:
-            raise RuntimeError("No id for service area")  # TODO: ProcessingError
+            raise ProcessingError(response, "No id for service area")
         return response.json["resourceId"]
 
     @add_handler(handle_json_decode_error)
@@ -66,7 +67,7 @@ class API(BaseAPI):
         )
 
         if "id" not in response.json:
-            raise RuntimeError("No id for service area")
+            raise ProcessingError(response, "No id for service area")
         return response.json["id"]
 
     @add_handler(handle_json_decode_error)

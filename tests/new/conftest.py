@@ -29,9 +29,9 @@ class MockResponseInfo(ResponseInfo[None]):
 
     @cached_property
     def json(self) -> Any:
-        if self.json_:
-            return self.json_
-        json.loads("")
+        if self.json_ is None:
+            json.loads("")
+        return self.json_
 
 
 class EndpointTester:

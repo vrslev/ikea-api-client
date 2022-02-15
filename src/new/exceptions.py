@@ -38,3 +38,7 @@ class ItemFetchError(APIError):
 
 class WrongItemCodeError(ItemFetchError):
     pass
+
+
+class ProcessingError(APIError):
+    pass
