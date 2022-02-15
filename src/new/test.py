@@ -24,14 +24,14 @@ def ingka_items_api(constants: Constants):
     return ingka_items.API(constants)
 
 
-class EndpointChecker:
+class EndpointTester:
     def __init__(self, gen: Endpoint[EndpointResponse]) -> None:
         self.gen = gen
 
-    def request_info(self):
+    def prepare(self):
         return get_request_info(self.gen)
 
-    def parsed_response(self, response_info: ResponseInfo[Any]):
+    def parse(self, response_info: ResponseInfo[Any]):
         return get_parsed_response(self.gen, response_info)
 
     def assert_json_returned(self):
@@ -39,17 +39,16 @@ class EndpointChecker:
         prop = PropertyMock()
         type(mock).json = prop
 
-        self.parsed_response(mock)
+        self.parse(mock)
         prop.assert_called_once_with()
 
 
-def test_get_items_prepare(ingka_items_api: ingka_items.API):
+def test_get_items(ingka_items_api: ingka_items.API):
     item_codes = ["11111111", "22222222"]
-    gen = ingka_items_api.get_items(item_codes)
-    checker = EndpointChecker(gen)
+    c = EndpointTester(ingka_items_api.get_items(item_codes))
 
-    request_info = checker.request_info()
+    request_info = c.prepare()
     assert request_info.method == "GET"
     assert request_info.params == {"itemNos": item_codes}
 
-    checker.assert_json_returned()
+    c.assert_json_returned()
