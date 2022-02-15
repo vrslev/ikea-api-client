@@ -6,7 +6,6 @@ import pytest
 from new.abc import (
     Endpoint,
     EndpointResponse,
-    PreparedData,
     ResponseInfo,
     get_parsed_response,
     get_request_info,
@@ -26,7 +25,7 @@ def ingka_items_api(constants: Constants):
 
 
 class EndpointChecker:
-    def __init__(self, gen: Endpoint[PreparedData, EndpointResponse]) -> None:
+    def __init__(self, gen: Endpoint[EndpointResponse]) -> None:
         self.gen = gen
 
     def request_info(self):
@@ -46,8 +45,7 @@ class EndpointChecker:
 
 def test_get_items_prepare(ingka_items_api: ingka_items.API):
     item_codes = ["11111111", "22222222"]
-    data = ingka_items.Data(item_codes)
-    gen = ingka_items_api.get_items(data)
+    gen = ingka_items_api.get_items(item_codes)
     checker = EndpointChecker(gen)
 
     request_info = checker.request_info()

@@ -1,15 +1,22 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Any, Callable, Generator, Generic, Literal, TypeVar, cast
+from typing import (
+    Any,
+    Callable,
+    Concatenate,
+    Generator,
+    Generic,
+    Literal,
+    ParamSpec,
+    TypeVar,
+)
 
 from requests.structures import CaseInsensitiveDict
 
 from new.constants import Constants, extend_default_headers
 
-PreparedData = TypeVar("PreparedData")
 LibResponse = TypeVar("LibResponse")
-EndpointResponse = TypeVar("EndpointResponse")
 
 
 @dataclass
@@ -39,9 +46,12 @@ class ResponseInfo(ABC, Generic[LibResponse]):
         ...
 
 
-@dataclass
-class Rerun(Generic[PreparedData]):
-    data: PreparedData
+EndpointResponse = TypeVar("EndpointResponse")
+Endpoint = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
+
+EndpointParams = ParamSpec("EndpointParams")
+EndpointMethod = Callable[EndpointParams, Endpoint[EndpointResponse]]
+EndpointFunc = Callable[Concatenate[EndpointParams], Endpoint[EndpointResponse]]
 
 
 @dataclass
@@ -66,27 +76,13 @@ class BaseAPI(ABC):
         pass
 
 
-Endpoint = Generator[
-    RequestInfo, ResponseInfo[Any], Rerun[PreparedData] | EndpointResponse
-]
-EndpointInstMethod = Callable[
-    [Any, PreparedData], Endpoint[PreparedData, EndpointResponse]
-]
-EndpointFunc = Callable[[PreparedData], Endpoint[PreparedData, EndpointResponse]]
 ErrorHandler = Callable[[ResponseInfo[Any]], None]
-Executor = Callable[[SessionInfo, RequestInfo], ResponseInfo[Any]]
-
-
-def endpoint(
-    func: EndpointInstMethod[PreparedData, EndpointResponse]
-) -> EndpointInstMethod[PreparedData, EndpointResponse]:
-    return func
 
 
 def add_handler(handler: ErrorHandler):
     def decorator(
-        func: EndpointInstMethod[PreparedData, EndpointResponse]
-    ) -> EndpointInstMethod[PreparedData, EndpointResponse]:
+        func: EndpointMethod[EndpointParams, EndpointResponse]
+    ) -> EndpointMethod[EndpointParams, EndpointResponse]:
         if not getattr(func, "error_handlers", None):
             func.error_handlers: list[ErrorHandler] = []  # type: ignore
         func.error_handlers.append(handler)  # type: ignore
@@ -95,13 +91,12 @@ def add_handler(handler: ErrorHandler):
     return decorator
 
 
-def get_request_info(gen: Endpoint[Any, Any]) -> RequestInfo:
+def get_request_info(gen: Endpoint[Any]) -> RequestInfo:
     return next(gen)
 
 
 def get_parsed_response(
-    gen: Endpoint[Any, EndpointResponse],
-    response_info: ResponseInfo[Any],
+    gen: Endpoint[EndpointResponse], response_info: ResponseInfo[Any]
 ) -> EndpointResponse:
     try:
         gen.send(response_info)
@@ -111,11 +106,16 @@ def get_parsed_response(
         raise Exception
 
 
-def before_run(
-    func: EndpointFunc[PreparedData, EndpointResponse],
-    gen: Endpoint[PreparedData, EndpointResponse],
-) -> tuple[SessionInfo, RequestInfo]:
-    session_info = cast(SessionInfo, func.__self__.session_info)  # type: ignore
+def get_instance_from_gen(gen: Endpoint[Any]) -> BaseAPI:
+    return gen.gi_frame.f_locals["self"]
+
+
+def get_func_from_gen(gen: Endpoint[EndpointResponse]) -> Callable[..., Any]:
+    return getattr(get_instance_from_gen(gen), gen.gi_code.co_name)
+
+
+def before_run(gen: Endpoint[Any]) -> tuple[SessionInfo, RequestInfo]:
+    session_info = get_instance_from_gen(gen).session_info
 
     req_info = get_request_info(gen)
     req_info.url = session_info.base_url + req_info.url
@@ -124,16 +124,10 @@ def before_run(
 
 
 def after_run(
-    func: EndpointFunc[PreparedData, EndpointResponse],
-    gen: Endpoint[PreparedData, EndpointResponse],
-    response_info: ResponseInfo[Any],
-) -> tuple[Rerun[PreparedData], None] | tuple[None, EndpointResponse]:
+    gen: Endpoint[EndpointResponse], response_info: ResponseInfo[Any]
+) -> EndpointResponse:
+    func = get_func_from_gen(gen)
     for handler in getattr(func, "error_handlers", ()):
         handler(response_info)
 
-    parsed_response = get_parsed_response(gen, response_info)
-
-    if isinstance(parsed_response, Rerun):
-        return cast(Rerun[PreparedData], parsed_response), None
-
-    return None, parsed_response
+    return get_parsed_response(gen, response_info)
