@@ -5,13 +5,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from new.abc import (
-    Endpoint,
-    EndpointResponse,
-    ResponseInfo,
-    get_parsed_response,
-    get_request_info,
-)
+from new.abc import Endpoint, ResponseInfo, get_parsed_response, get_request_info
 from new.constants import Constants
 
 
@@ -40,7 +34,7 @@ class MockResponseInfo(ResponseInfo[None]):
 
 
 class EndpointTester:
-    def __init__(self, gen: Endpoint[EndpointResponse]) -> None:
+    def __init__(self, gen: Endpoint[Any]) -> None:
         self.gen = gen
 
     def prepare(self):
