@@ -111,7 +111,7 @@ def get_name(item: Union[ChildItem, ResponseIowsItem]):
     )
 
 
-def get_image_url(images: List[Image]) -> Optional[str]:
+def get_image_url(constants: Constants, images: List[Image]) -> Optional[str]:
     # Filter images first in case no image with S5 size found
     images = [
         i
@@ -125,8 +125,8 @@ def get_image_url(images: List[Image]) -> Optional[str]:
 
     for image in images:
         if image.ImageSize == "S5":
-            return Constants.BASE_URL + image.ImageUrl  # type: ignore
-    return Constants.BASE_URL + images[0].ImageUrl  # type: ignore
+            return constants.base_url + image.ImageUrl  # type: ignore
+    return constants.base_url + images[0].ImageUrl  # type: ignore
 
 
 def parse_weight(v: str):
@@ -230,7 +230,7 @@ def main(constants: Constants, response: Dict[str, Any]):
         is_combination=is_combination,
         item_code=item.ItemNo,
         name=get_name(item),
-        image_url=get_image_url(item.RetailItemImageList.RetailItemImage),
+        image_url=get_image_url(constants, item.RetailItemImageList.RetailItemImage),
         weight=weight,
         child_items=get_child_items(child_items),
         price=get_price(item.RetailItemCommPriceList.RetailItemCommPrice),

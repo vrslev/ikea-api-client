@@ -10,7 +10,7 @@ from new.abc import Endpoint, EndpointResponse, ResponseInfo, before_run
 from new.constants import Constants
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def constants():
     return Constants()
 

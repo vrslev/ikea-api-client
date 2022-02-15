@@ -2,8 +2,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from ikea_api._api import GraphQLResponse
-
 
 def get_files_in_directory(dirname: str):
     return (Path(__file__).parent / "data" / dirname).glob("*")
@@ -29,8 +27,6 @@ class TestData:
     item_pip = get_all_data_files_in_directory("item_pip")
     order_capture_home = get_all_data_files_in_directory("order_capture/home")
     order_capture_collect = get_all_data_files_in_directory("order_capture/collect")
-    purchases_status_banner: GraphQLResponse = get_data_file(
-        "purchases/status_banner.json"
-    )
-    purchases_costs: GraphQLResponse = get_data_file("purchases/costs.json")
-    purchases_history: GraphQLResponse = get_data_file("purchases/history.json")
+    purchases_status_banner = get_data_file("purchases/status_banner.json")
+    purchases_costs = get_data_file("purchases/costs.json")
+    purchases_history = get_data_file("purchases/history.json")
