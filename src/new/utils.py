@@ -5,7 +5,9 @@ import re
 import requests
 
 
-def _get_unshortened_links_from_ingka_pagelinks(message: str):
+def _get_unshortened_links_from_ingka_pagelinks(
+    message: str,
+):  # TODO: requests agnostic?
     session = requests.Session()
     base_url = "https://ingka.page.link/"
 
