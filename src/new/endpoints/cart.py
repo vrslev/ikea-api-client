@@ -1,7 +1,8 @@
 from typing import Any, TypedDict
 
-from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo
+from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
+from new.error_handlers import handle_401, handle_graphql_error
 
 CartEndpoint = Endpoint[dict[str, Any]]
 
@@ -28,6 +29,8 @@ class API(BaseAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
+    @add_handler(handle_graphql_error)
+    @add_handler(handle_401)
     def _req(self, query: str, **variables: Any) -> CartEndpoint:
         payload = {
             "query": query,
