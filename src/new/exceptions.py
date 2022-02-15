@@ -30,3 +30,11 @@ class GraphQLError(APIError):
                 self.errors.extend(chunk["errors"])
 
         super().__init__(response, self.errors)
+
+
+class ItemFetchError(APIError):
+    pass
+
+
+class WrongItemCodeError(ItemFetchError):
+    pass
