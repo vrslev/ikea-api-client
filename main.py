@@ -1,7 +1,8 @@
+from ikea_api._endpoints.auth import get_guest_token
 from new.constants import Constants
 from new.core import run
-from new.endpoints import pip_item
+from new.endpoints import cart
 
-api = pip_item.API(Constants())
-res = run(api.get_item("89128566"))
-print(res)
+token = get_guest_token()
+endp = cart.API(Constants(), token=token).show()
+print(run(endp))
