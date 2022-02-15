@@ -18,14 +18,13 @@ class API(abc.BaseAPI):
         return abc.SessionInfo(base_url=url, headers=headers)
 
     def get_item(
-        self, item_code: str, is_combination: bool = False
+        self, item_code: str, is_combination: bool = True
     ) -> abc.Endpoint[dict[str, Any]]:
         request_info = abc.RequestInfo("GET", _build_url(item_code, is_combination))
         response_info = yield request_info
-        if response_info.status_code == 404 and not is_combination:
+        if response_info.status_code == 404 and is_combination:
             if not is_combination:
-                yield from self.get_item(item_code=item_code, is_combination=True)
+                yield from self.get_item(item_code=item_code, is_combination=False)
 
-            handle_json_decode_error(response_info)
-
+        handle_json_decode_error(response_info)
         return response_info.json
