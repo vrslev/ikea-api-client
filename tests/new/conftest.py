@@ -25,7 +25,7 @@ class MockResponseInfo(ResponseInfo[None]):
 
     @cached_property
     def text(self) -> str:
-        return self.text_ or ""
+        return self.text_ or self.json_ or ""
 
     @cached_property
     def json(self) -> Any:
@@ -43,7 +43,9 @@ class EndpointTester:
     def prepare(self):
         if not self.next_request:
             raise RuntimeError("All done!")
-        return self.next_request
+        req = self.next_request
+        self.next_request = None
+        return req
 
     def parse(self, response_info: ResponseInfo[Any]):
         try:

@@ -38,9 +38,15 @@ class API(BaseAPI):
 
             item_code = list(self.items.keys())[0]
             self.items[item_code] = not self.items[item_code]
+            return
+
+        if not response.text:
+            return
 
         if "ErrorList" not in response.json or relapse == 2:
-            return response.json
+            if "RetailItemCommList" in response.json:
+                return response.json["RetailItemCommList"]["RetailItemComm"]
+            return [response.json["RetailItemComm"]]
 
         errors: list[dict[str, Any]] | dict[str, Any] = response.json["ErrorList"][
             "Error"
@@ -72,4 +78,4 @@ class API(BaseAPI):
             if data is not None:
                 return data
 
-        return data  # type: ignore
+        raise NotImplementedError
