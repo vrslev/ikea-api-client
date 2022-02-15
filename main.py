@@ -1,6 +1,6 @@
 from ikea_api._endpoints.auth import get_guest_token
+from new import run
 from new.constants import Constants
-from new.core import run
 from new.endpoints import cart, order_capture
 
 token = get_guest_token()
