@@ -20,9 +20,7 @@ class API(abc.BaseAPI):
     def get_item(
         self, item_code: str, is_combination: bool = False
     ) -> abc.Endpoint[dict[str, Any]]:
-        request_info = abc.RequestInfo(
-            method="GET", url=_build_url(item_code, is_combination)
-        )
+        request_info = abc.RequestInfo("GET", _build_url(item_code, is_combination))
         response_info = yield request_info
         if response_info.status_code == 404 and not is_combination:
             if not is_combination:

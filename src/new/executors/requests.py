@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from functools import cached_property, lru_cache
-from typing import Any
-
-import requests
+from typing import TYPE_CHECKING, Any
 
 from new.abc import (
     Endpoint,
@@ -14,9 +12,12 @@ from new.abc import (
     before_run,
 )
 
+if TYPE_CHECKING:
+    import requests
+
 
 @dataclass
-class RequestsResponseInfo(ResponseInfo[requests.Response]):
+class RequestsResponseInfo(ResponseInfo["requests.Response"]):
     def __post_init__(self):
         self.headers = self.response.headers
         self.status_code = self.response.status_code
@@ -31,20 +32,22 @@ class RequestsResponseInfo(ResponseInfo[requests.Response]):
 
 
 @lru_cache
-def get_cached_session(headers: frozenset[tuple[str, str]]) -> requests.Session:
+def get_cached_session(headers: frozenset[tuple[str, str]]) -> "requests.Session":
+    import requests
+
     session = requests.Session()
     session.headers.update(headers)
     return session
 
 
-def get_session_from_session_info(session_info: SessionInfo) -> requests.Session:
+def get_session_from_info(session_info: SessionInfo) -> "requests.Session":
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-def run_request(
+def run_req(
     session_info: SessionInfo, request_info: RequestInfo
 ) -> RequestsResponseInfo:
-    session = get_session_from_session_info(session_info)
+    session = get_session_from_info(session_info)
     response = session.request(
         method=request_info.method,
         url=request_info.url,
@@ -58,5 +61,5 @@ def run_request(
 
 def execute(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
     session_info, req_info = before_run(gen)
-    response_info = run_request(session_info, req_info)
+    response_info = run_req(session_info, req_info)
     return after_run(gen, response_info)

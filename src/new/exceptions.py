@@ -10,7 +10,7 @@ class IKEAAPIError(Exception):
 
     response: ResponseInfo[Any]
 
-    def __init__(self, response: ResponseInfo[Any], msg: Any = None):
+    def __init__(self, response: ResponseInfo[Any], msg: Any = None) -> None:
         self.response = response
         if msg is None:
             msg = (response.status_code, response.text)

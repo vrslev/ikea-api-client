@@ -13,17 +13,8 @@ class Constants:
     country: str = "ru"
 
 
-class Secrets:
-    item_iows_consumer = "MAMMUT#ShoppingCart"
-    item_iows_contract = "37249"
-    auth_guest_token_x_client_id = "e026b58d-dd69-425f-a67f-1e9a5087b87b"  # nosec
-    auth_guest_token_x_client_secret = (  # nosec
-        "cP0vA4hJ4gD8kO3vX3fP2nE6xT7pT3oH0gC5gX6yB4cY7oR5mB"
-    )
-
-
 @lru_cache
-def get_default_headers(constants: Constants):
+def get_default_headers(constants: Constants) -> dict[str, str]:
     return {
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": constants.language,
@@ -34,11 +25,13 @@ def get_default_headers(constants: Constants):
     }
 
 
-def extend_default_headers(headers: dict[str, str], constants: Constants):
+def extend_default_headers(
+    headers: dict[str, str], constants: Constants
+) -> dict[str, str]:
     res = get_default_headers(constants)
     res.update(headers)
     return res
 
 
-def get_headers_with_token(token: str):
+def get_headers_with_token(token: str) -> dict[str, str]:
     return {"Authorization": "Bearer " + token}
