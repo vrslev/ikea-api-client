@@ -7,7 +7,7 @@ import pytest
 
 from new.constants import Constants
 from new.wrappers import types
-from new.wrappers.parsers.item_iows import (
+from new.wrappers.parsers.iows_items import (
     Catalog,
     CatalogElement,
     CatalogElementList,

@@ -5,7 +5,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
-from new.wrappers.parsers.item_pip import (
+from new.wrappers.parsers.pip_item import (
     Catalog,
     CatalogRef,
     CatalogRefs,

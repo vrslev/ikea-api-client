@@ -142,7 +142,7 @@ def _get_iows_items(constants: Constants, item_codes: list[str]):
         except ItemFetchError as exc:
             if "Wrong Item Code" not in exc.args[0]:
                 raise
-    return [parsers.item_iows.main(constants=constants, response=r) for r in responses]
+    return [parsers.iows_items.main(constants=constants, response=r) for r in responses]
 
 
 def _get_ingka_items(constants: Constants, item_codes: list[str]):
@@ -152,14 +152,14 @@ def _get_ingka_items(constants: Constants, item_codes: list[str]):
         responses.append(fetcher.get_items(item_codes_chunk))
     res: list[types.IngkaItem] = []
     for resp in responses:
-        res += parsers.item_ingka.main(constants=constants, response=resp)
+        res += parsers.ingka_items.main(constants=constants, response=resp)
     return res
 
 
 def _get_pip_items(constants: Constants, item_codes: list[str]):
     fetcher = pip_item.API(constants)
     responses = (run(fetcher.get_item(i)) for i in item_codes)  # TODO: Httpx
-    return [parsers.item_pip.main(r) for r in responses]
+    return [parsers.pip_item.main(r) for r in responses]
 
 
 def _get_pip_items_map(items: list[types.PipItem | None]):

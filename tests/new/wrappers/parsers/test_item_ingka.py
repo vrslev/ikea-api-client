@@ -6,7 +6,7 @@ from typing import Any
 import pytest
 
 from new.exceptions import ParsingError
-from new.wrappers.parsers.item_ingka import (
+from new.wrappers.parsers.ingka_items import (
     Constants,
     _parse_russian_product_name,
     get_child_items,
