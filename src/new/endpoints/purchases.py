@@ -198,6 +198,7 @@ class Fragments:
         ...TaxRate
         }}
     }}
+
     {}
     {}
     """.format(
