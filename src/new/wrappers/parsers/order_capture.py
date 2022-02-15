@@ -85,10 +85,14 @@ def get_date(deliveries: list[HomeDelivery] | None):
             return delivery.timeWindows.earliestPossibleSlot.fromDateTime
 
 
-def get_type(service: HomeDeliveryService | CollectDeliveryService):
-    delivery_type = translate_from_dict(DELIVERY_TYPES, service.fulfillmentMethodType)
+def get_type(
+    constants: Constants, service: HomeDeliveryService | CollectDeliveryService
+):
+    delivery_type = translate_from_dict(
+        constants, DELIVERY_TYPES, service.fulfillmentMethodType
+    )
     if service.solution:
-        service_type = translate_from_dict(SERVICE_TYPES, service.solution)
+        service_type = translate_from_dict(constants, SERVICE_TYPES, service.solution)
         if service_type:
             return f"{delivery_type} {service_type}"
     return delivery_type
@@ -142,7 +146,7 @@ class HomeDeliveryServicesResponse(BaseModel):
     possibleDeliveryServices: Optional[HomePossibleDeliveryServices]
 
 
-def parse_home_delivery_services(response: dict[str, Any]):
+def parse_home_delivery_services(constants: Constants, response: dict[str, Any]):
     parsed_response = HomeDeliveryServicesResponse(**response)
 
     res: list[types.DeliveryService] = []
@@ -163,7 +167,7 @@ def parse_home_delivery_services(response: dict[str, Any]):
             types.DeliveryService(
                 is_available=is_available,
                 date=get_date(service.possibleDeliveries.deliveries),
-                type=get_type(service),
+                type=get_type(constants, service),
                 price=get_price(service),
                 service_provider=None,
                 unavailable_items=unavailable_items,
@@ -233,7 +237,7 @@ def parse_collect_delivery_services(constants: Constants, response: dict[str, An
         if not service.possibleDeliveries:
             continue
 
-        type_ = get_type(service)
+        type_ = get_type(constants, service)
         price = get_price(service)
         unavailable_items = get_unavailable_items(service)
 
@@ -271,5 +275,5 @@ def main(
     collect_delivery_services_response: dict[str, Any],
 ) -> list[types.DeliveryService]:
     return parse_home_delivery_services(
-        home_delivery_services_response
+        constants, home_delivery_services_response
     ) + parse_collect_delivery_services(constants, collect_delivery_services_response)

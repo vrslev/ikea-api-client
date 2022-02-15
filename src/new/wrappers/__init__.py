@@ -38,7 +38,7 @@ def get_purchase_history(
     constants: Constants, token: str
 ) -> list[types.PurchaseHistoryItem]:
     response = run(purchases.API(constants, token=token).history())
-    return parsers.purchases.parse_history(response)
+    return parsers.purchases.parse_history(constants, response)
 
 
 def get_purchase_info(

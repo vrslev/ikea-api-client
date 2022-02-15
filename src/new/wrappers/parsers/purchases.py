@@ -5,6 +5,7 @@ from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
+from new.constants import Constants
 from new.wrappers import types
 from new.wrappers.parsers.utils import translate_from_dict
 
@@ -107,7 +108,7 @@ def get_history_datetime(item: HistoryItem):
     return f"{item.dateAndTime.date}T{item.dateAndTime.time}"
 
 
-def parse_history(response: dict[str, Any]):
+def parse_history(constants: Constants, response: dict[str, Any]):
     history = ResponseHistory(**response)
     return [
         types.PurchaseHistoryItem(
@@ -116,7 +117,7 @@ def parse_history(response: dict[str, Any]):
             price=i.totalCost.value or 0,
             datetime=get_history_datetime(i),
             datetime_formatted=i.dateAndTime.formattedLongDateTime,
-            store=translate_from_dict(STORE_NAMES, i.storeName),
+            store=translate_from_dict(constants, STORE_NAMES, i.storeName),
         )
         for i in history.data.history
     ]
