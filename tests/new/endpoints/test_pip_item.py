@@ -48,5 +48,5 @@ def test_pip_item_retry(pip_item: API):
     t = EndpointTester(pip_item.get_item(item_code, is_combination))
     t.prepare()
 
-    with pytest.raises(APIError):
-        t.parse(MockResponseInfo(status_code=404))
+    t.parse(MockResponseInfo(status_code=404))
+    assert t.parse(MockResponseInfo(json_="ok")) == "ok"
