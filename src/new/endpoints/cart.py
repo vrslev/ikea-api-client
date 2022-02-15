@@ -15,7 +15,7 @@ class TemplatedItem(TypedDict):
 class API(BaseAPI):
     token: str
 
-    def __init__(self, constants: Constants, *, token: str):
+    def __init__(self, constants: Constants, *, token: str) -> None:
         self.token = token
         super().__init__(constants)
 

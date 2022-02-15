@@ -64,11 +64,11 @@ class BaseAPI(ABC):
     const: Constants
     session_info: SessionInfo
 
-    def __init__(self, constants: Constants):
+    def __init__(self, constants: Constants) -> None:
         self.const = constants
         self.session_info = self.get_session_info()
 
-    def extend_default_headers(self, headers: dict[str, str]):
+    def extend_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
         return extend_default_headers(headers=headers, constants=self.const)
 
     @abstractmethod
