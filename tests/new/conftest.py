@@ -1,3 +1,5 @@
+from dataclasses import dataclass, field
+from functools import cached_property
 from typing import Any
 from unittest.mock import MagicMock, PropertyMock
 
@@ -16,6 +18,25 @@ from new.constants import Constants
 @pytest.fixture
 def constants():
     return Constants()
+
+
+@dataclass
+class MockResponseInfo(ResponseInfo[None]):
+    headers: dict[str, str] = field(default_factory=dict)
+    status_code: int = 200
+    text_: str | None = None
+    json_: Any | None = None
+    response: None = field(init=False)
+
+    @cached_property
+    def text(self) -> str:
+        assert self.text_
+        return self.text_
+
+    @cached_property
+    def json(self) -> Any:
+        assert self.json_
+        return self.json_
 
 
 class EndpointTester:

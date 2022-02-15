@@ -8,11 +8,10 @@ from typing import (
     Generator,
     Generic,
     Literal,
+    Mapping,
     ParamSpec,
     TypeVar,
 )
-
-from requests.structures import CaseInsensitiveDict
 
 from new.constants import Constants, extend_default_headers
 
@@ -32,7 +31,7 @@ class RequestInfo:
 @dataclass
 class ResponseInfo(ABC, Generic[LibResponse]):
     response: LibResponse
-    headers: CaseInsensitiveDict[str] = field(init=False)
+    headers: Mapping[str, str] = field(init=False)
     status_code: int = field(init=False)
 
     @cached_property
