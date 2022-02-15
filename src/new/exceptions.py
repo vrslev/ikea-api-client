@@ -42,3 +42,7 @@ class WrongItemCodeError(ItemFetchError):
 
 class ProcessingError(APIError):
     pass
+
+
+class ParsingError(Exception):
+    pass

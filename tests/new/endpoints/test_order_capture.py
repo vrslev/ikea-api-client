@@ -20,7 +20,7 @@ def order_capture(constants: Constants):
 @pytest.mark.parametrize("fail", (True, False))
 def test_get_checkout(order_capture: API, fail: bool):
     items = [CheckoutItem(itemNo="11111111", quantity=1, uom="PIECE")]
-    t = EndpointTester(order_capture._get_checkout(items))
+    t = EndpointTester(order_capture.get_checkout(items))
 
     req = t.prepare()
     assert req.method == "POST"
@@ -45,7 +45,7 @@ def test_get_service_area_prepare(order_capture: API, state_code: str | None):
     checkout_id = "mycheckout"
     zip_code = "101000"
     t = EndpointTester(
-        order_capture._get_service_area(checkout_id, zip_code, state_code)
+        order_capture.get_service_area(checkout_id, zip_code, state_code)
     )
 
     req = t.prepare()
@@ -60,7 +60,7 @@ def test_get_service_area_prepare(order_capture: API, state_code: str | None):
 
 @pytest.mark.parametrize("fail", (True, False))
 def test_get_service_area_parse(order_capture: API, fail: bool):
-    t = EndpointTester(order_capture._get_service_area("", ""))
+    t = EndpointTester(order_capture.get_service_area("", ""))
 
     if fail:
         with pytest.raises(ProcessingError):

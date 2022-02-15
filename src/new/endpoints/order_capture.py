@@ -32,7 +32,7 @@ class API(BaseAPI):
 
     @add_handler(handle_json_decode_error)
     @add_handler(handle_401)
-    def _get_checkout(self, items: list[CheckoutItem]) -> Endpoint[str]:
+    def get_checkout(self, items: list[CheckoutItem]) -> Endpoint[str]:
         """Generate checkout for items"""
         response = yield RequestInfo(
             "POST",
@@ -55,7 +55,7 @@ class API(BaseAPI):
 
     @add_handler(handle_json_decode_error)
     @add_handler(handle_401)
-    def _get_service_area(
+    def get_service_area(
         self, checkout_id: str, zip_code: str, state_code: str | None = None
     ) -> Endpoint[str]:
         """Generate delivery area for checkout from Zip Code and State Code"""
