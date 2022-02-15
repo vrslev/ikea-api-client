@@ -11,9 +11,7 @@ def _build_url(item_code: str, is_combination: bool):
 
 class API(abc.BaseAPI):
     def get_session_info(self) -> abc.SessionInfo:
-        url = (
-            f"{self.const.base_url}/{self.const.country}/{self.const.language}/products"
-        )
+        url = f"{self.const.local_base_url}/products"
         headers = self.extend_default_headers({"Accept": "*/*"})
         return abc.SessionInfo(base_url=url, headers=headers)
 

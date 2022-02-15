@@ -77,12 +77,11 @@ class BaseAPI(ABC):
 
 
 ErrorHandler = Callable[[ResponseInfo[Any]], None]
+T = TypeVar("T")
 
 
 def add_handler(handler: ErrorHandler):
-    def decorator(
-        func: EndpointMethod[EndpointParams, EndpointResponse]
-    ) -> EndpointMethod[EndpointParams, EndpointResponse]:
+    def decorator(func: T) -> T:
         if not getattr(func, "error_handlers", None):
             func.error_handlers: list[ErrorHandler] = []  # type: ignore
         func.error_handlers.append(handler)  # type: ignore

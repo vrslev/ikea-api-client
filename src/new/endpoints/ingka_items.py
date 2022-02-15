@@ -9,7 +9,7 @@ class API(abc.BaseAPI):
         headers = self.extend_default_headers(
             {
                 "Accept": "*/*",
-                "Referer": f"{self.const.base_url}/{self.const.country}/{self.const.language}/order/delivery/",
+                "Referer": f"{self.const.local_base_url}/order/delivery/",
                 "X-Client-Id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",
             }
         )

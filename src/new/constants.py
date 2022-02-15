@@ -12,6 +12,10 @@ class Constants:
     language: str = "ru"
     country: str = "ru"
 
+    @property
+    def local_base_url(self):
+        return f"{self.base_url}/{self.country}/{self.language}"
+
 
 @lru_cache
 def get_default_headers(constants: Constants) -> dict[str, str]:
