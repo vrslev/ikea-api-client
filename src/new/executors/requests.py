@@ -44,13 +44,13 @@ def get_session_from_info(session_info: SessionInfo) -> "requests.Session":
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-def run_req(
+def run_request(
     session_info: SessionInfo, request_info: RequestInfo
 ) -> RequestsResponseInfo:
     session = get_session_from_info(session_info)
     response = session.request(
         method=request_info.method,
-        url=request_info.url,
+        url=session_info.base_url + request_info.url,
         params=request_info.params,
         data=request_info.data,
         json=request_info.json,
@@ -61,5 +61,10 @@ def run_req(
 
 def execute(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
     session_info, req_info = before_run(gen)
-    response_info = run_req(session_info, req_info)
-    return after_run(gen, response_info)
+
+    while True:
+        try:
+            response_info = run_request(session_info, req_info)
+            req_info = after_run(gen, response_info)
+        except StopIteration as exc:
+            return exc.value

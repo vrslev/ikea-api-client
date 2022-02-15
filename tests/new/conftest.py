@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass, field
 from functools import cached_property
 from typing import Any
@@ -5,7 +6,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from new.abc import Endpoint, ResponseInfo, get_parsed_response, get_request_info
+from new.abc import Endpoint, EndpointResponse, ResponseInfo, before_run
 from new.constants import Constants
 
 
@@ -19,29 +20,36 @@ class MockResponseInfo(ResponseInfo[None]):
     headers: dict[str, str] = field(default_factory=dict)
     status_code: int = 200
     text_: str | None = None
-    json_: Any | None = None
-    response: None = field(init=False)
+    json_: Any = None
+    response: None = field(default=None, init=False)
 
     @cached_property
     def text(self) -> str:
-        assert self.text_
-        return self.text_
+        return self.text_ or ""
 
     @cached_property
     def json(self) -> Any:
-        assert self.json_
-        return self.json_
+        if self.json_:
+            return self.json_
+        json.loads("")
 
 
 class EndpointTester:
-    def __init__(self, gen: Endpoint[Any]) -> None:
+    def __init__(self, gen: Endpoint[EndpointResponse]) -> None:
         self.gen = gen
+        self.session, self.next_request = before_run(gen)
+        self.response = None
 
     def prepare(self):
-        return get_request_info(self.gen)
+        if not self.next_request:
+            raise RuntimeError("All done!")
+        return self.next_request
 
     def parse(self, response_info: ResponseInfo[Any]):
-        return get_parsed_response(self.gen, response_info)
+        try:
+            self.next_request = self.gen.send(response_info)
+        except StopIteration as exc:
+            return exc.value
 
     def assert_json_returned(self):
         mock = MagicMock()

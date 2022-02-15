@@ -93,39 +93,24 @@ def get_request_info(gen: Endpoint[Any]) -> RequestInfo:
     return next(gen)
 
 
-def get_parsed_response(
-    gen: Endpoint[EndpointResponse], response_info: ResponseInfo[Any]
-) -> EndpointResponse:
-    try:
-        gen.send(response_info)
-    except StopIteration as exc:
-        return exc.value
-    else:
-        raise Exception
-
-
 def get_instance_from_gen(gen: Endpoint[Any]) -> BaseAPI:
     return gen.gi_frame.f_locals["self"]
+
+
+def before_run(gen: Endpoint[Any]) -> tuple[SessionInfo, RequestInfo]:
+    session_info = get_instance_from_gen(gen).session_info
+    return session_info, next(gen)
 
 
 def get_func_from_gen(gen: Endpoint[EndpointResponse]) -> Callable[..., Any]:
     return getattr(get_instance_from_gen(gen), gen.gi_code.co_name)
 
 
-def before_run(gen: Endpoint[Any]) -> tuple[SessionInfo, RequestInfo]:
-    session_info = get_instance_from_gen(gen).session_info
-
-    req_info = get_request_info(gen)
-    req_info.url = session_info.base_url + req_info.url
-
-    return session_info, req_info
-
-
 def after_run(
     gen: Endpoint[EndpointResponse], response_info: ResponseInfo[Any]
-) -> EndpointResponse:
+) -> RequestInfo:
     func = get_func_from_gen(gen)
     for handler in getattr(func, "error_handlers", ()):
         handler(response_info)
 
-    return get_parsed_response(gen, response_info)
+    return gen.send(response_info)
