@@ -2,14 +2,13 @@ from dataclasses import dataclass
 from functools import cached_property, lru_cache
 from typing import TYPE_CHECKING, Any
 
-from new.abc import (
+from new.abc import (  # after_run,; before_run,
     Endpoint,
     EndpointResponse,
     RequestInfo,
     ResponseInfo,
     SessionInfo,
-    after_run,
-    before_run,
+    SyncExecutor,
 )
 
 if TYPE_CHECKING:
@@ -44,27 +43,49 @@ def get_session_from_info(session_info: SessionInfo) -> "requests.Session":
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-def run_request(
-    session_info: SessionInfo, request_info: RequestInfo
-) -> RequestsResponseInfo:
-    session = get_session_from_info(session_info)
-    response = session.request(
-        method=request_info.method,
-        url=session_info.base_url + request_info.url,
-        params=request_info.params,
-        data=request_info.data,
-        json=request_info.json,
-        headers=request_info.headers,
-    )
-    return RequestsResponseInfo(response)
+class RequestsExecutor(SyncExecutor["requests.Response"]):
+    @staticmethod
+    def request(
+        session_info: SessionInfo, request_info: RequestInfo
+    ) -> ResponseInfo["requests.Response"]:
+        print("requesting")
+        session = get_session_from_info(session_info)
+        response = session.request(
+            method=request_info.method,
+            url=session_info.base_url + request_info.url,
+            params=request_info.params,
+            data=request_info.data,
+            json=request_info.json,
+            headers=request_info.headers,
+        )
+        return RequestsResponseInfo(response)
 
 
-def execute(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
-    session_info, req_info = before_run(gen)
+def run(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
+    return RequestsExecutor.run(gen)
 
-    while True:
-        try:
-            response_info = run_request(session_info, req_info)
-            req_info = after_run(gen, response_info)
-        except StopIteration as exc:
-            return exc.value
+
+# def run_request(
+#     session_info: SessionInfo, request_info: RequestInfo
+# ) -> RequestsResponseInfo:
+#     session = get_session_from_info(session_info)
+#     response = session.request(
+#         method=request_info.method,
+#         url=session_info.base_url + request_info.url,
+#         params=request_info.params,
+#         data=request_info.data,
+#         json=request_info.json,
+#         headers=request_info.headers,
+#     )
+#     return RequestsResponseInfo(response)
+
+
+# def execute(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
+#     session_info, req_info = before_run(gen)
+
+#     while True:
+#         try:
+#             response_info = run_request(session_info, req_info)
+#             req_info = after_run(gen, response_info)
+#         except StopIteration as exc:
+#             return exc.value

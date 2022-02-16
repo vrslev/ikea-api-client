@@ -21,7 +21,7 @@ from new.endpoints import (
     purchases,
 )
 from new.exceptions import GraphQLError, ItemFetchError
-from new.executors.requests import execute as run
+from new.executors.requests import run
 from new.utils import parse_item_codes
 from new.wrappers import parsers, types
 

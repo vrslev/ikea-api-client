@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, Endpoint, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_graphql_error
 
@@ -36,7 +36,7 @@ class API(BaseAPI):
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
         payload = _build_payload("History", Queries.history, take=take, skip=skip)
-        response = yield RequestInfo("POST", "", json=payload)
+        response = yield self.RequestInfo("POST", "", json=payload)
         return response.json
 
     @add_handler(handle_graphql_error)
@@ -102,7 +102,7 @@ class API(BaseAPI):
         else:
             headers = {"Referer": f"https://order.ikea.com/{order_number}/"}
 
-        response = yield RequestInfo("POST", "", json=payload, headers=headers)
+        response = yield self.RequestInfo("POST", "", json=payload, headers=headers)
         return response.json
 
 
