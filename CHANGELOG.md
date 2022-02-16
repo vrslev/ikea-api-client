@@ -3,6 +3,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.0 (2022-02-16)
+### Feature
+* Add stock ingka endpoint ([#92](https://github.com/vrslev/ikea-api-client/issues/92)) ([`445fd69`](https://github.com/vrslev/ikea-api-client/commit/445fd69fa995c46483c445987a39c959f92c9d80))
+
+### Chore
+* **deps:** Update pytest requirement from 7.0.0 to 7.0.1 ([#93](https://github.com/vrslev/ikea-api-client/issues/93)) ([`5af08fa`](https://github.com/vrslev/ikea-api-client/commit/5af08fafe3bb24010f650d65f40a5255f24a1712))
+
 ## v1.1.8 (2022-02-08)
 ### Fix
 * **Item Ingka parser:** Add weight instead of taking first value ([`606b8d7`](https://github.com/vrslev/ikea-api-client/commit/606b8d7cec0dd6f5d76454858c8e2bfd9741255a))
