@@ -122,7 +122,7 @@ If you use authorized token (copy-paste from cookies), than you edit your user's
 
 ### 🚛 [Order Capture](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/order_capture.py)
 
-Check pickup or delivery availability. If you need to know whether items are available _in stores_, check out [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
+Check pickup or delivery availability. If you need to know whether items are available _in stores_, use [Item availability endpoint](#%F0%9F%9F%A2-item-availabilityhttpsgithubcomvrslevikea-api-clientblobmainsrcikeaapiendpointsstockingkapy) or [ikea-availability-checker](https://github.com/Ephigenia/ikea-availability-checker).
 
 ```python
 order = ikea.order_capture(
@@ -234,7 +234,7 @@ PipItem()(item_code)
 > get_items(["30457903"])
 > ```
 
-### 🟢 Item availability
+### 🟢 [Item availability](https://github.com/vrslev/ikea-api-client/blob/main/src/ikea_api/_endpoints/stock_ingka.py)
 
 Get availability by item code (product number or whatever).
 
