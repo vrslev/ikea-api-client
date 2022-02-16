@@ -26,10 +26,10 @@ class IngkaStock(API):
                 item_code = None
             raise ItemFetchError(response, item_code)
 
-    def __call__(self, item_code: str):
+    def __call__(self, item_codes: list[str]):
         return self._get(
             params={
-                "itemNos": [[item_code]],
+                "itemNos": item_codes,
                 "expand": "StoresList,Restocks,SalesLocations",
             }
         )

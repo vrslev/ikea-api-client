@@ -42,7 +42,7 @@ def add_response(json: dict[str, Any]):
 def test_ingka_stock_error_handler_raises_without_item_code(response: dict[str, Any]):
     add_response(response)
     with pytest.raises(IKEAAPIError) as exc:
-        IngkaStock()("111")
+        IngkaStock()(["111"])
     assert exc.value.args == ((200, json.dumps(response)),)
 
 
@@ -64,7 +64,7 @@ def test_ingka_stock_error_handler_raises_with_item_code():
     }
     add_response(response)
     with pytest.raises(IKEAAPIError) as exc:
-        IngkaStock()("111")
+        IngkaStock()(["111"])
     assert exc.value.args == (["11111111"],)
 
 
@@ -73,7 +73,7 @@ def test_ingka_stock_passes():
     response: dict[str, Any] = {"data": [{}]}
     add_response(response)
 
-    item_code = "11111111"
+    item_codes = ["11111111", "22222222"]
 
     class MockIngkaStock(IngkaStock):
         def _get(
@@ -83,9 +83,9 @@ def test_ingka_stock_passes():
             params: dict[str, Any] | None = None,
         ):
             assert params == {
-                "itemNos": [[item_code]],
+                "itemNos": item_codes,
                 "expand": "StoresList,Restocks,SalesLocations",
             }
             return super()._get(endpoint=endpoint, headers=headers, params=params)
 
-    assert MockIngkaStock()(item_code) == response
+    assert MockIngkaStock()(item_codes) == response
