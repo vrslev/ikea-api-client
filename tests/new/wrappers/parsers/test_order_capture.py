@@ -7,6 +7,7 @@ from typing import Any
 import pytest
 
 from new.constants import Constants
+from new.utils import translate_from_dict
 from new.wrappers import types
 from new.wrappers.parsers.order_capture import (
     DELIVERY_TYPES,
@@ -19,7 +20,6 @@ from new.wrappers.parsers.order_capture import (
     parse_collect_delivery_services,
     parse_home_delivery_services,
 )
-from new.wrappers.parsers.utils import translate_from_dict
 from tests.conftest import TestData
 
 
