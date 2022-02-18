@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
+from new.abc import Wrapper, wrap_endpoint
 from new.constants import Constants
 
 try:
@@ -67,15 +68,17 @@ class _CartError(BaseModel):
     extensions: _CartErrorExtensions
 
 
-def add_items_to_cart(cart: cart.API, items: dict[str, int]) -> types.CannotAddItems:
-    run(cart.clear())
+def add_items_to_cart(
+    cart: cart.API, items: dict[str, int]
+) -> Wrapper[types.CannotAddItems]:
+    yield from wrap_endpoint(cart.clear())
 
     pending_items = items.copy()
     cannot_add_items: list[str] = []
 
     while pending_items:
         try:
-            run(cart.add_items(pending_items))
+            yield from wrap_endpoint(cart.add_items(pending_items))
             break
         except GraphQLError as exc:
             for error_dict in exc.errors:
@@ -100,7 +103,7 @@ def get_delivery_services(
     zip_code: str,
 ) -> types.GetDeliveryServicesResponse:
     cart_ = cart.API(constants, token=token)
-    cannot_add = add_items_to_cart(cart_, items)
+    cannot_add = yield from add_items_to_cart(cart_, items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
     if cannot_add_all_items:
         return types.GetDeliveryServicesResponse(

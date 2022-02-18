@@ -118,6 +118,9 @@ def endpoint(handlers: Iterable[ErrorHandler] | None = None):
     return decorator
 
 
+T = TypeVar("T")
+
+
 class SyncExecutor(ABC, Generic[LibResponse]):
     @staticmethod
     @abstractmethod
@@ -140,3 +143,26 @@ class SyncExecutor(ABC, Generic[LibResponse]):
 
             except StopIteration as exc:
                 return exc.value
+
+    @classmethod
+    def run_wrapper(
+        cls, wrapper: Generator[EndpointInfo[EndpointResponse], EndpointResponse, T]
+    ) -> T:
+        endpoint_info = next(wrapper)
+
+        while True:
+            try:
+                endpoint_response = cls.run(endpoint_info)
+                endpoint_info = wrapper.send(endpoint_response)
+            except StopIteration as exc:
+                return exc.value
+
+
+Wrapper = Generator[EndpointInfo[Any], Any, EndpointResponse]
+
+
+def wrap_endpoint(
+    endpoint: EndpointInfo[EndpointResponse],
+) -> Generator[EndpointInfo[EndpointResponse], EndpointResponse, EndpointResponse]:
+    """Helper for typing. Otherwise result that generator yields would be unknown."""
+    return (yield endpoint)
