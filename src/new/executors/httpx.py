@@ -30,11 +30,11 @@ class HttpxResponseInfo(ResponseInfo[httpx.Response]):
 
 
 @lru_cache
-def get_cached_session(headers: frozenset[tuple[str, str]]) -> httpx.Client:
-    return httpx.Client(headers=dict(headers))
+def get_cached_session(headers: frozenset[tuple[str, str]]) -> httpx.AsyncClient:
+    return httpx.AsyncClient(headers=dict(headers))
 
 
-def get_session_from_info(session_info: SessionInfo) -> httpx.Client:
+def get_session_from_info(session_info: SessionInfo) -> httpx.AsyncClient:
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
@@ -44,7 +44,7 @@ class HttpxExecutor(AsyncExecutor[httpx.Response]):
         session_info: SessionInfo, request_info: RequestInfo
     ) -> ResponseInfo[httpx.Response]:
         session = get_session_from_info(session_info)
-        response = session.request(  # type: ignore
+        response = await session.request(  # type: ignore
             method=request_info.method,
             url=session_info.base_url + request_info.url,
             params=request_info.params,
