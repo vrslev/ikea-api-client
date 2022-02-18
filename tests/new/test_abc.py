@@ -1,13 +1,6 @@
 from typing import Any
 
-from new.abc import (
-    BaseAPI,
-    EndpointGen,
-    RequestInfo,
-    ResponseInfo,
-    SessionInfo,
-    add_handler,
-)
+from new.abc import BaseAPI, EndpointGen, ResponseInfo, SessionInfo, endpoint
 from new.constants import Constants
 from tests.new.conftest import EndpointTester, MockResponseInfo
 
@@ -26,9 +19,9 @@ def test_error_handlers(constants: Constants):
         def get_session_info(self) -> SessionInfo:
             return SessionInfo("", {})
 
-        @add_handler(handle_no_anotherthing)
+        @endpoint(handlers=[handle_no_anotherthing])
         def get_something(self, something: str) -> EndpointGen[Something]:
-            response = yield RequestInfo("POST", "", json={"name": something})
+            response = yield self.RequestInfo("POST", "", json={"name": something})
             return response.json["anotherthing"]
 
     t = EndpointTester(API(constants).get_something("somecoolthing"))

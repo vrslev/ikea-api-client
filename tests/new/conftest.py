@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from new.abc import EndpointGen, EndpointResponse, ResponseInfo, after_run, before_run
+from new.abc import EndpointInfo, ResponseInfo
 from new.constants import Constants
 
 
@@ -35,9 +35,10 @@ class MockResponseInfo(ResponseInfo[None]):
 
 
 class EndpointTester:
-    def __init__(self, gen: EndpointGen[EndpointResponse]) -> None:
-        self.gen = gen
-        self.session, self.next_request = before_run(gen)
+    def __init__(self, endpoint: EndpointInfo[Any]) -> None:
+        self.endpoint = endpoint
+        self.gen = endpoint.func()
+        self.next_request = next(self.gen)
         self.response = None
 
     def prepare(self):
@@ -49,7 +50,7 @@ class EndpointTester:
 
     def parse(self, response_info: ResponseInfo[Any]):
         try:
-            self.next_request = after_run(self.gen, response_info)
+            self.next_request = self.gen.send(response_info)
         except StopIteration as exc:
             return exc.value
 

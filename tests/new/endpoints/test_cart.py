@@ -2,7 +2,7 @@ from typing import Any, Callable
 
 import pytest
 
-from new.abc import EndpointGen
+from new.abc import EndpointInfo
 from new.constants import Constants
 from new.endpoints.cart import API, Mutations, Queries, _convert_items
 from tests.new.conftest import EndpointTester
@@ -37,8 +37,8 @@ def test_cart_req(cart: API):
     t.assert_json_returned()
 
 
-def assert_req_called_with(gen: EndpointGen[Any], query: str, **variables: Any):
-    t = EndpointTester(gen)
+def assert_req_called_with(endpoint: EndpointInfo[Any], query: str, **variables: Any):
+    t = EndpointTester(endpoint)
     req = t.prepare()
     assert req.json["query"] == query
     del req.json["variables"]["languageCode"]
