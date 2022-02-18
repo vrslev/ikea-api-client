@@ -1,10 +1,8 @@
 from typing import Any, TypedDict
 
-from new.abc import BaseAPI, EndpointGen, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_graphql_error
-
-CartEndpoint = EndpointGen[dict[str, Any]]
 
 
 class _TemplatedItem(TypedDict):
@@ -33,9 +31,8 @@ class API(BaseAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @add_handler(handle_graphql_error)
-    @add_handler(handle_401)
-    def _req(self, query: str, **variables: Any) -> CartEndpoint:
+    @endpoint(handlers=[handle_graphql_error, handle_401])
+    def _req(self, query: str, **variables: Any) -> EndpointGen[dict[str, Any]]:
         payload = {
             "query": query,
             "variables": {"languageCode": self.const.language, **variables},
@@ -43,38 +40,38 @@ class API(BaseAPI):
         response = yield self.RequestInfo("POST", "", json=payload)
         return response.json
 
-    def show(self) -> CartEndpoint:
+    def show(self):
         return self._req(Queries.cart)
 
-    def clear(self) -> CartEndpoint:
+    def clear(self):
         return self._req(Mutations.clear_items)
 
-    def add_items(self, items: dict[str, int]) -> CartEndpoint:
+    def add_items(self, items: dict[str, int]):
         """
         Add items to cart.
         Required items list format: {'item_no': quantity, ...}
         """
         return self._req(Mutations.add_items, items=_convert_items(items))
 
-    def update_items(self, items: dict[str, int]) -> CartEndpoint:
+    def update_items(self, items: dict[str, int]):
         """
         Replace quantity for given item to the new one.
         Required items list format: {'item_no': quantity, ...}
         """
         return self._req(Mutations.update_items, items=_convert_items(items))
 
-    def copy_items(self, *, source_user_id: str) -> CartEndpoint:
+    def copy_items(self, *, source_user_id: str):
         """Copy cart from another account."""
         return self._req(Mutations.copy_items, sourceUserId=source_user_id)
 
-    def remove_items(self, item_codes: list[str]) -> CartEndpoint:
+    def remove_items(self, item_codes: list[str]):
         """Remove items by item codes."""
         return self._req(Mutations.remove_items, itemNos=item_codes)
 
-    def set_coupon(self, code: str) -> CartEndpoint:
+    def set_coupon(self, code: str):
         return self._req(Mutations.set_coupon, code=code)
 
-    def clear_coupon(self) -> CartEndpoint:
+    def clear_coupon(self):
         return self._req(Mutations.clear_coupon)
 
 

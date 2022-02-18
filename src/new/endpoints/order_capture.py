@@ -1,6 +1,6 @@
 from typing import Any, TypedDict
 
-from new.abc import BaseAPI, EndpointGen, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_json_decode_error
 from new.exceptions import ProcessingError
@@ -30,11 +30,10 @@ class API(BaseAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @add_handler(handle_json_decode_error)
-    @add_handler(handle_401)
+    @endpoint(handlers=[handle_json_decode_error, handle_401])
     def get_checkout(self, items: list[CheckoutItem]) -> EndpointGen[str]:
         """Generate checkout for items"""
-        response = yield RequestInfo(
+        response = yield self.RequestInfo(
             "POST",
             "/checkouts",
             headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
@@ -53,8 +52,7 @@ class API(BaseAPI):
             raise ProcessingError(response, "No id for service area")
         return response.json["resourceId"]
 
-    @add_handler(handle_json_decode_error)
-    @add_handler(handle_401)
+    @endpoint(handlers=[handle_json_decode_error, handle_401])
     def get_service_area(
         self, checkout_id: str, zip_code: str, state_code: str | None = None
     ) -> EndpointGen[str]:
@@ -62,7 +60,7 @@ class API(BaseAPI):
         payload = {"zipCode": zip_code}
         if state_code:
             payload["stateCode"] = state_code
-        response = yield RequestInfo(
+        response = yield self.RequestInfo(
             "POST", f"/checkouts/{checkout_id}/service-area", json=payload
         )
 
@@ -70,25 +68,23 @@ class API(BaseAPI):
             raise ProcessingError(response, "No id for service area")
         return response.json["id"]
 
-    @add_handler(handle_json_decode_error)
-    @add_handler(handle_401)
+    @endpoint(handlers=[handle_json_decode_error, handle_401])
     def get_home_delivery_services(
         self, checkout_id: str, service_area_id: str
     ) -> EndpointGen[dict[str, Any]]:
         """Get available home delivery services"""
-        response = yield RequestInfo(
+        response = yield self.RequestInfo(
             "GET",
             f"/checkouts/{checkout_id}/service-area/{service_area_id}/home-delivery-services",
         )
         return response.json
 
-    @add_handler(handle_json_decode_error)
-    @add_handler(handle_401)
+    @endpoint(handlers=[handle_json_decode_error, handle_401])
     def get_collect_delivery_services(
         self, checkout_id: str, service_area_id: str
     ) -> EndpointGen[dict[str, Any]]:
         """Get available collect delivery services"""
-        response = yield RequestInfo(
+        response = yield self.RequestInfo(
             "GET",
             f"/checkouts/{checkout_id}/service-area/{service_area_id}/collect-delivery-services",
         )

@@ -1,7 +1,7 @@
 import sys
 from typing import Any
 
-from new.abc import BaseAPI, EndpointGen, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
 from new.constants import get_default_headers
 from new.error_handlers import handle_json_decode_error
 
@@ -18,7 +18,7 @@ class API(BaseAPI):
         url = f"https://sik.search.blue.cdtapps.com/{self.const.country}/{self.const.language}/search-result-page"
         return SessionInfo(base_url=url, headers=get_default_headers(self.const))
 
-    @add_handler(handle_json_decode_error)
+    @endpoint(handlers=[handle_json_decode_error])
     def search(
         self,
         query: str,
@@ -26,9 +26,9 @@ class API(BaseAPI):
         limit: int = 24,
         types: list[SearchType] = ["PRODUCT"],
     ) -> EndpointGen[dict[str, Any]]:
-        response = yield RequestInfo(
-            "GET",
-            "",
+        response = yield self.RequestInfo(
+            method="GET",
+            url="",
             params={
                 "autocorrect": "true",
                 "subcategories-style": "tree-navigation",

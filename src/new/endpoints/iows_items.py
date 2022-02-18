@@ -1,6 +1,6 @@
 from typing import Any
 
-from new.abc import BaseAPI, EndpointGen, RequestInfo, ResponseInfo, SessionInfo
+from new.abc import BaseAPI, EndpointGen, ResponseInfo, SessionInfo, endpoint
 from new.exceptions import ItemFetchError, WrongItemCodeError
 
 ItemCodeToComboDict = dict[str, bool]
@@ -28,8 +28,8 @@ class API(BaseAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    def _req_items(self):
-        return RequestInfo("GET", _build_url(self.items))
+    def _build_request(self):
+        return self.RequestInfo("GET", _build_url(self.items))
 
     def _handle_response(self, response: ResponseInfo[Any], relapse: int) -> Any:
         if response.status_code == 404 and len(self.items) == 1:
@@ -69,11 +69,12 @@ class API(BaseAPI):
             else:  # Nope, item is invalid
                 del self.items[item_code]
 
+    @endpoint()
     def get_items(self, item_codes: list[str]) -> EndpointGen[dict[str, Any]]:
         self.items = {i: False for i in item_codes}
 
         for relapse in range(3):
-            response = yield self._req_items()
+            response = yield self._build_request()
             data = self._handle_response(response, relapse)
             if data is not None:
                 return data
