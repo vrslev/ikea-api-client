@@ -1,3 +1,4 @@
+from new.constants import Constants as Constants
 from new.endpoints.auth import API as Auth
 from new.endpoints.cart import API as Cart
 from new.endpoints.ingka_items import API as IngkaItems

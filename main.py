@@ -1,9 +1,6 @@
 import asyncio
 
-from new.constants import Constants
-from new.endpoints import auth, cart, ingka_items
-from new.executors.requests import run
-from new.wrappers.wrappers import add_items_to_cart, get_items
+from new import Constants, get_items
 
 items = [
     "90458626",
@@ -57,8 +54,7 @@ items = [
     "70501664",
     "70498992",
 ]
-# https://api.ingka.ikea.com/salesitem/communications/ru/ru/?itemNos=29429732
-# https://api.ingka.ikea.com/salesitem/communications/ru/ru?itemNos=29429732
+
 # run(ingka_items.API(Constants()).get_items(items))
 print(asyncio.run(get_items(Constants(), items)))
 # item = "29429732"
