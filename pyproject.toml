@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ikea_api"
-version = "1.1.8"
+version = "1.2.0"
 description = "Client for several IKEA's APIs"
 authors = ["Lev Vereshchagin <mail@vrslev.com>"]
 license = "MIT"
@@ -18,8 +18,9 @@ include = ["src/ikea_api/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.7" # TODO: Drop Py 3.7
 requests = "^2.26.0"
-typing-extensions = {version = "^4.0.0", python = "<3.9"} # TODO: Drop typing-extensions
-pytest = {version = "7.0.0", optional = true}
+# TODO: Drop typing-extensions
+typing-extensions = {version = "^4.0.0", python = "<3.9"}
+pytest = {version = "7.0.1", optional = true}
 pytest-cov = {version = "3.0.0", optional = true}
 pytest-randomly = {version = "3.11.0", optional = true}
 responses = {version = "0.18.0", optional = true}
