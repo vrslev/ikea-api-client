@@ -165,7 +165,7 @@ async def _get_ingka_items(constants: Constants, item_codes: list[str]):
 async def _get_pip_items(constants: Constants, item_codes: list[str]):
     fetcher = pip_item.API(constants)
     responses = await asyncio.gather(
-        *(run_with_httpx(fetcher.get_item(i)) for i in item_codes)
+        *[run_with_httpx(fetcher.get_item(i)) for i in item_codes]
     )
     return [parsers.pip_item.main(r) for r in responses]
 
