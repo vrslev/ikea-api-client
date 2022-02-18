@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Any, List, Optional
+import asyncio
+from typing import Any, Coroutine, List, Optional
 
-from new.abc import Wrapper, wrap_endpoint
 from new.constants import Constants
 
 try:
@@ -21,8 +21,9 @@ from new.endpoints import (
     pip_item,
     purchases,
 )
-from new.exceptions import GraphQLError, ItemFetchError
-from new.executors.requests import run
+from new.exceptions import GraphQLError
+from new.executors.httpx import run as run_with_httpx
+from new.executors.requests import run as run_with_requests
 from new.utils import parse_item_codes
 from new.wrappers import parsers, types
 
@@ -37,15 +38,15 @@ __all__ = [
 
 def get_purchase_history(
     constants: Constants, token: str
-) -> Wrapper[list[types.PurchaseHistoryItem]]:
-    response = yield from wrap_endpoint(purchases.API(constants, token=token).history())
+) -> list[types.PurchaseHistoryItem]:
+    response = run_with_requests(purchases.API(constants, token=token).history())
     return parsers.purchases.parse_history(constants, response)
 
 
 def get_purchase_info(
     constants: Constants, token: str, *, id: str, email: str | None = None
-) -> Wrapper[types.PurchaseInfo]:
-    status_banner_resp, costs_resp = yield from wrap_endpoint(
+) -> types.PurchaseInfo:
+    status_banner_resp, costs_resp = run_with_requests(
         purchases.API(constants, token=token).order_info(
             order_number=id, email=email, queries=["StatusBannerOrder", "CostsOrder"]
         )
@@ -68,17 +69,15 @@ class _CartError(BaseModel):
     extensions: _CartErrorExtensions
 
 
-def add_items_to_cart(
-    cart: cart.API, items: dict[str, int]
-) -> Wrapper[types.CannotAddItems]:
-    yield from wrap_endpoint(cart.clear())
+def add_items_to_cart(cart: cart.API, items: dict[str, int]) -> types.CannotAddItems:
+    run_with_requests(cart.clear())
 
     pending_items = items.copy()
     cannot_add_items: list[str] = []
 
     while pending_items:
         try:
-            yield from wrap_endpoint(cart.add_items(pending_items))
+            run_with_requests(cart.add_items(pending_items))
             break
         except GraphQLError as exc:
             for error_dict in exc.errors:
@@ -95,15 +94,11 @@ def add_items_to_cart(
     return cannot_add_items
 
 
-def get_delivery_services(
-    constants: Constants,
-    token: str,
-    *,
-    items: dict[str, int],
-    zip_code: str,
-) -> Wrapper[types.GetDeliveryServicesResponse]:
+async def get_delivery_services(
+    constants: Constants, token: str, *, items: dict[str, int], zip_code: str
+) -> types.GetDeliveryServicesResponse:
     cart_ = cart.API(constants, token=token)
-    cannot_add = yield from add_items_to_cart(cart_, items)
+    cannot_add = add_items_to_cart(cart_, items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
     if cannot_add_all_items:
         return types.GetDeliveryServicesResponse(
@@ -111,27 +106,27 @@ def get_delivery_services(
         )
 
     order_capture_ = order_capture.API(constants=constants, token=token)
-    cart_response = yield from wrap_endpoint(cart_.show())
+    cart_response = run_with_requests(cart_.show())
     checkout_items = order_capture.convert_cart_to_checkout_items(cart_response)
-    checkout_id = yield from wrap_endpoint(order_capture_.get_checkout(checkout_items))
-    service_area = yield from wrap_endpoint(
+    checkout_id = await run_with_httpx(order_capture_.get_checkout(checkout_items))
+    service_area = await run_with_httpx(
         order_capture_.get_service_area(checkout_id, zip_code=zip_code)
     )
 
-    home = yield from wrap_endpoint(
-        order_capture_.get_home_delivery_services(  # TODO: Httpx
-            checkout_id, service_area
-        )
+    home, collect = await asyncio.gather(
+        run_with_httpx(
+            order_capture_.get_home_delivery_services(checkout_id, service_area),
+        ),
+        run_with_httpx(
+            order_capture_.get_collect_delivery_services(checkout_id, service_area)
+        ),
     )
-    collect = yield from wrap_endpoint(
-        order_capture_.get_collect_delivery_services(checkout_id, service_area)
-    )
-
     parsed_data = parsers.order_capture.main(
         constants=constants,
         home_delivery_services_response=home,
         collect_delivery_services_response=collect,
     )
+
     return types.GetDeliveryServicesResponse(
         delivery_options=parsed_data, cannot_add=cannot_add
     )
@@ -141,32 +136,37 @@ def _split_to_chunks(list_: list[Any], chunk_size: int):
     return (list_[i : i + chunk_size] for i in range(0, len(list_), chunk_size))
 
 
-def _get_iows_items(constants: Constants, item_codes: list[str]):
-    responses: list[Any] = []
+async def _get_iows_items(constants: Constants, item_codes: list[str]):
     fetcher = iows_items.API(constants)
+    tasks: list[Coroutine[Any, Any, dict[str, Any]]] = []
+
     for item_codes_chunk in _split_to_chunks(item_codes, 90):  # TODO: Httpx
-        try:
-            responses += run(fetcher.get_items(item_codes_chunk))
-        except ItemFetchError as exc:
-            if "Wrong Item Code" not in exc.args[0]:
-                raise
+        tasks.append(run_with_httpx(fetcher.get_items(item_codes_chunk)))
+
+    responses = await asyncio.gather(*tasks)
     return [parsers.iows_items.main(constants=constants, response=r) for r in responses]
 
 
-def _get_ingka_items(constants: Constants, item_codes: list[str]):
-    responses: list[Any] = []
+async def _get_ingka_items(constants: Constants, item_codes: list[str]):
     fetcher = ingka_items.API(constants)
+    tasks: list[Coroutine[Any, Any, dict[str, Any]]] = []
+
     for item_codes_chunk in _split_to_chunks(item_codes, 50):  # TODO: Httpx
-        responses.append(fetcher.get_items(item_codes_chunk))
+        tasks.append(run_with_httpx(fetcher.get_items(item_codes_chunk)))
+
+    responses = await asyncio.gather(*tasks)
+
     res: list[types.IngkaItem] = []
-    for resp in responses:
-        res += parsers.ingka_items.main(constants=constants, response=resp)
+    for response in responses:
+        res += parsers.ingka_items.main(constants=constants, response=response)
     return res
 
 
-def _get_pip_items(constants: Constants, item_codes: list[str]):
+async def _get_pip_items(constants: Constants, item_codes: list[str]):
     fetcher = pip_item.API(constants)
-    responses = (run(fetcher.get_item(i)) for i in item_codes)  # TODO: Httpx
+    responses = await asyncio.gather(
+        *(run_with_httpx(fetcher.get_item(i)) for i in item_codes)
+    )
     return [parsers.pip_item.main(r) for r in responses]
 
 
@@ -178,11 +178,13 @@ def _get_pip_items_map(items: list[types.PipItem | None]):
     return res
 
 
-def _get_ingka_pip_items(
+async def _get_ingka_pip_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.ParsedItem]:
-    ingka_items = _get_ingka_items(constants=constants, item_codes=item_codes)
-    pip_items = _get_pip_items(constants=constants, item_codes=item_codes)
+    ingka_items, pip_items = await asyncio.gather(
+        _get_ingka_items(constants=constants, item_codes=item_codes),
+        _get_pip_items(constants=constants, item_codes=item_codes),
+    )
     pip_items_map = _get_pip_items_map(pip_items)
 
     res: list[types.ParsedItem] = []
@@ -207,9 +209,11 @@ def _get_ingka_pip_items(
     return res
 
 
-def get_items(constants: Constants, item_codes: list[str]) -> list[types.ParsedItem]:
+async def get_items(
+    constants: Constants, item_codes: list[str]
+) -> list[types.ParsedItem]:
     pending_item_codes = parse_item_codes(item_codes, unshorten_ingka_pagelinks=True)
-    fetched_items_ingka_pip = _get_ingka_pip_items(
+    fetched_items_ingka_pip = await _get_ingka_pip_items(
         constants=constants, item_codes=pending_item_codes
     )
 
@@ -218,7 +222,7 @@ def get_items(constants: Constants, item_codes: list[str]) -> list[types.ParsedI
     if not pending_item_codes:
         return fetched_items_ingka_pip
 
-    fetched_items_iows = _get_iows_items(
+    fetched_items_iows = await _get_iows_items(
         constants=constants, item_codes=pending_item_codes
     )
     return fetched_items_ingka_pip + fetched_items_iows
