@@ -4,13 +4,10 @@ from functools import lru_cache
 
 @dataclass(frozen=True)
 class Constants:
-    user_agent: str = (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15"
-        + " (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15"
-    )
+    user_agent: str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15"
     base_url: str = "https://www.ikea.com"
-    language: str = "ru"
     country: str = "ru"
+    language: str = "ru"
 
     @property
     def local_base_url(self):
@@ -29,13 +26,5 @@ def get_default_headers(constants: Constants) -> dict[str, str]:
     }
 
 
-def extend_default_headers(
-    headers: dict[str, str], constants: Constants
-) -> dict[str, str]:
-    res = get_default_headers(constants)
-    res.update(headers)
-    return res
-
-
-def get_headers_with_token(token: str) -> dict[str, str]:
+def get_auth_header(token: str) -> dict[str, str]:
     return {"Authorization": "Bearer " + token}

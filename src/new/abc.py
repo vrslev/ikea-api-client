@@ -13,7 +13,7 @@ from typing import (
     TypeVar,
 )
 
-from new.constants import Constants, extend_default_headers
+from new.constants import Constants, get_default_headers
 
 
 @dataclass
@@ -62,7 +62,9 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
         self.session_info = self.get_session_info()
 
     def extend_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
-        return extend_default_headers(headers=headers, constants=self.const)
+        res = get_default_headers(constants=self.const)
+        res.update(headers)
+        return res
 
     @abstractmethod
     def get_session_info(self) -> SessionInfo:

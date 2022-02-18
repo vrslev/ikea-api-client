@@ -1,7 +1,7 @@
 from typing import Any, Literal
 
 from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
-from new.constants import Constants, get_headers_with_token
+from new.constants import Constants, get_auth_header
 from new.error_handlers import handle_401, handle_graphql_error
 
 
@@ -24,7 +24,7 @@ class API(BaseAPI):
                 "Accept-Language": f"{self.const.language}-{self.const.country}",
                 "Origin": "https://order.ikea.com",
                 "Referer": f"https://order.ikea.com/{self.const.country}/{self.const.language}/purchases/",
-                **get_headers_with_token(self.token),
+                **get_auth_header(self.token),
             }
         )
         return SessionInfo(base_url=url, headers=headers)

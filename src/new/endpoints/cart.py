@@ -1,7 +1,7 @@
 from typing import Any, TypedDict
 
 from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
-from new.constants import Constants, get_headers_with_token
+from new.constants import Constants, get_auth_header
 from new.error_handlers import handle_401, handle_graphql_error
 
 
@@ -26,7 +26,7 @@ class API(BaseAPI):
         headers = self.extend_default_headers(
             {
                 "X-Client-Id": "66e4684a-dbcb-499c-8639-a72fa50ac0c3",
-                **get_headers_with_token(self.token),
+                **get_auth_header(self.token),
             }
         )
         return SessionInfo(base_url=url, headers=headers)
