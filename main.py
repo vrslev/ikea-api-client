@@ -1,6 +1,6 @@
 import asyncio
 
-from new import Constants, get_items
+from ikea_api import Constants, get_items
 
 items = [
     "90458626",

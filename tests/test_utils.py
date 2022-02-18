@@ -5,10 +5,10 @@ from typing import Any
 import pytest
 import responses
 
-import ikea_api._utils
-from ikea_api._utils import (
-    _get_unshortened_links_from_ingka_pagelinks,
+import ikea_api.utils
+from ikea_api.utils import (
     format_item_code,
+    get_unshortened_links_from_ingka_pagelinks,
     parse_item_codes,
 )
 
@@ -22,7 +22,7 @@ from ikea_api._utils import (
     ),
 )
 def test_get_unshortened_links_from_ingka_pagelinks_no_value(v: str):
-    _get_unshortened_links_from_ingka_pagelinks(v)
+    get_unshortened_links_from_ingka_pagelinks(v)
 
 
 @responses.activate
@@ -34,7 +34,7 @@ def test_get_unshortened_links_from_ingka_pagelinks_with_value():
     )
     responses.add(responses.GET, pagelink, headers={"Location": exp_url})
 
-    assert list(_get_unshortened_links_from_ingka_pagelinks(pagelink)) == [exp_url]
+    assert list(get_unshortened_links_from_ingka_pagelinks(pagelink)) == [exp_url]
 
 
 def test_parse_item_codes_unshorten_ingka_pagelinks_false(
@@ -47,7 +47,7 @@ def test_parse_item_codes_unshorten_ingka_pagelinks_false(
         called = True  # pragma: no cover
 
     monkeypatch.setattr(
-        ikea_api._utils, "_get_unshortened_links_from_ingka_pagelinks", mock_unshorten
+        ikea_api.utils, "get_unshortened_links_from_ingka_pagelinks", mock_unshorten
     )
     parse_item_codes([], unshorten_ingka_pagelinks=False)
     parse_item_codes([])
@@ -66,7 +66,7 @@ def test_parse_item_codes_unshorten_ingka_pagelinks_true_no_value(
         called = True
 
     monkeypatch.setattr(
-        ikea_api._utils, "_get_unshortened_links_from_ingka_pagelinks", mock_unshorten
+        ikea_api.utils, "get_unshortened_links_from_ingka_pagelinks", mock_unshorten
     )
     assert parse_item_codes(exp_val, unshorten_ingka_pagelinks=True) == [exp_val]
     assert called
@@ -86,7 +86,7 @@ def test_parse_item_codes_unshorten_ingka_pagelinks_true(
         yield "11111111"
 
     monkeypatch.setattr(
-        ikea_api._utils, "_get_unshortened_links_from_ingka_pagelinks", mock_unshorten
+        ikea_api.utils, "get_unshortened_links_from_ingka_pagelinks", mock_unshorten
     )
 
     if is_list:
@@ -146,6 +146,6 @@ def test_format_item_code(
         called = True
         return parse_item_codes(v)
 
-    monkeypatch.setattr(ikea_api._utils, "parse_item_codes", mock_parse)
+    monkeypatch.setattr(ikea_api.utils, "parse_item_codes", mock_parse)
     assert format_item_code(input) == output
     assert called
