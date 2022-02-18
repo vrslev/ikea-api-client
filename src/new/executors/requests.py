@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from functools import cached_property, lru_cache
-from typing import TYPE_CHECKING, Any
+from typing import Any
+
+import requests
 
 from new.abc import (
     EndpointInfo,
@@ -10,9 +12,6 @@ from new.abc import (
     SessionInfo,
     SyncExecutor,
 )
-
-if TYPE_CHECKING:
-    import requests
 
 
 @dataclass
@@ -32,8 +31,6 @@ class RequestsResponseInfo(ResponseInfo["requests.Response"]):
 
 @lru_cache
 def get_cached_session(headers: frozenset[tuple[str, str]]) -> "requests.Session":
-    import requests
-
     session = requests.Session()
     session.headers.update(headers)
     return session
@@ -57,6 +54,7 @@ class RequestsExecutor(SyncExecutor["requests.Response"]):
             json=request_info.json,
             headers=request_info.headers,
         )
+        print(response.request.url)
         return RequestsResponseInfo(response)
 
 

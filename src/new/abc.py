@@ -143,3 +143,27 @@ class SyncExecutor(ABC, Generic[LibResponse]):
 
             except StopIteration as exc:
                 return exc.value
+
+
+class AsyncExecutor(ABC, Generic[LibResponse]):
+    @staticmethod
+    @abstractmethod
+    async def request(
+        session_info: SessionInfo, request_info: RequestInfo
+    ) -> ResponseInfo[LibResponse]:
+        ...
+
+    @classmethod
+    async def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+        gen = endpoint.func()
+        req_info = next(gen)
+
+        while True:
+            try:
+                response_info = await cls.request(req_info.session_info, req_info)
+                for handler in endpoint.handlers:
+                    handler(response_info)
+                req_info = gen.send(response_info)
+
+            except StopIteration as exc:
+                return exc.value
