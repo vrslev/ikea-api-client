@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from functools import cached_property, lru_cache
 from typing import Any, cast
 
-import httpx
+import httpx  # TODO: Optional import
 
 from ikea_api.abc import (
     AsyncExecutor,
@@ -12,6 +12,8 @@ from ikea_api.abc import (
     ResponseInfo,
     SessionInfo,
 )
+
+# TODO: Add Sync client
 
 
 @dataclass

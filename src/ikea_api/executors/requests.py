@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from functools import cached_property, lru_cache
 from typing import Any
 
-import requests
+import requests  # TODO: Optional import
 
 from ikea_api.abc import (
     EndpointInfo,
