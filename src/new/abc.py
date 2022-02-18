@@ -121,7 +121,7 @@ def endpoint(handlers: Iterable[ErrorHandler] | None = None):
 class SyncExecutor(ABC, Generic[LibResponse]):
     @staticmethod
     @abstractmethod
-    def request(request_info: RequestInfo) -> ResponseInfo[LibResponse]:
+    def request(request: RequestInfo) -> ResponseInfo[LibResponse]:
         ...
 
     @classmethod
@@ -143,7 +143,7 @@ class SyncExecutor(ABC, Generic[LibResponse]):
 class AsyncExecutor(ABC, Generic[LibResponse]):
     @staticmethod
     @abstractmethod
-    async def request(request_info: RequestInfo) -> ResponseInfo[LibResponse]:
+    async def request(request: RequestInfo) -> ResponseInfo[LibResponse]:
         ...
 
     @classmethod

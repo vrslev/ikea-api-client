@@ -16,13 +16,13 @@ from new.abc import (
 
 @dataclass
 class HttpxResponseInfo(ResponseInfo[httpx.Response]):
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.headers = cast(httpx.Headers, self.response.headers)  # type: ignore
         self.status_code = cast(int, self.response.status_code)  # type: ignore
 
     @cached_property
     def text(self) -> str:
-        return cast(str, self.response.text)  # type: ignore
+        return self.response.text
 
     @cached_property
     def json(self) -> Any:
@@ -40,17 +40,15 @@ def get_session_from_info(session_info: SessionInfo) -> httpx.AsyncClient:
 
 class HttpxExecutor(AsyncExecutor[httpx.Response]):
     @staticmethod
-    async def request(
-        session_info: SessionInfo, request_info: RequestInfo
-    ) -> ResponseInfo[httpx.Response]:
-        session = get_session_from_info(session_info)
+    async def request(request: RequestInfo) -> ResponseInfo[httpx.Response]:
+        session = get_session_from_info(request.session_info)
         response = await session.request(  # type: ignore
-            method=request_info.method,
-            url=session_info.base_url + request_info.url,
-            params=request_info.params,
-            data=request_info.data,
-            json=request_info.json,
-            headers=request_info.headers or {},
+            method=request.method,
+            url=request.session_info.base_url + request.url,
+            params=request.params,
+            data=request.data,
+            json=request.json,
+            headers=request.headers or {},
         )
         return HttpxResponseInfo(response)
 
