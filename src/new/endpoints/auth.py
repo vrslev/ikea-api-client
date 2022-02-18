@@ -1,4 +1,4 @@
-from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
 from new.error_handlers import handle_json_decode_error
 
 
@@ -15,9 +15,9 @@ class API(BaseAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @add_handler(handle_json_decode_error)
-    def get_guest_token(self) -> Endpoint[str]:
-        response = yield RequestInfo(
+    @endpoint(handlers=[handle_json_decode_error])
+    def get_guest_token(self) -> EndpointGen[str]:
+        response = yield self.RequestInfo(
             "POST", "", json={"retailUnit": self.const.country}
         )
         return response.json["access_token"]

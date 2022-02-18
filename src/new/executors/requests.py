@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from functools import cached_property, lru_cache
 from typing import TYPE_CHECKING, Any
 
-from new.abc import (  # after_run,; before_run,
-    Endpoint,
+from new.abc import (
+    EndpointInfo,
     EndpointResponse,
     RequestInfo,
     ResponseInfo,
@@ -61,8 +61,8 @@ class RequestsExecutor(SyncExecutor["requests.Response"]):
         return RequestsResponseInfo(response)
 
 
-def run(gen: Endpoint[EndpointResponse]) -> EndpointResponse:
-    return RequestsExecutor.run(gen)
+def run(endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+    return RequestsExecutor.run(endpoint)
 
 
 # def run_request(

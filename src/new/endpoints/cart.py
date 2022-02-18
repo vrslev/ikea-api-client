@@ -1,10 +1,10 @@
 from typing import Any, TypedDict
 
-from new.abc import BaseAPI, Endpoint, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_graphql_error
 
-CartEndpoint = Endpoint[dict[str, Any]]
+CartEndpoint = EndpointGen[dict[str, Any]]
 
 
 class _TemplatedItem(TypedDict):

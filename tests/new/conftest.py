@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from new.abc import Endpoint, EndpointResponse, ResponseInfo, after_run, before_run
+from new.abc import EndpointGen, EndpointResponse, ResponseInfo, after_run, before_run
 from new.constants import Constants
 
 
@@ -35,7 +35,7 @@ class MockResponseInfo(ResponseInfo[None]):
 
 
 class EndpointTester:
-    def __init__(self, gen: Endpoint[EndpointResponse]) -> None:
+    def __init__(self, gen: EndpointGen[EndpointResponse]) -> None:
         self.gen = gen
         self.session, self.next_request = before_run(gen)
         self.response = None

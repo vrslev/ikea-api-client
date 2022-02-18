@@ -1,7 +1,7 @@
 import sys
 from typing import Any
 
-from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, RequestInfo, SessionInfo, add_handler
 from new.constants import get_default_headers
 from new.error_handlers import handle_json_decode_error
 
@@ -25,7 +25,7 @@ class API(BaseAPI):
         *,
         limit: int = 24,
         types: list[SearchType] = ["PRODUCT"],
-    ) -> Endpoint[dict[str, Any]]:
+    ) -> EndpointGen[dict[str, Any]]:
         response = yield RequestInfo(
             "GET",
             "",

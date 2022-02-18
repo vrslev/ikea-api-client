@@ -17,7 +17,7 @@ class API(abc.BaseAPI):
 
     def get_item(
         self, item_code: str, is_combination: bool = True
-    ) -> abc.Endpoint[dict[str, Any]]:
+    ) -> abc.EndpointGen[dict[str, Any]]:
         response_info = yield abc.RequestInfo(
             "GET", _build_url(item_code, is_combination)
         )

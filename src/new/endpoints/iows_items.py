@@ -1,6 +1,6 @@
 from typing import Any
 
-from new.abc import BaseAPI, Endpoint, RequestInfo, ResponseInfo, SessionInfo
+from new.abc import BaseAPI, EndpointGen, RequestInfo, ResponseInfo, SessionInfo
 from new.exceptions import ItemFetchError, WrongItemCodeError
 
 ItemCodeToComboDict = dict[str, bool]
@@ -69,7 +69,7 @@ class API(BaseAPI):
             else:  # Nope, item is invalid
                 del self.items[item_code]
 
-    def get_items(self, item_codes: list[str]) -> Endpoint[dict[str, Any]]:
+    def get_items(self, item_codes: list[str]) -> EndpointGen[dict[str, Any]]:
         self.items = {i: False for i in item_codes}
 
         for relapse in range(3):

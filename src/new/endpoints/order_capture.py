@@ -1,6 +1,6 @@
 from typing import Any, TypedDict
 
-from new.abc import BaseAPI, Endpoint, RequestInfo, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, RequestInfo, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_json_decode_error
 from new.exceptions import ProcessingError
@@ -32,7 +32,7 @@ class API(BaseAPI):
 
     @add_handler(handle_json_decode_error)
     @add_handler(handle_401)
-    def get_checkout(self, items: list[CheckoutItem]) -> Endpoint[str]:
+    def get_checkout(self, items: list[CheckoutItem]) -> EndpointGen[str]:
         """Generate checkout for items"""
         response = yield RequestInfo(
             "POST",
@@ -57,7 +57,7 @@ class API(BaseAPI):
     @add_handler(handle_401)
     def get_service_area(
         self, checkout_id: str, zip_code: str, state_code: str | None = None
-    ) -> Endpoint[str]:
+    ) -> EndpointGen[str]:
         """Generate delivery area for checkout from Zip Code and State Code"""
         payload = {"zipCode": zip_code}
         if state_code:
@@ -74,7 +74,7 @@ class API(BaseAPI):
     @add_handler(handle_401)
     def get_home_delivery_services(
         self, checkout_id: str, service_area_id: str
-    ) -> Endpoint[dict[str, Any]]:
+    ) -> EndpointGen[dict[str, Any]]:
         """Get available home delivery services"""
         response = yield RequestInfo(
             "GET",
@@ -86,7 +86,7 @@ class API(BaseAPI):
     @add_handler(handle_401)
     def get_collect_delivery_services(
         self, checkout_id: str, service_area_id: str
-    ) -> Endpoint[dict[str, Any]]:
+    ) -> EndpointGen[dict[str, Any]]:
         """Get available collect delivery services"""
         response = yield RequestInfo(
             "GET",

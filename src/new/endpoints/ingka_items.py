@@ -18,7 +18,7 @@ class API(abc.BaseAPI):
 
     @abc.add_handler(handle_401)
     @abc.add_handler(handle_json_decode_error)
-    def get_items(self, item_codes: list[str]) -> abc.Endpoint[dict[str, Any]]:
+    def get_items(self, item_codes: list[str]) -> abc.EndpointGen[dict[str, Any]]:
         request_info = abc.RequestInfo("GET", "", params={"itemNos": item_codes})
         response_info = yield request_info
         return response_info.json

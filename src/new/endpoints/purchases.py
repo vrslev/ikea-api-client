@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from new.abc import BaseAPI, Endpoint, SessionInfo, add_handler
+from new.abc import BaseAPI, EndpointGen, SessionInfo, add_handler
 from new.constants import Constants, get_headers_with_token
 from new.error_handlers import handle_401, handle_graphql_error
 
@@ -31,7 +31,7 @@ class API(BaseAPI):
 
     @add_handler(handle_graphql_error)
     @add_handler(handle_401)
-    def history(self, *, take: int = 5, skip: int = 0) -> Endpoint[dict[str, Any]]:
+    def history(self, *, take: int = 5, skip: int = 0) -> EndpointGen[dict[str, Any]]:
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
@@ -52,7 +52,7 @@ class API(BaseAPI):
         skip_products: int = 0,
         skip_product_prices: bool = False,
         take_products: int = 10,
-    ) -> Endpoint[list[dict[str, Any]]]:
+    ) -> EndpointGen[list[dict[str, Any]]]:
         """Get order information: status and costs.
 
         :params order_number: Purchase ID

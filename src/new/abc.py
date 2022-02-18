@@ -1,7 +1,7 @@
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from functools import cached_property
+from functools import cached_property, partial
 from types import FrameType
 from typing import (
     Any,
@@ -9,6 +9,7 @@ from typing import (
     Concatenate,
     Generator,
     Generic,
+    Iterable,
     Literal,
     Mapping,
     ParamSpec,
@@ -55,11 +56,11 @@ class ResponseInfo(ABC, Generic[LibResponse]):
 
 
 EndpointResponse = TypeVar("EndpointResponse")
-Endpoint = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
+EndpointGen = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
 
 EndpointParams = ParamSpec("EndpointParams")
-EndpointMethod = Callable[EndpointParams, Endpoint[EndpointResponse]]
-EndpointFunc = Callable[Concatenate[EndpointParams], Endpoint[EndpointResponse]]
+EndpointMethod = Callable[EndpointParams, EndpointGen[EndpointResponse]]
+EndpointFunc = Callable[Concatenate[EndpointParams], EndpointGen[EndpointResponse]]
 
 
 class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
@@ -100,6 +101,31 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
 ErrorHandler = Callable[[ResponseInfo[Any]], None]
 T = TypeVar("T")
 
+PreParams = ParamSpec("PreParams")
+
+
+@dataclass
+class EndpointInfo(Generic[EndpointResponse]):
+    func: EndpointFunc[[], EndpointResponse]
+    handlers: Iterable[ErrorHandler]
+
+
+def endpoint(handlers: Iterable[ErrorHandler] | None = None):
+    def decorator(
+        func: Callable[PreParams, EndpointGen[EndpointResponse]]
+    ) -> Callable[PreParams, EndpointInfo[EndpointResponse]]:
+        def wrapper(
+            *args: PreParams.args, **kwargs: PreParams.kwargs
+        ) -> EndpointInfo[EndpointResponse]:
+            return EndpointInfo(
+                func=partial(func, *args, **kwargs),
+                handlers=handlers or (),
+            )
+
+        return wrapper
+
+    return decorator
+
 
 def add_handler(handler: ErrorHandler):
     def decorator(func: T) -> T:
@@ -111,11 +137,11 @@ def add_handler(handler: ErrorHandler):
     return decorator
 
 
-def get_request_info(gen: Endpoint[Any]) -> RequestInfo:
+def get_request_info(gen: EndpointGen[Any]) -> RequestInfo:
     return next(gen)
 
 
-def get_source_gen(gen: Endpoint[Any]) -> Generator[Any, Any, Any]:
+def get_source_gen(gen: EndpointGen[Any]) -> Generator[Any, Any, Any]:
     self = gen.gi_frame.f_locals.get("self")
     if self:
         return gen
@@ -136,11 +162,11 @@ def get_source_gen(gen: Endpoint[Any]) -> Generator[Any, Any, Any]:
 #     return self
 
 
-def get_self_from_gen(gen: Endpoint[Any]) -> BaseAPI:
+def get_self_from_gen(gen: EndpointGen[Any]) -> BaseAPI:
     return gen.gi_frame.f_locals["self"]
 
 
-def get_func_from_gen(gen: Endpoint[EndpointResponse]) -> Callable[..., Any]:
+def get_func_from_gen(gen: EndpointGen[EndpointResponse]) -> Callable[..., Any]:
     source_gen = get_source_gen(gen)
     return getattr(get_self_from_gen(source_gen), source_gen.gi_code.co_name)
 
@@ -148,7 +174,7 @@ def get_func_from_gen(gen: Endpoint[EndpointResponse]) -> Callable[..., Any]:
 class SyncExecutor(ABC, Generic[LibResponse]):
     @classmethod
     def after_run(
-        cls, gen: Endpoint[EndpointResponse], response_info: ResponseInfo[Any]
+        cls, gen: EndpointGen[EndpointResponse], response_info: ResponseInfo[Any]
     ) -> RequestInfo:
         print("after")
         func = get_func_from_gen(gen)
@@ -168,35 +194,16 @@ class SyncExecutor(ABC, Generic[LibResponse]):
         ...
 
     @classmethod
-    def run(cls, gen: Endpoint[EndpointResponse]) -> EndpointResponse:
+    def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+        gen = endpoint.func()
         req_info = next(gen)
-        func = get_func_from_gen(gen)
 
         while True:
             try:
-
                 response_info = cls.request(req_info.session_info, req_info)
-                try:
-                    for handler in getattr(func, "error_handlers", ()):
-                        handler(response_info)
-                except Exception as exc:
-                    pass
-                    gen.throw(exc)
-                    # get_source_gen(gen).throw(exc)
-
+                for handler in endpoint.handlers:
+                    handler(response_info)
                 req_info = gen.send(response_info)
 
-                try:
-                    func = get_func_from_gen(gen)
-                except AttributeError:
-                    req_info = next(get_source_gen(gen))
-
             except StopIteration as exc:
-                if not gen.gi_yieldfrom or not gen.gi_yieldfrom.gi_frame:
-                    print("! NO FRAME DETECTED")
-                    continue
-                    # return exc.value
-
-                else:
-                    # continue
-                    return exc.value
+                return exc.value

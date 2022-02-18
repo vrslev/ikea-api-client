@@ -2,7 +2,7 @@ from typing import Any
 
 from new.abc import (
     BaseAPI,
-    Endpoint,
+    EndpointGen,
     RequestInfo,
     ResponseInfo,
     SessionInfo,
@@ -27,7 +27,7 @@ def test_error_handlers(constants: Constants):
             return SessionInfo("", {})
 
         @add_handler(handle_no_anotherthing)
-        def get_something(self, something: str) -> Endpoint[Something]:
+        def get_something(self, something: str) -> EndpointGen[Something]:
             response = yield RequestInfo("POST", "", json={"name": something})
             return response.json["anotherthing"]
 
