@@ -52,7 +52,6 @@ class HttpxExecutor(AsyncExecutor[httpx.Response]):
             json=request_info.json,
             headers=request_info.headers or {},
         )
-        print(response.request)
         return HttpxResponseInfo(response)
 
 
