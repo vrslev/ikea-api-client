@@ -3,7 +3,7 @@ import asyncio
 from new.constants import Constants
 from new.endpoints import auth, cart, ingka_items
 from new.executors.requests import run
-from new.wrappers import add_items_to_cart, get_items
+from new.wrappers.wrappers import add_items_to_cart, get_items
 
 items = [
     "90458626",

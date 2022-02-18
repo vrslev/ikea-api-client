@@ -7,8 +7,6 @@ from pydantic import BaseModel, HttpUrl
 from new.wrappers import types
 from new.wrappers.parsers.item_base import ItemCode
 
-__all__ = ["main"]
-
 
 class Catalog(BaseModel):
     name: str

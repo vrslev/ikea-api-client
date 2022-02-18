@@ -6,11 +6,9 @@ from typing import Any, List, Optional
 from pydantic import BaseModel, validator
 
 from new.constants import Constants
+from new.utils import translate_from_dict
 from new.wrappers import types
 from new.wrappers.parsers.item_base import ItemCode
-from new.wrappers.parsers.utils import translate_from_dict
-
-__all__ = ["main"]
 
 DELIVERY_TYPES = {
     "ru": {

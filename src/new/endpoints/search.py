@@ -1,14 +1,8 @@
-import sys
-from typing import Any
+from typing import Any, Literal
 
 from new.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
 from new.constants import get_default_headers
 from new.error_handlers import handle_json_decode_error
-
-if sys.version_info < (3, 8):
-    from typing_extensions import Literal
-else:
-    from typing import Literal
 
 SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWER"]
 

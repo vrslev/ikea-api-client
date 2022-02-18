@@ -1,12 +1,6 @@
-import sys
-from typing import Any
+from typing import Any, Literal
 
 from new.utils import parse_item_codes
-
-if sys.version_info < (3, 8):
-    from typing_extensions import Literal
-else:
-    from typing import Literal
 
 
 class ItemCode(str):

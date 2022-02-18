@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 import requests
+
+from new.constants import Constants
 
 
 def _get_unshortened_links_from_ingka_pagelinks(
@@ -45,3 +48,12 @@ def format_item_code(item_code: str) -> str | None:
         return
     item_code = matches[0]
     return item_code[0:3] + "." + item_code[3:6] + "." + item_code[6:8]
+
+
+def translate_from_dict(
+    constants: Constants, dictionary: dict[str, dict[str, Any]], v: str
+):
+    lang_dict = dictionary.get(constants.language)
+    if lang_dict is None:
+        return v
+    return lang_dict.get(v, v)

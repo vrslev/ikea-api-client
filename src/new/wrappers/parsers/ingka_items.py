@@ -14,8 +14,6 @@ from new.wrappers.parsers.item_base import (
     get_is_combination_from_item_type,
 )
 
-__all__ = ["main"]
-
 
 class ItemKey(BaseModel):
     itemType: ItemType

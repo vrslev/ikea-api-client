@@ -15,8 +15,6 @@ from typing import (
 
 from new.constants import Constants, extend_default_headers
 
-LibResponse = TypeVar("LibResponse")
-
 
 @dataclass
 class SessionInfo:
@@ -35,6 +33,9 @@ class RequestInfo:
     headers: dict[str, str] | None = None
 
 
+LibResponse = TypeVar("LibResponse")
+
+
 @dataclass
 class ResponseInfo(ABC, Generic[LibResponse]):
     response: LibResponse
@@ -50,10 +51,6 @@ class ResponseInfo(ABC, Generic[LibResponse]):
     @abstractmethod
     def json(self) -> Any:
         ...
-
-
-EndpointResponse = TypeVar("EndpointResponse")
-EndpointGen = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
 
 
 class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
@@ -91,6 +88,9 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
         )
 
 
+EndpointResponse = TypeVar("EndpointResponse")
+EndpointGen = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
+
 ErrorHandler = Callable[[ResponseInfo[Any]], None]
 PreParams = ParamSpec("PreParams")
 
@@ -118,15 +118,10 @@ def endpoint(handlers: Iterable[ErrorHandler] | None = None):
     return decorator
 
 
-T = TypeVar("T")
-
-
 class SyncExecutor(ABC, Generic[LibResponse]):
     @staticmethod
     @abstractmethod
-    def request(
-        session_info: SessionInfo, request_info: RequestInfo
-    ) -> ResponseInfo[LibResponse]:
+    def request(request_info: RequestInfo) -> ResponseInfo[LibResponse]:
         ...
 
     @classmethod
@@ -136,7 +131,7 @@ class SyncExecutor(ABC, Generic[LibResponse]):
 
         while True:
             try:
-                response_info = cls.request(req_info.session_info, req_info)
+                response_info = cls.request(req_info)
                 for handler in endpoint.handlers:
                     handler(response_info)
                 req_info = gen.send(response_info)
@@ -148,9 +143,7 @@ class SyncExecutor(ABC, Generic[LibResponse]):
 class AsyncExecutor(ABC, Generic[LibResponse]):
     @staticmethod
     @abstractmethod
-    async def request(
-        session_info: SessionInfo, request_info: RequestInfo
-    ) -> ResponseInfo[LibResponse]:
+    async def request(request_info: RequestInfo) -> ResponseInfo[LibResponse]:
         ...
 
     @classmethod
@@ -160,7 +153,7 @@ class AsyncExecutor(ABC, Generic[LibResponse]):
 
         while True:
             try:
-                response_info = await cls.request(req_info.session_info, req_info)
+                response_info = await cls.request(req_info)
                 for handler in endpoint.handlers:
                     handler(response_info)
                 req_info = gen.send(response_info)
