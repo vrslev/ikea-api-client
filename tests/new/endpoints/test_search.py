@@ -11,8 +11,6 @@ def test_search(constants: Constants):
     t = EndpointTester(search.API(constants).search(query, limit=limit, types=types))
     req = t.prepare()
 
-    assert req.method == "GET"
-    assert req.url == ""
     assert req.params
     assert req.params["types"] == ",".join(types)
     assert req.params["q"] == query

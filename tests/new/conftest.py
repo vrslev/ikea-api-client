@@ -48,7 +48,11 @@ class EndpointTester:
         self.next_request = None
         return req
 
-    def parse(self, response_info: ResponseInfo[Any]):
+    def parse(self, response_info: ResponseInfo[Any], handle_errors: bool = False):
+        if handle_errors:
+            for handler in self.endpoint.handlers:
+                handler(response_info)
+
         try:
             self.next_request = self.gen.send(response_info)
         except StopIteration as exc:

@@ -28,7 +28,6 @@ def test_pip_item_prepare(pip_item: API):
     t = EndpointTester(pip_item.get_item(item_code, is_combination))
     req = t.prepare()
 
-    assert req.method == "GET"
     assert req.url == _build_url(item_code, is_combination)
 
 

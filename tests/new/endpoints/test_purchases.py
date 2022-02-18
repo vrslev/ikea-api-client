@@ -23,9 +23,6 @@ def test_history(purchases: API):
     skip = 1
     t = EndpointTester(purchases.history(take=take, skip=skip))
     req = t.prepare()
-
-    assert req.method == "POST"
-    assert req.url == ""
     assert req.json == _build_payload("History", Queries.history, take=take, skip=skip)
 
     t.assert_json_returned()

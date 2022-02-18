@@ -23,7 +23,6 @@ def test_get_checkout(order_capture: API, fail: bool):
     t = EndpointTester(order_capture.get_checkout(items))
 
     req = t.prepare()
-    assert req.method == "POST"
     assert req.headers
     assert (
         req.headers["X-Client-Id"]
@@ -49,7 +48,6 @@ def test_get_service_area_prepare(order_capture: API, state_code: str | None):
     )
 
     req = t.prepare()
-    assert req.method == "POST"
     assert req.url == f"/checkouts/{checkout_id}/service-area"
 
     payload = {"zipCode": zip_code}
@@ -84,7 +82,6 @@ def test_get_services(order_capture: API, method: Callable[..., Any], path: str)
     t = EndpointTester(method(order_capture, checkout_id, service_area_id))
     req = t.prepare()
 
-    assert req.method == "GET"
     assert req.url == f"/checkouts/{checkout_id}/service-area/{service_area_id}/{path}"
 
     t.assert_json_returned()

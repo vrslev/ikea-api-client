@@ -30,7 +30,6 @@ def test_cart_req(cart: API):
     t = EndpointTester(cart._req(query, **variables))
     req = t.prepare()
 
-    assert req.method == "POST"
     assert req.json["query"] == query
     assert req.json["variables"] == {"languageCode": cart.const.language, **variables}
 

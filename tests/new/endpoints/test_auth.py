@@ -7,8 +7,6 @@ def test_get_guest_token(constants: Constants):
     c = EndpointTester(auth.API(constants).get_guest_token())
 
     request_info = c.prepare()
-    assert request_info.method == "POST"
-    assert request_info.url == ""
     assert request_info.json == {"retailUnit": constants.country}
 
     token = "mytoken"  # nosec

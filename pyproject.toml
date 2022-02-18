@@ -66,4 +66,6 @@ exclude_lines = [
     "pragma: no cover",
     "if sys.version_info",
     "if TYPE_CHECKING",
+    "@abstractmethod",
+    "raise NotImplementedError"
 ]

@@ -25,5 +25,5 @@ def test_error_handlers(constants: Constants):
             return response.json["anotherthing"]
 
     t = EndpointTester(API(constants).get_something("somecoolthing"))
-    resp = t.parse(MockResponseInfo(json_={"onlysomethng": "tada"}))
+    resp = t.parse(MockResponseInfo(json_={"onlysomethng": "tada"}), handle_errors=True)
     assert resp == "You're welcome!"
