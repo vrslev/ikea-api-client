@@ -31,7 +31,9 @@ class API(BaseAPI):
     def _build_request(self):
         return self.RequestInfo("GET", _build_url(self.items))
 
-    def _handle_response(self, response: ResponseInfo[Any], relapse: int) -> Any:
+    def _handle_response(
+        self, response: ResponseInfo[Any], relapse: int
+    ) -> list[dict[str, Any]] | None:
         if response.status_code == 404 and len(self.items) == 1:
             if relapse != 0:
                 raise WrongItemCodeError(response)
@@ -70,7 +72,7 @@ class API(BaseAPI):
                 del self.items[item_code]
 
     @endpoint()
-    def get_items(self, item_codes: list[str]) -> EndpointGen[dict[str, Any]]:
+    def get_items(self, item_codes: list[str]) -> EndpointGen[list[dict[str, Any]]]:
         self.items = {i: False for i in item_codes}
 
         for relapse in range(3):
