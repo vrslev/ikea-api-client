@@ -37,19 +37,19 @@ __all__ = [
 
 def get_purchase_history(
     constants: Constants, token: str
-) -> list[types.PurchaseHistoryItem]:
-    response = run(purchases.API(constants, token=token).history())
+) -> Wrapper[list[types.PurchaseHistoryItem]]:
+    response = yield from wrap_endpoint(purchases.API(constants, token=token).history())
     return parsers.purchases.parse_history(constants, response)
 
 
 def get_purchase_info(
     constants: Constants, token: str, *, id: str, email: str | None = None
-) -> types.PurchaseInfo:
-    gen = purchases.API(constants, token=token).order_info(
-        order_number=id, email=email, queries=["StatusBannerOrder", "CostsOrder"]
+) -> Wrapper[types.PurchaseInfo]:
+    status_banner_resp, costs_resp = yield from wrap_endpoint(
+        purchases.API(constants, token=token).order_info(
+            order_number=id, email=email, queries=["StatusBannerOrder", "CostsOrder"]
+        )
     )
-    status_banner_resp, costs_resp = run(gen)
-
     status_banner = parsers.purchases.parse_status_banner_order(status_banner_resp)
     costs = parsers.purchases.parse_costs_order(costs_resp)
     return types.PurchaseInfo(**status_banner.dict(), **costs.dict())
@@ -101,7 +101,7 @@ def get_delivery_services(
     *,
     items: dict[str, int],
     zip_code: str,
-) -> types.GetDeliveryServicesResponse:
+) -> Wrapper[types.GetDeliveryServicesResponse]:
     cart_ = cart.API(constants, token=token)
     cannot_add = yield from add_items_to_cart(cart_, items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
@@ -111,22 +111,27 @@ def get_delivery_services(
         )
 
     order_capture_ = order_capture.API(constants=constants, token=token)
-    cart_response = run(cart_.show())
+    cart_response = yield from wrap_endpoint(cart_.show())
     checkout_items = order_capture.convert_cart_to_checkout_items(cart_response)
-    checkout_id = run(order_capture_.get_checkout(checkout_items))
-    service_area = run(order_capture_.get_service_area(checkout_id, zip_code=zip_code))
-
-    home = order_capture_.get_home_delivery_services(  # TODO: Httpx
-        checkout_id, service_area
+    checkout_id = yield from wrap_endpoint(order_capture_.get_checkout(checkout_items))
+    service_area = yield from wrap_endpoint(
+        order_capture_.get_service_area(checkout_id, zip_code=zip_code)
     )
-    collect = order_capture_.get_collect_delivery_services(checkout_id, service_area)
+
+    home = yield from wrap_endpoint(
+        order_capture_.get_home_delivery_services(  # TODO: Httpx
+            checkout_id, service_area
+        )
+    )
+    collect = yield from wrap_endpoint(
+        order_capture_.get_collect_delivery_services(checkout_id, service_area)
+    )
 
     parsed_data = parsers.order_capture.main(
         constants=constants,
-        home_delivery_services_response=run(home),
-        collect_delivery_services_response=run(collect),
+        home_delivery_services_response=home,
+        collect_delivery_services_response=collect,
     )
-
     return types.GetDeliveryServicesResponse(
         delivery_options=parsed_data, cannot_add=cannot_add
     )
