@@ -1,12 +1,9 @@
-import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property, partial
-from types import FrameType
 from typing import (
     Any,
     Callable,
-    Concatenate,
     Generator,
     Generic,
     Iterable,
@@ -58,10 +55,6 @@ class ResponseInfo(ABC, Generic[LibResponse]):
 EndpointResponse = TypeVar("EndpointResponse")
 EndpointGen = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
 
-EndpointParams = ParamSpec("EndpointParams")
-EndpointMethod = Callable[EndpointParams, EndpointGen[EndpointResponse]]
-EndpointFunc = Callable[Concatenate[EndpointParams], EndpointGen[EndpointResponse]]
-
 
 class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
     const: Constants
@@ -99,14 +92,12 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
 
 
 ErrorHandler = Callable[[ResponseInfo[Any]], None]
-T = TypeVar("T")
-
 PreParams = ParamSpec("PreParams")
 
 
 @dataclass
 class EndpointInfo(Generic[EndpointResponse]):
-    func: EndpointFunc[[], EndpointResponse]
+    func: Callable[[], EndpointGen[EndpointResponse]]
     handlers: Iterable[ErrorHandler]
 
 
@@ -127,65 +118,7 @@ def endpoint(handlers: Iterable[ErrorHandler] | None = None):
     return decorator
 
 
-def add_handler(handler: ErrorHandler):
-    def decorator(func: T) -> T:
-        if not getattr(func, "error_handlers", None):
-            func.error_handlers: list[ErrorHandler] = []  # type: ignore
-        func.error_handlers.append(handler)  # type: ignore
-        return func
-
-    return decorator
-
-
-def get_request_info(gen: EndpointGen[Any]) -> RequestInfo:
-    return next(gen)
-
-
-def get_source_gen(gen: EndpointGen[Any]) -> Generator[Any, Any, Any]:
-    self = gen.gi_frame.f_locals.get("self")
-    if self:
-        return gen
-    if (
-        gen.gi_yieldfrom
-        and gen.gi_yieldfrom.gi_frame
-        and gen.gi_yieldfrom.gi_frame.f_locals.get("self")
-    ):
-        return gen.gi_yieldfrom
-    raise RuntimeError("Frame not found")
-
-
-# def get_instance_from_gen(gen: Endpoint[Any]) -> BaseAPI:
-#     self = gen.gi_frame.f_locals.get("self")
-#     if not self and gen.gi_yieldfrom:
-#         return gen.gi_yieldfrom.gi_frame.f_locals["self"]
-#     assert self
-#     return self
-
-
-def get_self_from_gen(gen: EndpointGen[Any]) -> BaseAPI:
-    return gen.gi_frame.f_locals["self"]
-
-
-def get_func_from_gen(gen: EndpointGen[EndpointResponse]) -> Callable[..., Any]:
-    source_gen = get_source_gen(gen)
-    return getattr(get_self_from_gen(source_gen), source_gen.gi_code.co_name)
-
-
 class SyncExecutor(ABC, Generic[LibResponse]):
-    @classmethod
-    def after_run(
-        cls, gen: EndpointGen[EndpointResponse], response_info: ResponseInfo[Any]
-    ) -> RequestInfo:
-        print("after")
-        func = get_func_from_gen(gen)
-        try:
-            for handler in getattr(func, "error_handlers", ()):
-                handler(response_info)
-        except Exception as exc:
-            gen.throw(exc)
-
-        return gen.send(response_info)
-
     @staticmethod
     @abstractmethod
     def request(
