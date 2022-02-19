@@ -61,7 +61,7 @@ jobs:
           poetry config virtualenvs.create false
 
       - name: Install package
-        run: poetry install --no-dev -E wrappers -E test
+        run: poetry install --extras all
 
       - name: Install Pyright
         run: npm install -g --no-package-lock --no-save pyright
@@ -97,7 +97,7 @@ jobs:
           poetry config virtualenvs.create false
 
       - name: Install package
-        run: poetry install --no-dev -E wrappers -E test
+        run: poetry install --extras all
 
       - name: Test
         run: pytest --color=yes --cov --cov-report=xml
