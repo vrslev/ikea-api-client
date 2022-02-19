@@ -3,38 +3,9 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
-import responses
 
 import ikea_api.utils
-from ikea_api.utils import (
-    format_item_code,
-    get_unshortened_links_from_ingka_pagelinks,
-    parse_item_codes,
-)
-
-
-@responses.activate
-@pytest.mark.parametrize(
-    "v",
-    (
-        "https://www.ikea.com/ru/ru/p/fejka-feyka-iskusstvennoe-rastenie-v-gorshke-3sht-d-doma-ulicy-zelenyy-10485209/",
-        "10485209",
-    ),
-)
-def test_get_unshortened_links_from_ingka_pagelinks_no_value(v: str):
-    get_unshortened_links_from_ingka_pagelinks(v)
-
-
-@responses.activate
-def test_get_unshortened_links_from_ingka_pagelinks_with_value():
-    pagelink = "https://ingka.page.link/Re4Cos2tqLvuf6Mz7"
-    exp_url = (
-        "https://www.ikea.com/ru/ru/p/fejka-feyka-iskusstvennoe-rastenie"
-        + "-v-gorshke-3sht-d-doma-ulicy-zelenyy-10485209/"
-    )
-    responses.add(responses.GET, pagelink, headers={"Location": exp_url})
-
-    assert list(get_unshortened_links_from_ingka_pagelinks(pagelink)) == [exp_url]
+from ikea_api.utils import format_item_code, parse_item_codes
 
 
 def test_parse_item_codes_unshorten_ingka_pagelinks_false(
