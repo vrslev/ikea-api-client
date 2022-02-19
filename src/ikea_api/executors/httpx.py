@@ -32,6 +32,10 @@ class HttpxResponseInfo(ResponseInfo):
     def json(self) -> Any:
         return self.response.json()
 
+    @property
+    def is_success(self) -> bool:
+        return self.response.is_success
+
 
 @lru_cache
 def get_cached_session(headers: frozenset[tuple[str, str]]) -> httpx.AsyncClient:

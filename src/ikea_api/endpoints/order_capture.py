@@ -2,7 +2,11 @@ from typing import Any, TypedDict
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseAuthIkeaAPI
-from ikea_api.error_handlers import handle_401, handle_json_decode_error
+from ikea_api.error_handlers import (
+    handle_401,
+    handle_json_decode_error,
+    handle_not_success,
+)
 from ikea_api.exceptions import ProcessingError
 
 
@@ -10,6 +14,9 @@ class CheckoutItem(TypedDict):
     itemNo: str
     quantity: int
     uom: str
+
+
+handlers = (handle_json_decode_error, handle_401, handle_not_success)
 
 
 class API(BaseAuthIkeaAPI):
@@ -21,7 +28,7 @@ class API(BaseAuthIkeaAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @endpoint(handlers=[handle_json_decode_error, handle_401])
+    @endpoint(handlers)
     def get_checkout(self, items: list[CheckoutItem]) -> Endpoint[str]:
         """Generate checkout for items"""
         response = yield self.RequestInfo(
@@ -43,7 +50,7 @@ class API(BaseAuthIkeaAPI):
             raise ProcessingError(response, "No id for service area")
         return response.json["resourceId"]
 
-    @endpoint(handlers=[handle_json_decode_error, handle_401])
+    @endpoint(handlers)
     def get_service_area(
         self, checkout_id: str, zip_code: str, state_code: str | None = None
     ) -> Endpoint[str]:
@@ -59,7 +66,7 @@ class API(BaseAuthIkeaAPI):
             raise ProcessingError(response, "No id for service area")
         return response.json["id"]
 
-    @endpoint(handlers=[handle_json_decode_error, handle_401])
+    @endpoint(handlers)
     def get_home_delivery_services(
         self, checkout_id: str, service_area_id: str
     ) -> Endpoint[dict[str, Any]]:
@@ -70,7 +77,7 @@ class API(BaseAuthIkeaAPI):
         )
         return response.json
 
-    @endpoint(handlers=[handle_json_decode_error, handle_401])
+    @endpoint(handlers)
     def get_collect_delivery_services(
         self, checkout_id: str, service_area_id: str
     ) -> Endpoint[dict[str, Any]]:

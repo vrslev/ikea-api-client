@@ -2,11 +2,24 @@ from typing import Any, Literal
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseAuthIkeaAPI
-from ikea_api.error_handlers import handle_401, handle_graphql_error
+from ikea_api.error_handlers import (
+    handle_401,
+    handle_graphql_error,
+    handle_json_decode_error,
+    handle_not_success,
+)
 
 
 def _build_payload(operation_name: str, query: str, **variables: Any) -> dict[str, Any]:
     return {"operationName": operation_name, "variables": variables, "query": query}
+
+
+handlers = (
+    handle_json_decode_error,
+    handle_graphql_error,
+    handle_401,
+    handle_not_success,
+)
 
 
 class API(BaseAuthIkeaAPI):
@@ -22,7 +35,7 @@ class API(BaseAuthIkeaAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @endpoint(handlers=[handle_graphql_error, handle_401])
+    @endpoint(handlers)
     def history(self, *, take: int = 5, skip: int = 0) -> Endpoint[dict[str, Any]]:
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
@@ -31,7 +44,7 @@ class API(BaseAuthIkeaAPI):
         response = yield self.RequestInfo("POST", json=payload)
         return response.json
 
-    @endpoint(handlers=[handle_graphql_error, handle_401])
+    @endpoint(handlers)
     def order_info(
         self,
         order_number: str,

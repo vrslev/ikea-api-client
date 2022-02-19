@@ -2,7 +2,12 @@ from typing import Any, TypedDict
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseAuthIkeaAPI
-from ikea_api.error_handlers import handle_401, handle_graphql_error
+from ikea_api.error_handlers import (
+    handle_401,
+    handle_graphql_error,
+    handle_json_decode_error,
+    handle_not_success,
+)
 
 
 class _TemplatedItem(TypedDict):
@@ -22,7 +27,14 @@ class API(BaseAuthIkeaAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @endpoint(handlers=[handle_graphql_error, handle_401])
+    @endpoint(
+        handlers=[
+            handle_json_decode_error,
+            handle_graphql_error,
+            handle_401,
+            handle_not_success,
+        ]
+    )
     def _req(self, query: str, **variables: Any) -> Endpoint[dict[str, Any]]:
         payload = {
             "query": query,

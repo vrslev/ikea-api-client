@@ -30,6 +30,10 @@ class RequestsResponseInfo(ResponseInfo):
     def json(self) -> Any:
         return self.response.json()
 
+    @property
+    def is_success(self) -> bool:
+        return self.response.ok
+
 
 @lru_cache
 def get_cached_session(headers: frozenset[tuple[str, str]]) -> requests.Session:

@@ -38,6 +38,7 @@ LibResponse = TypeVar("LibResponse")
 class ResponseInfo(ABC):
     headers: Mapping[str, str] = field(init=False)
     status_code: int = field(init=False)
+    ok: bool = field(init=False)
 
     @cached_property
     @abstractmethod
@@ -47,6 +48,11 @@ class ResponseInfo(ABC):
     @cached_property
     @abstractmethod
     def json(self) -> Any:
+        ...
+
+    @property
+    @abstractmethod
+    def is_success(self) -> bool:
         ...
 
 

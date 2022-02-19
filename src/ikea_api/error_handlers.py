@@ -19,3 +19,8 @@ def handle_401(response: ResponseInfo):
 def handle_graphql_error(response: ResponseInfo):
     if "errors" in response.json:
         raise GraphQLError(response)
+
+
+def handle_not_success(response: ResponseInfo):
+    if not response.is_success:
+        raise APIError(response)
