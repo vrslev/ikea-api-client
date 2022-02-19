@@ -35,6 +35,9 @@ requests = ["requests"]
 httpx = ["httpx"]
 all = ["pydantic", "requests", "httpx"]
 
+[tool.poetry-version-plugin]
+source = "git-tag"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -52,14 +55,6 @@ reportMissingTypeStubs = false
 reportPrivateUsage = false
 reportImportCycles = false
 # reportUnnecessaryTypeIgnoreComment = "warning"
-
-[tool.semantic_release]
-branch = "main"
-version_toml = "pyproject.toml:tool.poetry.version"
-build_command = "pip install build && python -m build"
-commit_subject = "сhore: Update version to {version}"
-commit_author = "github-actions <github-actions@github.com>"
-changelog_sections = "feature, fix, build, refactor, test, ci, chore"
 
 [tool.coverage.report]
 skip_covered = true

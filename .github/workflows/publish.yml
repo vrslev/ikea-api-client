@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: |
+          pip install -U pip
+          pip install -U poetry==v1.2.0a2
+          poetry plugin add poetry-version-plugin
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: release-${{ hashFiles('pyproject.toml') }}
+
+      - name: Install dependencies
+        run: poetry install --without dev
+
+      - name: Build
+        run: poetry build
+
+      - name: Publish
+        run: poetry publish -u $USER -p $PASSWORD
+        env:
+          USER: __token__
+          PASSWORD: ${{ secrets.PYPI_TOKEN }}
