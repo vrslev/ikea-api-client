@@ -1,6 +1,5 @@
 from types import SimpleNamespace
 from typing import Any
-from unittest.mock import MagicMock
 
 from ikea_api.abc import (
     AsyncExecutor,
@@ -13,7 +12,7 @@ from ikea_api.abc import (
     SyncExecutor,
     endpoint,
 )
-from tests.conftest import EndpointTester, MockResponseInfo
+from tests.conftest import EndpointTester, ExecutorContext, MockResponseInfo
 
 
 def test_endpoint_decorator():
@@ -30,50 +29,30 @@ def test_endpoint_decorator():
     assert info.handlers == [handler]
 
 
-def test_sync_executor(response: ResponseInfo):
-    request_info = RequestInfo(
-        SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
-    )
-
+def test_sync_executor(executor_context: ExecutorContext):
     class MyExecutor(SyncExecutor):
         @staticmethod
         def request(request: RequestInfo):
-            assert request == request_info
-            return response
+            assert request == executor_context.request
+            return executor_context.response
 
-    mock = MagicMock()
-
-    @endpoint(handlers=[mock])
-    def myendpoint() -> Endpoint[tuple[str, str]]:
-        response1 = yield request_info
-        response2 = yield request_info
-        return (response1.json, response2.json)
-
-    assert MyExecutor.run(myendpoint()) == (response.json, response.json)
-    mock.assert_called_with(response)
+    res = MyExecutor.run(executor_context.endpoint())
+    assert res == executor_context.endpoint_response
 
 
-async def test_async_executor(response: ResponseInfo):
-    request_info = RequestInfo(
-        SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
-    )
+async def test_async_executor(executor_context: ExecutorContext):
+    async def something():
+        pass
 
     class MyExecutor(AsyncExecutor):
         @staticmethod
         async def request(request: RequestInfo):
-            assert request == request_info
-            return response
+            assert request == executor_context.request
+            await something()
+            return executor_context.response
 
-    mock = MagicMock()
-
-    @endpoint(handlers=[mock])
-    def myendpoint() -> Endpoint[tuple[str, str]]:
-        response1 = yield request_info
-        response2 = yield request_info
-        return (response1.json, response2.json)
-
-    assert await MyExecutor.run(myendpoint()) == (response.json, response.json)
-    mock.assert_called_with(response)
+    res = await MyExecutor.run(executor_context.endpoint())
+    assert res == executor_context.endpoint_response
 
 
 def test_error_handlers():

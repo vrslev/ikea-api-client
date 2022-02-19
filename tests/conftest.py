@@ -2,12 +2,19 @@ import json
 from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from ikea_api.abc import EndpointInfo, ResponseInfo
+from ikea_api.abc import (
+    Endpoint,
+    EndpointInfo,
+    RequestInfo,
+    ResponseInfo,
+    SessionInfo,
+    endpoint,
+)
 from ikea_api.constants import Constants
 
 
@@ -100,11 +107,38 @@ class EndpointTester:
         prop.assert_called_once_with()
 
 
+@dataclass
+class ExecutorContext:
+    request: RequestInfo
+    response: ResponseInfo
+    endpoint: Callable[[], EndpointInfo[Any]]
+    endpoint_response: Any
+
+
 @pytest.fixture
-def response():
-    return MockResponseInfo(
+def executor_context():
+    request = RequestInfo(
+        SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
+    )
+    response = MockResponseInfo(
         headers={"Accept": "*/*"},
         status_code=200,
         text_='{"ok":"ok"}',
         json_={"ok": "ok"},
     )
+    mock_handler = MagicMock()
+
+    @endpoint(handlers=[mock_handler])
+    def myendpoint() -> Endpoint[tuple[str, str]]:
+        response1 = yield request
+        response2 = yield request
+        return (response1.json, response2.json)
+
+    yield ExecutorContext(
+        request=request,
+        response=response,
+        endpoint=myendpoint,
+        endpoint_response=(response.json, response.json),
+    )
+
+    mock_handler.assert_called_with(response)

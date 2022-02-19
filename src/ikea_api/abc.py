@@ -37,7 +37,7 @@ class ResponseInfo(ABC):
     status_code: int = field(init=False)
     ok: bool = field(init=False)
 
-    @cached_property
+    @cached_property  # TODO: Use getters instead of abstract properties
     @abstractmethod
     def text(self) -> str:
         ...
