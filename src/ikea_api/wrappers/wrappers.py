@@ -131,15 +131,14 @@ async def get_delivery_services(
     )
 
 
-def _chunks(list_: list[Any], chunk_size: int):
+def chunks(list_: list[Any], chunk_size: int):
     return (list_[i : i + chunk_size] for i in range(0, len(list_), chunk_size))
 
 
 async def _get_ingka_items(constants: Constants, item_codes: list[str]):
     api = IngkaItemsAPI(constants)
-    tasks = (run_with_httpx(api.get_items(c)) for c in _chunks(item_codes, 50))
+    tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 50))
     responses = await asyncio.gather(*tasks)
-
     res: list[types.IngkaItem] = []
     for response in responses:
         res += parse_ingka_items(constants, response)
@@ -193,7 +192,7 @@ async def _get_ingka_pip_items(
 
 async def _get_iows_items(constants: Constants, item_codes: list[str]):
     api = IowsItemsAPI(constants)
-    tasks = (run_with_httpx(api.get_items(c)) for c in _chunks(item_codes, 90))
+    tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 90))
     responses = await asyncio.gather(*tasks)
 
     res: list[types.ParsedItem] = []

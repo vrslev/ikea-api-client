@@ -1,6 +1,9 @@
+import asyncio
 import re
 import sys
-from typing import Callable
+import warnings
+from types import SimpleNamespace
+from typing import Any, Awaitable, Callable
 
 import pytest
 
@@ -14,10 +17,18 @@ from ikea_api.endpoints.cart import convert_items
 from ikea_api.endpoints.order_capture import convert_cart_to_checkout_items
 from ikea_api.executors.httpx import HttpxExecutor
 from ikea_api.executors.requests import RequestsExecutor
+from ikea_api.utils import parse_item_codes
 from ikea_api.wrappers import types
 from ikea_api.wrappers.wrappers import (
+    _get_ingka_items,
+    _get_ingka_pip_items,
+    _get_iows_items,
+    _get_pip_items,
+    _get_pip_items_map,
     add_items_to_cart,
+    chunks,
     get_delivery_services,
+    get_items,
     get_purchase_history,
     get_purchase_info,
 )
@@ -225,3 +236,203 @@ async def test_get_delivery_services_main(
         constants, "mytoken", items={"11111111": 2}, zip_code="101000"  # nosec
     )
     assert isinstance(res, types.GetDeliveryServicesResponse)
+
+
+@pytest.mark.parametrize(
+    ("list_", "chunk_size", "expected"),
+    (
+        (["11111111"] * 50, 26, [["11111111"] * 26, ["11111111"] * 24]),
+        (["11111111"] * 75, 80, [["11111111"] * 75]),
+        (["11111111"] * 10, 5, [["11111111"] * 5, ["11111111"] * 5]),
+        (
+            ["11111111", "11111111", "22222222", "33333333"],
+            2,
+            [["11111111", "11111111"], ["22222222", "33333333"]],
+        ),
+    ),
+)
+def test_split_to_chunks(list_: list[str], chunk_size: int, expected: list[list[str]]):
+    result = list(chunks(list_, chunk_size))
+    for res, exp in zip(result, expected):
+        assert len(res) == len(exp)
+
+
+def patch_asyncio_gather(
+    monkeypatch: pytest.MonkeyPatch, func: Callable[..., Awaitable[Any]]
+):
+    monkeypatch.setattr(asyncio, "gather", func)
+    warnings.simplefilter("ignore", RuntimeWarning)  # coroutines not awaited
+
+
+async def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+    async def func(*tasks: Awaitable[Any]):
+        assert len(tasks) == 2
+        return TestData.item_ingka[0], TestData.item_ingka[0]
+
+    patch_asyncio_gather(monkeypatch, func)
+    res = await _get_ingka_items(constants, ["11111111"] * 51)
+    assert len(res) == 2
+    assert isinstance(res[0], types.IngkaItem)
+
+
+async def test_get_pip_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+    async def func(*tasks: Awaitable[Any]):
+        assert len(tasks) == 10
+        return [TestData.item_pip[1]] * 10
+
+    patch_asyncio_gather(monkeypatch, func)
+    res = await _get_pip_items(constants, ["11111111"] * 10)
+    assert len(res) == 10
+    assert isinstance(res[0], types.PipItem)
+
+
+def test_get_pip_items_map():
+    items: list[Any] = [
+        SimpleNamespace(item_code="11111111"),
+        SimpleNamespace(item_code="11111111", name="test"),
+        SimpleNamespace(item_code="22222222"),
+        None,
+    ]
+    res = _get_pip_items_map(items)
+    assert res["11111111"] == SimpleNamespace(item_code="11111111", name="test")
+    assert res["22222222"] == SimpleNamespace(item_code="22222222")
+
+
+async def test_get_ingka_pip_items(
+    constants: Constants, monkeypatch: pytest.MonkeyPatch
+):
+    exp_item_codes = ["11111111", "22222222", "33333333", "44444444"]
+
+    async def mock_get_ingka_items(constants: Constants, item_codes: list[str]):
+        assert item_codes == exp_item_codes
+        return [
+            types.IngkaItem(
+                is_combination=False,
+                item_code="11111111",
+                name="first item",
+                image_url="https://ikea.com/image1.jpg",
+                weight=10.0,
+                child_items=[],
+            ),
+            types.IngkaItem(
+                is_combination=True,
+                item_code="22222222",
+                name="second item",
+                image_url="https://ikea.com/image2.jpg",
+                weight=21.0,
+                child_items=[
+                    types.ChildItem(
+                        name="child item", item_code="12121212", weight=10.5, qty=2
+                    )
+                ],
+            ),
+            types.IngkaItem(
+                is_combination=False,
+                item_code="44444444",
+                name="fourth item",
+                image_url="https://ikea.com/image4.jpg",
+                weight=0.55,
+                child_items=[],
+            ),
+        ]
+
+    async def mock_get_pip_items(constants: Constants, item_codes: list[str]):
+        assert item_codes == exp_item_codes
+        return [
+            types.PipItem(
+                item_code="11111111",
+                price=1000,
+                url="https://ikea.com/11111111",
+                category_name="test category name",
+                category_url="https://ikea.com/category/1",  # type: ignore
+            ),
+            types.PipItem(
+                item_code="22222222",
+                price=20000,
+                url="https://ikea.com/22222222",
+                category_name=None,
+                category_url=None,
+            ),
+            types.PipItem(
+                item_code="33333333",
+                price=20000,
+                url="https://ikea.com/33333333",
+                category_name=None,
+                category_url=None,
+            ),
+        ]
+
+    monkeypatch.setattr(
+        ikea_api.wrappers.wrappers, "_get_ingka_items", mock_get_ingka_items
+    )
+    monkeypatch.setattr(
+        ikea_api.wrappers.wrappers, "_get_pip_items", mock_get_pip_items
+    )
+
+    assert await _get_ingka_pip_items(constants, exp_item_codes) == [
+        types.ParsedItem(
+            is_combination=False,
+            item_code="11111111",
+            name="first item",
+            image_url="https://ikea.com/image1.jpg",
+            weight=10.0,
+            child_items=[],
+            price=1000,
+            url="https://ikea.com/11111111",
+            category_name="test category name",
+            category_url="https://ikea.com/category/1",  # type: ignore
+        ),
+        types.ParsedItem(
+            is_combination=True,
+            item_code="22222222",
+            name="second item",
+            image_url="https://ikea.com/image2.jpg",
+            weight=21.0,
+            child_items=[
+                types.ChildItem(
+                    name="child item", item_code="12121212", weight=10.5, qty=2
+                )
+            ],
+            price=20000,
+            url="https://ikea.com/22222222",
+            category_name=None,
+            category_url=None,
+        ),
+    ]
+
+
+async def test_get_iows_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+    async def func(*tasks: Awaitable[Any]):
+        assert len(tasks) == 2
+        return [TestData.item_iows[0]] * 50, [TestData.item_iows[0]] * 49
+
+    patch_asyncio_gather(monkeypatch, func)
+    res = await _get_iows_items(constants, ["11111111"] * 99)
+    assert len(res) == 99
+    assert isinstance(res[0], types.ParsedItem)
+
+
+async def test_get_items_main(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+    raw_item_codes = ["111.111.11", "22222222"]
+    exp_item_codes = parse_item_codes(raw_item_codes)
+    exp_items = [
+        SimpleNamespace(item_code="11111111"),
+        SimpleNamespace(item_code="22222222"),
+    ]
+
+    async def mock_get_ingka_pip_items(constants: Constants, item_codes: list[str]):
+        assert item_codes == exp_item_codes
+        return [exp_items[0]]
+
+    async def mock_get_iows_items(constants: Constants, item_codes: list[str]):
+        assert item_codes == [exp_item_codes[1]]
+        return [exp_items[1]]
+
+    monkeypatch.setattr(
+        ikea_api.wrappers.wrappers, "_get_ingka_pip_items", mock_get_ingka_pip_items
+    )
+    monkeypatch.setattr(
+        ikea_api.wrappers.wrappers, "_get_iows_items", mock_get_iows_items
+    )
+
+    assert await get_items(constants, raw_item_codes) == exp_items
