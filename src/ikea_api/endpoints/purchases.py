@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from ikea_api.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
 from ikea_api.constants import Constants, get_auth_header
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
@@ -30,12 +30,12 @@ class API(BaseAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint(handlers=[handle_graphql_error, handle_401])
-    def history(self, *, take: int = 5, skip: int = 0) -> EndpointGen[dict[str, Any]]:
+    def history(self, *, take: int = 5, skip: int = 0) -> Endpoint[dict[str, Any]]:
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
         payload = _build_payload("History", Queries.history, take=take, skip=skip)
-        response = yield self.RequestInfo("POST", "", json=payload)
+        response = yield self.RequestInfo("POST", json=payload)
         return response.json
 
     @endpoint(handlers=[handle_graphql_error, handle_401])
@@ -50,7 +50,7 @@ class API(BaseAPI):
         skip_products: int = 0,
         skip_product_prices: bool = False,
         take_products: int = 10,
-    ) -> EndpointGen[list[dict[str, Any]]]:
+    ) -> Endpoint[list[dict[str, Any]]]:
         """Get order information: status and costs.
 
         :params order_number: Purchase ID
@@ -100,7 +100,7 @@ class API(BaseAPI):
         else:
             headers = {"Referer": f"https://order.ikea.com/{order_number}/"}
 
-        response = yield self.RequestInfo("POST", "", json=payload, headers=headers)
+        response = yield self.RequestInfo("POST", json=payload, headers=headers)
         return response.json
 
 

@@ -1,4 +1,4 @@
-from ikea_api.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
 from ikea_api.error_handlers import handle_json_decode_error
 
 
@@ -16,8 +16,8 @@ class API(BaseAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint(handlers=[handle_json_decode_error])
-    def get_guest_token(self) -> EndpointGen[str]:
+    def get_guest_token(self) -> Endpoint[str]:
         response = yield self.RequestInfo(
-            "POST", "", json={"retailUnit": self.const.country}
+            "POST", json={"retailUnit": self.const.country}
         )
         return response.json["access_token"]

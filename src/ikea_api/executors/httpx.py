@@ -52,7 +52,7 @@ class HttpxExecutor(AsyncExecutor):
             params=request.params,
             data=request.data,
             json=request.json,
-            headers=request.headers or {},
+            headers=request.headers,
         )
         return HttpxResponseInfo(response)
 

@@ -1,6 +1,6 @@
 from typing import Any, TypedDict
 
-from ikea_api.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
 from ikea_api.constants import Constants, get_auth_header
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
@@ -32,12 +32,12 @@ class API(BaseAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint(handlers=[handle_graphql_error, handle_401])
-    def _req(self, query: str, **variables: Any) -> EndpointGen[dict[str, Any]]:
+    def _req(self, query: str, **variables: Any) -> Endpoint[dict[str, Any]]:
         payload = {
             "query": query,
             "variables": {"languageCode": self.const.language, **variables},
         }
-        response = yield self.RequestInfo("POST", "", json=payload)
+        response = yield self.RequestInfo("POST", json=payload)
         return response.json
 
     def show(self):

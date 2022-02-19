@@ -1,6 +1,6 @@
 from typing import Any
 
-from ikea_api.abc import BaseAPI, EndpointGen, ResponseInfo, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, ResponseInfo, SessionInfo, endpoint
 from ikea_api.exceptions import ItemFetchError, WrongItemCodeError
 
 ItemCodeToComboDict = dict[str, bool]
@@ -72,7 +72,7 @@ class API(BaseAPI):
                 del self.items[item_code]
 
     @endpoint()
-    def get_items(self, item_codes: list[str]) -> EndpointGen[list[dict[str, Any]]]:
+    def get_items(self, item_codes: list[str]) -> Endpoint[list[dict[str, Any]]]:
         self.items = {i: False for i in item_codes}
 
         for relapse in range(3):

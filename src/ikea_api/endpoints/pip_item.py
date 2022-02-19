@@ -1,6 +1,6 @@
 from typing import Any
 
-from ikea_api.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
 from ikea_api.error_handlers import handle_json_decode_error
 
 
@@ -18,7 +18,7 @@ class API(BaseAPI):
     @endpoint()
     def get_item(
         self, item_code: str, is_combination: bool = True
-    ) -> EndpointGen[dict[str, Any]]:
+    ) -> Endpoint[dict[str, Any]]:
         response = yield self.RequestInfo("GET", _build_url(item_code, is_combination))
 
         if response.status_code == 404 and is_combination:

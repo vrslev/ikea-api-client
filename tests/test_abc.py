@@ -1,4 +1,4 @@
-from ikea_api.abc import BaseAPI, EndpointGen, ResponseInfo, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, ResponseInfo, SessionInfo, endpoint
 from ikea_api.constants import Constants
 from tests.conftest import EndpointTester, MockResponseInfo
 
@@ -18,7 +18,7 @@ def test_error_handlers(constants: Constants):
             return SessionInfo("", {})
 
         @endpoint(handlers=[handle_no_anotherthing])
-        def get_something(self, something: str) -> EndpointGen[Something]:
+        def get_something(self, something: str) -> Endpoint[Something]:
             response = yield self.RequestInfo("POST", "", json={"name": something})
             return response.json["anotherthing"]
 

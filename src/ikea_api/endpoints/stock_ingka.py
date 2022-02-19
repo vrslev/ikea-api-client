@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ikea_api.abc import BaseAPI, EndpointGen, SessionInfo, endpoint
+from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
 from ikea_api.error_handlers import handle_json_decode_error
 from ikea_api.exceptions import ItemFetchError
 
@@ -20,9 +20,9 @@ class API(BaseAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint(handlers=[handle_json_decode_error])
-    def get_stock(self, item_codes: list[str]) -> EndpointGen[dict[str, Any]]:
+    def get_stock(self, item_codes: list[str]) -> Endpoint[dict[str, Any]]:
         params = {"itemNos": item_codes, "expand": "StoresList,Restocks,SalesLocations"}
-        response = yield self.RequestInfo("GET", "", params=params)
+        response = yield self.RequestInfo("GET", params=params)
 
         if "errors" not in response.json:
             return response.json

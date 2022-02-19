@@ -27,10 +27,10 @@ class RequestInfo:
     session_info: SessionInfo
     method: Literal["GET", "POST"]
     url: str
-    params: dict[str, Any] | None = None
+    params: dict[str, Any]
+    headers: dict[str, str]
     data: Any = None
     json: Any = None
-    headers: dict[str, str] | None = None
 
 
 LibResponse = TypeVar("LibResponse")
@@ -50,6 +50,88 @@ class ResponseInfo(ABC):
     @abstractmethod
     def json(self) -> Any:
         ...
+
+
+EndpointResponse = TypeVar("EndpointResponse")
+Endpoint = Generator[RequestInfo, ResponseInfo, EndpointResponse]
+
+ErrorHandler = Callable[[ResponseInfo], None]
+
+
+@dataclass
+class EndpointInfo(Generic[EndpointResponse]):
+    func: Callable[[], Endpoint[EndpointResponse]]
+    handlers: Iterable[ErrorHandler]
+
+
+P = ParamSpec("P")
+
+
+def endpoint(
+    handlers: Iterable[ErrorHandler] | None = None,
+) -> Callable[
+    [Callable[P, Endpoint[EndpointResponse]]],
+    Callable[P, EndpointInfo[EndpointResponse]],
+]:
+    def decorator(
+        func: Callable[P, Endpoint[EndpointResponse]]
+    ) -> Callable[P, EndpointInfo[EndpointResponse]]:
+        def wrapper(
+            *args: P.args, **kwargs: P.kwargs
+        ) -> EndpointInfo[EndpointResponse]:
+            return EndpointInfo(
+                func=partial(func, *args, **kwargs), handlers=handlers or ()
+            )
+
+        return wrapper
+
+    return decorator
+
+
+class SyncExecutor(ABC):
+    @staticmethod
+    @abstractmethod
+    def request(request: RequestInfo) -> ResponseInfo:
+        ...
+
+    @classmethod
+    def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+        gen = endpoint.func()
+        req_info = next(gen)
+
+        while True:
+            response_info = cls.request(req_info)
+
+            try:
+                for handler in endpoint.handlers:
+                    handler(response_info)
+                req_info = gen.send(response_info)
+
+            except StopIteration as exc:
+                return exc.value
+
+
+class AsyncExecutor(ABC):
+    @staticmethod
+    @abstractmethod
+    async def request(request: RequestInfo) -> ResponseInfo:
+        ...
+
+    @classmethod
+    async def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+        gen = endpoint.func()
+        req_info = next(gen)
+
+        while True:
+            response_info = await cls.request(req_info)
+
+            try:
+                for handler in endpoint.handlers:
+                    handler(response_info)
+                req_info = gen.send(response_info)
+
+            except StopIteration as exc:
+                return exc.value
 
 
 class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
@@ -72,92 +154,18 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
     def RequestInfo(
         self,
         method: Literal["GET", "POST"],
-        url: str,
+        url: str | None = None,
         params: dict[str, Any] | None = None,
-        data: Any = None,
-        json: Any = None,
         headers: dict[str, str] | None = None,
+        json: Any = None,
+        data: Any = None,
     ) -> RequestInfo:
         return RequestInfo(
+            session_info=self.session_info,
             method=method,
-            url=url,
-            params=params,
+            url=url or "",
+            params=params or {},
+            headers=headers or {},
             data=data,
             json=json,
-            headers=headers,
-            session_info=self.session_info,
         )
-
-
-EndpointResponse = TypeVar("EndpointResponse")
-EndpointGen = Generator[RequestInfo, ResponseInfo, EndpointResponse]
-
-ErrorHandler = Callable[[ResponseInfo], None]
-PreParams = ParamSpec("PreParams")
-
-
-@dataclass
-class EndpointInfo(Generic[EndpointResponse]):
-    func: Callable[[], EndpointGen[EndpointResponse]]
-    handlers: Iterable[ErrorHandler]
-
-
-def endpoint(handlers: Iterable[ErrorHandler] | None = None):
-    def decorator(
-        func: Callable[PreParams, EndpointGen[EndpointResponse]]
-    ) -> Callable[PreParams, EndpointInfo[EndpointResponse]]:
-        def wrapper(
-            *args: PreParams.args, **kwargs: PreParams.kwargs
-        ) -> EndpointInfo[EndpointResponse]:
-            return EndpointInfo(
-                func=partial(func, *args, **kwargs),
-                handlers=handlers or (),
-            )
-
-        return wrapper
-
-    return decorator
-
-
-class SyncExecutor(ABC):
-    @staticmethod
-    @abstractmethod
-    def request(request: RequestInfo) -> ResponseInfo:
-        ...
-
-    @classmethod
-    def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
-        gen = endpoint.func()
-        req_info = next(gen)
-
-        while True:
-            try:
-                response_info = cls.request(req_info)
-                for handler in endpoint.handlers:
-                    handler(response_info)
-                req_info = gen.send(response_info)
-
-            except StopIteration as exc:
-                return exc.value
-
-
-class AsyncExecutor(ABC):
-    @staticmethod
-    @abstractmethod
-    async def request(request: RequestInfo) -> ResponseInfo:
-        ...
-
-    @classmethod
-    async def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
-        gen = endpoint.func()
-        req_info = next(gen)
-
-        while True:
-            try:
-                response_info = await cls.request(req_info)
-                for handler in endpoint.handlers:
-                    handler(response_info)
-                req_info = gen.send(response_info)
-
-            except StopIteration as exc:
-                return exc.value
