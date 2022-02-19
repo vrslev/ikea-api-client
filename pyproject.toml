@@ -26,7 +26,6 @@ httpx = {version = ">=0.22.0<1", optional = true}
 pytest = "7.0.1"
 pytest-asyncio = "0.18.1"
 pytest-cov = "3.0.0"
-pytest-randomly = "3.11.0"
 black = {version = "22.1.0"}
 pre-commit = "2.17.0"
 
