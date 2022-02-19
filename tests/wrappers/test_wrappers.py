@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 import sys
 from types import SimpleNamespace
 from typing import Any, Callable
@@ -35,16 +34,11 @@ from ikea_api.wrappers.wrappers import (
 from tests.conftest import MockResponseInfo, TestData
 
 
-def test_pydantic_import_passes():
-    import ikea_api.wrappers.wrappers  # type: ignore
-
-
 def test_pydantic_import_fails():
     sys.modules["pydantic"] = None  # type: ignore
     del sys.modules["ikea_api.wrappers.wrappers"]
     with pytest.raises(
-        RuntimeError,
-        match=re.escape("To use wrappers you need Pydantic to be installed"),
+        RuntimeError, match="To use wrappers you need Pydantic to be installed"
     ):
         import ikea_api.wrappers.wrappers  # type: ignore
     del sys.modules["pydantic"]

@@ -1,3 +1,4 @@
+import sys
 from typing import cast
 
 import httpx
@@ -5,8 +6,20 @@ import pytest
 
 import ikea_api.executors.httpx
 from ikea_api.abc import SessionInfo
-from ikea_api.executors.httpx import HttpxResponseInfo, get_session_from_info, run
+from ikea_api.executors.httpx import (
+    HttpxResponseInfo,
+    get_cached_session,
+    get_session_from_info,
+    run,
+)
 from tests.conftest import ExecutorContext
+
+
+def test_httpx_import_fails():
+    sys.modules["httpx"] = None  # type: ignore
+    with pytest.raises(RuntimeError, match="To use httpx executor"):
+        get_cached_session(headers=frozenset())  # type: ignore
+    del sys.modules["httpx"]
 
 
 def test_httpx_response_info():

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from typing import Any
 
 import pytest
@@ -8,8 +9,20 @@ from requests.structures import CaseInsensitiveDict
 
 import ikea_api.executors.requests
 from ikea_api.abc import SessionInfo
-from ikea_api.executors.requests import RequestsResponseInfo, get_session_from_info, run
+from ikea_api.executors.requests import (
+    RequestsResponseInfo,
+    get_cached_session,
+    get_session_from_info,
+    run,
+)
 from tests.conftest import ExecutorContext
+
+
+def test_requests_import_fails():
+    sys.modules["requests"] = None  # type: ignore
+    with pytest.raises(RuntimeError, match="To use requests executor"):
+        get_cached_session(headers=frozenset())  # type: ignore
+    del sys.modules["requests"]
 
 
 def test_requests_response_info():
