@@ -25,6 +25,7 @@ pytest-cov = {version = "3.0.0", optional = true}
 pytest-randomly = {version = "3.11.0", optional = true}
 responses = {version = "0.18.0", optional = true}
 pydantic = {version = "^1.8.2", optional = true}
+pytest-asyncio = "^0.18.1"
 
 [tool.poetry.dev-dependencies]
 black = {version = "22.1.0", allow-prereleases = true}
@@ -70,3 +71,6 @@ exclude_lines = [
     "@abstractmethod",
     "raise NotImplementedError",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

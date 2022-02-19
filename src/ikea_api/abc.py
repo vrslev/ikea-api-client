@@ -31,9 +31,6 @@ class RequestInfo:
     json: Any = None
 
 
-LibResponse = TypeVar("LibResponse")
-
-
 @dataclass
 class ResponseInfo(ABC):
     headers: Mapping[str, str] = field(init=False)
@@ -64,7 +61,7 @@ ErrorHandler = Callable[[ResponseInfo], None]
 
 @dataclass
 class EndpointInfo(Generic[EndpointResponse]):
-    func: Callable[[], Endpoint[EndpointResponse]]
+    func: partial[Endpoint[EndpointResponse]]
     handlers: Iterable[ErrorHandler]
 
 
