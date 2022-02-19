@@ -5,14 +5,13 @@ import asyncio
 from typing import Any, Optional
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints import (
-    cart,
-    ingka_items,
-    iows_items,
-    order_capture,
-    pip_item,
-    purchases,
-)
+from ikea_api.endpoints.cart import API as CartAPI
+from ikea_api.endpoints.ingka_items import API as IngkaItemsAPI
+from ikea_api.endpoints.iows_items import API as IowsItemsAPI
+from ikea_api.endpoints.order_capture import API as OrderCaptureAPI
+from ikea_api.endpoints.order_capture import convert_cart_to_checkout_items
+from ikea_api.endpoints.pip_item import API as PipItemAPI
+from ikea_api.endpoints.purchases import API as PurchasesAPI
 from ikea_api.exceptions import GraphQLError
 from ikea_api.executors.httpx import run as run_with_httpx
 from ikea_api.executors.requests import run as run_with_requests
@@ -33,13 +32,13 @@ except ImportError:
     )
 
 
-def get_purchase_history(purchases: purchases.API) -> list[types.PurchaseHistoryItem]:
+def get_purchase_history(purchases: PurchasesAPI) -> list[types.PurchaseHistoryItem]:
     response = run_with_requests(purchases.history())
     return purchases_parser.parse_history(purchases.const, response)
 
 
 def get_purchase_info(
-    purchases: purchases.API, *, order_number: str, email: str | None = None
+    purchases: PurchasesAPI, *, order_number: str, email: str | None = None
 ) -> types.PurchaseInfo:
     endpoint = purchases.order_info(
         order_number=order_number,
@@ -66,7 +65,7 @@ class _CartErrorRef(BaseModel):
     extensions: _Extensions
 
 
-def add_items_to_cart(cart: cart.API, items: dict[str, int]) -> types.CannotAddItems:
+def add_items_to_cart(cart: CartAPI, items: dict[str, int]) -> types.CannotAddItems:
     run_with_requests(cart.clear())
     cannot_add_items: list[str] = []
 
@@ -95,29 +94,29 @@ async def get_delivery_services(
     items: dict[str, int],
     zip_code: str,
 ) -> types.GetDeliveryServicesResponse:
-    cart_ = cart.API(constants, token=token)
-    order_capture_ = order_capture.API(constants, token=token)
+    cart = CartAPI(constants, token=token)
+    order_capture = OrderCaptureAPI(constants, token=token)
 
-    cannot_add = add_items_to_cart(cart_, items)
+    cannot_add = add_items_to_cart(cart, items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
     if cannot_add_all_items:
         return types.GetDeliveryServicesResponse(
             delivery_options=[], cannot_add=cannot_add
         )
 
-    cart_response = await run_with_httpx(cart_.show())
-    checkout_items = order_capture.convert_cart_to_checkout_items(cart_response)
-    checkout_id = await run_with_httpx(order_capture_.get_checkout(checkout_items))
+    cart_response = await run_with_httpx(cart.show())
+    checkout_items = convert_cart_to_checkout_items(cart_response)
+    checkout_id = await run_with_httpx(order_capture.get_checkout(checkout_items))
     service_area = await run_with_httpx(
-        order_capture_.get_service_area(checkout_id, zip_code=zip_code)
+        order_capture.get_service_area(checkout_id, zip_code=zip_code)
     )
 
     home, collect = await asyncio.gather(
         run_with_httpx(
-            order_capture_.get_home_delivery_services(checkout_id, service_area),
+            order_capture.get_home_delivery_services(checkout_id, service_area),
         ),
         run_with_httpx(
-            order_capture_.get_collect_delivery_services(checkout_id, service_area)
+            order_capture.get_collect_delivery_services(checkout_id, service_area)
         ),
     )
 
@@ -136,7 +135,7 @@ def _chunks(list_: list[Any], chunk_size: int):
 
 
 async def _get_ingka_items(constants: Constants, item_codes: list[str]):
-    api = ingka_items.API(constants)
+    api = IngkaItemsAPI(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in _chunks(item_codes, 50))
     responses = await asyncio.gather(*tasks)
 
@@ -147,7 +146,7 @@ async def _get_ingka_items(constants: Constants, item_codes: list[str]):
 
 
 async def _get_pip_items(constants: Constants, item_codes: list[str]):
-    api = pip_item.API(constants)
+    api = PipItemAPI(constants)
     tasks = (run_with_httpx(api.get_item(i)) for i in item_codes)
     responses = await asyncio.gather(*tasks)
     return [parse_pip_item(r) for r in responses]
@@ -192,7 +191,7 @@ async def _get_ingka_pip_items(
 
 
 async def _get_iows_items(constants: Constants, item_codes: list[str]):
-    api = iows_items.API(constants)
+    api = IowsItemsAPI(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in _chunks(item_codes, 90))
     responses = await asyncio.gather(*tasks)
 
