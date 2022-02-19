@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.stock_ingka import API
+from ikea_api.endpoints.stock import API
 from ikea_api.exceptions import ItemFetchError
 from tests.conftest import EndpointTester, MockResponseInfo
 
