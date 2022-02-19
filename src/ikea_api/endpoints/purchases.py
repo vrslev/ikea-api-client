@@ -1,8 +1,7 @@
 from typing import Any, Literal
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
-from ikea_api.base_ikea_api import BaseIkeaAPI
-from ikea_api.constants import Constants, get_auth_header
+from ikea_api.base_ikea_api import BaseAuthIkeaAPI
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
 
@@ -10,22 +9,15 @@ def _build_payload(operation_name: str, query: str, **variables: Any) -> dict[st
     return {"operationName": operation_name, "variables": variables, "query": query}
 
 
-class API(BaseIkeaAPI):
-    token: str
-
-    def __init__(self, constants: Constants, *, token: str) -> None:
-        self.token = token
-        super().__init__(constants)
-
+class API(BaseAuthIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         url = "https://purchase-history.ocp.ingka.ikea.com/graphql"
-        headers = self.extend_default_headers(
+        headers = self.extend_default_headers_with_auth(
             {
                 "Accept": "*/*",
                 "Accept-Language": f"{self.const.language}-{self.const.country}",
                 "Origin": "https://order.ikea.com",
                 "Referer": f"https://order.ikea.com/{self.const.country}/{self.const.language}/purchases/",
-                **get_auth_header(self.token),
             }
         )
         return SessionInfo(base_url=url, headers=headers)

@@ -2,7 +2,6 @@ from typing import Any, Literal
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseIkeaAPI
-from ikea_api.constants import get_default_headers
 from ikea_api.error_handlers import handle_json_decode_error
 
 SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWER"]
@@ -11,7 +10,7 @@ SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWE
 class API(BaseIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         url = f"https://sik.search.blue.cdtapps.com/{self.const.country}/{self.const.language}/search-result-page"
-        return SessionInfo(base_url=url, headers=get_default_headers(self.const))
+        return SessionInfo(base_url=url, headers=self.extend_default_headers({}))
 
     @endpoint(handlers=[handle_json_decode_error])
     def search(

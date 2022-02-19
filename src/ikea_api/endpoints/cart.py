@@ -1,8 +1,7 @@
 from typing import Any, TypedDict
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
-from ikea_api.base_ikea_api import BaseIkeaAPI
-from ikea_api.constants import Constants, get_auth_header
+from ikea_api.base_ikea_api import BaseAuthIkeaAPI
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
 
@@ -15,20 +14,11 @@ def _convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
     return [{"itemNo": item_code, "quantity": qty} for item_code, qty in items.items()]
 
 
-class API(BaseIkeaAPI):
-    token: str
-
-    def __init__(self, constants: Constants, *, token: str) -> None:
-        self.token = token
-        super().__init__(constants)
-
+class API(BaseAuthIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         url = "https://cart.oneweb.ingka.com/graphql"
-        headers = self.extend_default_headers(
-            {
-                "X-Client-Id": "66e4684a-dbcb-499c-8639-a72fa50ac0c3",
-                **get_auth_header(self.token),
-            }
+        headers = self.extend_default_headers_with_auth(
+            {"X-Client-Id": "66e4684a-dbcb-499c-8639-a72fa50ac0c3"}
         )
         return SessionInfo(base_url=url, headers=headers)
 

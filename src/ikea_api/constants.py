@@ -24,7 +24,3 @@ def get_default_headers(constants: Constants) -> dict[str, str]:
         "Origin": constants.base_url,
         "Referer": constants.base_url + "/",
     }
-
-
-def get_auth_header(token: str) -> dict[str, str]:
-    return {"Authorization": "Bearer " + token}

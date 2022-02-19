@@ -1,8 +1,7 @@
 from typing import Any, TypedDict
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
-from ikea_api.base_ikea_api import BaseIkeaAPI
-from ikea_api.constants import Constants, get_auth_header
+from ikea_api.base_ikea_api import BaseAuthIkeaAPI
 from ikea_api.error_handlers import handle_401, handle_json_decode_error
 from ikea_api.exceptions import ProcessingError
 
@@ -13,21 +12,12 @@ class CheckoutItem(TypedDict):
     uom: str
 
 
-class API(BaseIkeaAPI):
-    token: str
-
-    def __init__(self, constants: Constants, *, token: str) -> None:
-        self.token = token
-        super().__init__(constants)
-
+class API(BaseAuthIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         host = "ikea.ru" if self.const.country == "ru" else "ingka.com"
         url = f"https://ordercapture.{host}/ordercaptureapi/{self.const.country}"
-        headers = self.extend_default_headers(
-            {
-                "X-Client-Id": "af2525c3-1779-49be-8d7d-adf32cac1934",
-                **get_auth_header(self.token),
-            }
+        headers = self.extend_default_headers_with_auth(
+            {"X-Client-Id": "af2525c3-1779-49be-8d7d-adf32cac1934"}
         )
         return SessionInfo(base_url=url, headers=headers)
 
