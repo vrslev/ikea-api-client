@@ -1,10 +1,12 @@
-from typing import Any
+from __future__ import annotations
+
+from typing import Any, Dict
 
 from ikea_api.abc import Endpoint, ResponseInfo, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.exceptions import ItemFetchError, WrongItemCodeError
 
-ItemCodeToComboDict = dict[str, bool]
+ItemCodeToComboDict = Dict[str, bool]
 
 
 def _build_url(items: ItemCodeToComboDict):

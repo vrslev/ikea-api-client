@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import Any, Dict, List, cast
 
 from ikea_api.abc import ResponseInfo
 
@@ -39,7 +39,7 @@ class GraphQLError(APIError):
             assert isinstance(response.json, list)
             self.errors = []
 
-            for chunk in cast(list[dict[str, Any]], response.json):
+            for chunk in cast(List[Dict[str, Any]], response.json):
                 if "errors" in chunk:
                     self.errors += chunk["errors"]
 

@@ -48,7 +48,7 @@ profile = "black"
 
 [tool.pyright]
 typeCheckingMode = "strict"
-pythonVersion = "3.10" # TODO: Change to 3.8
+pythonVersion = "3.8"
 reportMissingTypeStubs = false
 reportPrivateUsage = false
 reportImportCycles = false

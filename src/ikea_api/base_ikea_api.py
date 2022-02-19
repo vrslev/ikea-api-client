@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ikea_api.abc import BaseAPI
 from ikea_api.constants import Constants, get_default_headers
 

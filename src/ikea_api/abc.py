@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from functools import cached_property, partial
@@ -9,9 +12,13 @@ from typing import (
     Iterable,
     Literal,
     Mapping,
-    ParamSpec,
     TypeVar,
 )
+
+if sys.version_info < (3, 9):
+    from typing_extensions import ParamSpec
+else:
+    from typing import ParamSpec
 
 
 @dataclass
