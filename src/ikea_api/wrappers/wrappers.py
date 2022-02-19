@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, List, Optional
 
 from ikea_api.constants import Constants
 from ikea_api.endpoints.cart import API as CartAPI
@@ -53,7 +53,7 @@ def get_purchase_info(
 
 
 class _ExtensionsData(BaseModel):
-    itemNos: list[str]
+    itemNos: List[str]
 
 
 class _Extensions(BaseModel):
