@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
 from typing import Any, Callable
-from unittest.mock import MagicMock, PropertyMock
+from unittest.mock import MagicMock, Mock, PropertyMock
 
 import pytest
 
@@ -111,24 +111,31 @@ class EndpointTester:
 class ExecutorContext:
     request: RequestInfo
     response: ResponseInfo
-    endpoint: Callable[[], EndpointInfo[Any]]
+    func: Callable[[], EndpointInfo[Any]]
     endpoint_response: Any
+    handler: Mock
 
 
 @pytest.fixture
 def executor_context():
     request = RequestInfo(
-        SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
+        SessionInfo(
+            base_url="https://example.com",
+            headers={"Accept": "*/*"},
+        ),
+        method="POST",
+        url="/ping",
+        params={"foo": "bar"},
+        headers={"Referer": "https://example.com"},
+        data='{"ok":"ok"}',
+        json={"ok": "ok"},
     )
     response = MockResponseInfo(
-        headers={"Accept": "*/*"},
-        status_code=200,
-        text_='{"ok":"ok"}',
-        json_={"ok": "ok"},
+        headers={"X-ok": "ok"}, status_code=200, text_='{"ok":"ok"}', json_={"ok": "ok"}
     )
-    mock_handler = MagicMock()
+    handler = MagicMock()
 
-    @endpoint(handlers=[mock_handler])
+    @endpoint(handlers=[handler])
     def myendpoint() -> Endpoint[tuple[str, str]]:
         response1 = yield request
         response2 = yield request
@@ -137,8 +144,7 @@ def executor_context():
     yield ExecutorContext(
         request=request,
         response=response,
-        endpoint=myendpoint,
+        func=myendpoint,
         endpoint_response=(response.json, response.json),
+        handler=handler,
     )
-
-    mock_handler.assert_called_with(response)

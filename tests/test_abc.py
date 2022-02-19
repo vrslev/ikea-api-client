@@ -36,8 +36,9 @@ def test_sync_executor(executor_context: ExecutorContext):
             assert request == executor_context.request
             return executor_context.response
 
-    res = MyExecutor.run(executor_context.endpoint())
+    res = MyExecutor.run(executor_context.func())
     assert res == executor_context.endpoint_response
+    executor_context.handler.assert_called_with(executor_context.response)
 
 
 async def test_async_executor(executor_context: ExecutorContext):
@@ -51,8 +52,9 @@ async def test_async_executor(executor_context: ExecutorContext):
             await something()
             return executor_context.response
 
-    res = await MyExecutor.run(executor_context.endpoint())
+    res = await MyExecutor.run(executor_context.func())
     assert res == executor_context.endpoint_response
+    executor_context.handler.assert_called_with(executor_context.response)
 
 
 def test_error_handlers():

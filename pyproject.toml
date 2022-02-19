@@ -74,3 +74,6 @@ exclude_lines = [
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+filterwarnings = [
+  "ignore:Use 'content=<...>' to upload raw bytes/text content",
+]
