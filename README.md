@@ -15,8 +15,8 @@ With this library you can access following IKEA's APIs:
 - Home Delivery and Collect Services (actually, Order Capture),
 - Items info (3 different services),
 - Purchases (history and order info),
-- Search.
-- Stock,
+- Search,
+- Stock.
 
 Also the package:
 
@@ -30,17 +30,33 @@ Also the package:
 pip install ikea_api
 ```
 
-In case you want to use [httpx](https://www.python-httpx.org) — awesome async HTTP library — as backend, you can install it like this: `pip install "ikea_api[httpx]"`. Also [requests](https://docs.python-requests.org) is available: `pip install "ikea_api[requests]"`.
+- Use [httpx](https://www.python-httpx.org) — awesome async HTTP library — as backend:
 
-If you intend to use wrappers:
+```bash
+pip install "ikea_api[httpx]"
+```
+
+- Use [requests](https://docs.python-requests.org) as backend:
+
+```bash
+pip install "ikea_api[requests]"
+```
+
+- Use wrappers:
 
 ```bash
 pip install "ikea_api[wrappers]"
 ```
 
+- Install everything:
+
+```bash
+pip install "ikea_api[all]"
+```
+
 # Usage
 
-_ikea_api_ is unusual API client. It decouples I/O from logic for easier testing and maintenance. As a bonus, you can use literally \_any\* HTTP library.
+_ikea_api_ is unusual API client. It decouples I/O from logic for easier testing and maintenance. As a bonus, you can use literally _any_ HTTP library.
 Let's have a look at how to work with ikea_api.
 
 ```python
@@ -56,13 +72,13 @@ endpoint = search.search("Billy")
 
 As you can see, nothing happened up to this point. Code suggests that we already should get the result of the search but we don't. What happened is `search()` returned a data class that contains information about endpoint that can be interpreted by an endpoint runner. There are two built-in: for [requests](https://docs.python-requests.org) (sync) and [httpx](https://www.python-httpx.org) (async), but you can easily write one yourself.
 
-Here's how you would use requests one:
+Here's how you would use _requests_ one:
 
 ```python
 ikea_api.run(endpoint)
 ```
 
-And httpx one:
+And _httpx_ one:
 
 ```python
 await ikea_api.run_async(endpoint)
