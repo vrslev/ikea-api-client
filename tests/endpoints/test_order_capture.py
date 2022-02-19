@@ -115,4 +115,5 @@ def test_convert_cart_to_checkout_items_passes():
         for i in out_items
     ]
     data = {"data": {"cart": {"items": in_items}}}
+    raise Exception(data)
     assert convert_cart_to_checkout_items(data) == out_items

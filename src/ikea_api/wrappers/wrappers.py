@@ -108,16 +108,16 @@ async def get_delivery_services(
     cart_response = await run_with_httpx(cart.show())
     checkout_items = convert_cart_to_checkout_items(cart_response)
     checkout_id = await run_with_httpx(order_capture.get_checkout(checkout_items))
-    service_area = await run_with_httpx(
+    service_area_id = await run_with_httpx(
         order_capture.get_service_area(checkout_id, zip_code=zip_code)
     )
 
     home, collect = await asyncio.gather(
         run_with_httpx(
-            order_capture.get_home_delivery_services(checkout_id, service_area),
+            order_capture.get_home_delivery_services(checkout_id, service_area_id),
         ),
         run_with_httpx(
-            order_capture.get_collect_delivery_services(checkout_id, service_area)
+            order_capture.get_collect_delivery_services(checkout_id, service_area_id)
         ),
     )
 
