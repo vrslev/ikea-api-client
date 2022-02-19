@@ -29,7 +29,7 @@ def test_httpx_response_info():
     response = httpx.Response(200, headers={"Accept": "*/*"}, json={"ok": "ok"})
     info = HttpxResponseInfo(response)
     assert info.headers == response.headers
-    assert info.status_code == response.status_code  # type: ignore
+    assert info.status_code == response.status_code
     assert info.text == response.text
     assert info.json == response.json()
     assert info.is_success == response.is_success
@@ -59,14 +59,14 @@ async def test_httpx_executor(
     session = req.session_info
 
     def handler(request: httpx.Request):
-        assert request.method == req.method  # type: ignore
-        url = cast(httpx.URL, request.url)  # type: ignore
+        assert request.method == req.method
+        url = cast(httpx.URL, request.url)
         assert url == f"{session.base_url}{req.url}?{url.params}"
         assert request.content.decode() == req.data
         headers = session.headers.copy()
         headers.update(req.headers)
         for key, value in headers.items():
-            assert request.headers[key] == value  # type: ignore
+            assert request.headers[key] == value
 
         return httpx.Response(200, json=executor_context.response.json)
 
