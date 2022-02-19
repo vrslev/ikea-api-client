@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import re
-from typing import TYPE_CHECKING, Any, Iterable, cast
+from typing import TYPE_CHECKING, Any, Iterable, Optional, cast
 
 from ikea_api.constants import Constants
 
@@ -29,7 +29,7 @@ def _parse_ingka_pagelink_urls(message: str) -> Iterable[str]:
 def _get_location_headers(responses: Iterable[httpx.Response]) -> list[str]:
     res: list[str] = []
     for response in responses:
-        location = cast(str | None, response.headers.get("Location"))  # type: ignore
+        location = cast(Optional[str], response.headers.get("Location"))  # type: ignore
         if location is not None:
             res.append(location)
     return res
