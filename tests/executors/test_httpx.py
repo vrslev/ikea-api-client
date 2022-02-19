@@ -10,13 +10,7 @@ from tests.conftest import ExecutorContext
 
 
 def test_httpx_response_info():
-    headers = {"Accept": "*/*"}
-    status_code = 200
-    text = '{"ok":"ok"}'
-    json = {"ok": "ok"}
-    response = httpx.Response(
-        status_code=status_code, headers=headers, text=text, json=json
-    )
+    response = httpx.Response(200, headers={"Accept": "*/*"}, json={"ok": "ok"})
     info = HttpxResponseInfo(response)
     assert info.headers == response.headers  # type: ignore
     assert info.status_code == response.status_code  # type: ignore
