@@ -1,5 +1,5 @@
 import sys
-from typing import cast
+from typing import Any, cast
 
 import httpx
 import pytest
@@ -14,18 +14,21 @@ from ikea_api.executors.httpx import (
 )
 from tests.conftest import ExecutorContext
 
+# pyright: reportUnknownMemberType=false
+
 
 def test_httpx_import_fails():
     sys.modules["httpx"] = None  # type: ignore
+    headers: frozenset[Any] = frozenset()
     with pytest.raises(RuntimeError, match="To use httpx executor"):
-        get_cached_session(headers=frozenset())  # type: ignore
+        get_cached_session(headers)
     del sys.modules["httpx"]
 
 
 def test_httpx_response_info():
     response = httpx.Response(200, headers={"Accept": "*/*"}, json={"ok": "ok"})
     info = HttpxResponseInfo(response)
-    assert info.headers == response.headers  # type: ignore
+    assert info.headers == response.headers
     assert info.status_code == response.status_code  # type: ignore
     assert info.text == response.text
     assert info.json == response.json()

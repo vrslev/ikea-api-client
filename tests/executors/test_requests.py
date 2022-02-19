@@ -20,8 +20,9 @@ from tests.conftest import ExecutorContext
 
 def test_requests_import_fails():
     sys.modules["requests"] = None  # type: ignore
+    headers: frozenset[Any] = frozenset()
     with pytest.raises(RuntimeError, match="To use requests executor"):
-        get_cached_session(headers=frozenset())  # type: ignore
+        get_cached_session(headers)
     del sys.modules["requests"]
 
 

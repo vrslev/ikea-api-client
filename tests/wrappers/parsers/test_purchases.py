@@ -1,4 +1,5 @@
 from types import SimpleNamespace
+from typing import Any
 
 import pytest
 
@@ -24,12 +25,8 @@ def test_parse_costs_order():
     ("date", "time"), (("val1", "val2"), ("2021-04-14", "18:16:25Z"))
 )
 def test_get_history_datetime(date: str, time: str):
-    assert (
-        get_history_datetime(
-            SimpleNamespace(dateAndTime=SimpleNamespace(date=date, time=time))  # type: ignore
-        )
-        == f"{date}T{time}"
-    )
+    item: Any = SimpleNamespace(dateAndTime=SimpleNamespace(date=date, time=time))
+    assert get_history_datetime(item) == f"{date}T{time}"
 
 
 def test_parse_history(constants: Constants):

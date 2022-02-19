@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, cast
 
 from pydantic import BaseModel
 
@@ -123,8 +123,8 @@ def get_image_url(constants: Constants, images: List[Image]) -> Optional[str]:
 
     for image in images:
         if image.ImageSize == "S5":
-            return constants.base_url + image.ImageUrl  # type: ignore
-    return constants.base_url + images[0].ImageUrl  # type: ignore
+            return constants.base_url + cast(str, image.ImageUrl)
+    return constants.base_url + cast(str, images[0].ImageUrl)
 
 
 def parse_weight(v: str) -> float:

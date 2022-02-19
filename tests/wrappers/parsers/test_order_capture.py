@@ -23,22 +23,24 @@ from ikea_api.wrappers.parsers.order_capture import (
 from tests.conftest import TestData
 
 
-def test_get_date_no_value():
-    assert get_date([]) is None
-    assert get_date([SimpleNamespace(timeWindows=None)]) is None  # type: ignore
-    assert (
-        get_date(
-            [  # type: ignore
-                SimpleNamespace(timeWindows=None),
-                SimpleNamespace(timeWindows=SimpleNamespace(earliestPossibleSlot=None)),
-            ]
-        )
-    ) is None
+@pytest.mark.parametrize(
+    "v",
+    (
+        [],
+        [SimpleNamespace(timeWindows=None)],
+        [
+            SimpleNamespace(timeWindows=None),
+            SimpleNamespace(timeWindows=SimpleNamespace(earliestPossibleSlot=None)),
+        ],
+    ),
+)
+def test_get_date_no_value(v: Any):
+    assert get_date(v) is None
 
 
 def test_get_date_with_value_first():
     exp_datetime = datetime.now()
-    deliveries = [
+    deliveries: list[Any] = [
         SimpleNamespace(
             timeWindows=SimpleNamespace(
                 earliestPossibleSlot=SimpleNamespace(fromDateTime=exp_datetime)
@@ -52,12 +54,12 @@ def test_get_date_with_value_first():
             )
         ),
     ]
-    assert get_date(deliveries) == exp_datetime  # type: ignore
+    assert get_date(deliveries) == exp_datetime
 
 
 def test_get_date_with_value_not_first():
     exp_datetime = datetime.now()
-    deliveries = [
+    deliveries: list[Any] = [
         SimpleNamespace(timeWindows=SimpleNamespace(earliestPossibleSlot=None)),
         SimpleNamespace(
             timeWindows=SimpleNamespace(
@@ -65,70 +67,78 @@ def test_get_date_with_value_not_first():
             )
         ),
     ]
-    assert get_date(deliveries) == exp_datetime  # type: ignore
+    assert get_date(deliveries) == exp_datetime
 
 
-def test_get_type_no_service_type(
-    constants: Constants,
-):  # TODO: Remove all this type ignores
+def test_get_type_no_service_type(constants: Constants):
     exp_delivery_type = "HOME_DELIVERY"
-    service = SimpleNamespace(fulfillmentMethodType=exp_delivery_type, solution=None)
-    assert get_type(constants, service) == translate_from_dict(constants, DELIVERY_TYPES, exp_delivery_type)  # type: ignore
+    service: Any = SimpleNamespace(
+        fulfillmentMethodType=exp_delivery_type, solution=None
+    )
+    assert get_type(constants, service) == translate_from_dict(
+        constants, DELIVERY_TYPES, exp_delivery_type
+    )
 
 
 def test_get_type_with_service_type(constants: Constants):
     exp_delivery_type = "HOME_DELIVERY"
     exp_solution_type = "CURBSIDE"
-    service = SimpleNamespace(
+    service: Any = SimpleNamespace(
         fulfillmentMethodType=exp_delivery_type, solution=exp_solution_type
     )
-    assert get_type(constants, service) == (  # type: ignore
+    exp_res = (
         translate_from_dict(constants, DELIVERY_TYPES, exp_delivery_type)
-        + f" {translate_from_dict(constants, SERVICE_TYPES, exp_solution_type)}"
+        + " "
+        + translate_from_dict(constants, SERVICE_TYPES, exp_solution_type)
     )
+    assert get_type(constants, service) == exp_res
 
 
 def test_get_price_no_value():
-    service = SimpleNamespace(solutionPrice=None)
-    assert get_price(service) == 0  # type: ignore
+    service: Any = SimpleNamespace(solutionPrice=None)
+    assert get_price(service) == 0
 
 
 def test_get_price_with_value():
-    service = SimpleNamespace(solutionPrice=SimpleNamespace(inclTax=100))
-    assert get_price(service) == 100  # type: ignore
+    service: Any = SimpleNamespace(solutionPrice=SimpleNamespace(inclTax=100))
+    assert get_price(service) == 100
 
 
 @pytest.mark.parametrize("v", (None, []))
 def test_get_unavailable_items_no_value(v: list[Any] | None):
-    assert get_unavailable_items(SimpleNamespace(unavailableItems=v)) == []  # type: ignore
+    service: Any = SimpleNamespace(unavailableItems=v)
+    assert get_unavailable_items(service) == []
 
 
 def test_get_unavailable_items_with_value():
-    items = [
-        SimpleNamespace(itemNo="11111111", availableQuantity=5),
-        SimpleNamespace(itemNo="22222222", availableQuantity=3),
-    ]
+    service: Any = SimpleNamespace(
+        unavailableItems=[
+            SimpleNamespace(itemNo="11111111", availableQuantity=5),
+            SimpleNamespace(itemNo="22222222", availableQuantity=3),
+        ]
+    )
     exp_res = [
         types.UnavailableItem(item_code="11111111", available_qty=5),
         types.UnavailableItem(item_code="22222222", available_qty=3),
     ]
-    assert get_unavailable_items(SimpleNamespace(unavailableItems=items)) == exp_res  # type: ignore
+    assert get_unavailable_items(service) == exp_res
 
 
 def test_get_service_provider_no_value(constants: Constants):
-    assert get_service_provider(constants, SimpleNamespace(identifier=None)) is None  # type: ignore
+    point: Any = SimpleNamespace(identifier=None)
+    assert get_service_provider(constants, point) is None
 
 
 @pytest.mark.parametrize("v", ("BUSINESSLINES and some other value", "BUSINESSLINES"))
 def test_get_service_provider_with_value_match(constants: Constants, v: str):
-    service = SimpleNamespace(identifier=v)
-    assert get_service_provider(constants, service) == "Деловые линии"  # type: ignore
+    point: Any = SimpleNamespace(identifier=v)
+    assert get_service_provider(constants, point) == "Деловые линии"
 
 
 def test_get_service_provider_with_value_no_match(constants: Constants):
     exp_identifier = "USINESSLIN"
-    service = SimpleNamespace(identifier=exp_identifier)
-    assert get_service_provider(constants, service) == exp_identifier  # type: ignore
+    point: Any = SimpleNamespace(identifier=exp_identifier)
+    assert get_service_provider(constants, point) == exp_identifier
 
 
 @pytest.mark.parametrize("response", TestData.order_capture_home)

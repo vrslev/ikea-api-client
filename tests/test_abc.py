@@ -83,7 +83,7 @@ def test_error_handlers():
 
 def test_base_api_request_info():
     session = SessionInfo("", {})
-    mock_instance: Any = SimpleNamespace(session_info=session)
+    mock_instance: Any = SimpleNamespace(_session_info=session)
     res = BaseAPI._RequestInfo(
         mock_instance, "POST", url=None, params=None, headers=None, json=None, data=None
     )

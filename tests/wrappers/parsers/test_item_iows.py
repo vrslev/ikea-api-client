@@ -29,18 +29,11 @@ def test_get_rid_of_dollars():
 
 
 def test_get_image_url_filtered(constants: Constants):
-    assert (
-        get_image_url(
-            constants,
-            [  # type: ignore
-                SimpleNamespace(ImageType="LINE DRAWING"),
-                SimpleNamespace(
-                    ImageType="not LINE DRAWING", ImageUrl="somename.notpngorjpg"
-                ),
-            ],
-        )
-        is None
-    )
+    images: list[Any] = [
+        SimpleNamespace(ImageType="LINE DRAWING"),
+        SimpleNamespace(ImageType="not LINE DRAWING", ImageUrl="somename.notpngorjpg"),
+    ]
+    assert get_image_url(constants, images) is None
 
 
 def test_get_image_url_no_images(constants: Constants):
@@ -49,21 +42,19 @@ def test_get_image_url_no_images(constants: Constants):
 
 @pytest.mark.parametrize("ext", (".png", ".jpg", ".PNG", ".JPG"))
 def test_get_image_url_matches(constants: Constants, ext: str):
-    image: Callable[[str], SimpleNamespace] = lambda ext: SimpleNamespace(
+    image: Callable[[str], Any] = lambda ext: SimpleNamespace(
         ImageType="not line drawing", ImageSize="S5", ImageUrl="somename" + ext
     )
-    assert (
-        get_image_url(constants, [image(ext), image(".notpngjpg")])  # type: ignore
-        == f"{constants.base_url}somename{ext}"
-    )
+    res = get_image_url(constants, [image(ext), image(".notpngjpg")])
+    assert res == f"{constants.base_url}somename{ext}"
 
 
 def test_get_image_url_first(constants: Constants):
     url = "somename.jpg"
-    images = [
+    images: list[Any] = [
         SimpleNamespace(ImageType="not line drawing", ImageSize="S4", ImageUrl=url)
     ]
-    assert get_image_url(constants, images) == constants.base_url + url  # type: ignore
+    assert get_image_url(constants, images) == constants.base_url + url
 
 
 @pytest.mark.parametrize(
@@ -85,16 +76,14 @@ def test_get_weight_no_measurements():
 
 
 def test_get_weight_no_weight():
-    measurements = [
-        SimpleNamespace(
-            PackageMeasureType="not WEIGHT", PackageMeasureTextMetric="10.45 м"
-        )
-    ]
-    assert get_weight(measurements) == 0.0  # type: ignore
+    measurement: Any = SimpleNamespace(
+        PackageMeasureType="not WEIGHT", PackageMeasureTextMetric="10.45 м"
+    )
+    assert get_weight([measurement]) == 0.0
 
 
 def test_get_weight_with_input():
-    measurements = [
+    measurements: list[Any] = [
         SimpleNamespace(
             PackageMeasureType="not WEIGHT", PackageMeasureTextMetric="10.45 м"
         ),
@@ -105,7 +94,7 @@ def test_get_weight_with_input():
             PackageMeasureType="WEIGHT", PackageMeasureTextMetric="0.33 кг"
         ),
     ]
-    assert get_weight(measurements) == 10.0  # type: ignore
+    assert get_weight(measurements) == 10.0
 
 
 def test_get_child_items_no_input():
@@ -113,7 +102,7 @@ def test_get_child_items_no_input():
 
 
 def test_get_child_items_with_input():
-    child_items = [
+    child_items: list[Any] = [
         SimpleNamespace(
             Quantity=10,
             ItemNo="70299474",
@@ -156,7 +145,7 @@ def test_get_child_items_with_input():
             qty=4,
         ),
     ]
-    assert get_child_items(child_items) == exp_result  # type: ignore
+    assert get_child_items(child_items) == exp_result
 
 
 def test_get_price_no_input():
@@ -164,15 +153,18 @@ def test_get_price_no_input():
 
 
 def test_get_price_not_list_zero():
-    assert get_price(SimpleNamespace(Price=0)) == 0  # type: ignore
+    price: Any = SimpleNamespace(Price=0)
+    assert get_price(price) == 0
 
 
 def test_get_price_not_list_not_zero():
-    assert get_price(SimpleNamespace(Price=10)) == 10  # type: ignore
+    price: Any = SimpleNamespace(Price=10)
+    assert get_price(price) == 10
 
 
 def test_get_price_list():
-    assert get_price([SimpleNamespace(Price=5), SimpleNamespace(Price=20)]) == 5  # type: ignore
+    prices: list[Any] = [SimpleNamespace(Price=5), SimpleNamespace(Price=20)]
+    assert get_price(prices) == 5
 
 
 @pytest.mark.parametrize(
@@ -192,10 +184,10 @@ def test_get_url(
 
 
 def test_get_category_name_and_url_no_category(constants: Constants):
-    assert get_category_name_and_url(
-        constants,
-        [SimpleNamespace(CatalogElementList=SimpleNamespace(CatalogElement=[]))],  # type: ignore
-    ) == (None, None)
+    catalog: Any = SimpleNamespace(
+        CatalogElementList=SimpleNamespace(CatalogElement=[])
+    )
+    assert get_category_name_and_url(constants, [catalog]) == (None, None)
 
 
 def test_get_category_name_and_url_no_categories(constants: Constants):
@@ -219,22 +211,16 @@ def test_get_category_name_and_url_not_list(constants: Constants):
 def test_get_category_name_and_url_name_or_id_is_dict(
     constants: Constants, name: str | dict[Any, Any], id: str | dict[Any, Any]
 ):
-    assert get_category_name_and_url(
-        constants,
-        [  # type: ignore
-            SimpleNamespace(
-                CatalogElementList=SimpleNamespace(
-                    CatalogElement=SimpleNamespace(
-                        CatalogElementName=name, CatalogElementId=id
-                    )
-                )
-            )
-        ],
-    ) == (None, None)
+    catalog: Any = SimpleNamespace(
+        CatalogElementList=SimpleNamespace(
+            CatalogElement=SimpleNamespace(CatalogElementName=name, CatalogElementId=id)
+        )
+    )
+    assert get_category_name_and_url(constants, [catalog]) == (None, None)
 
 
 def test_get_category_name_and_url_passes(constants: Constants):
-    catalogs_first_el = [
+    catalogs_first_el: Any = [
         SimpleNamespace(
             CatalogElementList=SimpleNamespace(
                 CatalogElement=SimpleNamespace(
@@ -247,9 +233,9 @@ def test_get_category_name_and_url_passes(constants: Constants):
         "name",
         f"{constants.local_base_url}/cat/-id",
     )
-    assert get_category_name_and_url(constants, catalogs_first_el) == exp_res  # type: ignore
+    assert get_category_name_and_url(constants, catalogs_first_el) == exp_res
     catalogs_second_el = [SimpleNamespace()] + catalogs_first_el
-    assert get_category_name_and_url(constants, catalogs_second_el) == exp_res  # type: ignore
+    assert get_category_name_and_url(constants, catalogs_second_el) == exp_res
 
 
 @pytest.mark.parametrize("test_data_response", TestData.item_iows)

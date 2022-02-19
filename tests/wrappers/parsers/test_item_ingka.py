@@ -22,24 +22,24 @@ from tests.conftest import TestData
 def test_get_localised_communication_passes():
     constants = Constants(language="nolang")
     exp_res = SimpleNamespace(languageCode="nolang")
-    communications = [
+    communications: list[Any] = [
         SimpleNamespace(languageCode="ru"),
         SimpleNamespace(languageCode="en"),
         exp_res,
     ]
-    assert get_localised_communication(constants, communications) == exp_res  # type: ignore
+    assert get_localised_communication(constants, communications) == exp_res
 
 
 def test_get_localised_communication_raises():
     constants = Constants(language="nolang")
-    communications = [
+    communications: list[Any] = [
         SimpleNamespace(languageCode="ru"),
         SimpleNamespace(languageCode="en"),
     ]
     with pytest.raises(
         ParsingError, match="Cannot find appropriate localized communication"
     ):
-        get_localised_communication(constants, communications)  # type: ignore
+        get_localised_communication(constants, communications)
 
 
 @pytest.mark.parametrize(
@@ -91,7 +91,7 @@ def test_get_name(
     measurements: str | None,
     exp_result: str,
 ):
-    comm = SimpleNamespace(
+    comm: Any = SimpleNamespace(
         productName=product_name,
         productType=SimpleNamespace(name=product_type),
         validDesign=SimpleNamespace(text=design) if design else None,
@@ -102,12 +102,12 @@ def test_get_name(
         else None,
     )
 
-    assert get_name(comm) == exp_result  # type: ignore
+    assert get_name(comm) == exp_result
 
 
 def test_get_image_url_not_main_image():
     exp_value = "some href"
-    comm = SimpleNamespace(
+    comm: Any = SimpleNamespace(
         media=[
             SimpleNamespace(
                 typeName="not main product image",
@@ -119,12 +119,12 @@ def test_get_image_url_not_main_image():
             ),
         ]
     )
-    assert get_image_url(comm) == exp_value  # type: ignore
+    assert get_image_url(comm) == exp_value
 
 
 def test_get_image_url_main_image_not_s5():
     exp_value = "some href"
-    comm = SimpleNamespace(
+    comm: Any = SimpleNamespace(
         media=[
             SimpleNamespace(
                 typeName="MAIN_PRODUCT_IMAGE",
@@ -136,12 +136,12 @@ def test_get_image_url_main_image_not_s5():
             ),
         ]
     )
-    assert get_image_url(comm) == exp_value  # type: ignore
+    assert get_image_url(comm) == exp_value
 
 
 def test_get_image_url_main_image_s5():
     exp_value = "some href"
-    comm = SimpleNamespace(
+    comm: Any = SimpleNamespace(
         media=[
             SimpleNamespace(
                 typeName="MAIN_PRODUCT_IMAGE",
@@ -153,33 +153,35 @@ def test_get_image_url_main_image_s5():
             ),
         ]
     )
-    assert get_image_url(comm) == exp_value  # type: ignore
+    assert get_image_url(comm) == exp_value
 
 
 def test_get_weight_no_package_measurements():
-    comm = SimpleNamespace(packageMeasurements=None)
-    assert get_weight(comm) == 0.0  # type: ignore
+    comm: Any = SimpleNamespace(packageMeasurements=None)
+    assert get_weight(comm) == 0.0
 
 
 def test_get_weight_no_values():
-    comm = SimpleNamespace(packageMeasurements=[])
-    assert get_weight(comm) == 0.0  # type: ignore
+    comm: Any = SimpleNamespace(packageMeasurements=[])
+    assert get_weight(comm) == 0.0
 
 
 def test_get_weight_no_weight():
-    comm = SimpleNamespace(packageMeasurements=[SimpleNamespace(type="not weight")])
-    assert get_weight(comm) == 0.0  # type: ignore
+    comm: Any = SimpleNamespace(
+        packageMeasurements=[SimpleNamespace(type="not weight")]
+    )
+    assert get_weight(comm) == 0.0
 
 
 def test_get_weight_success():
-    comm = SimpleNamespace(
+    comm: Any = SimpleNamespace(
         packageMeasurements=[
             SimpleNamespace(type="not weight", valueMetric="not exp_value"),
             SimpleNamespace(type="WEIGHT", valueMetric=5.0),
             SimpleNamespace(type="WEIGHT", valueMetric=6.0),
         ]
     )
-    assert get_weight(comm) == 11.0  # type: ignore
+    assert get_weight(comm) == 11.0
 
 
 @pytest.mark.parametrize("input", ([], None))
@@ -189,12 +191,12 @@ def test_get_child_items_no_input(input: list[Any] | None):
 
 def test_get_child_items_success():
     exp_result = {"11111111": 1, "22222222": 3}
-    child_items = [
+    child_items: list[Any] = [
         SimpleNamespace(itemKey=SimpleNamespace(itemNo=item_code), quantity=qty)
         for item_code, qty in exp_result.items()
     ]
 
-    for child in get_child_items(child_items):  # type: ignore
+    for child in get_child_items(child_items):
         assert child.qty == exp_result[child.item_code]
         assert child.weight == 0.0
         assert child.name is None
