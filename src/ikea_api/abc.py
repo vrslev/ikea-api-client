@@ -37,8 +37,7 @@ LibResponse = TypeVar("LibResponse")
 
 
 @dataclass
-class ResponseInfo(ABC, Generic[LibResponse]):
-    response: LibResponse
+class ResponseInfo(ABC):
     headers: Mapping[str, str] = field(init=False)
     status_code: int = field(init=False)
 
@@ -91,9 +90,9 @@ class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
 
 
 EndpointResponse = TypeVar("EndpointResponse")
-EndpointGen = Generator[RequestInfo, ResponseInfo[Any], EndpointResponse]
+EndpointGen = Generator[RequestInfo, ResponseInfo, EndpointResponse]
 
-ErrorHandler = Callable[[ResponseInfo[Any]], None]
+ErrorHandler = Callable[[ResponseInfo], None]
 PreParams = ParamSpec("PreParams")
 
 
@@ -120,10 +119,10 @@ def endpoint(handlers: Iterable[ErrorHandler] | None = None):
     return decorator
 
 
-class SyncExecutor(ABC, Generic[LibResponse]):
+class SyncExecutor(ABC):
     @staticmethod
     @abstractmethod
-    def request(request: RequestInfo) -> ResponseInfo[LibResponse]:
+    def request(request: RequestInfo) -> ResponseInfo:
         ...
 
     @classmethod
@@ -142,10 +141,10 @@ class SyncExecutor(ABC, Generic[LibResponse]):
                 return exc.value
 
 
-class AsyncExecutor(ABC, Generic[LibResponse]):
+class AsyncExecutor(ABC):
     @staticmethod
     @abstractmethod
-    async def request(request: RequestInfo) -> ResponseInfo[LibResponse]:
+    async def request(request: RequestInfo) -> ResponseInfo:
         ...
 
     @classmethod

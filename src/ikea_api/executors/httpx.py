@@ -17,7 +17,9 @@ from ikea_api.abc import (
 
 
 @dataclass
-class HttpxResponseInfo(ResponseInfo[httpx.Response]):
+class HttpxResponseInfo(ResponseInfo):
+    response: httpx.Response
+
     def __post_init__(self) -> None:
         self.headers = cast(httpx.Headers, self.response.headers)  # type: ignore
         self.status_code = cast(int, self.response.status_code)  # type: ignore
@@ -40,9 +42,9 @@ def get_session_from_info(session_info: SessionInfo) -> httpx.AsyncClient:
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-class HttpxExecutor(AsyncExecutor[httpx.Response]):
+class HttpxExecutor(AsyncExecutor):
     @staticmethod
-    async def request(request: RequestInfo) -> ResponseInfo[httpx.Response]:
+    async def request(request: RequestInfo) -> HttpxResponseInfo:
         session = get_session_from_info(request.session_info)
         response = await session.request(  # type: ignore
             method=request.method,

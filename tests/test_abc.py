@@ -1,12 +1,10 @@
-from typing import Any
-
 from ikea_api.abc import BaseAPI, EndpointGen, ResponseInfo, SessionInfo, endpoint
 from ikea_api.constants import Constants
 from tests.conftest import EndpointTester, MockResponseInfo
 
 
 def test_error_handlers(constants: Constants):
-    def handle_no_anotherthing(response: ResponseInfo[Any]) -> None:
+    def handle_no_anotherthing(response: ResponseInfo) -> None:
         try:
             response.json["anotherthing"]
         except KeyError:

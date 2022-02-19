@@ -15,7 +15,9 @@ from ikea_api.abc import (
 
 
 @dataclass
-class RequestsResponseInfo(ResponseInfo[requests.Response]):
+class RequestsResponseInfo(ResponseInfo):
+    response: requests.Response
+
     def __post_init__(self) -> None:
         self.headers = self.response.headers
         self.status_code = self.response.status_code
@@ -40,9 +42,9 @@ def get_session_from_info(session_info: SessionInfo) -> requests.Session:
     return get_cached_session(headers=frozenset(session_info.headers.items()))
 
 
-class RequestsExecutor(SyncExecutor[requests.Response]):
+class RequestsExecutor(SyncExecutor):
     @staticmethod
-    def request(request: RequestInfo) -> ResponseInfo[requests.Response]:
+    def request(request: RequestInfo) -> RequestsResponseInfo:
         session = get_session_from_info(request.session_info)
         response = session.request(
             method=request.method,

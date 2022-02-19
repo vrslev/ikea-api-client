@@ -32,7 +32,7 @@ class API(BaseAPI):
         return self.RequestInfo("GET", _build_url(self.items))
 
     def _handle_response(
-        self, response: ResponseInfo[Any], relapse: int
+        self, response: ResponseInfo, relapse: int
     ) -> list[dict[str, Any]] | None:
         if response.status_code == 404 and len(self.items) == 1:
             if relapse != 0:

@@ -8,9 +8,9 @@ from ikea_api.abc import ResponseInfo
 class APIError(Exception):
     """Generic API related exception."""
 
-    response: ResponseInfo[Any]
+    response: ResponseInfo
 
-    def __init__(self, response: ResponseInfo[Any], msg: Any = None) -> None:
+    def __init__(self, response: ResponseInfo, msg: Any = None) -> None:
         self.response = response
         if msg is None:
             msg = (response.status_code, response.text)
@@ -20,7 +20,7 @@ class APIError(Exception):
 class GraphQLError(APIError):
     errors: list[dict[str, Any]]
 
-    def __init__(self, response: ResponseInfo[Any]) -> None:
+    def __init__(self, response: ResponseInfo) -> None:
         if isinstance(response.json, dict):
             self.errors = response.json["errors"]
         else:

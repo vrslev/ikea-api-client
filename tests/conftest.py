@@ -46,12 +46,11 @@ def constants():
 
 
 @dataclass
-class MockResponseInfo(ResponseInfo[None]):
+class MockResponseInfo(ResponseInfo):
     headers: dict[str, str] = field(default_factory=dict)
     status_code: int = 200
     text_: str | None = None
     json_: Any = None
-    response: None = field(default=None, init=False)
 
     @cached_property
     def text(self) -> str:
@@ -78,7 +77,7 @@ class EndpointTester:
         self.next_request = None
         return req
 
-    def parse(self, response_info: ResponseInfo[Any], handle_errors: bool = False):
+    def parse(self, response_info: ResponseInfo, handle_errors: bool = False):
         if handle_errors:
             for handler in self.endpoint.handlers:
                 handler(response_info)
