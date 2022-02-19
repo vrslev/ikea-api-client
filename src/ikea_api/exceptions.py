@@ -1,61 +1,61 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import Any, Dict, List, cast
 
-from requests import Response
-
-if TYPE_CHECKING:
-    from ikea_api._api import CustomResponse, GraphQLResponse
+from ikea_api.abc import ResponseInfo
 
 
-class IKEAAPIError(Exception):
+class APIError(Exception):
     """Generic API related exception."""
 
-    response: CustomResponse
+    response: ResponseInfo
 
-    def __init__(self, response: CustomResponse, msg: Any = None):
+    def __init__(self, response: ResponseInfo, msg: Any = None) -> None:
         self.response = response
         if msg is None:
             msg = (response.status_code, response.text)
         super().__init__(msg)
 
 
-class UnauthorizedError(IKEAAPIError):
-    """Exception that is being called when cannot log in"""
-
-    def __init__(self, response: CustomResponse):
-        resp_json: dict[str, Any] = response._json
-        msg = (
-            resp_json.get("moreInformation")
-            or resp_json.get("error")
-            or resp_json.get("title")  # From Cart
-            or resp_json
-        )
-        super().__init__(response, msg)
+class JSONError(APIError):
+    pass
 
 
-class GraphQLError(IKEAAPIError):
-    """Generic GraphQL exception"""
+class AuthError(APIError):
+    pass
 
-    errors: list[dict[str, Any]] | dict[str, Any]
 
-    def __init__(self, response: CustomResponse):
-        resp: GraphQLResponse | list[GraphQLResponse] = response._json
+class NotSuccessError(APIError):
+    pass
 
-        if isinstance(resp, dict):
-            self.errors = resp["errors"]  # type: ignore
+
+class GraphQLError(APIError):
+    errors: list[dict[str, Any]]
+
+    def __init__(self, response: ResponseInfo) -> None:
+        if isinstance(response.json, dict):
+            self.errors = response.json["errors"]
         else:
-            # from purchases.order_info
-            self.errors = [d["errors"] for d in resp if "errors" in d]  # type: ignore
+            assert isinstance(response.json, list)
+            self.errors = []
+
+            for chunk in cast(List[Dict[str, Any]], response.json):
+                if "errors" in chunk:
+                    self.errors += chunk["errors"]
 
         super().__init__(response, self.errors)
 
 
-class ItemFetchError(IKEAAPIError):
-    response: Response  # type: ignore
+class ItemFetchError(APIError):
+    pass
 
-    def __init__(self, response: Response, msg: Any = None):
-        super().__init__(response, msg=msg)  # type: ignore
+
+class WrongItemCodeError(ItemFetchError):
+    pass
+
+
+class ProcessingError(APIError):
+    pass
 
 
 class ParsingError(Exception):

@@ -1,34 +1,9 @@
 from __future__ import annotations
 
 import datetime
-from typing import Any, Callable, List, Optional, TypeVar
+from typing import List, Optional
 
-from pydantic import BaseModel as PydanticBaseModel
-from pydantic import HttpUrl
-from pydantic.fields import Field, FieldInfo
-from pydantic.main import ModelMetaclass as PydanticModelMetaclass
-
-_T = TypeVar("_T")
-
-
-# https://github.com/microsoft/pyright/blob/main/specs/dataclass_transforms.md#applying-to-pydantic
-def __dataclass_transform__(
-    *,
-    eq_default: bool = True,
-    order_default: bool = False,
-    kw_only_default: bool = False,
-    field_descriptors: tuple[type | Callable[..., Any], ...] = (()),
-) -> Callable[[_T], _T]:
-    return lambda a: a
-
-
-@__dataclass_transform__(kw_only_default=True, field_descriptors=(Field, FieldInfo))
-class ModelMetaclass(PydanticModelMetaclass):
-    pass
-
-
-class BaseModel(PydanticBaseModel, metaclass=ModelMetaclass):
-    pass
+from pydantic import BaseModel, HttpUrl
 
 
 class ChildItem(BaseModel):
