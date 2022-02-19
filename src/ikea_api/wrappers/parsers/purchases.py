@@ -84,7 +84,7 @@ class ResponseHistory(BaseModel):
     data: HistoryData
 
 
-def parse_status_banner_order(response: dict[str, Any]):
+def parse_status_banner_order(response: dict[str, Any]) -> types.StatusBannerOrder:
     order = ResponseStatusBanner(**response)
     return types.StatusBannerOrder(
         purchase_date=order.data.order.dateAndTime.date,
@@ -94,7 +94,7 @@ def parse_status_banner_order(response: dict[str, Any]):
     )
 
 
-def parse_costs_order(response: dict[str, Any]):
+def parse_costs_order(response: dict[str, Any]) -> types.CostsOrder:
     order = ResponseCosts(**response)
     costs = order.data.order.costs
     return types.CostsOrder(
@@ -102,11 +102,13 @@ def parse_costs_order(response: dict[str, Any]):
     )
 
 
-def get_history_datetime(item: HistoryItem):
+def get_history_datetime(item: HistoryItem) -> str:
     return f"{item.dateAndTime.date}T{item.dateAndTime.time}"
 
 
-def parse_history(constants: Constants, response: dict[str, Any]):
+def parse_history(
+    constants: Constants, response: dict[str, Any]
+) -> list[types.PurchaseHistoryItem]:
     history = ResponseHistory(**response)
     return [
         types.PurchaseHistoryItem(

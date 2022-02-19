@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, TypedDict
 
-from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, EndpointInfo, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseAuthIkeaAPI
 from ikea_api.error_handlers import (
     handle_401,
@@ -45,38 +45,38 @@ class API(BaseAuthIkeaAPI):
         response = yield self.RequestInfo("POST", json=payload)
         return response.json
 
-    def show(self):
+    def show(self) -> EndpointInfo[dict[str, Any]]:
         return self._req(Queries.cart)
 
-    def clear(self):
+    def clear(self) -> EndpointInfo[dict[str, Any]]:
         return self._req(Mutations.clear_items)
 
-    def add_items(self, items: dict[str, int]):
+    def add_items(self, items: dict[str, int]) -> EndpointInfo[dict[str, Any]]:
         """
         Add items to cart.
         Required items list format: {'item_no': quantity, ...}
         """
         return self._req(Mutations.add_items, items=convert_items(items))
 
-    def update_items(self, items: dict[str, int]):
+    def update_items(self, items: dict[str, int]) -> EndpointInfo[dict[str, Any]]:
         """
         Replace quantity for given item to the new one.
         Required items list format: {'item_no': quantity, ...}
         """
         return self._req(Mutations.update_items, items=convert_items(items))
 
-    def copy_items(self, *, source_user_id: str):
+    def copy_items(self, *, source_user_id: str) -> EndpointInfo[dict[str, Any]]:
         """Copy cart from another account."""
         return self._req(Mutations.copy_items, sourceUserId=source_user_id)
 
-    def remove_items(self, item_codes: list[str]):
+    def remove_items(self, item_codes: list[str]) -> EndpointInfo[dict[str, Any]]:
         """Remove items by item codes."""
         return self._req(Mutations.remove_items, itemNos=item_codes)
 
-    def set_coupon(self, code: str):
+    def set_coupon(self, code: str) -> EndpointInfo[dict[str, Any]]:
         return self._req(Mutations.set_coupon, code=code)
 
-    def clear_coupon(self):
+    def clear_coupon(self) -> EndpointInfo[dict[str, Any]]:
         return self._req(Mutations.clear_coupon)
 
 

@@ -96,7 +96,7 @@ def get_rid_of_dollars(d: Dict[str, Any]) -> Dict[str, Any]:
     )
 
 
-def get_name(item: Union[ChildItem, ResponseIowsItem]):
+def get_name(item: Union[ChildItem, ResponseIowsItem]) -> str:
     return ", ".join(
         part
         for part in (
@@ -127,14 +127,14 @@ def get_image_url(constants: Constants, images: List[Image]) -> Optional[str]:
     return constants.base_url + images[0].ImageUrl  # type: ignore
 
 
-def parse_weight(v: str):
+def parse_weight(v: str) -> float:
     matches = re.findall(r"[0-9.,]+", v)
     if matches:
         return float(matches[0])
     return 0.0
 
 
-def get_weight(measurements: List[Measurement]):
+def get_weight(measurements: List[Measurement]) -> float:
     weight = 0.0
     if not measurements:
         return weight
@@ -168,7 +168,7 @@ def get_child_items(
     ]
 
 
-def get_price(prices: Union[Price, List[Price]]):
+def get_price(prices: Union[Price, List[Price]]) -> int:
     if not prices:
         return 0
     if isinstance(prices, list):
@@ -176,7 +176,7 @@ def get_price(prices: Union[Price, List[Price]]):
     return prices.Price
 
 
-def get_url(constants: Constants, item_code: str, is_combination: bool):
+def get_url(constants: Constants, item_code: str, is_combination: bool) -> str:
     suffix = "s" if is_combination else ""
     return f"{constants.local_base_url}/p/-{suffix}{item_code}"
 
@@ -205,7 +205,7 @@ def get_category_name_and_url(
     )
 
 
-def main(constants: Constants, response: Dict[str, Any]):
+def main(constants: Constants, response: Dict[str, Any]) -> types.ParsedItem:
     response = get_rid_of_dollars(response)
     item = ResponseIowsItem(**response)
 

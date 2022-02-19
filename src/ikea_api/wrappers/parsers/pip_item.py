@@ -34,7 +34,7 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
     return catalog_refs.products.elements[0].name, catalog_refs.products.elements[0].url
 
 
-def main(response: dict[str, Any]):
+def main(response: dict[str, Any]) -> types.PipItem | None:
     if not response:
         return
     parsed_item = ResponsePipItem(**response)

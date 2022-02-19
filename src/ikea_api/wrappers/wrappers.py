@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Optional
+from typing import Any, Iterable, Optional
 
 from ikea_api.constants import Constants
 from ikea_api.endpoints.cart import API as CartAPI
@@ -131,11 +131,13 @@ async def get_delivery_services(
     )
 
 
-def chunks(list_: list[Any], chunk_size: int):
+def chunks(list_: list[Any], chunk_size: int) -> Iterable[list[Any]]:
     return (list_[i : i + chunk_size] for i in range(0, len(list_), chunk_size))
 
 
-async def _get_ingka_items(constants: Constants, item_codes: list[str]):
+async def _get_ingka_items(
+    constants: Constants, item_codes: list[str]
+) -> list[types.IngkaItem]:
     api = IngkaItemsAPI(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 50))
     responses = await asyncio.gather(*tasks)
@@ -145,14 +147,16 @@ async def _get_ingka_items(constants: Constants, item_codes: list[str]):
     return res
 
 
-async def _get_pip_items(constants: Constants, item_codes: list[str]):
+async def _get_pip_items(
+    constants: Constants, item_codes: list[str]
+) -> list[types.PipItem | None]:
     api = PipItemAPI(constants)
     tasks = (run_with_httpx(api.get_item(i)) for i in item_codes)
     responses = await asyncio.gather(*tasks)
     return [parse_pip_item(r) for r in responses]
 
 
-def _get_pip_items_map(items: list[types.PipItem | None]):
+def _get_pip_items_map(items: list[types.PipItem | None]) -> dict[str, types.PipItem]:
     res: dict[str, types.PipItem] = {}
     for item in items:
         if item:
@@ -190,7 +194,9 @@ async def _get_ingka_pip_items(
     return res
 
 
-async def _get_iows_items(constants: Constants, item_codes: list[str]):
+async def _get_iows_items(
+    constants: Constants, item_codes: list[str]
+) -> list[types.ParsedItem]:
     api = IowsItemsAPI(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 90))
     responses = await asyncio.gather(*tasks)

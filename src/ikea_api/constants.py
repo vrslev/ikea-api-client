@@ -12,7 +12,7 @@ class Constants:
     language: str = "ru"
 
     @property
-    def local_base_url(self):
+    def local_base_url(self) -> str:
         return f"{self.base_url}/{self.country}/{self.language}"
 
 

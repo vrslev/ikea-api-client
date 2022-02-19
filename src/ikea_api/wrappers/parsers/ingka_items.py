@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, List, Optional
+from typing import Any, Iterable, List, Optional
 
 from pydantic import BaseModel
 
@@ -78,14 +78,14 @@ class ResponseIngkaItems(BaseModel):
 
 def get_localised_communication(
     constants: Constants, comms: list[LocalisedCommunication]
-):
+) -> LocalisedCommunication:
     for comm in comms:
         if comm.languageCode == constants.language:
             return comm
     raise ParsingError("Cannot find appropriate localized communication")
 
 
-def _parse_russian_product_name(product_name: str):
+def parse_russian_product_name(product_name: str) -> str:
     if not re.findall(r"[А-яЁё ]+", product_name):  # Russian text found
         # No russian text found: 'MARABOU'
         return product_name
@@ -104,8 +104,8 @@ def _parse_russian_product_name(product_name: str):
     return product_name
 
 
-def get_name(comm: LocalisedCommunication):
-    product_name = _parse_russian_product_name(comm.productName)
+def get_name(comm: LocalisedCommunication) -> str:
+    product_name = parse_russian_product_name(comm.productName)
     product_type = comm.productType.name.capitalize()
     design = comm.validDesign.text if comm.validDesign else None
 
@@ -124,7 +124,7 @@ def get_name(comm: LocalisedCommunication):
     )
 
 
-def get_image_url(comm: LocalisedCommunication):
+def get_image_url(comm: LocalisedCommunication) -> str | None:
     if comm.media is None:
         return
 
@@ -137,7 +137,7 @@ def get_image_url(comm: LocalisedCommunication):
     return comm.media[0].variants[0].href
 
 
-def get_weight(comm: LocalisedCommunication):
+def get_weight(comm: LocalisedCommunication) -> float:
     weight = 0.0
     if not comm.packageMeasurements:
         return weight
@@ -163,7 +163,7 @@ def get_child_items(child_items: list[ChildItem] | None) -> list[types.ChildItem
     ]
 
 
-def parse_item(constants: Constants, item: ResponseIngkaItem):
+def parse_item(constants: Constants, item: ResponseIngkaItem) -> types.IngkaItem:
     comm = get_localised_communication(constants, item.localisedCommunications)
     return types.IngkaItem(
         is_combination=get_is_combination_from_item_type(item.itemKey.itemType),
@@ -175,7 +175,7 @@ def parse_item(constants: Constants, item: ResponseIngkaItem):
     )
 
 
-def main(constants: Constants, response: dict[str, Any]):
+def main(constants: Constants, response: dict[str, Any]) -> Iterable[types.IngkaItem]:
     parsed_resp = ResponseIngkaItems(**response)
     for item in parsed_resp.data:
         yield parse_item(constants, item)

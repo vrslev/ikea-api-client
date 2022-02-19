@@ -27,4 +27,4 @@ from ikea_api.wrappers.wrappers import get_purchase_history as get_purchase_hist
 from ikea_api.wrappers.wrappers import get_purchase_info as get_purchase_info
 
 # pyright: reportUnusedImport = false
-# TODO: Add missing type hints
+# TODO: Update docs

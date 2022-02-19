@@ -61,7 +61,7 @@ class SelectableInfo(BaseModel):
     selectable: bool
 
     @validator("selectable", pre=True)
-    def validate_selectable(cls, v: Any):
+    def validate_selectable(cls, v: Any) -> Any:
         return v == "YES"
 
 
@@ -74,7 +74,7 @@ class UnavailableItem(BaseModel):
     availableQuantity: int
 
 
-def get_date(deliveries: list[HomeDelivery] | None):
+def get_date(deliveries: list[HomeDelivery] | None) -> datetime | None:
     if not deliveries:
         return
 
@@ -85,7 +85,7 @@ def get_date(deliveries: list[HomeDelivery] | None):
 
 def get_type(
     constants: Constants, service: HomeDeliveryService | CollectDeliveryService
-):
+) -> str:
     delivery_type = translate_from_dict(
         constants, DELIVERY_TYPES, service.fulfillmentMethodType
     )
@@ -96,7 +96,7 @@ def get_type(
     return delivery_type
 
 
-def get_price(service: HomeDeliveryService | CollectDeliveryService):
+def get_price(service: HomeDeliveryService | CollectDeliveryService) -> int:
     if service.solutionPrice:
         return service.solutionPrice.inclTax
     return 0
@@ -144,7 +144,9 @@ class HomeDeliveryServicesResponse(BaseModel):
     possibleDeliveryServices: Optional[HomePossibleDeliveryServices]
 
 
-def parse_home_delivery_services(constants: Constants, response: dict[str, Any]):
+def parse_home_delivery_services(
+    constants: Constants, response: dict[str, Any]
+) -> list[types.DeliveryService]:
     parsed_response = HomeDeliveryServicesResponse(**response)
 
     res: list[types.DeliveryService] = []
@@ -214,7 +216,7 @@ class CollectDeliveryServicesResponse(BaseModel):
     possibleDeliveryServices: Optional[CollectPossibleDeliveryServices]
 
 
-def get_service_provider(constants: Constants, pickup_point: PickUpPoint):
+def get_service_provider(constants: Constants, pickup_point: PickUpPoint) -> str | None:
     identifier = pickup_point.identifier
     if not identifier:
         return
@@ -224,7 +226,9 @@ def get_service_provider(constants: Constants, pickup_point: PickUpPoint):
     return identifier
 
 
-def parse_collect_delivery_services(constants: Constants, response: dict[str, Any]):
+def parse_collect_delivery_services(
+    constants: Constants, response: dict[str, Any]
+) -> list[types.DeliveryService]:
     parsed_response = CollectDeliveryServicesResponse(**response)
 
     res: list[types.DeliveryService] = []

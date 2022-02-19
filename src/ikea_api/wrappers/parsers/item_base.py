@@ -23,6 +23,6 @@ class ItemCode(str):
 ItemType = Literal["ART", "SPR"]
 
 
-def get_is_combination_from_item_type(item_type: ItemType):
+def get_is_combination_from_item_type(item_type: ItemType) -> bool:
     assert item_type in ("ART", "SPR"), "Item type should be ART or SPR"
     return item_type == "SPR"

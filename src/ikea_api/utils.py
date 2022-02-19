@@ -1,16 +1,16 @@
 from __future__ import annotations
 
 import re
-from typing import Any
+from typing import Any, Iterable
 
 import requests
 
 from ikea_api.constants import Constants
 
 
-def get_unshortened_links_from_ingka_pagelinks( # TODO: Add tests
+def get_unshortened_links_from_ingka_pagelinks(  # TODO: Add tests
     message: str,
-):  # TODO: requests agnostic?
+) -> Iterable[str]:  # TODO: requests agnostic?
     session = requests.Session()
     base_url = "https://ingka.page.link/"
 
@@ -45,14 +45,14 @@ def parse_item_codes(
 def format_item_code(item_code: str) -> str | None:
     matches = parse_item_codes(item_code)
     if not matches:
-        return
+        return None
     item_code = matches[0]
     return item_code[0:3] + "." + item_code[3:6] + "." + item_code[6:8]
 
 
 def translate_from_dict(
     constants: Constants, dictionary: dict[str, dict[str, Any]], v: str
-):
+) -> str:
     lang_dict = dictionary.get(constants.language)
     if lang_dict is None:
         return v

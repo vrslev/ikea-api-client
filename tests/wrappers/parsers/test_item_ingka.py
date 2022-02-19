@@ -8,13 +8,13 @@ import pytest
 from ikea_api.exceptions import ParsingError
 from ikea_api.wrappers.parsers.ingka_items import (
     Constants,
-    _parse_russian_product_name,
     get_child_items,
     get_image_url,
     get_localised_communication,
     get_name,
     get_weight,
     main,
+    parse_russian_product_name,
 )
 from tests.conftest import TestData
 
@@ -54,7 +54,7 @@ def test_get_localised_communication_raises():
     ),
 )
 def test_parse_russian_product_name(input: str, output: str):
-    assert _parse_russian_product_name(input) == output
+    assert parse_russian_product_name(input) == output
 
 
 @pytest.mark.parametrize(

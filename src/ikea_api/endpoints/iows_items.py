@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ikea_api.abc import Endpoint, ResponseInfo, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, RequestInfo, ResponseInfo, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.exceptions import ItemFetchError, WrongItemCodeError
 
 ItemCodeToComboDict = Dict[str, bool]
 
 
-def _build_url(items: ItemCodeToComboDict):
+def _build_url(items: ItemCodeToComboDict) -> str:
     return ";".join(
         f"{'SPR' if is_combintaion else 'ART'},{item_code}"
         for item_code, is_combintaion in items.items()
@@ -31,7 +31,7 @@ class API(BaseIkeaAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    def _build_request(self):
+    def _build_request(self) -> RequestInfo:
         return self.RequestInfo("GET", _build_url(self.items))
 
     def _handle_response(

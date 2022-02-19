@@ -7,7 +7,7 @@ from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.error_handlers import handle_json_decode_error
 
 
-def _build_url(item_code: str, is_combination: bool):
+def _build_url(item_code: str, is_combination: bool) -> str:
     prefix = "s" if is_combination else ""
     return f"/{item_code[5:]}/{prefix}{item_code}.json"
 
