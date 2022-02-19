@@ -15,7 +15,7 @@ from ikea_api.endpoints.purchases import API as PurchasesAPI
 from ikea_api.exceptions import GraphQLError
 from ikea_api.executors.httpx import run as run_with_httpx
 from ikea_api.executors.requests import run as run_with_requests
-from ikea_api.utils import parse_item_codes
+from ikea_api.utils import parse_item_codes, unshorten_urls_from_ingka_pagelinks
 from ikea_api.wrappers import types
 from ikea_api.wrappers.parsers import purchases as purchases_parser
 from ikea_api.wrappers.parsers.ingka_items import main as parse_ingka_items
@@ -210,7 +210,9 @@ async def _get_iows_items(
 async def get_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.ParsedItem]:
-    pending = parse_item_codes(item_codes, unshorten_ingka_pagelinks=True)
+    item_codes_ = item_codes.copy()
+    item_codes_ += await unshorten_urls_from_ingka_pagelinks(str(item_codes))
+    pending = parse_item_codes(item_codes_)
     ingka_pip = await _get_ingka_pip_items(constants=constants, item_codes=pending)
 
     fetched = {i.item_code for i in ingka_pip}

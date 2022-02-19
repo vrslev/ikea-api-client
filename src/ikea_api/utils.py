@@ -1,45 +1,48 @@
 from __future__ import annotations
 
+import asyncio
 import re
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any, Iterable, cast
 
 from ikea_api.constants import Constants
 
-
-def get_unshortened_links_from_ingka_pagelinks(  # TODO: Add tests
-    message: str,
-) -> Iterable[str]:  # TODO: requests agnostic?
-    import requests
-
-    session = requests.Session()
-    base_url = "https://ingka.page.link/"
-
-    for postfix in re.findall("ingka.page.link/([0-9A-z]+)", message):
-        resp = session.get(base_url + postfix, allow_redirects=False)
-        location_header = resp.headers.get("Location")
-        if location_header is not None:
-            yield location_header
+if TYPE_CHECKING:
+    import httpx
 
 
-def parse_item_codes(
-    item_codes: str | list[str], unshorten_ingka_pagelinks: bool = False
-) -> list[str]:
-    if item_codes == []:
-        return []
-
-    if unshorten_ingka_pagelinks:
-        if isinstance(item_codes, str):
-            item_codes = [item_codes]
-        unshortened_links = get_unshortened_links_from_ingka_pagelinks(item_codes[0])
-        if unshortened_links:
-            item_codes.extend(unshortened_links)
-
+def parse_item_codes(item_codes: list[str] | str) -> list[str]:
     raw_res: list[str] = re.findall(
         r"\d{3}[, .-]{0,2}\d{3}[, .-]{0,2}\d{2}", str(item_codes)
     )
     regex = re.compile(r"[^0-9]")
     # http://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-in-python-whilst-preserving-order
     return list(dict.fromkeys(regex.sub("", i) for i in raw_res))
+
+
+def _parse_ingka_pagelink_urls(message: str) -> Iterable[str]:
+    base_url = "https://ingka.page.link/"
+    postfixes = re.findall("ingka.page.link/([0-9A-z]+)", message)
+    for postfix in postfixes:
+        yield base_url + postfix
+
+
+def _get_location_headers(responses: Iterable[httpx.Response]) -> list[str]:
+    res: list[str] = []
+    for response in responses:
+        location = cast(str | None, response.headers.get("Location"))  # type: ignore
+        if location is not None:
+            res.append(location)
+    return res
+
+
+async def unshorten_urls_from_ingka_pagelinks(message: str) -> list[str]:
+    import httpx
+
+    client = httpx.AsyncClient()
+    urls = _parse_ingka_pagelink_urls(message)
+    coros = (client.get(url, follow_redirects=False) for url in urls)  # type: ignore
+    responses = await asyncio.gather(*coros)
+    return _get_location_headers(responses)
 
 
 def format_item_code(item_code: str) -> str | None:
