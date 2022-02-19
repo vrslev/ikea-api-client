@@ -92,15 +92,52 @@ jobs:
           key: test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
 
       - name: Install Poetry
-        run: |
-          pip install -U poetry
-          poetry config virtualenvs.create false
+        run: pip install -U poetry
 
       - name: Install package
         run: poetry install --extras all
 
       - name: Test
-        run: pytest --color=yes --cov --cov-report=xml
+        run: |
+          poetry run pytest --color=yes --cov
+          mv .coverage ".coverage.${{ matrix.python-version }}"
 
-      - name: Upload coverage
-        uses: codecov/codecov-action@v2
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-data
+          path: .coverage.*
+          if-no-files-found: ignore
+
+  coverage: # https://hynek.me/articles/ditch-codecov-python/
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Install Coverage
+        run: pip install -U coverage[toml]
+
+      - name: Download data
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-data
+
+      - name: Combine coverage & fail if it's <100%
+        run: |
+          python -m coverage combine
+          python -m coverage html --skip-covered --skip-empty
+          python -m coverage report --fail-under=100
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: html-report
+          path: htmlcov
