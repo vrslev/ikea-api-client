@@ -98,3 +98,13 @@ class EndpointTester:
 
         self.parse(mock)
         prop.assert_called_once_with()
+
+
+@pytest.fixture
+def response():
+    return MockResponseInfo(
+        headers={"Accept": "*/*"},
+        status_code=200,
+        text_='{"ok":"ok"}',
+        json_={"ok": "ok"},
+    )

@@ -30,17 +30,16 @@ def test_endpoint_decorator():
     assert info.handlers == [handler]
 
 
-def test_sync_executor():
+def test_sync_executor(response: ResponseInfo):
     request_info = RequestInfo(
         SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
     )
-    response_info = MockResponseInfo(json_="ok")
 
     class MyExecutor(SyncExecutor):
         @staticmethod
-        def request(request: RequestInfo) -> MockResponseInfo:
+        def request(request: RequestInfo):
             assert request == request_info
-            return response_info
+            return response
 
     mock = MagicMock()
 
@@ -50,21 +49,20 @@ def test_sync_executor():
         response2 = yield request_info
         return (response1.json, response2.json)
 
-    assert MyExecutor.run(myendpoint()) == ("ok", "ok")
-    mock.assert_called_with(response_info)
+    assert MyExecutor.run(myendpoint()) == (response.json, response.json)
+    mock.assert_called_with(response)
 
 
-async def test_async_executor():
+async def test_async_executor(response: ResponseInfo):
     request_info = RequestInfo(
         SessionInfo("https://example.com", {}), "POST", "", params={}, headers={}
     )
-    response_info = MockResponseInfo(json_="ok")
 
     class MyExecutor(AsyncExecutor):
         @staticmethod
-        async def request(request: RequestInfo) -> MockResponseInfo:
+        async def request(request: RequestInfo):
             assert request == request_info
-            return response_info
+            return response
 
     mock = MagicMock()
 
@@ -74,8 +72,8 @@ async def test_async_executor():
         response2 = yield request_info
         return (response1.json, response2.json)
 
-    assert await MyExecutor.run(myendpoint()) == ("ok", "ok")
-    mock.assert_called_with(response_info)
+    assert await MyExecutor.run(myendpoint()) == (response.json, response.json)
+    mock.assert_called_with(response)
 
 
 def test_error_handlers():

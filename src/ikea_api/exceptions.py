@@ -17,6 +17,18 @@ class APIError(Exception):
         super().__init__(msg)
 
 
+class JSONError(APIError):
+    pass
+
+
+class AuthError(APIError):
+    pass
+
+
+class NotSuccessError(APIError):
+    pass
+
+
 class GraphQLError(APIError):
     errors: list[dict[str, Any]]
 
@@ -26,8 +38,10 @@ class GraphQLError(APIError):
         else:
             assert isinstance(response.json, list)
             self.errors = []
+
             for chunk in cast(list[dict[str, Any]], response.json):
-                self.errors.extend(chunk["errors"])
+                if "errors" in chunk:
+                    self.errors += chunk["errors"]
 
         super().__init__(response, self.errors)
 

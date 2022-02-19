@@ -8,8 +8,11 @@ from ikea_api.endpoints.pip_item import API as PipItem
 from ikea_api.endpoints.purchases import API as Purchases
 from ikea_api.endpoints.search import API as Search
 from ikea_api.exceptions import APIError as APIError
+from ikea_api.exceptions import AuthError as AuthError
 from ikea_api.exceptions import GraphQLError as GraphQLError
 from ikea_api.exceptions import ItemFetchError as ItemFetchError
+from ikea_api.exceptions import JSONError as JSONError
+from ikea_api.exceptions import NotSuccessError as NotSuccessError
 from ikea_api.exceptions import ParsingError as ParsingError
 from ikea_api.exceptions import ProcessingError as ProcessingError
 from ikea_api.exceptions import WrongItemCodeError as WrongItemCodeError

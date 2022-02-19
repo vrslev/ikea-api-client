@@ -1,26 +1,31 @@
 from json import JSONDecodeError
+from typing import Any, cast
 
 from ikea_api.abc import ResponseInfo
-from ikea_api.exceptions import APIError, GraphQLError
+from ikea_api.exceptions import AuthError, GraphQLError, JSONError, NotSuccessError
 
 
 def handle_json_decode_error(response: ResponseInfo):
     try:
         response.json
     except JSONDecodeError:
-        raise APIError(response)
+        raise JSONError(response)
 
 
 def handle_401(response: ResponseInfo):
     if response.status_code == 401:
-        raise APIError(response)
+        raise AuthError(response)
+
+
+def handle_not_success(response: ResponseInfo):
+    if not response.is_success:
+        raise NotSuccessError(response)
 
 
 def handle_graphql_error(response: ResponseInfo):
     if "errors" in response.json:
         raise GraphQLError(response)
-
-
-def handle_not_success(response: ResponseInfo):
-    if not response.is_success:
-        raise APIError(response)
+    elif isinstance(response.json, list):
+        for dict_ in cast(list[dict[str, Any]], response.json):
+            if "errors" in dict_:
+                raise GraphQLError(response)
