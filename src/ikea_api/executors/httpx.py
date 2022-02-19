@@ -16,8 +16,6 @@ from ikea_api.abc import (
 if TYPE_CHECKING:
     import httpx
 
-# TODO: Add Sync client
-
 
 @dataclass
 class HttpxResponseInfo(ResponseInfo):

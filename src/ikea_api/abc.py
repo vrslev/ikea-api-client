@@ -43,7 +43,7 @@ class ResponseInfo(ABC):
     headers: Mapping[str, str] = field(init=False)
     status_code: int = field(init=False)
 
-    @cached_property  # TODO: Use getters instead of abstract properties
+    @cached_property
     @abstractmethod
     def text(self) -> str:
         ...

@@ -53,7 +53,6 @@ class EarliestPossibleSlot(BaseModel):
 
 
 class TimeWindows(BaseModel):
-    # TODO: Check if this is the same for home delivery services
     earliestPossibleSlot: Optional[EarliestPossibleSlot]
 
 
