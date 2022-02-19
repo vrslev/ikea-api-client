@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property, lru_cache
-from typing import Any
-
-import requests  # TODO: Optional import
+from typing import TYPE_CHECKING, Any
 
 from ikea_api.abc import (
     EndpointInfo,
@@ -14,6 +12,9 @@ from ikea_api.abc import (
     SessionInfo,
     SyncExecutor,
 )
+
+if TYPE_CHECKING:
+    import requests
 
 
 @dataclass
@@ -39,6 +40,14 @@ class RequestsResponseInfo(ResponseInfo):
 
 @lru_cache
 def get_cached_session(headers: frozenset[tuple[str, str]]) -> requests.Session:
+    try:
+        import requests
+    except ImportError:
+        raise RuntimeError(
+            "To use requests executor you need requests to be installed. "
+            + "Run 'pip install \"ikea_api[requests]\"' to do so."
+        )
+
     session = requests.Session()
     session.headers.update(headers)
     return session

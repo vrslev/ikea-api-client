@@ -3,14 +3,14 @@ from __future__ import annotations
 import re
 from typing import Any, Iterable
 
-import requests
-
 from ikea_api.constants import Constants
 
 
 def get_unshortened_links_from_ingka_pagelinks(  # TODO: Add tests
     message: str,
 ) -> Iterable[str]:  # TODO: requests agnostic?
+    import requests
+
     session = requests.Session()
     base_url = "https://ingka.page.link/"
 

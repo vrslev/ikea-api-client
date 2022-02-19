@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property, lru_cache
-from typing import Any, cast
-
-import httpx  # TODO: Optional import
+from typing import TYPE_CHECKING, Any, cast
 
 from ikea_api.abc import (
     AsyncExecutor,
@@ -15,6 +13,9 @@ from ikea_api.abc import (
     SessionInfo,
 )
 
+if TYPE_CHECKING:
+    import httpx
+
 # TODO: Add Sync client
 
 
@@ -23,7 +24,7 @@ class HttpxResponseInfo(ResponseInfo):
     response: httpx.Response
 
     def __post_init__(self) -> None:
-        self.headers = cast(httpx.Headers, self.response.headers)  # type: ignore
+        self.headers = cast("httpx.Headers", self.response.headers)  # type: ignore
         self.status_code = cast(int, self.response.status_code)  # type: ignore
 
     @cached_property
@@ -41,6 +42,14 @@ class HttpxResponseInfo(ResponseInfo):
 
 @lru_cache
 def get_cached_session(headers: frozenset[tuple[str, str]]) -> httpx.AsyncClient:
+    try:
+        import httpx
+    except ImportError:
+        raise RuntimeError(
+            "To use httpx executor you need httpx to be installed. "
+            + "Run 'pip install \"ikea_api[httpx]\"' to do so."
+        )
+
     return httpx.AsyncClient(headers=dict(headers))
 
 
