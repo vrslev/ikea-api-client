@@ -62,6 +62,10 @@ class MockResponseInfo(ResponseInfo):
             json.loads("")
         return self.json_
 
+    @property
+    def is_success(self) -> bool:
+        return True
+
 
 class EndpointTester:
     def __init__(self, endpoint: EndpointInfo[Any]) -> None:
