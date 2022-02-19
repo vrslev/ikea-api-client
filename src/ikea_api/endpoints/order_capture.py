@@ -1,6 +1,7 @@
 from typing import Any, TypedDict
 
-from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.constants import Constants, get_auth_header
 from ikea_api.error_handlers import handle_401, handle_json_decode_error
 from ikea_api.exceptions import ProcessingError
@@ -12,7 +13,7 @@ class CheckoutItem(TypedDict):
     uom: str
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     token: str
 
     def __init__(self, constants: Constants, *, token: str) -> None:

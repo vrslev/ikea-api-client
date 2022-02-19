@@ -1,4 +1,5 @@
-from ikea_api.abc import BaseAPI, Endpoint, ResponseInfo, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, ResponseInfo, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.constants import Constants
 from tests.conftest import EndpointTester, MockResponseInfo
 
@@ -13,7 +14,7 @@ def test_error_handlers(constants: Constants):
     class Something:
         pass
 
-    class API(BaseAPI):
+    class API(BaseIkeaAPI):
         def get_session_info(self) -> SessionInfo:
             return SessionInfo("", {})
 

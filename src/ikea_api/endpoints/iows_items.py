@@ -1,6 +1,7 @@
 from typing import Any
 
-from ikea_api.abc import BaseAPI, Endpoint, ResponseInfo, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, ResponseInfo, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.exceptions import ItemFetchError, WrongItemCodeError
 
 ItemCodeToComboDict = dict[str, bool]
@@ -13,7 +14,7 @@ def _build_url(items: ItemCodeToComboDict):
     )
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     items: ItemCodeToComboDict
 
     def get_session_info(self) -> SessionInfo:

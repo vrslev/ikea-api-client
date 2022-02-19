@@ -13,8 +13,6 @@ from typing import (
     TypeVar,
 )
 
-from ikea_api.constants import Constants, get_default_headers
-
 
 @dataclass
 class SessionInfo:
@@ -134,18 +132,11 @@ class AsyncExecutor(ABC):
                 return exc.value
 
 
-class BaseAPI(ABC):  # TODO: Move constants to IkeaAPI or something
-    const: Constants
+class BaseAPI(ABC):
     session_info: SessionInfo
 
-    def __init__(self, constants: Constants) -> None:
-        self.const = constants
+    def __init__(self) -> None:
         self.session_info = self.get_session_info()
-
-    def extend_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
-        res = get_default_headers(constants=self.const)
-        res.update(headers)
-        return res
 
     @abstractmethod
     def get_session_info(self) -> SessionInfo:

@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.error_handlers import handle_json_decode_error
 from ikea_api.exceptions import ItemFetchError
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         url = f"https://api.ingka.ikea.com/cia/availabilities/{self.const.country}/{self.const.language}"
         headers = self.extend_default_headers(

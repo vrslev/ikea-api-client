@@ -1,6 +1,7 @@
 from typing import Any, TypedDict
 
-from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.constants import Constants, get_auth_header
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
@@ -14,7 +15,7 @@ def _convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
     return [{"itemNo": item_code, "quantity": qty} for item_code, qty in items.items()]
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     token: str
 
     def __init__(self, constants: Constants, *, token: str) -> None:

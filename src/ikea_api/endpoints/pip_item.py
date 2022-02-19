@@ -1,6 +1,7 @@
 from typing import Any
 
-from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.error_handlers import handle_json_decode_error
 
 
@@ -9,7 +10,7 @@ def _build_url(item_code: str, is_combination: bool):
     return f"/{item_code[5:]}/{prefix}{item_code}.json"
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     def get_session_info(self) -> SessionInfo:
         url = f"{self.const.local_base_url}/products"
         headers = self.extend_default_headers({"Accept": "*/*"})

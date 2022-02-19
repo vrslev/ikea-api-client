@@ -1,6 +1,7 @@
 from typing import Any, Literal
 
-from ikea_api.abc import BaseAPI, Endpoint, SessionInfo, endpoint
+from ikea_api.abc import Endpoint, SessionInfo, endpoint
+from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.constants import Constants, get_auth_header
 from ikea_api.error_handlers import handle_401, handle_graphql_error
 
@@ -9,7 +10,7 @@ def _build_payload(operation_name: str, query: str, **variables: Any) -> dict[st
     return {"operationName": operation_name, "variables": variables, "query": query}
 
 
-class API(BaseAPI):
+class API(BaseIkeaAPI):
     token: str
 
     def __init__(self, constants: Constants, *, token: str) -> None:
