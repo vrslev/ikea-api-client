@@ -1,16 +1,14 @@
-import asyncio
 import re
 import sys
-import warnings
 from types import SimpleNamespace
-from typing import Any, Awaitable, Callable
+from typing import Any, Callable
 
 import pytest
 
 import ikea_api.executors.httpx
 import ikea_api.executors.requests
 import ikea_api.wrappers.wrappers
-from ikea_api.abc import RequestInfo, ResponseInfo
+from ikea_api.abc import EndpointInfo, RequestInfo, ResponseInfo
 from ikea_api.constants import Constants
 from ikea_api.endpoints import cart, purchases
 from ikea_api.endpoints.cart import convert_items
@@ -257,30 +255,21 @@ def test_split_to_chunks(list_: list[str], chunk_size: int, expected: list[list[
         assert len(res) == len(exp)
 
 
-def patch_asyncio_gather(
-    monkeypatch: pytest.MonkeyPatch, func: Callable[..., Awaitable[Any]]
-):
-    monkeypatch.setattr(asyncio, "gather", func)
-    warnings.simplefilter("ignore", RuntimeWarning)  # coroutines not awaited
-
-
 async def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    async def func(*tasks: Awaitable[Any]):
-        assert len(tasks) == 2
-        return TestData.item_ingka[0], TestData.item_ingka[0]
+    async def func(e: Any):
+        return TestData.item_ingka[0]
 
-    patch_asyncio_gather(monkeypatch, func)
+    monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
     res = await _get_ingka_items(constants, ["11111111"] * 51)
     assert len(res) == 2
     assert isinstance(res[0], types.IngkaItem)
 
 
 async def test_get_pip_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    async def func(*tasks: Awaitable[Any]):
-        assert len(tasks) == 10
-        return [TestData.item_pip[1]] * 10
+    async def func(e: Any):
+        return TestData.item_pip[1]
 
-    patch_asyncio_gather(monkeypatch, func)
+    monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
     res = await _get_pip_items(constants, ["11111111"] * 10)
     assert len(res) == 10
     assert isinstance(res[0], types.PipItem)
@@ -402,17 +391,19 @@ async def test_get_ingka_pip_items(
 
 
 async def test_get_iows_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    async def func(*tasks: Awaitable[Any]):
-        assert len(tasks) == 2
-        return [TestData.item_iows[0]] * 50, [TestData.item_iows[0]] * 49
+    async def func(e: EndpointInfo[Any]):
+        return [TestData.item_iows[0]] * len(e.func.args[1])
 
-    patch_asyncio_gather(monkeypatch, func)
+    monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
     res = await _get_iows_items(constants, ["11111111"] * 99)
     assert len(res) == 99
     assert isinstance(res[0], types.ParsedItem)
 
 
-async def test_get_items_main(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+@pytest.mark.parametrize("early_exit", (True, False))
+async def test_get_items_main(
+    monkeypatch: pytest.MonkeyPatch, constants: Constants, early_exit: bool
+):
     raw_item_codes = ["111.111.11", "22222222"]
     exp_item_codes = parse_item_codes(raw_item_codes)
     exp_items = [
@@ -422,9 +413,13 @@ async def test_get_items_main(monkeypatch: pytest.MonkeyPatch, constants: Consta
 
     async def mock_get_ingka_pip_items(constants: Constants, item_codes: list[str]):
         assert item_codes == exp_item_codes
+        if early_exit:
+            return exp_items
         return [exp_items[0]]
 
     async def mock_get_iows_items(constants: Constants, item_codes: list[str]):
+        if early_exit:
+            raise Exception
         assert item_codes == [exp_item_codes[1]]
         return [exp_items[1]]
 
