@@ -35,7 +35,6 @@ class RequestInfo:
 class ResponseInfo(ABC):
     headers: Mapping[str, str] = field(init=False)
     status_code: int = field(init=False)
-    ok: bool = field(init=False)
 
     @cached_property  # TODO: Use getters instead of abstract properties
     @abstractmethod

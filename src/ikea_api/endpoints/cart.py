@@ -15,7 +15,7 @@ class _TemplatedItem(TypedDict):
     quantity: int
 
 
-def _convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
+def convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
     return [{"itemNo": item_code, "quantity": qty} for item_code, qty in items.items()]
 
 
@@ -54,14 +54,14 @@ class API(BaseAuthIkeaAPI):
         Add items to cart.
         Required items list format: {'item_no': quantity, ...}
         """
-        return self._req(Mutations.add_items, items=_convert_items(items))
+        return self._req(Mutations.add_items, items=convert_items(items))
 
     def update_items(self, items: dict[str, int]):
         """
         Replace quantity for given item to the new one.
         Required items list format: {'item_no': quantity, ...}
         """
-        return self._req(Mutations.update_items, items=_convert_items(items))
+        return self._req(Mutations.update_items, items=convert_items(items))
 
     def copy_items(self, *, source_user_id: str):
         """Copy cart from another account."""

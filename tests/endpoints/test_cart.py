@@ -4,7 +4,7 @@ import pytest
 
 from ikea_api.abc import EndpointInfo
 from ikea_api.constants import Constants
-from ikea_api.endpoints.cart import API, Mutations, Queries, _convert_items
+from ikea_api.endpoints.cart import API, Mutations, Queries, convert_items
 from tests.conftest import EndpointTester
 
 in_items = {"11111111": 1, "22222222": 2}
@@ -15,7 +15,7 @@ out_items = [
 
 
 def test_cart_convert_items():
-    assert _convert_items(in_items) == out_items
+    assert convert_items(in_items) == out_items
 
 
 @pytest.fixture

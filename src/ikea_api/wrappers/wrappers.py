@@ -68,8 +68,9 @@ class _CartErrorRef(BaseModel):
 def add_items_to_cart(cart: CartAPI, items: dict[str, int]) -> types.CannotAddItems:
     run_with_requests(cart.clear())
     cannot_add_items: list[str] = []
+    pending_items = items.copy()
 
-    while pending_items := items.copy():
+    while pending_items:
         try:
             run_with_requests(cart.add_items(pending_items))
             break
