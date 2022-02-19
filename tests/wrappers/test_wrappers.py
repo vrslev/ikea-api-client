@@ -1,3 +1,5 @@
+import re
+import sys
 from typing import Callable
 
 import pytest
@@ -20,6 +22,21 @@ from ikea_api.wrappers.wrappers import (
     get_purchase_info,
 )
 from tests.conftest import MockResponseInfo, TestData
+
+
+def test_pydantic_import_passes():
+    import ikea_api.wrappers.wrappers  # type: ignore
+
+
+def test_pydantic_import_fails():
+    sys.modules["pydantic"] = None  # type: ignore
+    del sys.modules["ikea_api.wrappers.wrappers"]
+    with pytest.raises(
+        RuntimeError,
+        match=re.escape("To use wrappers you need Pydantic to be installed"),
+    ):
+        import ikea_api.wrappers.wrappers  # type: ignore
+    del sys.modules["pydantic"]
 
 
 def patch_requests_executor(
