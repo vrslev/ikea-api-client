@@ -83,7 +83,7 @@ class EndpointTester:
 
     def prepare(self):
         if not self.next_request:
-            raise RuntimeError("All done!")
+            raise NotImplementedError("All done!")
         req = self.next_request
         self.next_request = None
         return req
@@ -104,7 +104,7 @@ class EndpointTester:
         type(mock).json = prop
 
         self.parse(mock)
-        prop.assert_called_once_with()
+        prop.assert_called()
 
 
 @dataclass
