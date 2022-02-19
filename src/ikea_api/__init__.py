@@ -4,9 +4,13 @@ from ikea_api.endpoints.cart import API as Cart
 from ikea_api.endpoints.ingka_items import API as IngkaItems
 from ikea_api.endpoints.iows_items import API as IowsItems
 from ikea_api.endpoints.order_capture import API as OrderCapture
+from ikea_api.endpoints.order_capture import (
+    convert_cart_to_checkout_items as convert_cart_to_checkout_items,
+)
 from ikea_api.endpoints.pip_item import API as PipItem
 from ikea_api.endpoints.purchases import API as Purchases
 from ikea_api.endpoints.search import API as Search
+from ikea_api.endpoints.stock import API as Stock
 from ikea_api.exceptions import APIError as APIError
 from ikea_api.exceptions import AuthError as AuthError
 from ikea_api.exceptions import GraphQLError as GraphQLError
@@ -27,4 +31,3 @@ from ikea_api.wrappers.wrappers import get_purchase_history as get_purchase_hist
 from ikea_api.wrappers.wrappers import get_purchase_info as get_purchase_info
 
 # pyright: reportUnusedImport = false
-# TODO: Update docs
