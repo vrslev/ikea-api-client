@@ -415,11 +415,12 @@ async def test_get_items_main(
         assert item_codes == exp_item_codes
         if early_exit:
             return exp_items
-        return [exp_items[0]]
+        else:
+            return [exp_items[0]]
 
     async def mock_get_iows_items(constants: Constants, item_codes: list[str]):
         if early_exit:
-            raise Exception
+            raise NotImplementedError
         assert item_codes == [exp_item_codes[1]]
         return [exp_items[1]]
 
