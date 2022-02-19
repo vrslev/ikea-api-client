@@ -148,10 +148,10 @@ class BaseAPI(ABC):
         self.session_info = self.get_session_info()
 
     @abstractmethod
-    def get_session_info(self) -> SessionInfo:
+    def get_session_info(self) -> SessionInfo:  # TODO: Make private
         pass
 
-    def RequestInfo(
+    def RequestInfo(  # TODO: Make private
         self,
         method: Literal["GET", "POST"],
         url: str | None = None,
