@@ -142,16 +142,16 @@ class AsyncExecutor(ABC):
 
 
 class BaseAPI(ABC):
-    session_info: SessionInfo
+    _session_info: SessionInfo
 
     def __init__(self) -> None:
-        self.session_info = self.get_session_info()
+        self._session_info = self._get_session_info()
 
     @abstractmethod
-    def get_session_info(self) -> SessionInfo:  # TODO: Make private
+    def _get_session_info(self) -> SessionInfo:
         pass
 
-    def RequestInfo(  # TODO: Make private
+    def _RequestInfo(
         self,
         method: Literal["GET", "POST"],
         url: str | None = None,
@@ -161,7 +161,7 @@ class BaseAPI(ABC):
         data: Any = None,
     ) -> RequestInfo:
         return RequestInfo(
-            session_info=self.session_info,
+            session_info=self._session_info,
             method=method,
             url=url or "",
             params=params or {},

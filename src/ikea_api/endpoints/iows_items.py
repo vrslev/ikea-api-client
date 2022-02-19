@@ -19,12 +19,12 @@ def _build_url(items: ItemCodeToComboDict) -> str:
 class API(BaseIkeaAPI):
     items: ItemCodeToComboDict
 
-    def get_session_info(self) -> SessionInfo:
-        url = f"https://iows.ikea.com/retail/iows/{self.const.country}/{self.const.language}/catalog/items/"
-        headers = self.extend_default_headers(
+    def _get_session_info(self) -> SessionInfo:
+        url = f"https://iows.ikea.com/retail/iows/{self._const.country}/{self._const.language}/catalog/items/"
+        headers = self._extend_default_headers(
             {
                 "Accept": "application/vnd.ikea.iows+json;version=2.0",
-                "Referer": f"{self.const.local_base_url}/shoppinglist/",
+                "Referer": f"{self._const.local_base_url}/shoppinglist/",
                 "consumer": "MAMMUT#ShoppingCart",
                 "contract": "37249",
             }
@@ -32,7 +32,7 @@ class API(BaseIkeaAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     def _build_request(self) -> RequestInfo:
-        return self.RequestInfo("GET", _build_url(self.items))
+        return self._RequestInfo("GET", _build_url(self.items))
 
     def _handle_response(
         self, response: ResponseInfo, relapse: int

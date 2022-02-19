@@ -5,16 +5,14 @@ from ikea_api.constants import Constants, get_default_headers
 
 
 class BaseIkeaAPI(BaseAPI):
-    const: Constants
+    _const: Constants
 
     def __init__(self, constants: Constants) -> None:
-        self.const = constants
+        self._const = constants
         super().__init__()
 
-    def extend_default_headers(
-        self, headers: dict[str, str]
-    ) -> dict[str, str]:  # TODO: Make private
-        res = get_default_headers(constants=self.const)
+    def _extend_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
+        res = get_default_headers(constants=self._const)
         res.update(headers)
         return res
 
@@ -26,9 +24,9 @@ class BaseAuthIkeaAPI(BaseIkeaAPI):
         self.token = token
         super().__init__(constants)
 
-    def extend_default_headers_with_auth(  # TODO: Make private
+    def _extend_default_headers_with_auth(
         self, headers: dict[str, str]
     ) -> dict[str, str]:
-        res = super().extend_default_headers(headers)
+        res = super()._extend_default_headers(headers)
         res["Authorization"] = "Bearer " + self.token
         return res

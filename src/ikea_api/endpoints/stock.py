@@ -9,12 +9,12 @@ from ikea_api.exceptions import ItemFetchError
 
 
 class API(BaseIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
-        url = f"https://api.ingka.ikea.com/cia/availabilities/{self.const.country}/{self.const.language}"
-        headers = self.extend_default_headers(
+    def _get_session_info(self) -> SessionInfo:
+        url = f"https://api.ingka.ikea.com/cia/availabilities/{self._const.country}/{self._const.language}"
+        headers = self._extend_default_headers(
             {
                 "Accept": "*/*",
-                "Referer": f"{self.const.local_base_url}/order/delivery/",
+                "Referer": f"{self._const.local_base_url}/order/delivery/",
                 "X-Client-Id": "b6c117e5-ae61-4ef5-b4cc-e0b1e37f0631",
             }
         )
@@ -23,7 +23,7 @@ class API(BaseIkeaAPI):
     @endpoint(handlers=[handle_json_decode_error])
     def get_stock(self, item_codes: list[str]) -> Endpoint[dict[str, Any]]:
         params = {"itemNos": item_codes, "expand": "StoresList,Restocks,SalesLocations"}
-        response = yield self.RequestInfo("GET", params=params)
+        response = yield self._RequestInfo("GET", params=params)
 
         if "errors" not in response.json:
             return response.json

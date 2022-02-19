@@ -22,10 +22,10 @@ handlers = (handle_json_decode_error, handle_401, handle_not_success)
 
 
 class API(BaseAuthIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
-        host = "ikea.ru" if self.const.country == "ru" else "ingka.com"
-        url = f"https://ordercapture.{host}/ordercaptureapi/{self.const.country}"
-        headers = self.extend_default_headers_with_auth(
+    def _get_session_info(self) -> SessionInfo:
+        host = "ikea.ru" if self._const.country == "ru" else "ingka.com"
+        url = f"https://ordercapture.{host}/ordercaptureapi/{self._const.country}"
+        headers = self._extend_default_headers_with_auth(
             {"X-Client-Id": "af2525c3-1779-49be-8d7d-adf32cac1934"}
         )
         return SessionInfo(base_url=url, headers=headers)
@@ -33,7 +33,7 @@ class API(BaseAuthIkeaAPI):
     @endpoint(handlers)
     def get_checkout(self, items: list[CheckoutItem]) -> Endpoint[str]:
         """Generate checkout for items"""
-        response = yield self.RequestInfo(
+        response = yield self._RequestInfo(
             "POST",
             "/checkouts",
             headers={"X-Client-Id": "6a38e438-0bbb-4d4f-bc55-eb314c2e8e23"},
@@ -43,7 +43,7 @@ class API(BaseAuthIkeaAPI):
                 "shoppingType": "ONLINE",
                 "deliveryArea": None,
                 "items": items,
-                "languageCode": self.const.language,
+                "languageCode": self._const.language,
                 "serviceArea": None,
                 "preliminaryAddressInfo": None,
             },
@@ -60,7 +60,7 @@ class API(BaseAuthIkeaAPI):
         payload = {"zipCode": zip_code}
         if state_code:
             payload["stateCode"] = state_code
-        response = yield self.RequestInfo(
+        response = yield self._RequestInfo(
             "POST", f"/checkouts/{checkout_id}/service-area", json=payload
         )
 
@@ -73,7 +73,7 @@ class API(BaseAuthIkeaAPI):
         self, checkout_id: str, service_area_id: str
     ) -> Endpoint[dict[str, Any]]:
         """Get available home delivery services"""
-        response = yield self.RequestInfo(
+        response = yield self._RequestInfo(
             "GET",
             f"/checkouts/{checkout_id}/service-area/{service_area_id}/home-delivery-services",
         )
@@ -84,7 +84,7 @@ class API(BaseAuthIkeaAPI):
         self, checkout_id: str, service_area_id: str
     ) -> Endpoint[dict[str, Any]]:
         """Get available collect delivery services"""
-        response = yield self.RequestInfo(
+        response = yield self._RequestInfo(
             "GET",
             f"/checkouts/{checkout_id}/service-area/{service_area_id}/collect-delivery-services",
         )

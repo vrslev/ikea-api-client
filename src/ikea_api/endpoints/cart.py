@@ -22,9 +22,9 @@ def convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
 
 
 class API(BaseAuthIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
+    def _get_session_info(self) -> SessionInfo:
         url = "https://cart.oneweb.ingka.com/graphql"
-        headers = self.extend_default_headers_with_auth(
+        headers = self._extend_default_headers_with_auth(
             {"X-Client-Id": "66e4684a-dbcb-499c-8639-a72fa50ac0c3"}
         )
         return SessionInfo(base_url=url, headers=headers)
@@ -40,9 +40,9 @@ class API(BaseAuthIkeaAPI):
     def _req(self, query: str, **variables: Any) -> Endpoint[dict[str, Any]]:
         payload = {
             "query": query,
-            "variables": {"languageCode": self.const.language, **variables},
+            "variables": {"languageCode": self._const.language, **variables},
         }
-        response = yield self.RequestInfo("POST", json=payload)
+        response = yield self._RequestInfo("POST", json=payload)
         return response.json
 
     def show(self) -> EndpointInfo[dict[str, Any]]:

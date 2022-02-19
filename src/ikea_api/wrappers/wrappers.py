@@ -1,4 +1,3 @@
-# TODO: add tests
 from __future__ import annotations
 
 import asyncio
@@ -34,7 +33,7 @@ except ImportError:
 
 def get_purchase_history(purchases: PurchasesAPI) -> list[types.PurchaseHistoryItem]:
     response = run_with_requests(purchases.history())
-    return purchases_parser.parse_history(purchases.const, response)
+    return purchases_parser.parse_history(purchases._const, response)
 
 
 def get_purchase_info(

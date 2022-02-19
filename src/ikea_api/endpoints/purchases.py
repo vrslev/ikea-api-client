@@ -25,14 +25,14 @@ handlers = (
 
 
 class API(BaseAuthIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
+    def _get_session_info(self) -> SessionInfo:
         url = "https://purchase-history.ocp.ingka.ikea.com/graphql"
-        headers = self.extend_default_headers_with_auth(
+        headers = self._extend_default_headers_with_auth(
             {
                 "Accept": "*/*",
-                "Accept-Language": f"{self.const.language}-{self.const.country}",
+                "Accept-Language": f"{self._const.language}-{self._const.country}",
                 "Origin": "https://order.ikea.com",
-                "Referer": f"https://order.ikea.com/{self.const.country}/{self.const.language}/purchases/",
+                "Referer": f"https://order.ikea.com/{self._const.country}/{self._const.language}/purchases/",
             }
         )
         return SessionInfo(base_url=url, headers=headers)
@@ -43,7 +43,7 @@ class API(BaseAuthIkeaAPI):
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
         payload = _build_payload("History", Queries.history, take=take, skip=skip)
-        response = yield self.RequestInfo("POST", json=payload)
+        response = yield self._RequestInfo("POST", json=payload)
         return response.json
 
     @endpoint(handlers)
@@ -102,13 +102,13 @@ class API(BaseAuthIkeaAPI):
                 chunk["variables"]["liteId"] = email
 
             headers = {
-                "Referer": f"https://order.ikea.com/{self.const.country}/"
-                + f"{self.const.language}/purchases/lookup"
+                "Referer": f"https://order.ikea.com/{self._const.country}/"
+                + f"{self._const.language}/purchases/lookup"
             }
         else:
             headers = {"Referer": f"https://order.ikea.com/{order_number}/"}
 
-        response = yield self.RequestInfo("POST", json=payload, headers=headers)
+        response = yield self._RequestInfo("POST", json=payload, headers=headers)
         return response.json
 
 

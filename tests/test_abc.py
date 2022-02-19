@@ -68,12 +68,12 @@ def test_error_handlers():
         pass
 
     class API(BaseAPI):
-        def get_session_info(self) -> SessionInfo:
+        def _get_session_info(self) -> SessionInfo:
             return SessionInfo("", {})
 
         @endpoint(handlers=[handle_no_anotherthing])
         def get_something(self, something: str) -> Endpoint[Something]:
-            response = yield self.RequestInfo("POST", "", json={"name": something})
+            response = yield self._RequestInfo("POST", "", json={"name": something})
             return response.json["anotherthing"]
 
     t = EndpointTester(API().get_something("somecoolthing"))
@@ -84,7 +84,7 @@ def test_error_handlers():
 def test_base_api_request_info():
     session = SessionInfo("", {})
     mock_instance: Any = SimpleNamespace(session_info=session)
-    res = BaseAPI.RequestInfo(
+    res = BaseAPI._RequestInfo(
         mock_instance, "POST", url=None, params=None, headers=None, json=None, data=None
     )
     assert res == RequestInfo(

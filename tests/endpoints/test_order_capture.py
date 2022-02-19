@@ -28,10 +28,10 @@ def test_get_checkout(order_capture: API, fail: bool):
     assert req.headers
     assert (
         req.headers["X-Client-Id"]
-        != order_capture.get_session_info().headers["X-Client-Id"]
+        != order_capture._get_session_info().headers["X-Client-Id"]
     )
     assert req.json["items"] == items
-    assert req.json["languageCode"] == order_capture.const.language
+    assert req.json["languageCode"] == order_capture._const.language
 
     if fail:
         with pytest.raises(ProcessingError):

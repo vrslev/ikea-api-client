@@ -8,9 +8,9 @@ from ikea_api.error_handlers import (
 
 
 class API(BaseIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
+    def _get_session_info(self) -> SessionInfo:
         url = "https://api.ingka.ikea.com/guest/token"
-        headers = self.extend_default_headers(
+        headers = self._extend_default_headers(
             {
                 "Accept": "*/*",
                 "Accept-Language": "en-us",
@@ -22,7 +22,7 @@ class API(BaseIkeaAPI):
 
     @endpoint(handlers=[handle_json_decode_error, handle_401, handle_not_success])
     def get_guest_token(self) -> Endpoint[str]:
-        response = yield self.RequestInfo(
-            "POST", json={"retailUnit": self.const.country}
+        response = yield self._RequestInfo(
+            "POST", json={"retailUnit": self._const.country}
         )
         return response.json["access_token"]

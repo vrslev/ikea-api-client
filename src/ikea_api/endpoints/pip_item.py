@@ -13,19 +13,19 @@ def _build_url(item_code: str, is_combination: bool) -> str:
 
 
 class API(BaseIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
-        url = f"{self.const.local_base_url}/products"
-        headers = self.extend_default_headers({"Accept": "*/*"})
+    def _get_session_info(self) -> SessionInfo:
+        url = f"{self._const.local_base_url}/products"
+        headers = self._extend_default_headers({"Accept": "*/*"})
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint()
     def get_item(
         self, item_code: str, is_combination: bool = True
     ) -> Endpoint[dict[str, Any]]:
-        response = yield self.RequestInfo("GET", _build_url(item_code, is_combination))
+        response = yield self._RequestInfo("GET", _build_url(item_code, is_combination))
 
         if response.status_code == 404 and is_combination:
-            response = yield self.RequestInfo("GET", _build_url(item_code, False))
+            response = yield self._RequestInfo("GET", _build_url(item_code, False))
 
         handle_json_decode_error(response)
         return response.json

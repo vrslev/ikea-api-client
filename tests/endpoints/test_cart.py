@@ -31,7 +31,7 @@ def test_cart_req(cart: API):
     req = t.prepare()
 
     assert req.json["query"] == query
-    assert req.json["variables"] == {"languageCode": cart.const.language, **variables}
+    assert req.json["variables"] == {"languageCode": cart._const.language, **variables}
 
     t.assert_json_returned()
 

@@ -10,9 +10,9 @@ SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWE
 
 
 class API(BaseIkeaAPI):
-    def get_session_info(self) -> SessionInfo:
-        url = f"https://sik.search.blue.cdtapps.com/{self.const.country}/{self.const.language}/search-result-page"
-        return SessionInfo(base_url=url, headers=self.extend_default_headers({}))
+    def _get_session_info(self) -> SessionInfo:
+        url = f"https://sik.search.blue.cdtapps.com/{self._const.country}/{self._const.language}/search-result-page"
+        return SessionInfo(base_url=url, headers=self._extend_default_headers({}))
 
     @endpoint(handlers=[handle_json_decode_error])
     def search(
@@ -31,5 +31,5 @@ class API(BaseIkeaAPI):
             "c": "sr",  # API client: sr - search results, sb - search bar
             "v": "20210322",  # API version
         }
-        response = yield self.RequestInfo("GET", params=params)
+        response = yield self._RequestInfo("GET", params=params)
         return response.json
