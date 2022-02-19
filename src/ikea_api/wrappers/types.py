@@ -44,7 +44,7 @@ class ParsedItem(BaseModel):
     name: str
     image_url: Optional[str]
     weight: float
-    child_items: list[ChildItem]
+    child_items: List[ChildItem]
     price: int
     url: str
     category_name: Optional[str]
@@ -57,7 +57,7 @@ class IngkaItem(BaseModel):
     name: str
     image_url: Optional[str]
     weight: float
-    child_items: list[ChildItem]
+    child_items: List[ChildItem]
 
 
 class PipItem(BaseModel):
@@ -79,12 +79,12 @@ class DeliveryService(BaseModel):
     type: str
     price: int
     service_provider: Optional[str]
-    unavailable_items: list[UnavailableItem]
+    unavailable_items: List[UnavailableItem]
 
 
 class GetDeliveryServicesResponse(BaseModel):
-    delivery_options: list[DeliveryService]
-    cannot_add: list[str]
+    delivery_options: List[DeliveryService]
+    cannot_add: List[str]
 
 
 class CostsOrder(BaseModel):
