@@ -10,7 +10,7 @@ repos:
     rev: v2.31.0
     hooks:
       - id: pyupgrade
-        args: [--py37-plus, --keep-runtime-typing]
+        args: [--py38-plus, --keep-runtime-typing]
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
@@ -37,7 +37,7 @@ repos:
     rev: v1.12.1
     hooks:
       - id: blacken-docs
-        args: [--target-version, py37]
+        args: [--target-version, py38]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.5.1
