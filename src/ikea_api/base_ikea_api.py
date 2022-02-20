@@ -12,7 +12,7 @@ class BaseIkeaAPI(BaseAPI):
         super().__init__()
 
     def _extend_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
-        res = get_default_headers(constants=self._const)
+        res = get_default_headers(constants=self._const).copy()
         res.update(headers)
         return res
 
