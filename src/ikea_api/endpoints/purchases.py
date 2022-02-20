@@ -24,7 +24,7 @@ handlers = (
 )
 
 
-class API(BaseAuthIkeaAPI):
+class Purchases(BaseAuthIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = "https://purchase-history.ocp.ingka.ikea.com/graphql"
         headers = self._extend_default_headers_with_auth(

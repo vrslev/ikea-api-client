@@ -21,7 +21,7 @@ def convert_items(items: dict[str, int]) -> list[_TemplatedItem]:
     return [{"itemNo": item_code, "quantity": qty} for item_code, qty in items.items()]
 
 
-class API(BaseAuthIkeaAPI):
+class Cart(BaseAuthIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = "https://cart.oneweb.ingka.com/graphql"
         headers = self._extend_default_headers_with_auth(

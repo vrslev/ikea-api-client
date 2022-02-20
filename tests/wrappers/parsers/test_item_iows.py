@@ -18,7 +18,7 @@ from ikea_api.wrappers.parsers.iows_items import (
     get_rid_of_dollars,
     get_url,
     get_weight,
-    main,
+    parse_iows_item,
     parse_weight,
 )
 from tests.conftest import TestData
@@ -240,4 +240,4 @@ def test_get_category_name_and_url_passes(constants: Constants):
 
 @pytest.mark.parametrize("test_data_response", TestData.item_iows)
 def test_main(constants: Constants, test_data_response: dict[str, Any]):
-    main(constants, test_data_response)
+    parse_iows_item(constants, test_data_response)

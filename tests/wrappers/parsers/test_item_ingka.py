@@ -13,7 +13,7 @@ from ikea_api.wrappers.parsers.ingka_items import (
     get_localised_communication,
     get_name,
     get_weight,
-    main,
+    parse_ingka_items,
     parse_russian_product_name,
 )
 from tests.conftest import TestData
@@ -204,4 +204,4 @@ def test_get_child_items_success():
 
 @pytest.mark.parametrize("test_data_response", TestData.item_ingka)
 def test_main(constants: Constants, test_data_response: dict[str, Any]):
-    list(main(constants, test_data_response))
+    list(parse_ingka_items(constants, test_data_response))

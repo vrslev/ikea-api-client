@@ -10,7 +10,7 @@ from ikea_api.wrappers.parsers.pip_item import (
     CatalogRef,
     CatalogRefs,
     get_category_name_and_url,
-    main,
+    parse_pip_item,
 )
 from tests.conftest import TestData
 
@@ -32,4 +32,4 @@ def test_get_category_name_and_url_raises():
 
 @pytest.mark.parametrize("test_data_response", TestData.item_pip)
 def test_main(test_data_response: dict[str, Any]):
-    main(test_data_response)
+    parse_pip_item(test_data_response)

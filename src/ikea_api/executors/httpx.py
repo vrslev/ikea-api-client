@@ -70,5 +70,5 @@ class HttpxExecutor(AsyncExecutor):
         return HttpxResponseInfo(response)
 
 
-async def run(endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
+async def run_async(endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
     return await HttpxExecutor.run(endpoint)

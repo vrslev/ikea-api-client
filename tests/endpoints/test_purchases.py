@@ -1,7 +1,7 @@
 import pytest
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.purchases import API, Queries, _build_payload
+from ikea_api.endpoints.purchases import Purchases, Queries, _build_payload
 from tests.conftest import EndpointTester
 
 
@@ -15,10 +15,10 @@ def test_build_payload():
 
 @pytest.fixture
 def purchases(constants: Constants):
-    return API(constants, token="mytoken")  # nosec
+    return Purchases(constants, token="mytoken")  # nosec
 
 
-def test_history(purchases: API):
+def test_history(purchases: Purchases):
     take = 3
     skip = 1
     t = EndpointTester(purchases.history(take=take, skip=skip))
@@ -28,7 +28,7 @@ def test_history(purchases: API):
     t.assert_json_returned()
 
 
-def test_order_info_with_email(purchases: API):
+def test_order_info_with_email(purchases: Purchases):
     email = "mail@example.com"
 
     t = EndpointTester(purchases.order_info(order_number="", email=email))
@@ -43,7 +43,7 @@ def test_order_info_with_email(purchases: API):
     t.assert_json_returned()
 
 
-def test_order_info_no_email(purchases: API):
+def test_order_info_no_email(purchases: Purchases):
     order_number = "1111111111"
 
     t = EndpointTester(purchases.order_info(order_number=order_number))

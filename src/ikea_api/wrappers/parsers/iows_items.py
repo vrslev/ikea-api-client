@@ -205,7 +205,7 @@ def get_category_name_and_url(
     )
 
 
-def main(constants: Constants, response: Dict[str, Any]) -> types.ParsedItem:
+def parse_iows_item(constants: Constants, response: Dict[str, Any]) -> types.ParsedItem:
     response = get_rid_of_dollars(response)
     item = ResponseIowsItem(**response)
 

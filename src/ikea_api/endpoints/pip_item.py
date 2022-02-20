@@ -12,7 +12,7 @@ def _build_url(item_code: str, is_combination: bool) -> str:
     return f"/{item_code[5:]}/{prefix}{item_code}.json"
 
 
-class API(BaseIkeaAPI):
+class PipItem(BaseIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = f"{self._const.local_base_url}/products"
         headers = self._extend_default_headers({"Accept": "*/*"})

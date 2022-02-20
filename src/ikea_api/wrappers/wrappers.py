@@ -4,23 +4,29 @@ import asyncio
 from typing import Any, Iterable, List, Optional
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.cart import API as CartAPI
-from ikea_api.endpoints.ingka_items import API as IngkaItemsAPI
-from ikea_api.endpoints.iows_items import API as IowsItemsAPI
-from ikea_api.endpoints.order_capture import API as OrderCaptureAPI
-from ikea_api.endpoints.order_capture import convert_cart_to_checkout_items
-from ikea_api.endpoints.pip_item import API as PipItemAPI
-from ikea_api.endpoints.purchases import API as PurchasesAPI
+from ikea_api.endpoints.cart import Cart
+from ikea_api.endpoints.ingka_items import IngkaItems
+from ikea_api.endpoints.iows_items import IowsItems
+from ikea_api.endpoints.order_capture import (
+    OrderCapture,
+    convert_cart_to_checkout_items,
+)
+from ikea_api.endpoints.pip_item import PipItem
+from ikea_api.endpoints.purchases import Purchases
 from ikea_api.exceptions import GraphQLError
-from ikea_api.executors.httpx import run as run_with_httpx
+from ikea_api.executors.httpx import run_async as run_with_httpx
 from ikea_api.executors.requests import run as run_with_requests
 from ikea_api.utils import parse_item_codes, unshorten_urls_from_ingka_pagelinks
 from ikea_api.wrappers import types
-from ikea_api.wrappers.parsers import purchases as purchases_parser
-from ikea_api.wrappers.parsers.ingka_items import main as parse_ingka_items
-from ikea_api.wrappers.parsers.iows_items import main as parse_iows_items
-from ikea_api.wrappers.parsers.order_capture import main as parse_order_capture
-from ikea_api.wrappers.parsers.pip_item import main as parse_pip_item
+from ikea_api.wrappers.parsers.ingka_items import parse_ingka_items
+from ikea_api.wrappers.parsers.iows_items import parse_iows_item
+from ikea_api.wrappers.parsers.order_capture import parse_delivery_services
+from ikea_api.wrappers.parsers.pip_item import parse_pip_item
+from ikea_api.wrappers.parsers.purchases import (
+    parse_costs_order,
+    parse_history,
+    parse_status_banner_order,
+)
 
 try:
     from pydantic import BaseModel
@@ -31,13 +37,13 @@ except ImportError:
     )
 
 
-def get_purchase_history(purchases: PurchasesAPI) -> list[types.PurchaseHistoryItem]:
+def get_purchase_history(purchases: Purchases) -> list[types.PurchaseHistoryItem]:
     response = run_with_requests(purchases.history())
-    return purchases_parser.parse_history(purchases._const, response)
+    return parse_history(purchases._const, response)
 
 
 def get_purchase_info(
-    purchases: PurchasesAPI, *, order_number: str, email: str | None = None
+    purchases: Purchases, *, order_number: str, email: str | None = None
 ) -> types.PurchaseInfo:
     endpoint = purchases.order_info(
         order_number=order_number,
@@ -46,8 +52,8 @@ def get_purchase_info(
     )
     status_banner, costs = run_with_requests(endpoint)
     return types.PurchaseInfo(
-        **purchases_parser.parse_status_banner_order(status_banner).dict(),
-        **purchases_parser.parse_costs_order(costs).dict(),
+        **parse_status_banner_order(status_banner).dict(),
+        **parse_costs_order(costs).dict(),
     )
 
 
@@ -64,7 +70,7 @@ class _CartErrorRef(BaseModel):
     extensions: _Extensions
 
 
-def add_items_to_cart(cart: CartAPI, items: dict[str, int]) -> types.CannotAddItems:
+def add_items_to_cart(cart: Cart, items: dict[str, int]) -> types.CannotAddItems:
     run_with_requests(cart.clear())
     cannot_add_items: list[str] = []
     pending_items = items.copy()
@@ -94,8 +100,8 @@ async def get_delivery_services(
     items: dict[str, int],
     zip_code: str,
 ) -> types.GetDeliveryServicesResponse:
-    cart = CartAPI(constants, token=token)
-    order_capture = OrderCaptureAPI(constants, token=token)
+    cart = Cart(constants, token=token)
+    order_capture = OrderCapture(constants, token=token)
 
     cannot_add = add_items_to_cart(cart, items)
     cannot_add_all_items = not set(items.keys()) ^ set(cannot_add)
@@ -120,10 +126,10 @@ async def get_delivery_services(
         ),
     )
 
-    parsed_data = parse_order_capture(
+    parsed_data = parse_delivery_services(
         constants=constants,
-        home_delivery_services_response=home,
-        collect_delivery_services_response=collect,
+        home_response=home,
+        collect_response=collect,
     )
     return types.GetDeliveryServicesResponse(
         delivery_options=parsed_data, cannot_add=cannot_add
@@ -137,7 +143,7 @@ def chunks(list_: list[Any], chunk_size: int) -> Iterable[list[Any]]:
 async def _get_ingka_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.IngkaItem]:
-    api = IngkaItemsAPI(constants)
+    api = IngkaItems(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 50))
     responses = await asyncio.gather(*tasks)
     res: list[types.IngkaItem] = []
@@ -149,7 +155,7 @@ async def _get_ingka_items(
 async def _get_pip_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.PipItem | None]:
-    api = PipItemAPI(constants)
+    api = PipItem(constants)
     tasks = (run_with_httpx(api.get_item(i)) for i in item_codes)
     responses = await asyncio.gather(*tasks)
     return [parse_pip_item(r) for r in responses]
@@ -196,13 +202,13 @@ async def _get_ingka_pip_items(
 async def _get_iows_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.ParsedItem]:
-    api = IowsItemsAPI(constants)
+    api = IowsItems(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 90))
     responses = await asyncio.gather(*tasks)
 
     res: list[types.ParsedItem] = []
     for items in responses:
-        res += (parse_iows_items(constants, i) for i in items)
+        res += (parse_iows_item(constants, i) for i in items)
     return res
 
 
@@ -210,7 +216,9 @@ async def get_items(
     constants: Constants, item_codes: list[str]
 ) -> list[types.ParsedItem]:
     item_codes_ = item_codes.copy()
-    item_codes_ += await unshorten_urls_from_ingka_pagelinks(str(item_codes))
+    item_codes_ += await unshorten_urls_from_ingka_pagelinks(
+        str(item_codes)
+    )  # TODO: Don't do this
     pending = parse_item_codes(item_codes_)
     ingka_pip = await _get_ingka_pip_items(constants=constants, item_codes=pending)
 

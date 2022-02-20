@@ -67,7 +67,7 @@ def patch_httpx_executor(
 
 
 def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = purchases.API(constants, token="mytoken")  # nosec
+    api = purchases.Purchases(constants, token="mytoken")  # nosec
     patch_requests_executor(
         monkeypatch, lambda _: MockResponseInfo(json_=TestData.purchases_history)
     )
@@ -76,7 +76,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch, constants: Consta
 
 
 def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = purchases.API(constants, token="mytoken")  # nosec
+    api = purchases.Purchases(constants, token="mytoken")  # nosec
     patch_requests_executor(
         monkeypatch,
         lambda _: MockResponseInfo(
@@ -88,7 +88,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, constants: Constants
 
 
 def test_add_items_to_cart(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = cart.API(constants, token="mytoken")  # nosec
+    api = cart.Cart(constants, token="mytoken")  # nosec
     exp_items = [
         {"11111111": 2, "22222222": 1, "33333333": 4},
         {"11111111": 2, "33333333": 4},

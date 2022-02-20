@@ -8,7 +8,7 @@ def test_search(constants: Constants):
     limit = 30
     types: list[search.SearchType] = ["PLANNER", "REFINED_SEARCHES"]
 
-    t = EndpointTester(search.API(constants).search(query, limit=limit, types=types))
+    t = EndpointTester(search.Search(constants).search(query, limit=limit, types=types))
     req = t.prepare()
 
     assert req.params

@@ -8,7 +8,7 @@ from ikea_api.error_handlers import handle_json_decode_error
 from ikea_api.exceptions import ItemFetchError
 
 
-class API(BaseIkeaAPI):
+class Stock(BaseIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = f"https://api.ingka.ikea.com/cia/availabilities/{self._const.country}/{self._const.language}"
         headers = self._extend_default_headers(
