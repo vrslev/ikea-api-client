@@ -16,7 +16,7 @@ def _build_url(items: ItemCodeToComboDict) -> str:
     )
 
 
-class API(BaseIkeaAPI):
+class IowsItems(BaseIkeaAPI):
     items: ItemCodeToComboDict
 
     def _get_session_info(self) -> SessionInfo:

@@ -21,7 +21,7 @@ class CheckoutItem(TypedDict):
 handlers = (handle_json_decode_error, handle_401, handle_not_success)
 
 
-class API(BaseAuthIkeaAPI):
+class OrderCapture(BaseAuthIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         host = "ikea.ru" if self._const.country == "ru" else "ingka.com"
         url = f"https://ordercapture.{host}/ordercaptureapi/{self._const.country}"

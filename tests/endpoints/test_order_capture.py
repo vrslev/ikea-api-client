@@ -6,8 +6,8 @@ import pytest
 
 from ikea_api.constants import Constants
 from ikea_api.endpoints.order_capture import (
-    API,
     CheckoutItem,
+    OrderCapture,
     convert_cart_to_checkout_items,
 )
 from ikea_api.exceptions import ProcessingError
@@ -16,11 +16,11 @@ from tests.conftest import EndpointTester, MockResponseInfo
 
 @pytest.fixture
 def order_capture(constants: Constants):
-    return API(constants, token="mytoken")  # nosec
+    return OrderCapture(constants, token="mytoken")  # nosec
 
 
 @pytest.mark.parametrize("fail", (True, False))
-def test_get_checkout(order_capture: API, fail: bool):
+def test_get_checkout(order_capture: OrderCapture, fail: bool):
     items = [CheckoutItem(itemNo="11111111", quantity=1, uom="PIECE")]
     t = EndpointTester(order_capture.get_checkout(items))
 
@@ -42,7 +42,7 @@ def test_get_checkout(order_capture: API, fail: bool):
 
 
 @pytest.mark.parametrize("state_code", (None, "mystate"))
-def test_get_service_area_prepare(order_capture: API, state_code: str | None):
+def test_get_service_area_prepare(order_capture: OrderCapture, state_code: str | None):
     checkout_id = "mycheckout"
     zip_code = "101000"
     t = EndpointTester(
@@ -59,7 +59,7 @@ def test_get_service_area_prepare(order_capture: API, state_code: str | None):
 
 
 @pytest.mark.parametrize("fail", (True, False))
-def test_get_service_area_parse(order_capture: API, fail: bool):
+def test_get_service_area_parse(order_capture: OrderCapture, fail: bool):
     t = EndpointTester(order_capture.get_service_area("", ""))
 
     if fail:
@@ -73,11 +73,13 @@ def test_get_service_area_parse(order_capture: API, fail: bool):
 @pytest.mark.parametrize(
     ("method", "path"),
     (
-        (API.get_home_delivery_services, "home-delivery-services"),
-        (API.get_collect_delivery_services, "collect-delivery-services"),
+        (OrderCapture.get_home_delivery_services, "home-delivery-services"),
+        (OrderCapture.get_collect_delivery_services, "collect-delivery-services"),
     ),
 )
-def test_get_services(order_capture: API, method: Callable[..., Any], path: str):
+def test_get_services(
+    order_capture: OrderCapture, method: Callable[..., Any], path: str
+):
     checkout_id = "mycheckout"
     service_area_id = "myarea"
 

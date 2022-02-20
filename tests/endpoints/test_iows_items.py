@@ -3,18 +3,18 @@ from typing import Any
 import pytest
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.iows_items import API
+from ikea_api.endpoints.iows_items import IowsItems
 from ikea_api.exceptions import ItemFetchError, WrongItemCodeError
 from tests.conftest import EndpointTester, MockResponseInfo
 
 
 @pytest.fixture
 def iows_items(constants: Constants):
-    return API(constants)
+    return IowsItems(constants)
 
 
 @pytest.fixture
-def iows_tester(iows_items: API):
+def iows_tester(iows_items: IowsItems):
     return EndpointTester(iows_items.get_items(["11111111"]))
 
 

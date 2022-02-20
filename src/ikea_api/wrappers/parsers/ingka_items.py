@@ -175,7 +175,9 @@ def parse_item(constants: Constants, item: ResponseIngkaItem) -> types.IngkaItem
     )
 
 
-def main(constants: Constants, response: dict[str, Any]) -> Iterable[types.IngkaItem]:
+def parse_ingka_items(
+    constants: Constants, response: dict[str, Any]
+) -> Iterable[types.IngkaItem]:
     parsed_resp = ResponseIngkaItems(**response)
     for item in parsed_resp.data:
         yield parse_item(constants, item)

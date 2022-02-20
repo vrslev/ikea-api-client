@@ -7,7 +7,7 @@ from ikea_api.error_handlers import (
 )
 
 
-class API(BaseIkeaAPI):
+class Auth(BaseIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = "https://api.ingka.ikea.com/guest/token"
         headers = self._extend_default_headers(

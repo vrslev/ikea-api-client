@@ -12,7 +12,7 @@ from ikea_api.error_handlers import (
 from ikea_api.exceptions import ItemFetchError
 
 
-class API(BaseIkeaAPI):
+class IngkaItems(BaseIkeaAPI):
     def _get_session_info(self):
         headers = self._extend_default_headers(
             {

@@ -9,7 +9,7 @@ from ikea_api.error_handlers import handle_json_decode_error
 SearchType = Literal["PRODUCT", "CONTENT", "PLANNER", "REFINED_SEARCHES", "ANSWER"]
 
 
-class API(BaseIkeaAPI):
+class Search(BaseIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
         url = f"https://sik.search.blue.cdtapps.com/{self._const.country}/{self._const.language}/search-result-page"
         return SessionInfo(base_url=url, headers=self._extend_default_headers({}))

@@ -10,7 +10,7 @@ from ikea_api.executors.httpx import (
     HttpxResponseInfo,
     get_cached_session,
     get_session_from_info,
-    run,
+    run_async,
 )
 from tests.conftest import ExecutorContext
 
@@ -76,4 +76,4 @@ async def test_httpx_executor(
         return httpx.AsyncClient(headers=session.headers, transport=transport)
 
     monkeypatch.setattr(ikea_api.executors.httpx, "get_session_from_info", func)
-    await run(executor_context.func())
+    await run_async(executor_context.func())

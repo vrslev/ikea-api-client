@@ -4,7 +4,7 @@ import pytest
 
 from ikea_api.abc import EndpointInfo
 from ikea_api.constants import Constants
-from ikea_api.endpoints.cart import API, Mutations, Queries, convert_items
+from ikea_api.endpoints.cart import Cart, Mutations, Queries, convert_items
 from tests.conftest import EndpointTester
 
 in_items = {"11111111": 1, "22222222": 2}
@@ -20,10 +20,10 @@ def test_cart_convert_items():
 
 @pytest.fixture
 def cart(constants: Constants):
-    return API(constants, token="mytoken")  # nosec
+    return Cart(constants, token="mytoken")  # nosec
 
 
-def test_cart_req(cart: API):
+def test_cart_req(cart: Cart):
     query = "myquery"
     variables = {"ta": "da", "pa": "ga"}
 
@@ -47,24 +47,27 @@ def assert_req_called_with(endpoint: EndpointInfo[Any], query: str, **variables:
 @pytest.mark.parametrize(
     ("method", "query"),
     (
-        (API.show, Queries.cart),
-        (API.clear, Mutations.clear_items),
-        (API.clear_coupon, Mutations.clear_coupon),
+        (Cart.show, Queries.cart),
+        (Cart.clear, Mutations.clear_items),
+        (Cart.clear_coupon, Mutations.clear_coupon),
     ),
 )
-def test_cart_no_vars_methods(cart: API, method: Callable[..., Any], query: str):
+def test_cart_no_vars_methods(cart: Cart, method: Callable[..., Any], query: str):
     assert_req_called_with(method(cart), query)
 
 
 @pytest.mark.parametrize(
     ("method", "query"),
-    ((API.add_items, Mutations.add_items), (API.update_items, Mutations.update_items)),
+    (
+        (Cart.add_items, Mutations.add_items),
+        (Cart.update_items, Mutations.update_items),
+    ),
 )
-def test_cart_add_update_items(cart: API, method: Callable[..., Any], query: str):
+def test_cart_add_update_items(cart: Cart, method: Callable[..., Any], query: str):
     assert_req_called_with(method(cart, in_items), query, items=out_items)
 
 
-def test_cart_copy_items(cart: API):
+def test_cart_copy_items(cart: Cart):
     source_user_id = "myuserid"
     assert_req_called_with(
         cart.copy_items(source_user_id=source_user_id),
@@ -73,13 +76,13 @@ def test_cart_copy_items(cart: API):
     )
 
 
-def test_cart_remove_items(cart: API):
+def test_cart_remove_items(cart: Cart):
     item_codes = ["11111111"]
     assert_req_called_with(
         cart.remove_items(item_codes), Mutations.remove_items, itemNos=item_codes
     )
 
 
-def test_cart_set_coupon(cart: API):
+def test_cart_set_coupon(cart: Cart):
     code = "11"
     assert_req_called_with(cart.set_coupon(code), Mutations.set_coupon, code=code)

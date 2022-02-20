@@ -269,12 +269,12 @@ def parse_collect_delivery_services(
     return res
 
 
-def main(
+def parse_delivery_services(
     *,
     constants: Constants,
-    home_delivery_services_response: dict[str, Any],
-    collect_delivery_services_response: dict[str, Any],
+    home_response: dict[str, Any],
+    collect_response: dict[str, Any],
 ) -> list[types.DeliveryService]:
     return parse_home_delivery_services(
-        constants, home_delivery_services_response
-    ) + parse_collect_delivery_services(constants, collect_delivery_services_response)
+        constants, home_response
+    ) + parse_collect_delivery_services(constants, collect_response)
