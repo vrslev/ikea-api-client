@@ -3,6 +3,8 @@ from __future__ import annotations
 import asyncio
 from typing import Any, Iterable, List, Optional
 
+from pydantic import BaseModel
+
 from ikea_api.constants import Constants
 from ikea_api.endpoints.cart import Cart
 from ikea_api.endpoints.ingka_items import IngkaItems
@@ -27,14 +29,6 @@ from ikea_api.wrappers.parsers.purchases import (
     parse_history,
     parse_status_banner_order,
 )
-
-try:
-    from pydantic import BaseModel
-except ImportError:
-    raise RuntimeError(
-        "To use wrappers you need Pydantic to be installed. "
-        + "Run 'pip install \"ikea_api[wrappers]\"' to do so."
-    )
 
 
 def get_purchase_history(purchases: Purchases) -> list[types.PurchaseHistoryItem]:

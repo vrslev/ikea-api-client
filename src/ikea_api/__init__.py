@@ -24,8 +24,16 @@ from ikea_api.executors.httpx import run_async as run_async
 from ikea_api.executors.requests import run as run
 from ikea_api.utils import format_item_code as format_item_code
 from ikea_api.utils import parse_item_codes as parse_item_codes
-from ikea_api.wrappers.wrappers import add_items_to_cart as add_items_to_cart
-from ikea_api.wrappers.wrappers import get_delivery_services as get_delivery_services
-from ikea_api.wrappers.wrappers import get_items as get_items
-from ikea_api.wrappers.wrappers import get_purchase_history as get_purchase_history
-from ikea_api.wrappers.wrappers import get_purchase_info as get_purchase_info
+
+try:
+    import pydantic  # type: ignore
+except ImportError:
+    pass
+else:
+    from ikea_api.wrappers.wrappers import add_items_to_cart as add_items_to_cart
+    from ikea_api.wrappers.wrappers import (
+        get_delivery_services as get_delivery_services,
+    )
+    from ikea_api.wrappers.wrappers import get_items as get_items
+    from ikea_api.wrappers.wrappers import get_purchase_history as get_purchase_history
+    from ikea_api.wrappers.wrappers import get_purchase_info as get_purchase_info
