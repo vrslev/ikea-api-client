@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from json import JSONDecodeError
+import json
 from typing import Any, Dict, List, cast
 
 from ikea_api.abc import ResponseInfo
@@ -10,7 +10,7 @@ from ikea_api.exceptions import AuthError, GraphQLError, JSONError, NotSuccessEr
 def handle_json_decode_error(response: ResponseInfo) -> None:
     try:
         response.json
-    except JSONDecodeError:
+    except json.JSONDecodeError:
         raise JSONError(response)
 
 

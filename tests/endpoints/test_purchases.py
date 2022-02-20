@@ -1,12 +1,12 @@
 import pytest
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.purchases import Purchases, Queries, _build_payload
+from ikea_api.endpoints.purchases import Purchases, Queries, build_payload
 from tests.conftest import EndpointTester
 
 
 def test_build_payload():
-    assert _build_payload("myoperation", "myquery", var1=1, var2=2) == {
+    assert build_payload("myoperation", "myquery", var1=1, var2=2) == {
         "operationName": "myoperation",
         "variables": {"var1": 1, "var2": 2},
         "query": "myquery",
@@ -23,7 +23,7 @@ def test_history(purchases: Purchases):
     skip = 1
     t = EndpointTester(purchases.history(take=take, skip=skip))
     req = t.prepare()
-    assert req.json == _build_payload("History", Queries.history, take=take, skip=skip)
+    assert req.json == build_payload("History", Queries.history, take=take, skip=skip)
 
     t.assert_json_returned()
 

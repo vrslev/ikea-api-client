@@ -5,9 +5,9 @@ from typing import Any
 
 import pytest
 
+from ikea_api.constants import Constants
 from ikea_api.exceptions import ParsingError
 from ikea_api.wrappers.parsers.ingka_items import (
-    Constants,
     get_child_items,
     get_image_url,
     get_localised_communication,

@@ -11,9 +11,9 @@ import ikea_api.executors.requests
 import ikea_api.wrappers.wrappers
 from ikea_api.abc import EndpointInfo, RequestInfo, ResponseInfo
 from ikea_api.constants import Constants
-from ikea_api.endpoints import cart, purchases
-from ikea_api.endpoints.cart import convert_items
+from ikea_api.endpoints.cart import Cart, convert_items
 from ikea_api.endpoints.order_capture import convert_cart_to_checkout_items
+from ikea_api.endpoints.purchases import Purchases
 from ikea_api.executors.httpx import HttpxExecutor
 from ikea_api.executors.requests import RequestsExecutor
 from ikea_api.utils import parse_item_codes
@@ -67,7 +67,7 @@ def patch_httpx_executor(
 
 
 def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = purchases.Purchases(constants, token="mytoken")  # nosec
+    api = Purchases(constants, token="mytoken")  # nosec
     patch_requests_executor(
         monkeypatch, lambda _: MockResponseInfo(json_=TestData.purchases_history)
     )
@@ -76,7 +76,7 @@ def test_get_purchase_history(monkeypatch: pytest.MonkeyPatch, constants: Consta
 
 
 def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = purchases.Purchases(constants, token="mytoken")  # nosec
+    api = Purchases(constants, token="mytoken")  # nosec
     patch_requests_executor(
         monkeypatch,
         lambda _: MockResponseInfo(
@@ -88,7 +88,7 @@ def test_get_purchase_info(monkeypatch: pytest.MonkeyPatch, constants: Constants
 
 
 def test_add_items_to_cart(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    api = cart.Cart(constants, token="mytoken")  # nosec
+    api = Cart(constants, token="mytoken")  # nosec
     exp_items = [
         {"11111111": 2, "22222222": 1, "33333333": 4},
         {"11111111": 2, "33333333": 4},

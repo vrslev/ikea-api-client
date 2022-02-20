@@ -12,7 +12,7 @@ from ikea_api.error_handlers import (
 )
 
 
-def _build_payload(operation_name: str, query: str, **variables: Any) -> dict[str, Any]:
+def build_payload(operation_name: str, query: str, **variables: Any) -> dict[str, Any]:
     return {"operationName": operation_name, "variables": variables, "query": query}
 
 
@@ -42,7 +42,7 @@ class Purchases(BaseAuthIkeaAPI):
         """Get purchase history.
         Parameters are for pagination. If you want to see all your purchases set 'take' to 10000.
         """
-        payload = _build_payload("History", Queries.history, take=take, skip=skip)
+        payload = build_payload("History", Queries.history, take=take, skip=skip)
         response = yield self._RequestInfo("POST", json=payload)
         return response.json
 
@@ -72,7 +72,7 @@ class Purchases(BaseAuthIkeaAPI):
 
         if "StatusBannerOrder" in queries:
             payload.append(
-                _build_payload(
+                build_payload(
                     "StatusBannerOrder",
                     Queries.status_banner_order,
                     orderNumber=order_number,
@@ -80,13 +80,13 @@ class Purchases(BaseAuthIkeaAPI):
             )
         if "CostsOrder" in queries:
             payload.append(
-                _build_payload(
+                build_payload(
                     "CostsOrder", Queries.costs_order, orderNumber=order_number
                 )
             )
         if "ProductListOrder" in queries:
             payload.append(
-                _build_payload(
+                build_payload(
                     "ProductListOrder",
                     Queries.product_list_order,
                     orderNumber=order_number,

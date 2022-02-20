@@ -1,7 +1,7 @@
 import pytest
 
 from ikea_api.constants import Constants
-from ikea_api.endpoints.pip_item import PipItem, _build_url
+from ikea_api.endpoints.pip_item import PipItem, build_url
 from ikea_api.exceptions import APIError
 from tests.conftest import EndpointTester, MockResponseInfo
 
@@ -14,7 +14,7 @@ from tests.conftest import EndpointTester, MockResponseInfo
     ),
 )
 def test_build_url(item_code: str, is_combination: bool, expected: str):
-    assert _build_url(item_code, is_combination) == expected
+    assert build_url(item_code, is_combination) == expected
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def test_pip_item_prepare(pip_item: PipItem):
     t = EndpointTester(pip_item.get_item(item_code, is_combination))
     req = t.prepare()
 
-    assert req.url == _build_url(item_code, is_combination)
+    assert req.url == build_url(item_code, is_combination)
 
 
 def test_pip_item_no_retry(pip_item: PipItem):
