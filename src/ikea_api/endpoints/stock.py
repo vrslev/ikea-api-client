@@ -4,8 +4,7 @@ from typing import Any
 
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseIkeaAPI
-from ikea_api.error_handlers import handle_json_decode_error
-from ikea_api.exceptions import ItemFetchError
+from ikea_api.error_handlers import handle_graphql_error, handle_json_decode_error
 
 
 class Stock(BaseIkeaAPI):
@@ -20,16 +19,11 @@ class Stock(BaseIkeaAPI):
         )
         return SessionInfo(base_url=url, headers=headers)
 
-    @endpoint(handlers=[handle_json_decode_error])
-    def get_stock(self, item_codes: list[str]) -> Endpoint[dict[str, Any]]:
-        params = {"itemNos": item_codes, "expand": "StoresList,Restocks,SalesLocations"}
+    @endpoint(handlers=[handle_json_decode_error, handle_graphql_error])
+    def get_stock(self, item_code: str) -> Endpoint[dict[str, Any]]:
+        params = {
+            "itemNos": [item_code],
+            "expand": "StoresList,Restocks,SalesLocations",
+        }
         response = yield self._RequestInfo("GET", params=params)
-
-        if "errors" not in response.json:
-            return response.json
-
-        try:
-            item_code = response.json["errors"][0]["details"]["itemNo"]
-        except (KeyError, TypeError, IndexError):
-            item_code = None
-        raise ItemFetchError(response, msg=item_code)
+        return response.json
