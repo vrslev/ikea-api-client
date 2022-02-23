@@ -9,12 +9,12 @@ from tests.conftest import EndpointTester, MockResponseInfo
 
 
 def test_stock_prepare(constants: Constants):
-    item_codes = ["11111111"]
-    t = EndpointTester(Stock(constants).get_stock(item_codes))
+    item_code = "11111111"
+    t = EndpointTester(Stock(constants).get_stock(item_code))
     req = t.prepare()
 
     assert req.params
-    assert req.params["itemNos"] == item_codes
+    assert req.params["itemNos"] == [item_code]
 
 
 @pytest.mark.parametrize(
@@ -27,7 +27,7 @@ def test_stock_prepare(constants: Constants):
 )
 def test_stock_raises_without_item_code(constants: Constants, v: Any):
     item_code = "11111111"
-    t = EndpointTester(Stock(constants).get_stock([item_code]))
+    t = EndpointTester(Stock(constants).get_stock(item_code))
 
     with pytest.raises(ItemFetchError) as exc:
         t.parse(MockResponseInfo(json_=v))
@@ -37,7 +37,7 @@ def test_stock_raises_without_item_code(constants: Constants, v: Any):
 
 def test_stock_raises_with_item_code(constants: Constants):
     item_code = "11111111"
-    t = EndpointTester(Stock(constants).get_stock([item_code]))
+    t = EndpointTester(Stock(constants).get_stock(item_code))
     response = {
         "availabilities": None,
         "errors": [
@@ -59,5 +59,5 @@ def test_stock_raises_with_item_code(constants: Constants):
 
 def test_stock_passes(constants: Constants):
     item_code = "11111111"
-    t = EndpointTester(Stock(constants).get_stock([item_code]))
+    t = EndpointTester(Stock(constants).get_stock(item_code))
     assert t.parse(MockResponseInfo(json_="ok")) == "ok"
