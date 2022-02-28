@@ -1,5 +1,4 @@
 import sys
-from typing import Any, cast
 
 import httpx
 import pytest
@@ -19,7 +18,7 @@ from tests.conftest import ExecutorContext
 
 def test_httpx_import_fails():
     sys.modules["httpx"] = None  # type: ignore
-    headers: frozenset[Any] = frozenset()
+    headers: frozenset[object] = frozenset()
     with pytest.raises(RuntimeError, match="To use httpx executor"):
         get_cached_session(headers)
     del sys.modules["httpx"]
@@ -60,7 +59,7 @@ async def test_httpx_executor(
 
     def handler(request: httpx.Request):
         assert request.method == req.method
-        url = cast(httpx.URL, request.url)
+        url = request.url
         assert url == f"{session.base_url}{req.url}?{url.params}"
         assert request.content.decode() == req.data
         headers = session.headers.copy()
