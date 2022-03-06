@@ -5,6 +5,7 @@ from typing import Any
 from ikea_api.abc import Endpoint, SessionInfo, endpoint
 from ikea_api.base_ikea_api import BaseIkeaAPI
 from ikea_api.error_handlers import handle_json_decode_error
+from ikea_api.exceptions import ItemFetchError
 
 
 def build_url(item_code: str, is_combination: bool) -> str:
@@ -26,6 +27,8 @@ class PipItem(BaseIkeaAPI):
 
         if response.status_code == 404 and is_combination:
             response = yield self._RequestInfo("GET", build_url(item_code, False))
+            if response.status_code == 404:
+                raise ItemFetchError(response)
 
         handle_json_decode_error(response)
         return response.json
