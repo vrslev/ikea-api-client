@@ -281,6 +281,13 @@ stock = ikea_api.Stock(constants)
 stock.get_stock("30457903")
 ```
 
+#### Info about code 606
+Some users reported receiving the following response while using this funciton of the API:
+```js
+{'code': 606, 'message': 'classUnitType in path should be one of [ru sto]'}
+```
+The solution to this problem is to set country code to `ru` and set your language to the one used in the country you want to check the availability in.
+
 ### 🔎 Search
 
 Search for products in the product catalog by product name. Optionally also specify a maximum amount of returned search results (defaults to 24) and types of required search results.
