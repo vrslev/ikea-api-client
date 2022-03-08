@@ -9,11 +9,11 @@ from ikea_api.error_handlers import handle_graphql_error, handle_json_decode_err
 
 class Stock(BaseIkeaAPI):
     def _get_session_info(self) -> SessionInfo:
-        url = f"https://api.ingka.ikea.com/cia/availabilities/{self._const.country}/{self._const.language}"
+        url = f"https://api.ingka.ikea.com/cia/availabilities/ru/{self._const.country}"
         headers = self._extend_default_headers(
             {
-                "Accept": "*/*",
-                "Referer": f"{self._const.local_base_url}/order/delivery/",
+                "Accept": "application/json;version=2",
+                "Referer": "https://www.ikea.com/",
                 "X-Client-Id": "b6c117e5-ae61-4ef5-b4cc-e0b1e37f0631",
             }
         )
