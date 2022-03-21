@@ -84,7 +84,7 @@ def test_requests_executor(
 
             response = requests.Response()
             response.status_code = resp.status_code
-            response.headers == resp.headers
+            response.headers = CaseInsensitiveDict(resp.headers)
             response._content = resp.text.encode()
             return response
 

@@ -33,8 +33,9 @@ def test_one_second_time(iows_tester: EndpointTester):
     req = iows_tester.prepare()
     assert "SPR" in req.url
 
-    resp = {"RetailItemComm": "foo"}
-    iows_tester.parse(MockResponseInfo(json_=resp)) == resp
+    result = "foo"
+    resp = {"RetailItemComm": result}
+    assert iows_tester.parse(MockResponseInfo(json_=resp)) == [result]
 
 
 def test_one_fails(iows_tester: EndpointTester):
