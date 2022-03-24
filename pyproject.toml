@@ -8,7 +8,7 @@ readme = "README.md"
 repository = "https://github.com/vrslev/ikea-api-client"
 keywords = ["ikea", "ikea api", "api", "api client"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: Implementation :: CPython",
   "Natural Language :: English",
   "Typing :: Typed"
