@@ -24,7 +24,7 @@ jobs:
           poetry plugin add poetry-version-plugin
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .venv
           key: release-${{ hashFiles('pyproject.toml') }}
