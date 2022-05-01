@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ikea_api"
-version = "1.2.0"
+version = "0"
 description = "Client for several IKEA's APIs"
 authors = ["Lev Vereshchagin <mail@vrslev.com>"]
 license = "MIT"
