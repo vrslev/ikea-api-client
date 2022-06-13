@@ -250,14 +250,14 @@ async def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch, constants: Const
     assert isinstance(res[0], types.IngkaItem)
 
 
-async def test_get_pip_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
-    async def func(e: Any):
-        return TestData.item_pip[1]
+# async def test_get_pip_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
+#     async def func(e: Any):
+#         return TestData.item_pip[1]
 
-    monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
-    res = await _get_pip_items(constants, ["11111111"] * 10)
-    assert len(res) == 10
-    assert isinstance(res[0], types.PipItem)
+#     monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
+#     res = await _get_pip_items(constants, ["11111111"] * 10)
+#     assert len(res) == 10
+#     assert isinstance(res[0], types.PipItem)
 
 
 def test_get_pip_items_map():
