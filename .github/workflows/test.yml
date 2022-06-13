@@ -97,6 +97,9 @@ jobs:
       - name: Install package
         run: poetry install --extras all
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Test
         run: |
           poetry run pytest --color=yes --cov
