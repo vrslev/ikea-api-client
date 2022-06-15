@@ -20,30 +20,30 @@ from ikea_api.abc import (
 from ikea_api.constants import Constants
 
 
-def get_files_in_directory(dirname: str):
-    return (Path(__file__).parent / "data" / dirname).glob("*")
+def get_data_path(name: str) -> Path:
+    return Path(__file__).parent / "data" / name
 
 
-def get_all_data_files_in_directory(dirname: str):
-    res: list[Any] = []
-    for path in get_files_in_directory(dirname):
+def get_data_files_in_directory(dirname: str) -> list[Any]:
+    def load(path: Path) -> Any:
         with open(path) as f:
-            res.append(json.load(f))
-    return res
+            return json.load(f)
+
+    files = sorted(list(get_data_path(dirname).glob("*")))
+    return [load(path) for path in files]
 
 
-def get_data_file(filename: str):
-    path = Path(__file__).parent / "data" / filename
-    with open(path) as f:
+def get_data_file(filename: str) -> Any:
+    with open(get_data_path(filename)) as f:
         return json.load(f)
 
 
 class TestData:
-    item_ingka = get_all_data_files_in_directory("item_ingka")
-    item_iows = get_all_data_files_in_directory("item_iows")
-    item_pip = get_all_data_files_in_directory("item_pip")
-    order_capture_home = get_all_data_files_in_directory("order_capture/home")
-    order_capture_collect = get_all_data_files_in_directory("order_capture/collect")
+    item_ingka = get_data_files_in_directory("item_ingka")
+    item_iows = get_data_files_in_directory("item_iows")
+    item_pip = get_data_files_in_directory("item_pip")
+    order_capture_home = get_data_files_in_directory("order_capture/home")
+    order_capture_collect = get_data_files_in_directory("order_capture/collect")
     purchases_status_banner = get_data_file("purchases/status_banner.json")
     purchases_costs = get_data_file("purchases/costs.json")
     purchases_history = get_data_file("purchases/history.json")

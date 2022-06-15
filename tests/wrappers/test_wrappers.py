@@ -252,7 +252,7 @@ async def test_get_ingka_items(monkeypatch: pytest.MonkeyPatch, constants: Const
 
 async def test_get_pip_items(monkeypatch: pytest.MonkeyPatch, constants: Constants):
     async def func(e: Any):
-        return TestData.item_pip[1]
+        return TestData.item_pip[0]
 
     monkeypatch.setattr(ikea_api.wrappers.wrappers, "run_with_httpx", func)
     res = await _get_pip_items(constants, ["11111111"] * 10)
