@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Iterable, List, Optional
+from typing import Any, Iterable, List, Optional, cast
 
 from pydantic import BaseModel
 
@@ -198,7 +198,7 @@ async def _get_iows_items(
 ) -> list[types.ParsedItem]:
     api = IowsItems(constants)
     tasks = (run_with_httpx(api.get_items(c)) for c in chunks(item_codes, 90))
-    responses = await asyncio.gather(*tasks)
+    responses = cast("tuple[list[dict[str, Any]], ...]", await asyncio.gather(*tasks))
 
     res: list[types.ParsedItem] = []
     for items in responses:
