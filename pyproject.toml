@@ -23,7 +23,7 @@ pydantic = {version = ">=1.8.0<2", optional = true}
 httpx = {version = ">=0.22.0<1", optional = true}
 
 [tool.poetry.dev-dependencies]
-pytest = "7.1.2"
+pytest = "7.1.3"
 pytest-asyncio = "0.19.0"
 pytest-cov = "3.0.0"
 black = {version = "22.8.0"}
