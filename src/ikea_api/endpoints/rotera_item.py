@@ -19,11 +19,9 @@ class RoteraItem(BaseIkeaAPI):
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint()
-    def get_item(
-        self, item_code: str
-    ) -> Endpoint[dict[str, Any]]:
+    def get_item(self, item_code: str) -> Endpoint[dict[str, Any]]:
         response = yield self._RequestInfo("GET", build_url(item_code))
-        
+
         if response.status_code == 404:
             raise ItemFetchError(response)
 
