@@ -19,9 +19,8 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pip install -U pip
-          pip install -U poetry==v1.2.0a2
-          poetry plugin add poetry-version-plugin
+          pip install -U pip poetry
+          poetry self add "poetry-dynamic-versioning[plugin]"
 
       - name: Cache
         uses: actions/cache@v3
