@@ -15,12 +15,11 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install Poetry
         run: |
-          pip install -U pip
-          pip install -U poetry==v1.2.0a2
+          pip install -U pip poetry
           poetry plugin add poetry-version-plugin
 
       - name: Cache
