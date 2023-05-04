@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator  # pyright: ignore[reportUnknownVariableType]
 
 from ikea_api.constants import Constants
 from ikea_api.utils import translate_from_dict
