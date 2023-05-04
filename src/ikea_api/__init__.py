@@ -9,6 +9,7 @@ from ikea_api.endpoints.order_capture import (
 )
 from ikea_api.endpoints.pip_item import PipItem as PipItem
 from ikea_api.endpoints.purchases import Purchases as Purchases
+from ikea_api.endpoints.rotera_item import RoteraItem as RoteraItem
 from ikea_api.endpoints.search import Search as Search
 from ikea_api.endpoints.stock import Stock as Stock
 from ikea_api.exceptions import APIError as APIError

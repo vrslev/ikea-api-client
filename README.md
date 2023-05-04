@@ -11,6 +11,7 @@ With this library you can access following IKEA's APIs:
 - Cart,
 - Home Delivery and Collect Services (actually, Order Capture),
 - Items info (3 different services),
+- 3D models,
 - Purchases (history and order info),
 - Search,
 - Stock.
@@ -271,6 +272,15 @@ pip_item.get_item("30457903")
 > ```python
 > ikea_api.get_items(["30457903"])
 > ```
+
+### 📦 Item 3D models
+
+Get 3D models by item code.
+
+```python
+rotera_item = ikea_api.RoteraItem(constants)
+rotera_item.get_item("30221043")
+```
 
 ### 🟢 Item availability
 

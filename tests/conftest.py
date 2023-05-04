@@ -26,7 +26,7 @@ def get_data_path(name: str) -> Path:
 
 def get_data_files_in_directory(dirname: str) -> list[Any]:
     def load(path: Path) -> Any:
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
 
     files = sorted(list(get_data_path(dirname).glob("*")))
@@ -34,7 +34,7 @@ def get_data_files_in_directory(dirname: str) -> list[Any]:
 
 
 def get_data_file(filename: str) -> Any:
-    with open(get_data_path(filename)) as f:
+    with open(get_data_path(filename), encoding="utf-8") as f:
         return json.load(f)
 
 
