@@ -4,7 +4,7 @@ import json
 from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 from unittest.mock import MagicMock, Mock, PropertyMock
 
 import pytest
@@ -56,7 +56,7 @@ def constants():
 
 @dataclass
 class MockResponseInfo(ResponseInfo):
-    headers: dict[str, str] = field(default_factory=dict)
+    headers: Mapping[str, str] = field(default_factory=dict)
     status_code: int = 200
     text_: str | None = None
     json_: Any = None
