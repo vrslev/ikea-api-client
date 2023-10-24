@@ -21,7 +21,7 @@ class IngkaItems(BaseIkeaAPI):
                 "X-Client-Id": "c4faceb6-0598-44a2-bae4-2c02f4019d06",
             }
         )
-        url = f"https://api.ingka.ikea.com/salesitem/communications/{self._const.country}/{self._const.language}"
+        url = f"https://api.ingka.ikea.com/salesitem/communications/ru/{self._const.language}"
         return SessionInfo(base_url=url, headers=headers)
 
     @endpoint(handlers=[handle_json_decode_error, handle_401, handle_not_success])
