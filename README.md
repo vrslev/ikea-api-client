@@ -270,7 +270,7 @@ pip_item.get_item("30457903")
 > 💡 You probably won't want to use raw APIs when there's convenient "smart" wrapper that combines them all and parses basic info:
 >
 > ```python
-> ikea_api.get_items(["30457903"])
+> await ikea_api.get_items(["30457903"])
 > ```
 
 ### 📦 Item 3D models
