@@ -9,6 +9,6 @@ def test_no_pydantic():
     import ikea_api
 
     with pytest.raises(AttributeError):
-        ikea_api.get_items
+        ikea_api.add_items_to_cart
 
     del sys.modules["pydantic"]

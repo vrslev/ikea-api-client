@@ -40,7 +40,6 @@ def get_data_file(filename: str) -> Any:
 
 class TestData:
     item_ingka = get_data_files_in_directory("item_ingka")
-    item_iows = get_data_files_in_directory("item_iows")
     item_pip = get_data_files_in_directory("item_pip")
     order_capture_home = get_data_files_in_directory("order_capture/home")
     order_capture_collect = get_data_files_in_directory("order_capture/collect")

@@ -1,17 +1,11 @@
 from __future__ import annotations
 
-from types import SimpleNamespace
 from typing import Any
 
 import pytest
 
 import ikea_api.utils
-from ikea_api.utils import (
-    _get_location_headers,
-    _parse_ingka_pagelink_urls,
-    format_item_code,
-    parse_item_codes,
-)
+from ikea_api.utils import format_item_code, parse_item_codes
 
 
 def test_parse_item_codes_unique():
@@ -38,32 +32,6 @@ def test_parse_item_codes_clean(v: str):
 
 def test_parse_item_codes_empty():
     assert parse_item_codes([]) == []
-
-
-page_link = "https://ingka.page.link/Re4Cos2tqLvuf6Mz7"
-
-
-@pytest.mark.parametrize(
-    ("v", "expected"),
-    (
-        (page_link, [page_link]),
-        (
-            f"text here {page_link} text there {page_link} text there",
-            [page_link, page_link],
-        ),
-    ),
-)
-def test_parse_ingka_pagelink_urls(v: Any, expected: Any):
-    assert list(_parse_ingka_pagelink_urls(v)) == expected
-
-
-def test_get_location_headers():
-    responses: tuple[Any, ...] = (
-        SimpleNamespace(headers={"Location": "1"}),
-        SimpleNamespace(headers={"Location": "2"}),
-        SimpleNamespace(headers={}),
-    )
-    assert _get_location_headers(responses) == ["1", "2"]
 
 
 @pytest.mark.parametrize(

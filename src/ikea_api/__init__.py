@@ -2,7 +2,6 @@ from ikea_api.constants import Constants as Constants
 from ikea_api.endpoints.auth import Auth as Auth
 from ikea_api.endpoints.cart import Cart as Cart
 from ikea_api.endpoints.ingka_items import IngkaItems as IngkaItems
-from ikea_api.endpoints.iows_items import IowsItems as IowsItems
 from ikea_api.endpoints.order_capture import OrderCapture as OrderCapture
 from ikea_api.endpoints.order_capture import (
     convert_cart_to_checkout_items as convert_cart_to_checkout_items,
@@ -35,6 +34,5 @@ else:
     from ikea_api.wrappers.wrappers import (
         get_delivery_services as get_delivery_services,
     )
-    from ikea_api.wrappers.wrappers import get_items as get_items
     from ikea_api.wrappers.wrappers import get_purchase_history as get_purchase_history
     from ikea_api.wrappers.wrappers import get_purchase_info as get_purchase_info
