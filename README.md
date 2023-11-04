@@ -10,7 +10,7 @@ With this library you can access following IKEA's APIs:
 
 - Cart,
 - Home Delivery and Collect Services (actually, Order Capture),
-- Items info (3 different services),
+- Items info (2 services),
 - 3D models,
 - Purchases (history and order info),
 - Search,
@@ -254,24 +254,15 @@ purchases.order_info(
 
 ### 🪑 Item info
 
-Get item specification by item code (product number or whatever). There are 3 endpoints to do this because you can't get all the data about all the items using only one endpoint.
+Get item specification by item code (product number or whatever). There are 2 endpoints to do this because you can't get all the data about all the items using only one endpoint.
 
 ```python
-iows_items = ikea_api.IowsItems(constants)
-iows_items.get_items(["30457903"])
-
 ingka_items = ikea_api.IngkaItems(constants)
 ingka_items.get_items(["30457903"])
 
 pip_item = ikea_api.PipItem(constants)
 pip_item.get_item("30457903")
 ```
-
-> 💡 You probably won't want to use raw APIs when there's convenient "smart" wrapper that combines them all and parses basic info:
->
-> ```python
-> await ikea_api.get_items(["30457903"])
-> ```
 
 ### 📦 Item 3D models
 
