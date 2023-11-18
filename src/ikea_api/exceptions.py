@@ -33,10 +33,10 @@ class GraphQLError(APIError):
     errors: list[dict[str, Any]]
 
     def __init__(self, response: ResponseInfo) -> None:
-        if isinstance(response.json, dict):
+        if isinstance(response.json, cast(type[Dict[str, Any]], dict)):
             self.errors = response.json["errors"]
         else:
-            assert isinstance(response.json, list)
+            assert isinstance(response.json, cast(type[List[Any]], list))
             self.errors = []
 
             for chunk in cast(List[Dict[str, Any]], response.json):
