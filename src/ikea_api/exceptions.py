@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, cast
+from typing import Any, Dict, List, Type, cast
 
 from ikea_api.abc import ResponseInfo
 
@@ -33,10 +33,10 @@ class GraphQLError(APIError):
     errors: list[dict[str, Any]]
 
     def __init__(self, response: ResponseInfo) -> None:
-        if isinstance(response.json, cast(type[Dict[str, Any]], dict)):
+        if isinstance(response.json, cast(Type[Dict[str, Any]], dict)):
             self.errors = response.json["errors"]
         else:
-            assert isinstance(response.json, cast(type[List[Any]], list))
+            assert isinstance(response.json, cast(Type[List[Any]], list))
             self.errors = []
 
             for chunk in cast(List[Dict[str, Any]], response.json):
