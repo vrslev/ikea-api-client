@@ -105,7 +105,7 @@ jobs:
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-data
+          name: coverage-data-${{ matrix.runs-on }}
           path: .coverage.*
           if-no-files-found: ignore
 
@@ -128,6 +128,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: coverage-data
+          pattern: coverage-data-*
+          merge-multiple: true
 
       - name: Combine coverage & fail if it's <100%
         run: |
