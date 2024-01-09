@@ -59,7 +59,7 @@ class TimeWindows(BaseModel):
 class SelectableInfo(BaseModel):
     selectable: bool
 
-    @validator("selectable", pre=True)
+    @validator("selectable", pre=True)  # pyright: ignore[reportUntypedFunctionDecorator]
     def validate_selectable(cls, v: Any) -> Any:
         return v == "YES"
 
