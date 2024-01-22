@@ -23,7 +23,7 @@ jobs:
           poetry self add "poetry-dynamic-versioning[plugin]"
 
       - name: Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .venv
           key: release-${{ hashFiles('pyproject.toml') }}
