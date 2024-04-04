@@ -25,7 +25,7 @@ httpx = {version = ">=0.22,<0.27", optional = true}
 [tool.poetry.dev-dependencies]
 pytest = "8.1.1"
 pytest-asyncio = "0.23.6"
-pytest-cov = "4.1.0"
+pytest-cov = "5.0.0"
 black = {version = "24.3.0"}
 pre-commit = "3.5.0"
 
