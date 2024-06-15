@@ -34,16 +34,24 @@ class GraphQLError(APIError):
 
     def __init__(self, response: ResponseInfo) -> None:
         if isinstance(response.json, cast(Type[Dict[str, Any]], dict)):
-            self.errors = response.json["errors"]  # pyright: ignore[reportUnknownMemberType]
+            self.errors = response.json[  # pyright: ignore[reportUnknownMemberType]
+                "errors"
+            ]
         else:
             assert isinstance(response.json, cast(Type[List[Any]], list))
             self.errors = []
 
-            for chunk in cast(List[Dict[str, Any]], response.json):  # pyright: ignore[reportUnknownMemberType]
+            for chunk in cast(
+                List[Dict[str, Any]],
+                response.json,  # pyright: ignore[reportUnknownMemberType]
+            ):
                 if "errors" in chunk:
                     self.errors += chunk["errors"]
 
-        super().__init__(response, self.errors)  # pyright: ignore[reportUnknownMemberType]
+        super().__init__(
+            response,
+            self.errors,  # pyright: ignore[reportUnknownMemberType]
+        )
 
 
 class ItemFetchError(APIError):
