@@ -28,6 +28,6 @@ def handle_graphql_error(response: ResponseInfo) -> None:
     if "errors" in response.json:
         raise GraphQLError(response)
     elif isinstance(response.json, cast(Type[List[Any]], list)):
-        for dict_ in cast(List[Dict[str, Any]], response.json):
+        for dict_ in cast(List[Dict[str, Any]], response.json):  # pyright: ignore[reportUnknownMemberType]
             if "errors" in dict_:
                 raise GraphQLError(response)
