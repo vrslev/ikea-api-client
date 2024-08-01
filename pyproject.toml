@@ -28,7 +28,7 @@ pytest-asyncio = "*"
 pytest-cov = "*"
 black = "*"
 pre-commit = "*"
-pyright = "1.1.369"
+pyright = "1.1.374"
 
 [tool.poetry.extras]
 wrappers = ["pydantic"]
