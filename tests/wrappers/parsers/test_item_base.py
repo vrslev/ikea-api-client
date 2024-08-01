@@ -3,25 +3,25 @@ from __future__ import annotations
 import pytest
 
 from ikea_api.wrappers.parsers.item_base import (
-    ItemCode,
     ItemType,
     get_is_combination_from_item_type,
+    validate_item_code,
 )
 
 
 def test_item_code_validator_value_error():
     with pytest.raises(ValueError, match="invalid item code format"):
-        assert ItemCode.validate("11111.11") == "11111111"
+        assert validate_item_code("11111.11") == "11111111"
 
 
 def test_item_code_validator_type_error():
     with pytest.raises(TypeError, match="string required"):
-        ItemCode.validate({})
+        validate_item_code({})
 
 
 @pytest.mark.parametrize("v", ("11111111", "111.111.11", "111-111-11", 11111111))
 def test_item_code_validator_passes(v: str | int):
-    assert ItemCode.validate(v) == "11111111"
+    assert validate_item_code(v) == "11111111"
 
 
 @pytest.mark.parametrize(

@@ -48,17 +48,17 @@ class ReferenceMeasurements(BaseModel):
 
 
 class Measurements(BaseModel):
-    referenceMeasurements: Optional[List[ReferenceMeasurements]]
+    referenceMeasurements: Optional[List[ReferenceMeasurements]] = None
 
 
 class LocalisedCommunication(BaseModel):
     languageCode: str
-    packageMeasurements: Optional[List[PackageMeasurement]]
-    media: Optional[List[Media]]
+    packageMeasurements: Optional[List[PackageMeasurement]] = None
+    media: Optional[List[Media]] = None
     productName: str
     productType: ProductType
-    validDesign: Optional[ValidDesign]
-    measurements: Optional[Measurements]
+    validDesign: Optional[ValidDesign] = None
+    measurements: Optional[Measurements] = None
 
 
 class ChildItem(BaseModel):
@@ -69,7 +69,7 @@ class ChildItem(BaseModel):
 class ResponseIngkaItem(BaseModel):
     itemKey: ItemKey
     localisedCommunications: List[LocalisedCommunication]
-    childItems: Optional[List[ChildItem]]
+    childItems: Optional[List[ChildItem]] = None
 
 
 class ResponseIngkaItems(BaseModel):
@@ -178,6 +178,6 @@ def parse_item(constants: Constants, item: ResponseIngkaItem) -> types.IngkaItem
 def parse_ingka_items(
     constants: Constants, response: dict[str, Any]
 ) -> Iterable[types.IngkaItem]:
-    parsed_resp = ResponseIngkaItems(**response)
+    parsed_resp = ResponseIngkaItems.model_validate(response)
     for item in parsed_resp.data:
         yield parse_item(constants, item)

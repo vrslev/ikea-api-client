@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
-from pydantic import ValidationError
+from pydantic import HttpUrl, ValidationError
 
 from ikea_api.wrappers.parsers.pip_item import (
     Catalog,
@@ -21,7 +21,10 @@ def generate_catalog_refs(name: str, url: str):
 
 def test_get_category_name_and_url_passes():
     name, url = "Книжные шкафы", "https://www.ikea.com/ru/ru/cat/knizhnye-shkafy-10382/"
-    assert get_category_name_and_url(generate_catalog_refs(name, url)) == (name, url)
+    assert get_category_name_and_url(generate_catalog_refs(name, url)) == (
+        name,
+        HttpUrl(url),  # pyright: ignore[reportCallIssue]
+    )
 
 
 def test_get_category_name_and_url_raises():

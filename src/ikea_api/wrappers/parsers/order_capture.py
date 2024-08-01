@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, validator  # pyright: ignore[reportUnknownVariableType]
+from pydantic import BaseModel, BeforeValidator
+from typing_extensions import Annotated
 
 from ikea_api.constants import Constants
 from ikea_api.utils import translate_from_dict
@@ -53,17 +54,11 @@ class EarliestPossibleSlot(BaseModel):
 
 
 class TimeWindows(BaseModel):
-    earliestPossibleSlot: Optional[EarliestPossibleSlot]
+    earliestPossibleSlot: Optional[EarliestPossibleSlot] = None
 
 
 class SelectableInfo(BaseModel):
-    selectable: bool
-
-    @validator(
-        "selectable", pre=True
-    )  # pyright: ignore[reportUntypedFunctionDecorator]
-    def validate_selectable(cls, v: Any) -> Any:
-        return v == "YES"
+    selectable: Annotated[bool, BeforeValidator(lambda value: value == "YES")]
 
 
 class Metadata(BaseModel):
@@ -75,13 +70,13 @@ class UnavailableItem(BaseModel):
     availableQuantity: int
 
 
-def get_date(deliveries: list[HomeDelivery] | None) -> datetime | None:
+def get_date(deliveries: list[HomeDelivery] | None) -> date | None:
     if not deliveries:
         return
 
     for delivery in deliveries:
         if delivery.timeWindows and delivery.timeWindows.earliestPossibleSlot:
-            return delivery.timeWindows.earliestPossibleSlot.fromDateTime
+            return delivery.timeWindows.earliestPossibleSlot.fromDateTime.date()
 
 
 def get_type(
@@ -121,7 +116,7 @@ def get_unavailable_items(
 
 class HomeDelivery(BaseModel):
     type: str
-    timeWindows: Optional[TimeWindows]
+    timeWindows: Optional[TimeWindows] = None
 
 
 class HomePossibleDeliveries(BaseModel):
@@ -131,10 +126,10 @@ class HomePossibleDeliveries(BaseModel):
 class HomeDeliveryService(BaseModel):
     metadata: Metadata
     fulfillmentMethodType: str
-    solution: Optional[str]
-    solutionPrice: Optional[SolutionPrice]
-    possibleDeliveries: Optional[HomePossibleDeliveries]
-    unavailableItems: Optional[List[UnavailableItem]]
+    solution: Optional[str] = None
+    solutionPrice: Optional[SolutionPrice] = None
+    possibleDeliveries: Optional[HomePossibleDeliveries] = None
+    unavailableItems: Optional[List[UnavailableItem]] = None
 
 
 class HomePossibleDeliveryServices(BaseModel):
@@ -142,13 +137,13 @@ class HomePossibleDeliveryServices(BaseModel):
 
 
 class HomeDeliveryServicesResponse(BaseModel):
-    possibleDeliveryServices: Optional[HomePossibleDeliveryServices]
+    possibleDeliveryServices: Optional[HomePossibleDeliveryServices] = None
 
 
 def parse_home_delivery_services(
     constants: Constants, response: dict[str, Any]
 ) -> list[types.DeliveryService]:
-    parsed_response = HomeDeliveryServicesResponse(**response)
+    parsed_response = HomeDeliveryServicesResponse.model_validate(response)
 
     res: list[types.DeliveryService] = []
     if not parsed_response.possibleDeliveryServices:
@@ -184,8 +179,8 @@ def parse_home_delivery_services(
 
 class PickUpPoint(BaseModel):
     metadata: Metadata
-    timeWindows: Optional[TimeWindows]
-    identifier: Optional[str]
+    timeWindows: Optional[TimeWindows] = None
+    identifier: Optional[str] = None
 
 
 class PossiblePickUpPoints(BaseModel):
@@ -203,10 +198,10 @@ class CollectPossibleDeliveries(BaseModel):
 
 class CollectDeliveryService(BaseModel):
     fulfillmentMethodType: str
-    solution: Optional[str]
-    solutionPrice: Optional[SolutionPrice]
-    possibleDeliveries: Optional[CollectPossibleDeliveries]
-    unavailableItems: Optional[List[UnavailableItem]]
+    solution: Optional[str] = None
+    solutionPrice: Optional[SolutionPrice] = None
+    possibleDeliveries: Optional[CollectPossibleDeliveries] = None
+    unavailableItems: Optional[List[UnavailableItem]] = None
 
 
 class CollectPossibleDeliveryServices(BaseModel):
@@ -214,7 +209,7 @@ class CollectPossibleDeliveryServices(BaseModel):
 
 
 class CollectDeliveryServicesResponse(BaseModel):
-    possibleDeliveryServices: Optional[CollectPossibleDeliveryServices]
+    possibleDeliveryServices: Optional[CollectPossibleDeliveryServices] = None
 
 
 def get_service_provider(constants: Constants, pickup_point: PickUpPoint) -> str | None:
@@ -230,7 +225,7 @@ def get_service_provider(constants: Constants, pickup_point: PickUpPoint) -> str
 def parse_collect_delivery_services(
     constants: Constants, response: dict[str, Any]
 ) -> list[types.DeliveryService]:
-    parsed_response = CollectDeliveryServicesResponse(**response)
+    parsed_response = CollectDeliveryServicesResponse.model_validate(response)
 
     res: list[types.DeliveryService] = []
     if not parsed_response.possibleDeliveryServices:
@@ -247,7 +242,7 @@ def parse_collect_delivery_services(
         for delivery in service.possibleDeliveries.deliveries:
             for point in delivery.possiblePickUpPoints.pickUpPoints:
                 date = (
-                    point.timeWindows.earliestPossibleSlot.fromDateTime
+                    point.timeWindows.earliestPossibleSlot.fromDateTime.date()
                     if point.timeWindows and point.timeWindows.earliestPossibleSlot
                     else None
                 )

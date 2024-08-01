@@ -18,7 +18,7 @@ class CatalogRef(BaseModel):
 
 
 class CatalogRefs(BaseModel):
-    products: Optional[CatalogRef]
+    products: Optional[CatalogRef] = None
 
 
 class ResponsePipItem(BaseModel):
@@ -37,12 +37,12 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
 def parse_pip_item(response: dict[str, Any]) -> types.PipItem | None:
     if not response:
         return
-    parsed_item = ResponsePipItem(**response)
+    parsed_item = ResponsePipItem.model_validate(response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
     return types.PipItem(
         item_code=parsed_item.id,
         price=parsed_item.priceNumeral,
-        url=parsed_item.pipUrl,
+        url=str(parsed_item.pipUrl),
         category_name=category_name,
         category_url=category_url,
     )

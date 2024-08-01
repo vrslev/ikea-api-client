@@ -54,7 +54,7 @@ def test_get_date_with_value_first():
             )
         ),
     ]
-    assert get_date(deliveries) == exp_datetime
+    assert get_date(deliveries) == exp_datetime.date()
 
 
 def test_get_date_with_value_not_first():
@@ -67,7 +67,7 @@ def test_get_date_with_value_not_first():
             )
         ),
     ]
-    assert get_date(deliveries) == exp_datetime
+    assert get_date(deliveries) == exp_datetime.date()
 
 
 def test_get_type_no_service_type(constants: Constants):

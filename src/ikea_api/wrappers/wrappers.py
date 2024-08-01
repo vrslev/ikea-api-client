@@ -39,8 +39,8 @@ def get_purchase_info(
     )
     status_banner, costs = run_with_requests(endpoint)
     return types.PurchaseInfo(
-        **parse_status_banner_order(status_banner).dict(),
-        **parse_costs_order(costs).dict(),
+        **parse_status_banner_order(status_banner).model_dump(),
+        **parse_costs_order(costs).model_dump(),
     )
 
 
@@ -50,7 +50,7 @@ class _ExtensionsData(BaseModel):
 
 class _Extensions(BaseModel):
     code: str
-    data: Optional[_ExtensionsData]
+    data: Optional[_ExtensionsData] = None
 
 
 class _CartErrorRef(BaseModel):
@@ -68,7 +68,7 @@ def add_items_to_cart(cart: Cart, items: dict[str, int]) -> types.CannotAddItems
             break
         except GraphQLError as exc:
             for error_dict in exc.errors:
-                error = _CartErrorRef(**error_dict)
+                error = _CartErrorRef.model_validate(error_dict)
                 if error.extensions.code != "INVALID_ITEM_NUMBER":
                     continue
                 if not error.extensions.data:
