@@ -148,7 +148,7 @@ class HomeDeliveryServicesResponse(BaseModel):
 def parse_home_delivery_services(
     constants: Constants, response: dict[str, Any]
 ) -> list[types.DeliveryService]:
-    parsed_response = HomeDeliveryServicesResponse(**response)
+    parsed_response = HomeDeliveryServicesResponse.model_validate(response)
 
     res: list[types.DeliveryService] = []
     if not parsed_response.possibleDeliveryServices:
@@ -230,7 +230,7 @@ def get_service_provider(constants: Constants, pickup_point: PickUpPoint) -> str
 def parse_collect_delivery_services(
     constants: Constants, response: dict[str, Any]
 ) -> list[types.DeliveryService]:
-    parsed_response = CollectDeliveryServicesResponse(**response)
+    parsed_response = CollectDeliveryServicesResponse.model_validate(response)
 
     res: list[types.DeliveryService] = []
     if not parsed_response.possibleDeliveryServices:

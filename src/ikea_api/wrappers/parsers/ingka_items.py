@@ -178,6 +178,6 @@ def parse_item(constants: Constants, item: ResponseIngkaItem) -> types.IngkaItem
 def parse_ingka_items(
     constants: Constants, response: dict[str, Any]
 ) -> Iterable[types.IngkaItem]:
-    parsed_resp = ResponseIngkaItems(**response)
+    parsed_resp = ResponseIngkaItems.model_validate(response)
     for item in parsed_resp.data:
         yield parse_item(constants, item)

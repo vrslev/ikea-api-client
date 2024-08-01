@@ -37,7 +37,7 @@ def get_category_name_and_url(catalog_refs: CatalogRefs):
 def parse_pip_item(response: dict[str, Any]) -> types.PipItem | None:
     if not response:
         return
-    parsed_item = ResponsePipItem(**response)
+    parsed_item = ResponsePipItem.model_validate(response)
     category_name, category_url = get_category_name_and_url(parsed_item.catalogRefs)
     return types.PipItem(
         item_code=parsed_item.id,

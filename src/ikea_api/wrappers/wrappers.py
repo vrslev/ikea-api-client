@@ -68,7 +68,7 @@ def add_items_to_cart(cart: Cart, items: dict[str, int]) -> types.CannotAddItems
             break
         except GraphQLError as exc:
             for error_dict in exc.errors:
-                error = _CartErrorRef(**error_dict)
+                error = _CartErrorRef.model_validate(error_dict)
                 if error.extensions.code != "INVALID_ITEM_NUMBER":
                     continue
                 if not error.extensions.data:

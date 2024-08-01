@@ -1,25 +1,23 @@
 from typing import Any, Literal
 
+from pydantic import BeforeValidator
+from typing_extensions import Annotated
+
 from ikea_api.utils import parse_item_codes
 
 
-class ItemCode(str):
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, v: Any):
-        if isinstance(v, int):
-            v = str(v)
-        if isinstance(v, str):
-            parsed_item_codes = parse_item_codes(v)
-            if len(parsed_item_codes) != 1:
-                raise ValueError("invalid item code format")
-            return parsed_item_codes[0]
-        raise TypeError("string required")
+def validate_item_code(value: Any) -> str:
+    if isinstance(value, int):
+        value = str(value)
+    if isinstance(value, str):
+        parsed_item_codes = parse_item_codes(value)
+        if len(parsed_item_codes) != 1:
+            raise ValueError("invalid item code format")
+        return parsed_item_codes[0]
+    raise TypeError("string required")
 
 
+ItemCode = Annotated[str, BeforeValidator(validate_item_code)]
 ItemType = Literal["ART", "SPR"]
 
 
