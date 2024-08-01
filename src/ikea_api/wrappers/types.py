@@ -7,7 +7,7 @@ from pydantic import BaseModel, HttpUrl
 
 
 class ChildItem(BaseModel):
-    name: Optional[str]
+    name: Optional[str] = None
     item_code: str
     weight: float
     qty: int
@@ -17,20 +17,20 @@ class ParsedItem(BaseModel):
     is_combination: bool
     item_code: str
     name: str
-    image_url: Optional[str]
+    image_url: Optional[str] = None
     weight: float
     child_items: List[ChildItem]
     price: int
     url: str
-    category_name: Optional[str]
-    category_url: Optional[HttpUrl]
+    category_name: Optional[str] = None
+    category_url: Optional[HttpUrl] = None
 
 
 class IngkaItem(BaseModel):
     is_combination: bool
     item_code: str
     name: str
-    image_url: Optional[str]
+    image_url: Optional[str] = None
     weight: float
     child_items: List[ChildItem]
 
@@ -39,8 +39,8 @@ class PipItem(BaseModel):
     item_code: str
     price: int
     url: str
-    category_name: Optional[str]
-    category_url: Optional[HttpUrl]
+    category_name: Optional[str] = None
+    category_url: Optional[HttpUrl] = None
 
 
 class UnavailableItem(BaseModel):
@@ -50,10 +50,10 @@ class UnavailableItem(BaseModel):
 
 class DeliveryService(BaseModel):
     is_available: bool
-    date: Optional[datetime.date]
+    date: Optional[datetime.date] = None
     type: str
     price: int
-    service_provider: Optional[str]
+    service_provider: Optional[str] = None
     unavailable_items: List[UnavailableItem]
 
 

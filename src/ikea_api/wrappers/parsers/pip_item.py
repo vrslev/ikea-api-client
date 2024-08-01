@@ -18,7 +18,7 @@ class CatalogRef(BaseModel):
 
 
 class CatalogRefs(BaseModel):
-    products: Optional[CatalogRef]
+    products: Optional[CatalogRef] = None
 
 
 class ResponsePipItem(BaseModel):

@@ -50,7 +50,7 @@ class _ExtensionsData(BaseModel):
 
 class _Extensions(BaseModel):
     code: str
-    data: Optional[_ExtensionsData]
+    data: Optional[_ExtensionsData] = None
 
 
 class _CartErrorRef(BaseModel):

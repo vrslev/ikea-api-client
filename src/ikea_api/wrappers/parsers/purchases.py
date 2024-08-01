@@ -65,7 +65,7 @@ class HistoryDateAndTime(BaseModel):
 
 
 class HistoryTotalCost(BaseModel):
-    value: Optional[int]
+    value: Optional[int] = None
 
 
 class HistoryItem(BaseModel):
