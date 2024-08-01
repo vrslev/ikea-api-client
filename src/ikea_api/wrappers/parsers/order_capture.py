@@ -3,7 +3,11 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, validator  # pyright: ignore[reportUnknownVariableType]
+from pydantic import (  # pyright: ignore[reportUnknownVariableType]
+    AfterValidator,
+    BaseModel,
+)
+from typing_extensions import Annotated
 
 from ikea_api.constants import Constants
 from ikea_api.utils import translate_from_dict
@@ -57,13 +61,7 @@ class TimeWindows(BaseModel):
 
 
 class SelectableInfo(BaseModel):
-    selectable: bool
-
-    @validator(
-        "selectable", pre=True
-    )  # pyright: ignore[reportUntypedFunctionDecorator]
-    def validate_selectable(cls, v: Any) -> Any:
-        return v == "YES"
+    selectable: Annotated[bool, AfterValidator(lambda value: value == "YES")]
 
 
 class Metadata(BaseModel):

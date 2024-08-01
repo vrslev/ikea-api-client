@@ -39,8 +39,8 @@ def get_purchase_info(
     )
     status_banner, costs = run_with_requests(endpoint)
     return types.PurchaseInfo(
-        **parse_status_banner_order(status_banner).dict(),
-        **parse_costs_order(costs).dict(),
+        **parse_status_banner_order(status_banner).model_dump(),
+        **parse_costs_order(costs).model_dump(),
     )
 
 

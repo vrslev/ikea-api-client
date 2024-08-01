@@ -42,7 +42,7 @@ def parse_pip_item(response: dict[str, Any]) -> types.PipItem | None:
     return types.PipItem(
         item_code=parsed_item.id,
         price=parsed_item.priceNumeral,
-        url=parsed_item.pipUrl,
+        url=str(parsed_item.pipUrl),
         category_name=category_name,
         category_url=category_url,
     )
