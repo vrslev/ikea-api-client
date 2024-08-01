@@ -4,8 +4,8 @@ from datetime import date, datetime
 from typing import Any, List, Optional
 
 from pydantic import (  # pyright: ignore[reportUnknownVariableType]
-    AfterValidator,
     BaseModel,
+    BeforeValidator,
 )
 from typing_extensions import Annotated
 
@@ -61,7 +61,7 @@ class TimeWindows(BaseModel):
 
 
 class SelectableInfo(BaseModel):
-    selectable: Annotated[bool, AfterValidator(lambda value: value == "YES")]
+    selectable: Annotated[bool, BeforeValidator(lambda value: value == "YES")]
 
 
 class Metadata(BaseModel):
@@ -245,7 +245,7 @@ def parse_collect_delivery_services(
         for delivery in service.possibleDeliveries.deliveries:
             for point in delivery.possiblePickUpPoints.pickUpPoints:
                 date = (
-                    point.timeWindows.earliestPossibleSlot.fromDateTime
+                    point.timeWindows.earliestPossibleSlot.fromDateTime.date()
                     if point.timeWindows and point.timeWindows.earliestPossibleSlot
                     else None
                 )
