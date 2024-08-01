@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+
 from ikea_api.wrappers.parsers.item_base import (
     ItemType,
     get_is_combination_from_item_type,

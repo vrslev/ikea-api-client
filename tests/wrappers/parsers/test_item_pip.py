@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
+from pydantic import HttpUrl, ValidationError
+
 from ikea_api.wrappers.parsers.pip_item import (
     Catalog,
     CatalogRef,
@@ -10,8 +12,6 @@ from ikea_api.wrappers.parsers.pip_item import (
     get_category_name_and_url,
     parse_pip_item,
 )
-from pydantic import HttpUrl, ValidationError
-
 from tests.conftest import TestData
 
 
