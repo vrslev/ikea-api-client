@@ -95,11 +95,13 @@ def test_get_name(
         productName=product_name,
         productType=SimpleNamespace(name=product_type),
         validDesign=SimpleNamespace(text=design) if design else None,
-        measurements=SimpleNamespace(
-            referenceMeasurements=[SimpleNamespace(metric=measurements)]
-        )
-        if measurements
-        else None,
+        measurements=(
+            SimpleNamespace(
+                referenceMeasurements=[SimpleNamespace(metric=measurements)]
+            )
+            if measurements
+            else None
+        ),
     )
 
     assert get_name(comm) == exp_result

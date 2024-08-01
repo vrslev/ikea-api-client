@@ -23,7 +23,7 @@ def test_get_category_name_and_url_passes():
     name, url = "Книжные шкафы", "https://www.ikea.com/ru/ru/cat/knizhnye-shkafy-10382/"
     assert get_category_name_and_url(generate_catalog_refs(name, url)) == (
         name,
-        HttpUrl(url), # pyright: ignore[reportCallIssue]
+        HttpUrl(url),  # pyright: ignore[reportCallIssue]
     )
 
 

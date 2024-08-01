@@ -6,7 +6,9 @@ from functools import lru_cache
 
 @dataclass(frozen=True)
 class Constants:
-    user_agent: str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15"
+    user_agent: str = (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15"
+    )
     base_url: str = "https://www.ikea.com"
     country: str = "ru"
     language: str = "ru"

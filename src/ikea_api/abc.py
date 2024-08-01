@@ -45,18 +45,15 @@ class ResponseInfo(ABC):
 
     @cached_property
     @abstractmethod
-    def text(self) -> str:
-        ...
+    def text(self) -> str: ...
 
     @cached_property
     @abstractmethod
-    def json(self) -> Any:
-        ...
+    def json(self) -> Any: ...
 
     @property
     @abstractmethod
-    def is_success(self) -> bool:
-        ...
+    def is_success(self) -> bool: ...
 
 
 EndpointResponse = TypeVar("EndpointResponse")
@@ -98,8 +95,7 @@ def endpoint(
 class SyncExecutor(ABC):
     @staticmethod
     @abstractmethod
-    def request(request: RequestInfo) -> ResponseInfo:
-        ...
+    def request(request: RequestInfo) -> ResponseInfo: ...
 
     @classmethod
     def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
@@ -121,8 +117,7 @@ class SyncExecutor(ABC):
 class AsyncExecutor(ABC):
     @staticmethod
     @abstractmethod
-    async def request(request: RequestInfo) -> ResponseInfo:
-        ...
+    async def request(request: RequestInfo) -> ResponseInfo: ...
 
     @classmethod
     async def run(cls, endpoint: EndpointInfo[EndpointResponse]) -> EndpointResponse:
