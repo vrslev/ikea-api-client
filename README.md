@@ -1,3 +1,7 @@
+The project is archived.
+
+---
+
 Client for several IKEA APIs.
 
 [![Test](https://github.com/vrslev/ikea-api-client/actions/workflows/test.yml/badge.svg)](https://github.com/vrslev/ikea-api-client/actions/workflows/test.yml)
