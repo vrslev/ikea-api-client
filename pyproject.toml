@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ikea_api"
 version = "0"
-description = "Client for several IKEA's APIs"
+description = "The package is archived. Client for several IKEA's APIs"
 authors = ["Lev Vereshchagin <mail@vrslev.com>"]
 license = "MIT"
 readme = "README.md"
